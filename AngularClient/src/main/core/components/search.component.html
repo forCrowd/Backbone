@@ -1,0 +1,52 @@
+<h2>Search</h2>
+<hr />
+
+<div class="container g-mt-20">
+
+    <div class="searchInput">
+        <mat-form-field>
+            <input matInput placeholder="Enter a project or user name" [(ngModel)]="searchKey">
+        </mat-form-field>
+        <button mat-icon-button type="submit" (click)="search()">
+            <i class="material-icons">search</i>
+        </button>
+    </div>
+
+    <mat-progress-bar mode="indeterminate" [hidden]="!isBusy"></mat-progress-bar>
+    
+    <div class="g-mt-20">
+        <div class="noResults" [hidden]="!hasResult || dataSource.data.length > 0">
+            No records found!
+        </div>
+
+        <mat-table #table [dataSource]="dataSource" [trackBy]="trackBy" [hidden]="!hasResult || dataSource.data.length === 0">
+
+            <!-- Name -->
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef> Project </mat-header-cell>
+                <mat-cell *matCellDef="let project"> {{ project.Name }} </mat-cell>
+            </ng-container>
+
+            <!-- UserName -->
+            <ng-container matColumnDef="userName">
+                <mat-header-cell *matHeaderCellDef> User </mat-header-cell>
+                <mat-cell *matCellDef="let project"> {{ project.User.UserName }} </mat-cell>
+            </ng-container>
+
+            <!-- RatingCount -->
+            <ng-container matColumnDef="ratingCount">
+                <mat-header-cell *matHeaderCellDef> # Ratings </mat-header-cell>
+                <mat-cell *matCellDef="let project"> {{ project.RatingCount }} </mat-cell>
+            </ng-container>
+
+            <!-- CreatedOn -->
+            <ng-container matColumnDef="createdOn">
+                <mat-header-cell *matHeaderCellDef> Created On</mat-header-cell>
+                <mat-cell *matCellDef="let project"> {{ project.CreatedOn | amTimeAgo }} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+    </div>
+</div>

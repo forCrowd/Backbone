@@ -1,0 +1,25 @@
+﻿form {
+    padding-bottom: 10px;
+}
+
+.cellFilterContainer {
+    display: flex;
+}
+
+    .cellFilterContainer .mat-form-field {
+        padding: 0 2px;
+    }
+
+.mat-cell {
+    padding: 4px 0;
+}
+
+.mat-form-field {
+    width: 45%;
+}
+
+.templateContainer button {
+    height: 100px;
+    margin-right: 20px;
+    width: 100px;
+}

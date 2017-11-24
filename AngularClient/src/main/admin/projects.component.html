@@ -1,0 +1,48 @@
+<h2>Projects</h2>
+<div class="table-search">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Project</th>
+                    <th>User</th>
+                    <th># Ratings</th>
+                    <th>Created On</th>
+                    <th>Modified On</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr [hidden]="projectSet.length > 0">
+                    <td colspan="4">
+                        Nothing to display
+                    </td>
+                </tr>
+                <tr [hidden]="projectSet.length === 0" *ngFor="let project of projectSet">
+                    <td>
+                        <h3><a routerLink="{{ '/' + project.User.UserName + '/' + project.Key }}">{{ project.Name }}</a></h3>
+                    </td>
+                    <td>
+                        <div>
+                            <a routerLink="{{ '/' + project.User.UserName }}">{{ project.User.UserName }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        {{ project.RatingCount }}
+                    </td>
+                    <td>
+                        {{ project.CreatedOn | amTimeAgo }}
+                    </td>
+                    <td>
+                        {{ project.ModifiedOn | amTimeAgo }}
+                    </td>
+                    <td>
+                        <button (click)="updateComputedFields(project)" type="button" class="btn btn-link" title="Update computed fields">
+                            <i class="fa fa-refresh" aria-hidden="true"></i> Update
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

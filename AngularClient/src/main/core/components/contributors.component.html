@@ -1,0 +1,103 @@
+﻿<!--
+This is an experimental attempt to help you to get familiar with our project and make your first pull request.
+Follow this tutorial to get started: https://github.com/forCrowd/Backbone/wiki/First-Mission
+
+<div class="mat-row" role="row">
+    <div class="mat-cell" role="gridcell">
+        [Your name]<br />
+        <span class="userName">[Your Github username]</span>
+    </div>
+    <div class="mat-cell" role="gridcell">
+        [Role]
+    </div>
+    <div class="mat-cell" role="gridcell">
+        [Skills]
+    </div>
+    <div class="mat-cell" role="gridcell">
+        {{ getExperienceYears([Year]) }}
+    </div>
+    <div class="mat-cell" role="gridcell">
+        <a mat-icon-button href="[Link]" target="_blank">
+            <span class="fa fa-[Related Font Awesome icon] fa-lg" aria-hidden="true"></span>
+        </a>
+    </div>
+    <div class="mat-cell" role="gridcell">
+        {{ getJoinedOnDate([day], [month], [year]) | amTimeAgo }}
+    </div>
+</div>
+
+-->
+<h2>
+    Contributors
+</h2>
+<hr />
+
+<mat-card class="g-mt-20 callout callout-info">
+    <p>
+        This is an experimental attempt to help you to get familiar with our project and make your first pull request.<br />
+    </p>
+    <p>
+        Follow this tutorial to get started:
+        <a href="https://github.com/forCrowd/Backbone/wiki/First-Mission" target="_blank">
+            First Mission
+        </a>
+    </p>
+</mat-card>
+
+<div class=" g-mt-20">
+    Here is the list of contributors to this project.
+</div>
+
+<div class="mat-table g-mt-20" role="grid">
+    <div class="mat-header-row" role="row">
+        <div class="mat-header-cell" role="columnheader">Name</div>
+        <div class="mat-header-cell" role="columnheader">Role</div>
+        <div class="mat-header-cell" role="columnheader">Skills</div>
+        <div class="mat-header-cell" role="columnheader">Experience</div>
+        <div class="mat-header-cell" role="columnheader">Contacts</div>
+        <div class="mat-header-cell" role="columnheader">Joined on</div>
+    </div>
+
+    <div class="mat-row" role="row">
+        <div class="mat-cell" role="gridcell">
+            Serkan Holat<br />
+            <span class="userName">coni2k</span>
+        </div>
+        <div class="mat-cell" role="gridcell">
+            Software Developer
+        </div>
+        <div class="mat-cell" role="gridcell">
+            ASP.NET, Angular, C#, MS SQL
+        </div>
+        <div class="mat-cell" role="gridcell">
+            {{ getExperienceYears(2001) }}
+        </div>
+        <div class="mat-cell" role="gridcell">
+            <a mat-icon-button href="https://twitter.com/coni2k" target="_blank">
+                <span class="fa fa-twitter fa-lg" aria-hidden="true"></span>
+            </a>
+            <a mat-icon-button href="https://www.linkedin.com/in/serkanholat" target="_blank">
+                <span class="fa fa-linkedin fa-lg" aria-hidden="true"></span>
+            </a>
+            <a mat-icon-button href="mailto:serkan.holat@forcrowd.org" target="_blank">
+                <span class="fa fa-envelope fa-lg" aria-hidden="true"></span>
+            </a>
+            <a mat-icon-button href="http://forcrowd.org" target="_blank">
+                <span class="fa fa-globe fa-lg" aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="mat-cell" role="gridcell">
+            {{ getJoinedOnDate(16, 6, 2016) | amTimeAgo }}
+        </div>
+    </div>
+</div>
+
+<!--A silly trick to load mat-table classes; without adding this, "contributors" table doesn't use mat-table classes / coni2k - 16 Dec. '17-->
+<mat-table [dataSource]="null" [hidden]="true">
+    <ng-container matColumnDef="null">
+        <mat-header-cell></mat-header-cell>
+        <mat-cell></mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="null"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: null;"></mat-row>
+</mat-table>

@@ -1,0 +1,13 @@
+<div class="alert alert-warning" [hidden]="currentUser && currentUser.isAuthenticated()">
+    Please login first!
+</div>
+<div [hidden]="!(currentUser && currentUser.isAuthenticated())">
+    <odata-user-element-cell></odata-user-element-cell>
+    <odata-user-element-field></odata-user-element-field>
+    <odata-element-cell></odata-element-cell>
+    <odata-element-item></odata-element-item>
+    <odata-element-field></odata-element-field>
+    <odata-element></odata-element>
+    <odata-project></odata-project>
+    <odata-user></odata-user>
+</div>

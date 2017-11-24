@@ -1,0 +1,266 @@
+﻿<div *ngIf="project">
+
+    <div class="row">
+
+        <!--<div class="col-md-12 text-center">
+            <h2>
+                Sounds interesting?
+            </h2>
+
+            <div [hidden]="viewMode !== 'buttons'">
+                <button type="button" class="btn btn-success" (click)="like()">
+                    <i class="fa fa-thumbs-up fa-3x"></i>
+                </button>
+                <button type="button" class="btn btn-danger" (click)="dislike()">
+                    <i class="fa fa-thumbs-down fa-3x"></i>
+                </button>
+            </div>
+
+            <div [hidden]="viewMode !== 'results'">
+                <p>
+                    Number of votes: {{ project.RatingCount }}
+                </p>
+                <p>
+                    Liked? {{ project.ElementSet[0].ElementItemSet[0].ElementCellSet[0].numericValuePercentage() | percent }}
+                </p>
+                <p>
+                    Disliked? {{ project.ElementSet[0].ElementItemSet[1].ElementCellSet[0].numericValuePercentage() | percent }}
+                </p>
+                <p>
+                    <a href="#" (click)="displayButtons()">Vote again!</a>
+                </p>
+            </div>
+        </div>-->
+
+    </div>
+
+    <!--<div class="row">
+        <div class="col-md-12 text-center">
+            <h2>
+                Sounds interesting?
+            </h2>
+
+            <div class="block voteButton likeBlock">
+                <i class="fa fa-thumbs-up"></i>
+            </div>
+            <div class="block result dislikeBlock">
+                %100
+            </div>
+        </div>
+    </div>-->
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h3>
+                Sounds interesting?
+            </h3>
+
+            <div>
+                <div [@viewModeChanged]="buttonsVisibility">
+                    <div class="blockAlt">
+                        <button type="button" class="btn btn-success" (click)="vote(100, 0)">
+                            <i class="fa fa-thumbs-up"></i>
+                        </button>
+                    </div>
+                    <div class="blockAlt">
+                        <button type="button" class="btn btn-danger" (click)="vote(0, 100)">
+                            <i class="fa fa-thumbs-down"></i>
+                        </button>
+                    </div>
+                </div>
+                <div [@viewModeChanged]="resultsVisibility">
+                    <h4>
+                        Number of Votes: {{ project.RatingCount }}
+                    </h4>                    
+                    <div class="blockAlt">
+                        <button type="button" class="btn btn-success">
+                            {{ project.ElementSet[0].ElementItemSet[0].ElementCellSet[0].numericValuePercentage() | percent }}
+                        </button>
+                    </div>
+                    <div class="blockAlt">
+                        <button type="button" class="btn btn-danger" (click)="vote(0, 100)">
+                            {{ project.ElementSet[0].ElementItemSet[1].ElementCellSet[0].numericValuePercentage() | percent }}
+                        </button>
+                    </div>
+                    <div>
+                        <a href="#" (click)="displayButtons()">Vote again!</a>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <div [@fadeInOut]="viewMode">
+                <h4>
+                    &nbsp;<span [hidden]="viewMode === 'buttons'">Number of Votes: {{ project.RatingCount }}</span>
+                </h4>
+
+                <div class="blockAlt">
+                    <button type="button" class="btn btn-success" (click)="vote(100, 0)">
+                        <i class="fa fa-thumbs-up" [hidden]="viewMode === 'results'"></i>
+                        <span [hidden]="viewMode === 'buttons'">{{ project.ElementSet[0].ElementItemSet[0].ElementCellSet[0].numericValuePercentage() | percent }}</span>
+                    </button>
+                </div>
+                <div class="blockAlt">
+                    <button type="button" class="btn btn-danger" (click)="vote(0, 100)">
+                        <i class="fa fa-thumbs-down" [hidden]="viewMode === 'results'"></i>
+                        <span [hidden]="viewMode === 'buttons'">{{ project.ElementSet[0].ElementItemSet[1].ElementCellSet[0].numericValuePercentage() | percent }}</span>
+                    </button>
+                </div>
+                <div class="blockAlt">
+                    <button type="button" class="btn btn-success" (click)="vote(100, 0)" [hidden]="viewMode === 'results'">
+                        <i class="fa fa-thumbs-up"></i>
+                    </button>
+                    <button type="button" class="btn btn-success" [hidden]="viewMode === 'buttons'">
+                        <span [hidden]="viewMode === 'buttons'">{{ project.ElementSet[0].ElementItemSet[0].ElementCellSet[0].numericValuePercentage() | percent }}</span>
+                    </button>
+                </div>
+                <div class="blockAlt">
+                    <button type="button" class="btn btn-danger" (click)="vote(0, 100)" [hidden]="viewMode === 'results'">
+                        <i class="fa fa-thumbs-down"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger" (click)="vote(0, 100)" [hidden]="viewMode === 'buttons'">
+                        <span>{{ project.ElementSet[0].ElementItemSet[1].ElementCellSet[0].numericValuePercentage() | percent }}</span>
+                    </button>
+                </div>
+                <div>
+                    <a href="#" (click)="displayButtons()" [hidden]="viewMode === 'buttons'">Vote again!</a>&nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="row g-mt-50">
+    <div class="col-md-4">
+        Colors
+    </div>
+    <div class="col-md-4">
+        Numbers
+    </div>
+    <div class="col-md-4">
+        Result (Approve?)
+    </div>
+</div>
+
+    <div class="row g-mt-20">
+        <div class="col-md-12">
+            <strong>Project</strong>
+            Id: {{ project.Id }} -
+            User: {{ project.User.UserName }} -
+            Name: {{ project.Name }} -
+            Key: {{ project.Key }} -
+            RatingCount: {{ project.RatingCount }} -
+            RatingMode: <span (click)="project.toggleRatingMode()">{{ ratingMode[project.RatingMode] }}</span> -
+            uniqueKey: {{ project.uniqueKey | json }}
+
+            <div class="row g-mt-20">
+                <div class="col-md-2">
+                    <strong>Elements</strong>
+                    <div *ngFor="let element of project.ElementSet">
+                        Id: {{ element.Id }}<br />
+                        Name: {{ element.Name }}<br />
+                        ...: -<br />
+                        rating: {{ element.rating() }}<br />
+                        ...: -<br />
+                        <hr />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <strong>Fields</strong>
+                    <div *ngFor="let element of project.ElementSet">
+                        <div *ngFor="let field of element.ElementFieldSet">
+                            Id: {{ field.Id }}<br />
+                            Element: {{ field.Element.Name }}<br />
+                            Name: {{ field.Name }}<br />
+                            DataType: {{ field.DataType }}<br />
+                            SelectedElement: {{ field.SelectedElement?.Name }}<br />
+                            UseFixedValue: {{ field.UseFixedValue }}<br />
+                            RatingEnabled: {{ field.RatingEnabled }}<br />
+                            SortOrder: {{ field.SortOrder }}<br />
+                            RatingTotal: {{ field.RatingTotal }}<br />
+                            RatingCount: {{ field.RatingCount }}<br />
+                            ...: -<br />
+                            DataTypeText: {{ field.DataTypeText }}<br />
+                            otherUsersRatingTotal: {{ field.otherUsersRatingTotal }}<br />
+                            otherUsersRatingCount: {{ field.otherUsersRatingCount }}<br />
+                            currentUserRating: {{ field.currentUserRating() }}<br />
+                            rating: {{ field.rating() }}<br />
+                            ratingAverage: {{ field.ratingAverage() }}<br />
+                            ratingCount: {{ field.ratingCount() }}<br />
+                            ratingPercentage: {{ field.ratingPercentage() }}<br />
+                            ratingTotal: {{ field.ratingTotal() }}<br />
+                            numericValue: {{ field.numericValue() | number : '1.0-2' }}<br />
+                            ...: -<br />
+                            <hr />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <strong>User fields</strong>
+                    <div *ngFor="let element of project.ElementSet">
+                        <div *ngFor="let field of element.ElementFieldSet">
+                            <div *ngFor="let userField of field.UserElementFieldSet">
+                                Id: {{ userField.Id }}<br />
+                                Field: {{ userField.ElementField.Name }}<br />
+                                Rating: {{ userField.Rating }}<br />
+                                <hr />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <strong>Items</strong>
+                    <div *ngFor="let element of project.ElementSet">
+                        <div *ngFor="let item of element.ElementItemSet">
+                            Id: {{ item.Id }}<br />
+                            Element: {{ item.Element.Name }}<br />
+                            Name: {{ item.Name }}<br />
+                            ...: -<br />
+                            <hr />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <strong>Cells</strong>
+                    <div *ngFor="let element of project.ElementSet">
+                        <div *ngFor="let field of element.ElementFieldSet">
+                            <div *ngFor="let cell of field.ElementCellSet">
+                                Id: {{ cell.Id }}<br />
+                                Field: {{ cell.ElementField.Name }}<br />
+                                Item: {{ cell.ElementItem.Name }}<br />
+                                StringValue: {{ cell.StringValue }}<br />
+                                NumericValueTotal: {{ cell.NumericValueTotal }}<br />
+                                NumericValueCount: {{ cell.NumericValueCount }}<br />
+                                SelectedElementItem: {{ cell.SelectedElementItem?.Name }}<br />
+                                otherUsersNumericValueTotal: {{ cell.otherUsersNumericValueTotal }}<br />
+                                otherUsersNumericValueCount: {{ cell.otherUsersNumericValueCount }}<br />
+                                currentUserNumericValue: {{ cell.currentUserNumericValue() }}<br />
+                                numericValue: {{ cell.numericValue() | number : '1.0-2' }}<br />
+                                numericValueAverage: {{ cell.numericValueAverage() | number : '1.0-2' }}<br />
+                                numericValueCount: {{ cell.numericValueCount() }}<br />
+                                numericValuePercentage: {{ cell.numericValuePercentage() | number : '1.0-2' }}<br />
+                                numericValueTotal: {{ cell.numericValueTotal() }}<br />
+                                ...: -<br />
+                                <hr />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <strong>User cells</strong>
+                    <div *ngFor="let element of project.ElementSet">
+                        <div *ngFor="let field of element.ElementFieldSet">
+                            <div *ngFor="let cell of field.ElementCellSet">
+                                <div *ngFor="let userCell of cell.UserElementCellSet">
+                                    Cell: {{ userCell.ElementCell.Id }}<br />
+                                    DecimalValue: {{ userCell.DecimalValue }}<br />
+                                    <hr />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

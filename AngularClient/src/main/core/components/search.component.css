@@ -1,0 +1,16 @@
+.searchInput {
+    display: flex;
+    align-items: center;
+}
+
+.mat-table {
+    max-height: 500px;
+}
+
+.noResults {
+    display: flex;
+    justify-content: center;
+    -o-justify-content: center;
+    -webkit-justify-content: center;
+    padding: 2em;
+}

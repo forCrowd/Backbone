@@ -1,0 +1,107 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.body {
+    /* Margin bottom by footer height */
+    margin-bottom: 90px !important;
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Custom navbar with buttons (copied from bootstrap.css - navbar a */
+.nav > li > button:hover,
+.nav > li > button:focus {
+    text-decoration: none;
+}
+
+@media (max-width: 767px) {
+    .nav > li > button {
+        padding: 10px 15px;
+    }
+}
+
+/* End */
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 90px;
+}
+
+    .footer .contacts a:hover,
+    .footer .contacts a:focus {
+        text-decoration: none;
+    }
+
+.btn-link:hover,
+.btn-link:focus {
+    text-decoration: none;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding: 20px 15px;
+}
+
+.bg-info {
+    padding: 15px;
+}
+
+ul.bg-info {
+    padding-left: 25px;
+}
+
+.btn-xs {
+    font-size: 10px;
+    height: 18px;
+    width: 18px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+/* Project level custom helpers / coni2k 24 Jan. '14 */
+
+/* #region - Misc - */
+
+.center {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* #endregion */

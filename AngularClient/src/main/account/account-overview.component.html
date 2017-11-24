@@ -1,0 +1,29 @@
+﻿<h2>Account Overview</h2>
+<hr />
+
+<div *ngIf="currentUser">
+    <div class="g-mt-20">
+        <label class="mat-body-2">Email</label>
+        <div>
+            {{ currentUser.Email }}
+            <span [hidden]="!displayConfirmEmail">
+                | (Unconfirmed) <a routerLink="/app/account/confirm-email">Confirm</a>
+            </span>
+            | <a routerLink="/app/account/change-email">Update</a>
+        </div>
+    </div>
+    <div class="g-mt-20">
+        <label class="mat-body-2">Username</label>
+        <div>
+            {{ currentUser.UserName }}
+            | <a routerLink="/app/account/change-username">Update</a>
+        </div>
+    </div>
+    <div class="g-mt-20">
+        <label class="mat-body-2">Password</label>
+        <div>
+            <a [hidden]="!currentUser.HasPassword" routerLink="/app/account/change-password">Change password</a>
+            <a [hidden]="currentUser.HasPassword" routerLink="/app/account/add-password">Add password</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+﻿<div *ngIf="user">
+    <h2>{{ user.UserName }}</h2>
+    <hr />
+
+    <div class="g-mt-20">
+        <div class="noResults" [hidden]="dataSource.data.length > 0">
+            Nothing to display!
+        </div>
+
+        <mat-table #table [dataSource]="dataSource" [trackBy]="trackBy" [hidden]="dataSource.data.length === 0">
+
+            <!-- Name -->
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef> Project </mat-header-cell>
+                <mat-cell *matCellDef="let project"> {{ project.Name }} </mat-cell>
+            </ng-container>
+
+            <!-- RatingCount -->
+            <ng-container matColumnDef="ratingCount">
+                <mat-header-cell *matHeaderCellDef> # Ratings </mat-header-cell>
+                <mat-cell *matCellDef="let project"> {{ project.RatingCount }} </mat-cell>
+            </ng-container>
+
+            <!-- CreatedOn -->
+            <ng-container matColumnDef="createdOn">
+                <mat-header-cell *matHeaderCellDef> Created On</mat-header-cell>
+                <mat-cell *matCellDef="let project"> {{ project.CreatedOn | amTimeAgo }} </mat-cell>
+            </ng-container>
+
+            <!-- Functions -->
+            <ng-container matColumnDef="functions">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let project">
+                    <div [hidden]="!userActionsEnabled()">
+                        <button mat-raised-button (click)="manageProject(project)" type="button">
+                            <i class="fa fa-pencil" aria-hidden="true"></i> Manage
+                        </button>
+                        <button mat-raised-button (click)="confirmRemove(project)" type="button">
+                            <i class="fa fa-times" aria-hidden="true"></i> Remove
+                        </button>
+                    </div>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+        </mat-table>
+    </div>
+</div>
