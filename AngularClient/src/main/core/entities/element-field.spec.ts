@@ -91,26 +91,26 @@ describe("main/core/entities/element-field", () => {
         expect(decimalField2.ratingPercentage()).toBe(0.75);
     });
 
-    it("numericValue", () => {
+    it("decimalValue", () => {
 
         // Case 1: Initial
         const decimalField = TestHelpers.createElementField(null, ElementFieldDataType.Decimal);
 
-        expect(decimalField.numericValue()).toBe(0);
+        expect(decimalField.decimalValue()).toBe(0);
 
         // Case 2: Add fields
         const item1 = TestHelpers.createElementItem(decimalField.Element);
 
         TestHelpers.createElementCell(decimalField, item1, null, null, 5);
 
-        expect(decimalField.numericValue()).toBe(5);
+        expect(decimalField.decimalValue()).toBe(5);
 
         // Case 3: Add the second item
         const item2 = TestHelpers.createElementItem(decimalField.Element);
 
         TestHelpers.createElementCell(decimalField, item2, null, null, 10);
 
-        expect(decimalField.numericValue()).toBe(15);
+        expect(decimalField.decimalValue()).toBe(15);
 
         // TODO Update / remove cases
 

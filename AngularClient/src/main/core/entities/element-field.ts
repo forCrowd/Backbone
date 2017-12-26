@@ -98,17 +98,17 @@ export class ElementField extends EntityBase {
     private fields: {
         currentUserRating: number,
         dataType: ElementFieldDataType,
+        decimalValue: number,
         ratingEnabled: boolean,
         rating: number,
         ratingPercentage: number,
-        numericValue: number,
     } = {
         currentUserRating: 0,
         dataType: ElementFieldDataType.String,
+        decimalValue: 0,
         ratingEnabled: false,
         rating: 0,
         ratingPercentage: 0,
-        numericValue: 0,
     };
 
     currentUserRating() {
@@ -171,8 +171,8 @@ export class ElementField extends EntityBase {
         return true;
     }
 
-    numericValue() {
-        return this.fields.numericValue;
+    decimalValue() {
+        return this.fields.decimalValue;
     }
 
     rejectChanges(): void {
@@ -270,20 +270,20 @@ export class ElementField extends EntityBase {
         }
     }
 
-    setNumericValue() {
+    setDecimalValue() {
 
         var value = 0;
 
         this.ElementCellSet.forEach(cell => {
-            value += cell.numericValue();
+            value += cell.decimalValue();
         });
 
-        if (this.fields.numericValue !== value) {
-            this.fields.numericValue = value;
+        if (this.fields.decimalValue !== value) {
+            this.fields.decimalValue = value;
 
             // Update related
             this.ElementCellSet.forEach(cell => {
-                cell.setNumericValuePercentage();
+                cell.setDecimalValuePercentage();
             });
         }
     }

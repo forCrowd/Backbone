@@ -1,7 +1,3 @@
-h3 {
-    color: steelblue;
-}
-
-alert {
-    color: red;
+.mat-app-background {
+    min-height: 750px;
 }

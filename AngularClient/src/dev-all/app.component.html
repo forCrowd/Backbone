@@ -1,24 +1,34 @@
-<div class="container body-content">
-    <div class="row">
-        <div class="col-md-12">
-            <h3>
-                Dev Module - All Components
-            </h3>
-            <p>
-                A lightweight versions of 'app module' to make quick sanity checks.
-            </p>
-            <hr />
-            <div *ngIf="currentUser">
-                Current User / Id / Auth?: {{ currentUser.Email + " - " + currentUser.Id + " - " + currentUser.isAuthenticated() }}
-                <button *ngIf="currentUser.isAuthenticated()" (click)="logout()">logout</button>
-                <button *ngIf="!currentUser.isAuthenticated()" (click)="login()">login</button>
-            </div>
-            <hr />
-            <navigation></navigation>
-            <hr />
-            <div>
-                <router-outlet></router-outlet>
-            </div>
-        </div>
+<style>
+
+    html, body {
+        width: 100%;
+        height: 100%;
+    }
+
+    body {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<div class="mat-app-background">
+    <h2>
+        Dev Module - All Components
+    </h2>
+    <p class="g-mt-20">
+        A lightweight versions of 'app module' to make quick sanity checks.
+    </p>
+    <hr class="g-mt-20" />
+    <div *ngIf="currentUser" class="g-mt-20">
+        Current User / Id / Auth?: {{ currentUser.Email + " - " + currentUser.Id + " - " + currentUser.isAuthenticated() }}
+        <button mat-raised-button [hidden]="!currentUser.isAuthenticated()" (click)="logout()">logout</button>
+        <button mat-raised-button [hidden]="currentUser.isAuthenticated()" (click)="login()">login</button>
+    </div>
+    <hr class="g-mt-20" />
+    <div class="g-mt-20">
+        <navigation></navigation>
+    </div>
+    <hr class="g-mt-20" />
+    <div class="g-mt-20">
+        <router-outlet></router-outlet>
     </div>
 </div>

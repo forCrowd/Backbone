@@ -21,10 +21,10 @@
                     Number of votes: {{ project.RatingCount }}
                 </p>
                 <p>
-                    Liked? {{ project.ElementSet[0].ElementItemSet[0].ElementCellSet[0].numericValuePercentage() | percent }}
+                    Liked? {{ project.ElementSet[0].ElementItemSet[0].ElementCellSet[0].decimalValuePercentage() | percent }}
                 </p>
                 <p>
-                    Disliked? {{ project.ElementSet[0].ElementItemSet[1].ElementCellSet[0].numericValuePercentage() | percent }}
+                    Disliked? {{ project.ElementSet[0].ElementItemSet[1].ElementCellSet[0].decimalValuePercentage() | percent }}
                 </p>
                 <p>
                     <a href="#" (click)="displayButtons()">Vote again!</a>
@@ -51,9 +51,9 @@
 
     <div class="row">
         <div class="col-md-12 text-center">
-            <h3>
+            <h2>
                 Sounds interesting?
-            </h3>
+            </h2>
 
             <div>
                 <div [@viewModeChanged]="buttonsVisibility">
@@ -74,12 +74,12 @@
                     </h4>                    
                     <div class="blockAlt">
                         <button type="button" class="btn btn-success">
-                            {{ project.ElementSet[0].ElementItemSet[0].ElementCellSet[0].numericValuePercentage() | percent }}
+                            {{ project.ElementSet[0].ElementItemSet[0].ElementCellSet[0].decimalValuePercentage() | percent }}
                         </button>
                     </div>
                     <div class="blockAlt">
                         <button type="button" class="btn btn-danger" (click)="vote(0, 100)">
-                            {{ project.ElementSet[0].ElementItemSet[1].ElementCellSet[0].numericValuePercentage() | percent }}
+                            {{ project.ElementSet[0].ElementItemSet[1].ElementCellSet[0].decimalValuePercentage() | percent }}
                         </button>
                     </div>
                     <div>
@@ -98,13 +98,13 @@
                 <div class="blockAlt">
                     <button type="button" class="btn btn-success" (click)="vote(100, 0)">
                         <i class="fa fa-thumbs-up" [hidden]="viewMode === 'results'"></i>
-                        <span [hidden]="viewMode === 'buttons'">{{ project.ElementSet[0].ElementItemSet[0].ElementCellSet[0].numericValuePercentage() | percent }}</span>
+                        <span [hidden]="viewMode === 'buttons'">{{ project.ElementSet[0].ElementItemSet[0].ElementCellSet[0].decimalValuePercentage() | percent }}</span>
                     </button>
                 </div>
                 <div class="blockAlt">
                     <button type="button" class="btn btn-danger" (click)="vote(0, 100)">
                         <i class="fa fa-thumbs-down" [hidden]="viewMode === 'results'"></i>
-                        <span [hidden]="viewMode === 'buttons'">{{ project.ElementSet[0].ElementItemSet[1].ElementCellSet[0].numericValuePercentage() | percent }}</span>
+                        <span [hidden]="viewMode === 'buttons'">{{ project.ElementSet[0].ElementItemSet[1].ElementCellSet[0].decimalValuePercentage() | percent }}</span>
                     </button>
                 </div>
                 <div class="blockAlt">
@@ -112,7 +112,7 @@
                         <i class="fa fa-thumbs-up"></i>
                     </button>
                     <button type="button" class="btn btn-success" [hidden]="viewMode === 'buttons'">
-                        <span [hidden]="viewMode === 'buttons'">{{ project.ElementSet[0].ElementItemSet[0].ElementCellSet[0].numericValuePercentage() | percent }}</span>
+                        <span [hidden]="viewMode === 'buttons'">{{ project.ElementSet[0].ElementItemSet[0].ElementCellSet[0].decimalValuePercentage() | percent }}</span>
                     </button>
                 </div>
                 <div class="blockAlt">
@@ -120,7 +120,7 @@
                         <i class="fa fa-thumbs-down"></i>
                     </button>
                     <button type="button" class="btn btn-danger" (click)="vote(0, 100)" [hidden]="viewMode === 'buttons'">
-                        <span>{{ project.ElementSet[0].ElementItemSet[1].ElementCellSet[0].numericValuePercentage() | percent }}</span>
+                        <span>{{ project.ElementSet[0].ElementItemSet[1].ElementCellSet[0].decimalValuePercentage() | percent }}</span>
                     </button>
                 </div>
                 <div>
@@ -189,7 +189,7 @@
                             ratingCount: {{ field.ratingCount() }}<br />
                             ratingPercentage: {{ field.ratingPercentage() }}<br />
                             ratingTotal: {{ field.ratingTotal() }}<br />
-                            numericValue: {{ field.numericValue() | number : '1.0-2' }}<br />
+                            decimalValue: {{ field.decimalValue() | number : '1.0-2' }}<br />
                             ...: -<br />
                             <hr />
                         </div>
@@ -229,17 +229,17 @@
                                 Field: {{ cell.ElementField.Name }}<br />
                                 Item: {{ cell.ElementItem.Name }}<br />
                                 StringValue: {{ cell.StringValue }}<br />
-                                NumericValueTotal: {{ cell.NumericValueTotal }}<br />
-                                NumericValueCount: {{ cell.NumericValueCount }}<br />
+                                DecimalValueTotal: {{ cell.DecimalValueTotal }}<br />
+                                DecimalValueCount: {{ cell.DecimalValueCount }}<br />
                                 SelectedElementItem: {{ cell.SelectedElementItem?.Name }}<br />
-                                otherUsersNumericValueTotal: {{ cell.otherUsersNumericValueTotal }}<br />
-                                otherUsersNumericValueCount: {{ cell.otherUsersNumericValueCount }}<br />
-                                currentUserNumericValue: {{ cell.currentUserNumericValue() }}<br />
-                                numericValue: {{ cell.numericValue() | number : '1.0-2' }}<br />
-                                numericValueAverage: {{ cell.numericValueAverage() | number : '1.0-2' }}<br />
-                                numericValueCount: {{ cell.numericValueCount() }}<br />
-                                numericValuePercentage: {{ cell.numericValuePercentage() | number : '1.0-2' }}<br />
-                                numericValueTotal: {{ cell.numericValueTotal() }}<br />
+                                otherUsersDecimalValueTotal: {{ cell.otherUsersDecimalValueTotal }}<br />
+                                otherUsersDecimalValueCount: {{ cell.otherUsersDecimalValueCount }}<br />
+                                currentUserDecimalValue: {{ cell.currentUserDecimalValue() }}<br />
+                                decimalValue: {{ cell.decimalValue() | number : '1.0-2' }}<br />
+                                decimalValueAverage: {{ cell.decimalValueAverage() | number : '1.0-2' }}<br />
+                                decimalValueCount: {{ cell.decimalValueCount() }}<br />
+                                decimalValuePercentage: {{ cell.decimalValuePercentage() | number : '1.0-2' }}<br />
+                                decimalValueTotal: {{ cell.decimalValueTotal() }}<br />
                                 ...: -<br />
                                 <hr />
                             </div>

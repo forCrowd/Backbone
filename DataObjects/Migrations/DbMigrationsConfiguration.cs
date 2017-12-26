@@ -30,9 +30,9 @@ namespace forCrowd.Backbone.DataObjects.Migrations
 
                 switch (migrationVersion)
                 {
-                    case "V_0_1_0":
+                    case "V_0_1_2":
                         {
-                            V_0_1_0_Updates.Apply(context); // Initial data
+                            V_0_1_2_Updates.Apply(context); // Initial data
                             break;
                         }
                 }

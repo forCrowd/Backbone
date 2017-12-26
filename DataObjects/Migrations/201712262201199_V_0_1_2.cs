@@ -1,9 +1,11 @@
 namespace forCrowd.Backbone.DataObjects.Migrations
 {
+    using System;
     using System.Collections.Generic;
+    using System.Data.Entity.Infrastructure.Annotations;
     using System.Data.Entity.Migrations;
     
-    public partial class V_0_1_0 : DbMigration
+    public partial class V_0_1_2 : DbMigration
     {
         public override void Up()
         {
@@ -56,8 +58,8 @@ namespace forCrowd.Backbone.DataObjects.Migrations
                         ElementFieldId = c.Int(nullable: false),
                         ElementItemId = c.Int(nullable: false),
                         StringValue = c.String(),
-                        NumericValueTotal = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        NumericValueCount = c.Int(nullable: false),
+                        DecimalValueTotal = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        DecimalValueCount = c.Int(nullable: false),
                         SelectedElementItemId = c.Int(),
                         CreatedOn = c.DateTime(nullable: false),
                         ModifiedOn = c.DateTime(nullable: false),

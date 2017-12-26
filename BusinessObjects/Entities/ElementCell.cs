@@ -21,8 +21,8 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
 
         public string StringValue { get; set; }
 
-        public decimal NumericValueTotal { get; set; }
-        public int NumericValueCount { get; set; }
+        public decimal DecimalValueTotal { get; set; }
+        public int DecimalValueCount { get; set; }
 
         /// <summary>
         /// In case this cell's field type is Element, this is the selected item for this cell.

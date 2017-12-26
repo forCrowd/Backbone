@@ -7,9 +7,9 @@ import { BrowserModule } from "@angular/platform-browser";
 <div class="container body-content">
     <div class="row">
         <div class="col-md-12">
-            <h3>
+            <h2>
                 Dev Module - Basic Component
-            </h3>
+            </h2>
             <p>
                 A lightweight versions of app-module to make quick sanity checks.
             </p>

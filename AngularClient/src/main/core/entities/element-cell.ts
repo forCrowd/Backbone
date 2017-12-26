@@ -13,42 +13,44 @@ export class ElementCell extends EntityBase {
     ElementField: ElementField;
     ElementItem: ElementItem;
     StringValue: string = "";
-    NumericValueTotal: number = 0;
-    NumericValueCount: number = 0;
+    DecimalValueTotal: number = 0;
+    DecimalValueCount: number = 0;
     SelectedElementItem: ElementItem;
     UserElementCellSet: UserElementCell[];
 
-    numericValueUpdated = new Subject<number>();
+    // Client
+    otherUsersDecimalValueTotal = 0;
+    otherUsersDecimalValueCount = 0;
+
+    // Events
+    decimalValueUpdated = new Subject<number>();
 
     // Client-side
     private fields: {
-        currentUserNumericValue: number,
-        numericValue: number,
-        numericValuePercentage: number,
+        currentUserDecimalValue: number,
+        decimalValue: number,
+        decimalValuePercentage: number,
     } = {
-        currentUserNumericValue: 0,
-        numericValue: 0,
-        numericValuePercentage: 0,
+        currentUserDecimalValue: 0,
+        decimalValue: 0,
+        decimalValuePercentage: 0,
     };
 
-    otherUsersNumericValueTotal = 0;
-    otherUsersNumericValueCount = 0;
-
-    currentUserNumericValue() {
-        return this.fields.currentUserNumericValue;
+    currentUserDecimalValue() {
+        return this.fields.currentUserDecimalValue;
     }
 
     initialize(): boolean {
         if (!super.initialize()) return false;
 
         // Other users'
-        this.otherUsersNumericValueTotal = this.NumericValueTotal;
-        this.otherUsersNumericValueCount = this.NumericValueCount;
+        this.otherUsersDecimalValueTotal = this.DecimalValueTotal;
+        this.otherUsersDecimalValueCount = this.DecimalValueCount;
 
         // Exclude current user's
         if (this.UserElementCellSet[0]) {
-            this.otherUsersNumericValueTotal -= this.UserElementCellSet[0].DecimalValue;
-            this.otherUsersNumericValueCount -= 1;
+            this.otherUsersDecimalValueTotal -= this.UserElementCellSet[0].DecimalValue;
+            this.otherUsersDecimalValueCount -= 1;
         }
 
         // User cells
@@ -57,40 +59,40 @@ export class ElementCell extends EntityBase {
         });
 
         // Initial values
-        this.setCurrentUserNumericValue();
+        this.setCurrentUserDecimalValue();
 
         // Event handlers
         this.ElementField.Element.Project.ratingModeUpdated.subscribe(() => {
-            this.setNumericValue();
+            this.setDecimalValue();
         });
 
         return true;
     }
 
-    numericValue() { // a.k.a rating
-        return this.fields.numericValue;
+    decimalValue() { // a.k.a rating
+        return this.fields.decimalValue;
     }
 
-    numericValueAverage() { // a.k.a. allUsersNumericValue
-        return this.numericValueCount() === 0 ? 0 : this.numericValueTotal() / this.numericValueCount();
+    decimalValueAverage() { // a.k.a. all users' decimal value
+        return this.decimalValueCount() === 0 ? 0 : this.decimalValueTotal() / this.decimalValueCount();
     }
 
-    numericValueCount() {
+    decimalValueCount() {
         return this.ElementField.UseFixedValue
             ? 1
-            : this.otherUsersNumericValueCount + 1; // There is always default value, increase count by 1
+            : this.otherUsersDecimalValueCount + 1; // There is always default value, increase count by 1
     }
 
-    numericValuePercentage() { // a.k.a. ratingPercentage
-        return this.fields.numericValuePercentage;
+    decimalValuePercentage() { // a.k.a. rating percentage
+        return this.fields.decimalValuePercentage;
     }
 
-    numericValueTotal() {
+    decimalValueTotal() {
         return this.ElementField.UseFixedValue
             ? this.UserElementCellSet[0]
-                ? this.currentUserNumericValue()
-                : this.otherUsersNumericValueTotal
-            : this.otherUsersNumericValueTotal + this.currentUserNumericValue();
+                ? this.currentUserDecimalValue()
+                : this.otherUsersDecimalValueTotal
+            : this.otherUsersDecimalValueTotal + this.currentUserDecimalValue();
     }
 
     rejectChanges(): void {
@@ -102,52 +104,52 @@ export class ElementCell extends EntityBase {
         this.entityAspect.rejectChanges();
     }
 
-    setCurrentUserNumericValue() {
+    setCurrentUserDecimalValue() {
 
         const value = this.UserElementCellSet[0] ? this.UserElementCellSet[0].DecimalValue : 50; // Default value
 
-        if (this.fields.currentUserNumericValue !== value) {
-            this.fields.currentUserNumericValue = value;
+        if (this.fields.currentUserDecimalValue !== value) {
+            this.fields.currentUserDecimalValue = value;
 
-            this.setNumericValue();
+            this.setDecimalValue();
         }
     }
 
-    setNumericValue() {
+    setDecimalValue() {
 
         let value: number;
 
         switch (this.ElementField.Element.Project.RatingMode) {
             case RatingMode.CurrentUser:
                 {
-                    value = this.currentUserNumericValue();
+                    value = this.currentUserDecimalValue();
                     break;
                 }
             case RatingMode.AllUsers:
                 {
-                    value = this.numericValueAverage();
+                    value = this.decimalValueAverage();
                     break;
                 }
         }
 
-        if (this.fields.numericValue !== value) {
-            this.fields.numericValue = value;
+        if (this.fields.decimalValue !== value) {
+            this.fields.decimalValue = value;
 
             // Update related
-            //this.setNumericValuePercentage(); - No need to call this one since field is going to update it anyway! / coni2k - 05 Nov. '17
-            this.ElementField.setNumericValue();
+            //this.setDecimalValuePercentage(); - No need to call this one since field is going to update it anyway! / coni2k - 05 Nov. '17
+            this.ElementField.setDecimalValue();
 
             // Event
-            this.numericValueUpdated.next(this.fields.numericValue);
+            this.decimalValueUpdated.next(this.fields.decimalValue);
         }
     }
 
-    setNumericValuePercentage() {
+    setDecimalValuePercentage() {
 
-        const value = this.ElementField.numericValue() === 0 ? 0 : this.numericValue() / this.ElementField.numericValue();
+        const value = this.ElementField.decimalValue() === 0 ? 0 : this.decimalValue() / this.ElementField.decimalValue();
 
-        if (this.fields.numericValuePercentage !== value) {
-            this.fields.numericValuePercentage = value;
+        if (this.fields.decimalValuePercentage !== value) {
+            this.fields.decimalValuePercentage = value;
         }
     }
 }

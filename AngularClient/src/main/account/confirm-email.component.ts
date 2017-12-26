@@ -1,5 +1,6 @@
 ﻿import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Observable } from "rxjs";
 
 import { AccountService } from "./account.service";
 import { NotificationService } from "../core/notification.service";
@@ -30,19 +31,23 @@ export class ConfirmEmailComponent implements OnInit {
 
     ngOnInit() {
 
-        // Get token
-        const token = this.activatedRoute.snapshot.params["token"];
+        // Todo This timer silliness is necessary probably cos of this issue: https://github.com/angular/angular/issues/15634
+        Observable.timer(0).subscribe(() => {
 
-        // Validate
-        if (!token) {
-            return;
-        }
+            // Get token
+            const token = this.activatedRoute.snapshot.params["token"];
 
-        // Confirm
-        this.accountService.confirmEmail({ Token: token })
-            .subscribe(() => {
-                this.notificationService.notification.next("Your email address has been confirmed!");
-                this.router.navigate(["/app/account"]);
-            });
+            // Validate
+            if (!token) {
+                return;
+            }
+
+            // Confirm
+            this.accountService.confirmEmail({ Token: token })
+                .subscribe(() => {
+                    this.notificationService.notification.next("Your email address has been confirmed!");
+                    this.router.navigate(["/app/account"]);
+                });
+        });
     }
 }

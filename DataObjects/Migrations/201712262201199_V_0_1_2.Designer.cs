@@ -7,13 +7,13 @@ namespace forCrowd.Backbone.DataObjects.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class V_0_1_0 : IMigrationMetadata
+    public sealed partial class V_0_1_2 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(V_0_1_0));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(V_0_1_2));
         
         string IMigrationMetadata.Id
         {
-            get { return "201712071905071_V_0_1_0"; }
+            get { return "201712262201199_V_0_1_2"; }
         }
         
         string IMigrationMetadata.Source

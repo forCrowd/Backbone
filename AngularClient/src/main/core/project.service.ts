@@ -40,8 +40,8 @@ export class ProjectService {
 
         // User element cell
         if (elementCell.ElementField.DataType === ElementFieldDataType.Decimal) {
-            elementCell.NumericValueTotal = 50;
-            elementCell.NumericValueCount = 1;
+            elementCell.DecimalValueTotal = 50;
+            elementCell.DecimalValueCount = 1;
 
             this.createUserElementCell(elementCell, null);
         }

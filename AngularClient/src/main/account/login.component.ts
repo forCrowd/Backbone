@@ -1,5 +1,6 @@
-﻿import { Component } from "@angular/core";
+﻿import { OnInit, Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Observable } from "rxjs";
 
 import { AuthService } from "../core/auth.service";
 import { NotificationService } from "../core/notification.service";
@@ -9,7 +10,7 @@ import { NotificationService } from "../core/notification.service";
     templateUrl: "login.component.html",
     styleUrls: ["login.component.css"]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
     get isBusy(): boolean {
         return this.authService.isBusy;
@@ -38,5 +39,21 @@ export class LoginComponent {
                     this.router.navigate([returnUrl]);
                 });
         }
+    }
+
+    ngOnInit(): void {
+
+        // Todo This timer silliness is necessary probably cos of this issue: https://github.com/angular/angular/issues/15634
+        Observable.timer(0).subscribe(() => {
+
+            // Error
+            const error = this.activatedRoute.snapshot.params["error"];
+
+            if (error) {
+                this.notificationService.notification.next(error);
+                return;
+            }
+
+        });
     }
 }

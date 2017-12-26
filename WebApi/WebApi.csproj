@@ -262,6 +262,11 @@
     </None>
     <None Include="Configs\elmah.errorLog.config" />
     <None Include="Configs\elmah.errorMail.config" />
+    <Content Include="Configs\Production\appSettings.config" />
+    <Content Include="Configs\Production\connectionStrings.config" />
+    <Content Include="Configs\Production\elmah.errorLog.config" />
+    <Content Include="Configs\Production\elmah.errorMail.config" />
+    <Content Include="Configs\Production\system.net.mailSettings.smtp.config" />
     <None Include="Configs\Setup\connectionStrings.config" />
     <None Include="Configs\Setup\elmah.errorLog.config" />
     <None Include="Configs\Setup\elmah.errorMail.config" />

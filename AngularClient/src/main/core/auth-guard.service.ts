@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
 
         // Failure
         this.authService.loginReturnUrl = state.url;
-        this.router.navigate(["/app/account/login", { error: "Please login first" }]);
+        this.router.navigate(["/app/account/login", { error: "Please login first!" }]);
         return false;
     }
 }

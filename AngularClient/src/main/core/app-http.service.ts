@@ -59,7 +59,14 @@ export class AppHttp extends Http {
 
         let body = null;
 
-        try { body = response.json(); } catch (error) { };
+        try { body = response.json(); }
+        catch (e) { };
+
+        // If body is still null, then try text()
+        if (!body) {
+            try { body = response.text(); }
+            catch (e) { };
+        }
 
         return body;
     }

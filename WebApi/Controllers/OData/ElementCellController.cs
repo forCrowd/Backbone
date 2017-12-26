@@ -26,8 +26,8 @@ namespace forCrowd.Backbone.WebApi.Controllers.OData
             // TODO Use ForbiddenFieldsValidator?: Currently breeze doesn't allow to post custom (delta) entity
             // TODO Or use DTO?: Needs a different metadata than the context, which can be overkill
             elementCell.Id = 0;
-            elementCell.NumericValueTotal = 0;
-            elementCell.NumericValueCount = 0;
+            elementCell.DecimalValueTotal = 0;
+            elementCell.DecimalValueCount = 0;
             elementCell.CreatedOn = DateTime.UtcNow;
             elementCell.ModifiedOn = DateTime.UtcNow;
             elementCell.DeletedOn = null;
@@ -53,7 +53,7 @@ namespace forCrowd.Backbone.WebApi.Controllers.OData
 
         // PATCH odata/ElementCell(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        [ForbiddenFieldsValidator(nameof(ElementCell.Id), nameof(ElementCell.ElementFieldId), nameof(ElementCell.ElementItemId), nameof(ElementCell.NumericValueTotal), nameof(ElementCell.NumericValueCount), nameof(ElementCell.CreatedOn), nameof(ElementCell.ModifiedOn), nameof(ElementCell.DeletedOn))]
+        [ForbiddenFieldsValidator(nameof(ElementCell.Id), nameof(ElementCell.ElementFieldId), nameof(ElementCell.ElementItemId), nameof(ElementCell.DecimalValueTotal), nameof(ElementCell.DecimalValueCount), nameof(ElementCell.CreatedOn), nameof(ElementCell.ModifiedOn), nameof(ElementCell.DeletedOn))]
         [EntityExistsValidator(typeof(ElementCell))]
         [ConcurrencyValidator(typeof(ElementCell))]
         public async Task<IHttpActionResult> Patch(int key, Delta<ElementCell> patch)

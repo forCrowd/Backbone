@@ -17,7 +17,7 @@ export class UserElementCell extends EntityBase {
 
             // Update related
             if (this.initialized) {
-                this.ElementCell.setCurrentUserNumericValue();
+                this.ElementCell.setCurrentUserDecimalValue();
             }
         }
     }
@@ -31,7 +31,7 @@ export class UserElementCell extends EntityBase {
     initialize(): boolean {
         if (!super.initialize()) return false;
 
-        this.ElementCell.setCurrentUserNumericValue();
+        this.ElementCell.setCurrentUserDecimalValue();
 
         return true;        
     }

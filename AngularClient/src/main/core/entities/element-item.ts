@@ -77,7 +77,7 @@ export class ElementItem extends EntityBase {
 
         // Update related
         element.ElementFieldSet.forEach(field => {
-            field.setNumericValue();
+            field.setDecimalValue();
         });
     }
 

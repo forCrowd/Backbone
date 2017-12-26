@@ -162,8 +162,8 @@ export class ProjectEditorComponent implements OnDestroy, OnInit {
                     elementItem.ElementCellSet.forEach(elementCell => {
                         if (elementCell.ElementField.RatingEnabled) {
                             data.push(new ChartDataItem(elementCell.ElementItem.Name,
-                                +elementCell.numericValue().toFixed(2),
-                                elementCell.numericValueUpdated));
+                                +elementCell.decimalValue().toFixed(2),
+                                elementCell.decimalValueUpdated));
                         }
                     });
                 });

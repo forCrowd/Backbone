@@ -5,134 +5,134 @@ import { TestHelpers } from "./test-helpers";
 
 describe("main/core/entities/element-cell", () => {
 
-    it("currentUserNumericValue - Initial", () => {
+    it("currentUserDecimalValue - Initial", () => {
 
         var cell = TestHelpers.createElementCell();
 
-        expect(cell.currentUserNumericValue()).toBe(50);
+        expect(cell.currentUserDecimalValue()).toBe(50);
     });
 
-    it("currentUserNumericValue - With user cell", () => {
+    it("currentUserDecimalValue - With user cell", () => {
 
         var cell = TestHelpers.createElementCell(null, null, null, null, 10);
 
-        expect(cell.currentUserNumericValue()).toBe(10);
+        expect(cell.currentUserDecimalValue()).toBe(10);
     });
 
-    it("otherUsersNumericValueTotal & otherUsersNumericValueCount - Initial", () => {
+    it("otherUsersDecimalValueTotal & otherUsersDecimalValueCount - Initial", () => {
 
         var cell = TestHelpers.createElementCell();
 
-        expect(cell.otherUsersNumericValueTotal).toBe(0);
-        expect(cell.otherUsersNumericValueCount).toBe(0);
+        expect(cell.otherUsersDecimalValueTotal).toBe(0);
+        expect(cell.otherUsersDecimalValueCount).toBe(0);
     });
 
-    it("otherUsersNumericValueTotal & otherUsersNumericValueCount  - Without user rating", () => {
+    it("otherUsersDecimalValueTotal & otherUsersDecimalValueCount  - Without user rating", () => {
 
         var cell = TestHelpers.createElementCell(null, null, 25, 3);
 
-        expect(cell.otherUsersNumericValueTotal).toBe(25);
-        expect(cell.otherUsersNumericValueCount).toBe(3);
+        expect(cell.otherUsersDecimalValueTotal).toBe(25);
+        expect(cell.otherUsersDecimalValueCount).toBe(3);
     });
 
-    it("otherUsersNumericValueTotal & otherUsersNumericValueCount  - With user rating", () => {
+    it("otherUsersDecimalValueTotal & otherUsersDecimalValueCount  - With user rating", () => {
 
         var cell = TestHelpers.createElementCell(null, null, 25, 3, 10);
 
-        expect(cell.otherUsersNumericValueTotal).toBe(15);
-        expect(cell.otherUsersNumericValueCount).toBe(2);
+        expect(cell.otherUsersDecimalValueTotal).toBe(15);
+        expect(cell.otherUsersDecimalValueCount).toBe(2);
     });
 
-    it("numericValueTotal - Initial", () => {
+    it("decimalValueTotal - Initial", () => {
 
         var cell = TestHelpers.createElementCell();
 
-        expect(cell.numericValueTotal()).toBe(50);
+        expect(cell.decimalValueTotal()).toBe(50);
     });
 
-    it("numericValueTotal - Without user rating", () => {
+    it("decimalValueTotal - Without user rating", () => {
 
         var cell = TestHelpers.createElementCell(null, null, 25);
 
-        expect(cell.numericValueTotal()).toBe(25 + 50);
+        expect(cell.decimalValueTotal()).toBe(25 + 50);
     });
 
-    it("numericValueTotal - Including user rating", () => {
+    it("decimalValueTotal - Including user rating", () => {
 
         var cell = TestHelpers.createElementCell(null, null, 25, null, 10);
 
-        expect(cell.numericValueTotal()).toBe(25);
+        expect(cell.decimalValueTotal()).toBe(25);
     });
 
-    it("numericValueTotal - Adding user rating", () => {
+    it("decimalValueTotal - Adding user rating", () => {
 
         var cell = TestHelpers.createElementCell(null, null, 25);
 
         var userCell = TestHelpers.createUserElementCell(cell, 10);
 
-        expect(cell.numericValueTotal()).toBe(25 + 10);
+        expect(cell.decimalValueTotal()).toBe(25 + 10);
     });
 
-    it("numericValueCount - Initial", () => {
+    it("decimalValueCount - Initial", () => {
 
         var cell = TestHelpers.createElementCell();
 
-        expect(cell.numericValueCount()).toBe(1);
+        expect(cell.decimalValueCount()).toBe(1);
     });
 
-    it("numericValueCount - Without user rating", () => {
+    it("decimalValueCount - Without user rating", () => {
 
         var cell = TestHelpers.createElementCell(null, null, null, 3);
 
-        expect(cell.numericValueCount()).toBe(3 + 1);
+        expect(cell.decimalValueCount()).toBe(3 + 1);
     });
 
-    it("numericValueCount - Including user rating", () => {
+    it("decimalValueCount - Including user rating", () => {
 
         var cell = TestHelpers.createElementCell(null, null, null, 3, 10);
 
-        expect(cell.numericValueCount()).toBe(3);
+        expect(cell.decimalValueCount()).toBe(3);
     });
 
-    it("numericValueCount - Adding user rating", () => {
+    it("decimalValueCount - Adding user rating", () => {
 
         var cell = TestHelpers.createElementCell(null, null, null, 3);
 
         var userCell = TestHelpers.createUserElementCell(cell, 10);
 
-        expect(cell.numericValueCount()).toBe(3 + 1);
+        expect(cell.decimalValueCount()).toBe(3 + 1);
     });
 
-    it("numericValueAverage", () => {
+    it("decimalValueAverage", () => {
 
         var cell = TestHelpers.createElementCell(null, null, 75, 3);
 
-        expect(cell.numericValueAverage()).toBe((75 + 50) / (3 + 1));
+        expect(cell.decimalValueAverage()).toBe((75 + 50) / (3 + 1));
     });
 
-    it("numericValue", () => {
+    it("decimalValue", () => {
 
         // Arrange & act - Case 1: 'Current User' (Default)
         var cell = TestHelpers.createElementCell(null, null, 75, 3);
 
         // Assert
-        expect(cell.numericValue()).toBe(cell.currentUserNumericValue());
+        expect(cell.decimalValue()).toBe(cell.currentUserDecimalValue());
 
         // Act -  Cast 2: RatingMode 'All Users' & also cache case
         cell.ElementField.Element.Project.RatingMode = RatingMode.AllUsers;
 
         // Assert
-        expect(cell.numericValue()).toBe(cell.numericValueAverage());
+        expect(cell.decimalValue()).toBe(cell.decimalValueAverage());
     });
 
-    it("numericValuePercentage - One Item", () => {
+    it("decimalValuePercentage - One Item", () => {
 
         var cell = TestHelpers.createElementCell();
 
-        expect(cell.numericValuePercentage()).toBe(1);
+        expect(cell.decimalValuePercentage()).toBe(1);
     });
 
-    it("numericValuePercentage - Two Items", () => {
+    it("decimalValuePercentage - Two Items", () => {
 
         var cell1 = TestHelpers.createElementCell(null, null, null, null, 55);
 
@@ -141,7 +141,7 @@ describe("main/core/entities/element-cell", () => {
         var item2 = TestHelpers.createElementItem(field.Element);
         var cell2 = TestHelpers.createElementCell(field, item2, null, null, 45);
 
-        expect(cell1.numericValuePercentage()).toBe(55 / (45 + 55));
-        expect(cell2.numericValuePercentage()).toBe(45 / (45 + 55));
+        expect(cell1.decimalValuePercentage()).toBe(55 / (45 + 55));
+        expect(cell2.decimalValuePercentage()).toBe(45 / (45 + 55));
     });
 });

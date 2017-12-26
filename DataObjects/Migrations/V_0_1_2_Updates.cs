@@ -8,7 +8,7 @@ namespace forCrowd.Backbone.DataObjects.Migrations
     using Microsoft.AspNet.Identity.EntityFramework;
     using System;
 
-    public static class V_0_1_0_Updates
+    public static class V_0_1_2_Updates
     {
         public static void Apply(BackboneContext context)
         {

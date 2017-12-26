@@ -29,7 +29,7 @@ export class TestHelpers {
         return element;
     }
 
-    static createElementCell(elementField?: ElementField, elementItem?: ElementItem, numericValueTotal?: number, numericValueCount?: number, userCellDecimalValue?: number): ElementCell {
+    static createElementCell(elementField?: ElementField, elementItem?: ElementItem, decimalValueTotal?: number, decimalValueCount?: number, userCellDecimalValue?: number): ElementCell {
 
         if (!elementField) {
             const element = elementItem ? elementItem.Element : null;
@@ -46,12 +46,12 @@ export class TestHelpers {
         elementCell.ElementItem = elementItem;
         elementCell.UserElementCellSet = [];
 
-        if (numericValueTotal) {
-            elementCell.NumericValueTotal = numericValueTotal;
+        if (decimalValueTotal) {
+            elementCell.DecimalValueTotal = decimalValueTotal;
         }
 
-        if (numericValueCount) {
-            elementCell.NumericValueCount = numericValueCount;
+        if (decimalValueCount) {
+            elementCell.DecimalValueCount = decimalValueCount;
         }
 
         // Cross relation

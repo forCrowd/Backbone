@@ -19,7 +19,7 @@ export class ProjectTesterComponent implements OnInit {
 
     ngOnInit(): void {
 
-        this.projectService.getProjectExpanded({ projectKey: "showcase-1", username: "admin" }) // Set any existing username/project key from db
+        this.projectService.getProjectExpanded({ projectKey: "New-project-1514329026577", username: "guest-1514325806258" }) // Set any existing username/project key from db
             .subscribe(project => {
                 this.project = project;
                 //this.adminService.updateComputedFields(project).subscribe(() => { console.log("okke"); });

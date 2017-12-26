@@ -244,7 +244,7 @@ namespace forCrowd.Backbone.Facade
 
             foreach (var cell in cells)
             {
-                cell.NumericValueTotal = cell.UserElementCellSet.Sum(userCell =>
+                cell.DecimalValueTotal = cell.UserElementCellSet.Sum(userCell =>
                 {
                     switch (userCell.ElementCell.ElementField.DataType)
                     {
@@ -253,7 +253,7 @@ namespace forCrowd.Backbone.Facade
                     }
                 });
 
-                cell.NumericValueCount = cell.UserElementCellSet.Count;
+                cell.DecimalValueCount = cell.UserElementCellSet.Count;
             }
         }
 

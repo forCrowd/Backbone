@@ -45,7 +45,7 @@
                             ratingCount: {{ field.ratingCount() }}<br />
                             ratingPercentage: {{ field.ratingPercentage() }}<br />
                             ratingTotal: {{ field.ratingTotal() }}<br />
-                            numericValue: {{ field.numericValue() | number : '1.0-2' }}<br />
+                            decimalValue: {{ field.decimalValue() | number : '1.0-2' }}<br />
                             ...: -<br />
                             <hr />
                         </div>
@@ -85,17 +85,17 @@
                                 Field: {{ cell.ElementField.Name }}<br />
                                 Item: {{ cell.ElementItem.Name }}<br />
                                 StringValue: {{ cell.StringValue }}<br />
-                                NumericValueTotal: {{ cell.NumericValueTotal }}<br />
-                                NumericValueCount: {{ cell.NumericValueCount }}<br />
+                                DecimalValueTotal: {{ cell.DecimalValueTotal }}<br />
+                                DecimalValueCount: {{ cell.DecimalValueCount }}<br />
                                 SelectedElementItem: {{ cell.SelectedElementItem?.Name }}<br />
-                                otherUsersNumericValueTotal: {{ cell.otherUsersNumericValueTotal }}<br />
-                                otherUsersNumericValueCount: {{ cell.otherUsersNumericValueCount }}<br />
-                                currentUserNumericValue: {{ cell.currentUserNumericValue() }}<br />
-                                numericValue: {{ cell.numericValue() | number : '1.0-2' }}<br />
-                                numericValueAverage: {{ cell.numericValueAverage() | number : '1.0-2' }}<br />
-                                numericValueCount: {{ cell.numericValueCount() }}<br />
-                                numericValuePercentage: {{ cell.numericValuePercentage() | number : '1.0-2' }}<br />
-                                numericValueTotal: {{ cell.numericValueTotal() }}<br />
+                                otherUsersDecimalValueTotal: {{ cell.otherUsersDecimalValueTotal }}<br />
+                                otherUsersDecimalValueCount: {{ cell.otherUsersDecimalValueCount }}<br />
+                                currentUserDecimalValue: {{ cell.currentUserDecimalValue() }}<br />
+                                decimalValue: {{ cell.decimalValue() | number : '1.0-2' }}<br />
+                                decimalValueAverage: {{ cell.decimalValueAverage() | number : '1.0-2' }}<br />
+                                decimalValueCount: {{ cell.decimalValueCount() }}<br />
+                                decimalValuePercentage: {{ cell.decimalValuePercentage() | number : '1.0-2' }}<br />
+                                decimalValueTotal: {{ cell.decimalValueTotal() }}<br />
                                 ...: -<br />
                                 <hr />
                             </div>

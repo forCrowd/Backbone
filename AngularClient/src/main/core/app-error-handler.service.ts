@@ -1,19 +1,23 @@
 ﻿import { ErrorHandler, Injectable } from "@angular/core";
-import { Http, Response } from "@angular/http";
+import { Http } from "@angular/http";
 import { Observable, Subscription } from "rxjs";
 import { SourceMapConsumer } from "source-map";
 
 import { AppSettings } from "../../app-settings/app-settings";
+import { AppHttp } from "./app-http.service";
 
 @Injectable()
 export class AppErrorHandler implements ErrorHandler {
 
+    appHttp: AppHttp;
     sourceMapCache = {};
     errorCounter = 0;
     errorLimitResetTimer: Subscription = null;
     get errorLimitReached(): boolean { return this.errorCounter > 10 };
 
-    constructor(private http: Http) { }
+    constructor(private http: Http) {
+        this.appHttp = http as AppHttp;
+    }
 
     handleError(error: Error): void {
 
@@ -53,27 +57,20 @@ export class AppErrorHandler implements ErrorHandler {
     private getMapForScript(url: any) {
 
         if (this.sourceMapCache[url]) {
+
             return this.sourceMapCache[url];
+
         } else {
 
-            const observable = this.http.get(url).mergeMap((response) => {
-
-                let body = response.text();
-                body = body || "";
+            const observable = this.appHttp.get<string>(url).mergeMap(body => {
 
                 const match = body.match(/\/\/# sourceMappingURL=([^"\s]+\.map)/);
+
                 if (match) {
-
-                    let path = url.match(/^(.+)\/[^/]+$/);
-                    path = path && path[1];
-
-                    return this.http.get(path + "/" + match[1])
-                        .map((response: Response) => {
-
-                            let body = response.json();
-                            body = body || {};
-
-                            return new SourceMapConsumer(body);
+                    const sourceMapUrl = match[1];
+                    return this.appHttp.get(sourceMapUrl)
+                        .map((response: any) => {
+                            return new SourceMapConsumer(response);
                         });
                 } else {
                     return Observable.throw("no 'sourceMappingURL' regex match");
@@ -118,7 +115,7 @@ export class AppErrorHandler implements ErrorHandler {
                             pos.source = pos.source.substring(0, 3) === "../"
                                 ? pos.source.substring(2)
                                 : pos.source.charAt(0) !== "/"
-                                    ? `/app/${pos.source}`
+                                    ? `/${pos.source}`
                                     : pos.source;
 
                             var mangledName = prefix.match(/\s*(at)?\s*(.*?)\s*(\(|@)/);
@@ -126,7 +123,7 @@ export class AppErrorHandler implements ErrorHandler {
 
                             return `    at ${pos.name ? pos.name : mangledName} ${window.location.origin}${pos.source}:${pos.line}:${pos.column}`;
 
-                        }).catch((error: any): any => {
+                        }).catch(() => {
                             return stackLine;
                         });
                     } else {

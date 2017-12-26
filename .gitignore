@@ -45,4 +45,5 @@ AngularClient/src/app-settings/environments/*
 # WebApi
 WebApi/App_Data/
 WebApi/Configs/*.config
+WebApi/Configs/Production/*.config
 WebApi/googleanalytics.js
