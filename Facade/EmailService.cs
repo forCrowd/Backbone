@@ -58,28 +58,12 @@
                     }
                 case EnvironmentType.Live:
                     {
-                        // TODO Get rid of this ugliness asap! / coni2k - 04 Jan. '16
-                        // This email type is only a notification to the admin
-                        var notificationToAdmin = message.Subject == "New external login" ||
-                            message.Subject == "New guest account";
+                        // To
+                        mailMessage.To.Add(new MailAddress(message.Destination));
 
-                        if (!notificationToAdmin)
-                        {
-                            // To
-                            mailMessage.To.Add(new MailAddress(message.Destination));
-
-                            // Bcc
-                            if (hasNotificationAddress)
-                                mailMessage.Bcc.Add(new MailAddress(AppSettings.NotificationEmailAddress));
-                        }
-                        else
-                        {
-                            // Login emails will only be send to notification address
-                            if (!hasNotificationAddress)
-                                return;
-
-                            mailMessage.To.Add(new MailAddress(AppSettings.NotificationEmailAddress));
-                        }
+                        // Bcc
+                        if (hasNotificationAddress)
+                            mailMessage.Bcc.Add(new MailAddress(AppSettings.NotificationEmailAddress));
 
                         break;
                     }
@@ -120,5 +104,5 @@
                 }
             }
         }
-   }
+    }
 }

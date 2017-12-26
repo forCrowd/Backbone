@@ -54,15 +54,13 @@ namespace forCrowd.Backbone.WebApi.Providers
                         context.SetError("invalid_grant", "The username or password is incorrect.");
                         return;
                     }
-                    else
-                    {
-                        var result = await userManager.CheckPasswordAsync(user, password);
 
-                        if (!result)
-                        {
-                            context.SetError("invalid_grant", "The username or password is incorrect.");
-                            return;
-                        }
+                    var result = await userManager.CheckPasswordAsync(user, password);
+
+                    if (!result)
+                    {
+                        context.SetError("invalid_grant", "The username or password is incorrect.");
+                        return;
                     }
                 }
             }

@@ -5,13 +5,9 @@ namespace forCrowd.Backbone.WebApi
     using DataObjects;
     using Facade;
     using Framework;
-    using HttpClientHandlers;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin;
-    using Microsoft.Owin.Security.Facebook;
-    using Microsoft.Owin.Security.Google;
-    using Microsoft.Owin.Security.MicrosoftAccount;
     using Microsoft.Owin.Security.OAuth;
     using Owin;
     using Providers;
@@ -29,72 +25,18 @@ namespace forCrowd.Backbone.WebApi
             app.CreatePerOwinContext(BackboneContext.Create);
             app.CreatePerOwinContext<AppUserManager>(CreateUserManager);
 
-            // Use a cookie to temporarily store information about a user logging in with a third party login provider
-            app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
-
             // Configure the application for OAuth based flow
             PublicClientId = "self";
             var OAuthServerOptions = new OAuthAuthorizationServerOptions
             {
                 TokenEndpointPath = new PathString("/api/v1/Token"),
                 Provider = new ApplicationOAuthProvider(PublicClientId),
-                //AuthorizeEndpointPath = new PathString("/api/v1/Account/ExternalLogin"), // TODO ?
                 AccessTokenExpireTimeSpan = TimeSpan.FromHours(3),
                 AllowInsecureHttp = !AppSettings.EnableSsl
             };
 
             // Enable the application to use bearer tokens to authenticate users
             app.UseOAuthBearerTokens(OAuthServerOptions);
-
-            // Configure Facebook login
-            var facebookAppId = AppSettings.FacebookAppId;
-            var facebookAppSecret = AppSettings.FacebookAppSecret;
-
-            if (!string.IsNullOrWhiteSpace(facebookAppId) && !string.IsNullOrWhiteSpace(facebookAppSecret))
-            {
-                var facebookAuthOptions = new FacebookAuthenticationOptions
-                {
-                    AppId = AppSettings.FacebookAppId,
-                    AppSecret = AppSettings.FacebookAppSecret,
-                    UserInformationEndpoint = "https://graph.facebook.com/v2.5/me?fields=email",
-                    BackchannelHttpHandler = new FacebookBackChannelHandler(),
-                    CallbackPath = new PathString("/api/v1/Account/ExternalLoginFacebook") // Middleware is going to handle this, no need to implement
-                };
-                facebookAuthOptions.Scope.Add("email");
-                app.UseFacebookAuthentication(facebookAuthOptions);
-            }
-
-            // Configure Google login
-            var googleClientId = AppSettings.GoogleClientId;
-            var googleClientSecret = AppSettings.GoogleClientSecret;
-
-            if (!string.IsNullOrWhiteSpace(googleClientId) && !string.IsNullOrWhiteSpace(googleClientSecret))
-            {
-                var googleAuthOptions = new GoogleOAuth2AuthenticationOptions
-                {
-                    ClientId = googleClientId,
-                    ClientSecret = googleClientSecret,
-                    CallbackPath = new PathString("/api/v1/Account/ExternalLoginGoogle") // Middleware is going to handle this, no need to implement
-                };
-                app.UseGoogleAuthentication(googleAuthOptions);
-            }
-
-            // Configure Microsoft Accounts login
-            var microsoftClientId = AppSettings.MicrosoftClientId;
-            var microsoftClientSecret = AppSettings.MicrosoftClientSecret;
-
-            if (!string.IsNullOrWhiteSpace(microsoftClientId) && !string.IsNullOrWhiteSpace(microsoftClientSecret))
-            {
-                var microsoftAccountAuthOptions = new MicrosoftAccountAuthenticationOptions
-                {
-                    ClientId = AppSettings.MicrosoftClientId,
-                    ClientSecret = AppSettings.MicrosoftClientSecret,
-                    CallbackPath = new PathString("/api/v1/Account/ExternalLoginMicrosoft") // Middleware is going to handle this, no need to implement
-                };
-                microsoftAccountAuthOptions.Scope.Add("openid");
-                microsoftAccountAuthOptions.Scope.Add("email");
-                app.UseMicrosoftAccountAuthentication(microsoftAccountAuthOptions);
-            }
         }
 
         public static AppUserManager CreateUserManager(IdentityFactoryOptions<AppUserManager> options, IOwinContext context)

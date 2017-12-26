@@ -35,7 +35,7 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
 
         /// <summary>
         /// This token's purpose is to allow user to login to the system one time only.
-        /// In case of "auto generated guest account" and "external login", the user has no chance to enter a password.
+        /// In case of "auto generated guest account", the user has no chance to enter a password.
         /// So the client sends a request with this token, the user logs into the system, gets a "bearer" token and this token gets removed.
         /// </summary>
         public string SingleUseToken { get; set; }

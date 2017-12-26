@@ -19,8 +19,6 @@ export class AuthService {
     currentUser: User = null;
     currentUserChanged = new Subject<User>();
 
-    externalLoginUrl: string = "";
-
     get isBusy(): boolean {
         return this.appEntityManager.isBusy || this.appHttp.isBusy;
     }
@@ -56,7 +54,6 @@ export class AuthService {
 
         // Service urls
         this.currentUserUrl = AppSettings.serviceApiUrl + "/Account/CurrentUser";
-        this.externalLoginUrl = AppSettings.serviceApiUrl + "/Account/ExternalLogin";
         this.registerUrl = AppSettings.serviceApiUrl + "/Account/Register";
         this.tokenUrl = AppSettings.serviceApiUrl + "/Token";
     }
@@ -81,14 +78,6 @@ export class AuthService {
                     });
                 });
         }
-    }
-
-    getExternalLoginUrl(provider: string) {
-        const url = this.externalLoginUrl
-            + "?provider="
-            + provider + "&clientReturnUrl="
-            + window.location.origin + "/app/account/login";
-        return url;
     }
 
     getUser(username: string): Observable<User> {

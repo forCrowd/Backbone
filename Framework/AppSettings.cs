@@ -52,35 +52,5 @@
         /// Notification emails will be send to this address
         /// </summary>
         public static string NotificationEmailAddress => ConfigurationManager.AppSettings["NotificationEmailAddress"];
-
-        /// <summary>
-        /// Facebook app id
-        /// </summary>
-        public static string FacebookAppId => ConfigurationManager.AppSettings["FacebookAppId"];
-
-        /// <summary>
-        /// Facebook app secret
-        /// </summary>
-        public static string FacebookAppSecret => ConfigurationManager.AppSettings["FacebookAppSecret"];
-
-        /// <summary>
-        /// Google client id
-        /// </summary>
-        public static string GoogleClientId => ConfigurationManager.AppSettings["GoogleClientId"];
-
-        /// <summary>
-        /// Google client secret
-        /// </summary>
-        public static string GoogleClientSecret => ConfigurationManager.AppSettings["GoogleClientSecret"];
-
-        /// <summary>
-        /// Microsoft client id
-        /// </summary>
-        public static string MicrosoftClientId => ConfigurationManager.AppSettings["MicrosoftClientId"];
-
-        /// <summary>
-        /// Microsoft client secret
-        /// </summary>
-        public static string MicrosoftClientSecret => ConfigurationManager.AppSettings["MicrosoftClientSecret"];
     }
 }

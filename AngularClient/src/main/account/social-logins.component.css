@@ -1,9 +1,0 @@
-﻿.container {
-    display: flex;
-    flex-direction: column;
-}
-
-.container a {
-    display: block;
-    margin-bottom: 20px;
-}

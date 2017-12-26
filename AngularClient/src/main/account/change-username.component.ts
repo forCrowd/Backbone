@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 
 import { AppSettings } from "../../app-settings/app-settings";
 import { AccountService } from "./account.service";
@@ -25,13 +25,11 @@ export class ChangeUserNameComponent implements OnInit {
             userName: ""
         }
     };
-    externalLoginInit: boolean; // For external login's
     get isBusy(): boolean {
         return this.accountService.isBusy || this.authService.isBusy;
     }
 
-    constructor(private activatedRoute: ActivatedRoute,
-        private accountService: AccountService,
+    constructor(private accountService: AccountService,
         private authService: AuthService,
         private notificationService: NotificationService,
         private router: Router) {
@@ -77,9 +75,6 @@ export class ChangeUserNameComponent implements OnInit {
         if (AppSettings.environment === "Development") {
             this.bindingModel.UserName = getUniqueUserName();
         }
-
-        // External login init?
-        this.externalLoginInit = this.activatedRoute.snapshot.params["init"];
     }
 
     submitDisabled() {

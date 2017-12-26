@@ -73,7 +73,6 @@
     <TypeScriptCompile Include="src\main\account\login.component.ts" />
     <TypeScriptCompile Include="src\main\account\register.component.ts" />
     <TypeScriptCompile Include="src\main\account\reset-password.component.ts" />
-    <TypeScriptCompile Include="src\main\account\social-logins.component.ts" />
     <TypeScriptCompile Include="src\main\core\can-deactivate-guard.service.ts" />
     <TypeScriptCompile Include="src\main\core\components\contributors.component.ts" />
     <TypeScriptCompile Include="src\main\core\components\showcase.component.ts" />
@@ -97,7 +96,6 @@
     <Content Include="src\main\account\add-password.component.css" />
     <Content Include="src\main\account\register.component.css" />
     <Content Include="src\main\account\login.component.css" />
-    <Content Include="src\main\account\social-logins.component.css" />
     <Content Include="src\main\core\components\core.component.css" />
     <Content Include="src\main\core\components\core.component.html" />
     <Content Include="src\main\core\components\contributors.component.css" />
@@ -178,7 +176,6 @@
     <Content Include="src\main\account\login.component.html" />
     <Content Include="src\main\account\register.component.html" />
     <Content Include="src\main\account\reset-password.component.html" />
-    <Content Include="src\main\account\social-logins.component.html" />
     <Content Include="src\main\core\components\contributors.component.html" />
     <Content Include="src\main\core\components\home.component.html" />
     <Content Include="src\main\core\components\not-found.component.html" />

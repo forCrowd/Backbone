@@ -1,6 +1,4 @@
-﻿using forCrowd.Backbone.BusinessObjects.Entities;
-
-namespace forCrowd.Backbone.Facade
+﻿namespace forCrowd.Backbone.Facade
 {
     using DataObjects;
     using Framework;
@@ -8,6 +6,7 @@ namespace forCrowd.Backbone.Facade
     using System;
     using System.Data.Entity;
     using System.Linq;
+    using BusinessObjects.Entities;
     using System.Text;
     using System.Threading.Tasks;
 
@@ -37,12 +36,6 @@ namespace forCrowd.Backbone.Facade
             }
 
             return result;
-        }
-
-        public async Task AddSingleUseTokenAsync(User user)
-        {
-            user.SingleUseToken = Guid.NewGuid().ToString(); // Add single user token
-            await Store.Context.SaveChangesAsync();
         }
 
         public override async Task<IdentityResult> ChangePasswordAsync(int userId, string currentPassword, string newPassword)
@@ -146,46 +139,12 @@ namespace forCrowd.Backbone.Facade
             return result;
         }
 
-        /// <summary>
-        /// Creates an account with external login and no password
-        /// </summary>
-        /// <param name="user"></param>
-        /// <param name="userLoginInfo"></param>
-        /// <returns></returns>
-        public async Task<IdentityResult> CreateUserWithExternalLoginAsync(User user, UserLoginInfo userLoginInfo)
-        {
-            user.EmailConfirmed = true;
-
-            user.HasPassword = false;
-
-            user.SingleUseToken = Guid.NewGuid().ToString(); // Add single user token
-
-            var result = await base.CreateAsync(user);
-
-            if (result.Succeeded)
-            {
-                // Add to "Guest" role
-                await Store.AddToRoleAsync(user, "Guest");
-
-                // Add external login
-                await Store.AddLoginAsync(user, userLoginInfo);
-
-                // Save
-                await Store.Context.SaveChangesAsync();
-
-                // Send notification email
-                await SendNewExternalLoginNotificationEmailAsync(user.Id);
-            }
-
-            return result;
-        }
-
         public async Task<User> FindBySingleUseTokenAsync(string token)
         {
             // Search for the user
             var entity = await Users.SingleOrDefaultAsync(user => user.SingleUseToken == token);
 
-            // Return null if there is no..
+            // No user?
             if (entity == null)
                 return null;
 
@@ -259,23 +218,6 @@ namespace forCrowd.Backbone.Facade
             return userName;
         }
 
-        public async Task<IdentityResult> LinkLoginAsync(User user, UserLoginInfo userLoginInfo)
-        {
-            // Email confirmed
-            user.EmailConfirmed = true;
-
-            user.SingleUseToken = Guid.NewGuid().ToString(); // Add single user token
-
-            var result = await AddLoginAsync(user.Id, userLoginInfo);
-
-            if (result.Succeeded)
-            {
-                await Store.Context.SaveChangesAsync();
-            }
-
-            return result;
-        }
-
         public async Task ResendConfirmationEmailAsync(int userId, string clientAppUrl)
         {
             var user = await FindByIdAsync(userId);
@@ -340,26 +282,6 @@ namespace forCrowd.Backbone.Facade
             var sbBody = new StringBuilder();
             sbBody.AppendLine("    <p>");
             sbBody.AppendLine("        <b>Backbone - New Guest Account</b><br />");
-            sbBody.AppendLine("        <br />");
-            sbBody.AppendFormat("        Email: {0}<br />", user.Email);
-            sbBody.AppendLine("    </p>");
-            sbBody.AppendLine("    <p>");
-            sbBody.AppendLine("        Thanks,<br />");
-            sbBody.AppendLine("        forCrowd Foundation");
-            sbBody.AppendLine("    </p>");
-
-            await SendEmailAsync(userId, subject, sbBody.ToString());
-        }
-
-        public async Task SendNewExternalLoginNotificationEmailAsync(int userId)
-        {
-            var subject = "New external login";
-
-            var user = await FindByIdAsync(userId);
-
-            var sbBody = new StringBuilder();
-            sbBody.AppendLine("    <p>");
-            sbBody.AppendLine("        <b>Backbone - New External Login</b><br />");
             sbBody.AppendLine("        <br />");
             sbBody.AppendFormat("        Email: {0}<br />", user.Email);
             sbBody.AppendLine("    </p>");
