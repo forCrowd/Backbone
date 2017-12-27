@@ -1,10 +1,10 @@
-﻿import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
+﻿import { Injectable, Injector } from "@angular/core";
+import { HTTP_INTERCEPTORS, HttpClient } from "@angular/common/http";
 import { EntityQuery, Predicate } from "../../libraries/breeze-client";
 import { Observable } from "rxjs";
 
 import { AppSettings } from "../../app-settings/app-settings";
-import { AppHttp } from "./app-http.service";
+import { BusyInterceptor } from "./app-http-client/busy-interceptor";
 import { Element } from "./entities/element";
 import { ElementCell } from "./entities/element-cell";
 import { ElementField, ElementFieldDataType } from "./entities/element-field";
@@ -20,14 +20,20 @@ import { getUniqueValue } from "../shared/utils";
 export class ProjectService {
 
     get isBusy(): boolean { 
-        return this.appEntityManager.isBusy || this.appHttp.isBusy || this.isBusyLocal;
+        return this.appEntityManager.isBusy || this.busyInterceptor.isBusy || this.isBusyLocal;
     }
 
-    private appHttp: AppHttp;
+    private readonly busyInterceptor: BusyInterceptor = null;
     private isBusyLocal: boolean = false; // Use this flag for functions that contain multiple http requests (e.g. saveChanges())
 
-    constructor(private appEntityManager: AppEntityManager, private authService: AuthService, http: Http) {
-        this.appHttp = http as AppHttp;
+    constructor(private appEntityManager: AppEntityManager,
+        private authService: AuthService,
+        private httpClient: HttpClient,
+        private injector: Injector) {
+
+        // Busy interceptor
+        var interceptors = injector.get(HTTP_INTERCEPTORS);
+        this.busyInterceptor = interceptors.find(i => i instanceof BusyInterceptor) as BusyInterceptor;
     }
 
     createElement(initialValues: Object) {
@@ -296,7 +302,7 @@ export class ProjectService {
 
         const updateComputedFieldsUrl = this.getUpdateComputedFieldsUrl(project.Id);
 
-        return this.appHttp.post<void>(updateComputedFieldsUrl, null).mergeMap(() => {
+        return this.httpClient.post<void>(updateComputedFieldsUrl, null).mergeMap(() => {
             return this.getProjectExpanded(project.uniqueKey, true).map(() => { });
         });
     }

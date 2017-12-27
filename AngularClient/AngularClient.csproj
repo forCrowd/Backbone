@@ -34,7 +34,10 @@
     <TypeScriptCompile Include="src\main\app.module.ts" />
     <TypeScriptCompile Include="src\main\core\app-entity-manager.service.ts" />
     <TypeScriptCompile Include="src\main\core\app-error-handler.service.ts" />
-    <TypeScriptCompile Include="src\main\core\app-http.service.ts" />
+    <TypeScriptCompile Include="src\main\core\app-http-client\app-http-client.module.ts" />
+    <TypeScriptCompile Include="src\main\core\app-http-client\auth-interceptor.ts" />
+    <TypeScriptCompile Include="src\main\core\app-http-client\busy-interceptor.ts" />
+    <TypeScriptCompile Include="src\main\core\app-http-client\error-interceptor.ts" />
     <TypeScriptCompile Include="src\main\core\auth-guard.service.ts" />
     <TypeScriptCompile Include="src\main\core\notification.service.ts" />
     <TypeScriptCompile Include="src\main\core\auth.service.ts" />
@@ -150,6 +153,7 @@
     <Content Include="src\main\user\profile-remove-project.component.html" />
     <Content Include="src\main\user\profile.component.css" />
     <Content Include="src\styles\callout.scss" />
+    <None Include="src\styles\variables.scss" />
     <None Include="src\styles\theme.scss" />
     <Content Include="src\styles\styles.scss" />
     <Content Include="src\_app_offline.htm" />

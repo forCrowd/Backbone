@@ -1,12 +1,12 @@
 import { Observable } from "rxjs";
 import { Component } from "@angular/core";
-import { Http, Response } from "@angular/http";
+import { HttpClient } from "@angular/common/http";
 
 import { AppSettings } from "../app-settings/app-settings";
 import { ElementCell } from "../main/core/entities/element-cell";
 import { Project } from "../main/core/entities/project";
 import { User } from "../main/core/entities/user";
-import { AppHttp } from "../main/core/app-http.service";
+
 import { AuthService } from "../main/core/auth.service";
 
 @Component({
@@ -18,7 +18,7 @@ export class ODataUserElementCellComponent {
     get anotherUserId(): number {
         return 2;
     }
-    appHttp: AppHttp;
+    
     get currentUser(): User {
         return this.authService.currentUser;
     }
@@ -31,8 +31,8 @@ export class ODataUserElementCellComponent {
 
     constructor(
         private authService: AuthService,
-        http: Http) {
-        this.appHttp = http as AppHttp;
+        private httpClient: HttpClient) {
+        
     }
 
     createAnother(): void {
@@ -49,7 +49,7 @@ export class ODataUserElementCellComponent {
 
     deleteNotFound(): void {
         const url = this.getODataUrl(this.invalidUserId, this.invalidElementCellId);
-        this.appHttp.delete(url).subscribe(this.handleResponse);
+        this.httpClient.delete(url).subscribe(this.handleResponse);
     }
 
     deleteOwn(): void {
@@ -62,7 +62,7 @@ export class ODataUserElementCellComponent {
 
     updateNotFound(): void {
         const url = this.getODataUrl(this.invalidUserId, this.invalidElementCellId);
-        this.appHttp.patch(url, {}).subscribe(this.handleResponse);
+        this.httpClient.patch(url, {}).subscribe(this.handleResponse);
     }
 
     updateOwn(): void {
@@ -71,7 +71,7 @@ export class ODataUserElementCellComponent {
 
     /* Private methods */
 
-    private create(userId: number): Observable<Response> {
+    private create(userId: number): Observable<any> {
 
         return this.getElementCell(userId).mergeMap((elementCell) => {
 
@@ -83,17 +83,17 @@ export class ODataUserElementCellComponent {
 
             var url = `${AppSettings.serviceODataUrl}/UserElementCell`;
 
-            return this.appHttp.post(url, userElementCell);
+            return this.httpClient.post(url, userElementCell);
         });
     }
 
-    private delete(userId: number): Observable<Response> {
+    private delete(userId: number): Observable<any> {
 
         return this.getElementCell(userId, true).mergeMap((elementCell) => {
 
             const url = this.getODataUrl(userId, elementCell.Id);
 
-            return this.appHttp.delete(url);
+            return this.httpClient.delete(url);
         });
     }
 
@@ -105,8 +105,8 @@ export class ODataUserElementCellComponent {
 
         const url = `${AppSettings.serviceODataUrl}/Project?$expand=ElementSet/ElementFieldSet/ElementCellSet/UserElementCellSet&$filter=UserId eq ${userId}`;
 
-        return this.appHttp.get(url)
-            .map((response: Response) => {
+        return this.httpClient.get(url)
+            .map((response) => {
 
                 var results = (response as any).value as Project[];
 
@@ -142,11 +142,11 @@ export class ODataUserElementCellComponent {
             });
     }
 
-    private handleResponse(response: Response) {
+    private handleResponse(response) {
         console.log("response", response);
     }
 
-    private update(userId: number): Observable<Response> {
+    private update(userId: number): Observable<any> {
 
         return this.getElementCell(userId, true).mergeMap((elementCell) => {
 
@@ -159,7 +159,7 @@ export class ODataUserElementCellComponent {
 
             const url = this.getODataUrl(userId, elementCell.Id);
 
-            return this.appHttp.patch(url, body);
+            return this.httpClient.patch(url, body);
         });
     }
 }

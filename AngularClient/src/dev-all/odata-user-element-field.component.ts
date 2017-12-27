@@ -1,12 +1,12 @@
 import { Observable } from "rxjs";
 import { Component } from "@angular/core";
-import { Http, Response } from "@angular/http";
+import { HttpClient } from "@angular/common/http";
 
 import { AppSettings } from "../app-settings/app-settings";
 import { ElementField } from "../main/core/entities/element-field";
 import { Project } from "../main/core/entities/project";
 import { User } from "../main/core/entities/user";
-import { AppHttp } from "../main/core/app-http.service";
+
 import { AuthService } from "../main/core/auth.service";
 
 @Component({
@@ -18,7 +18,7 @@ export class ODataUserElementFieldComponent {
     get anotherUserId(): number {
         return 2;
     }
-    appHttp: AppHttp;
+    
     get currentUser(): User {
         return this.authService.currentUser;
     }
@@ -31,8 +31,8 @@ export class ODataUserElementFieldComponent {
 
     constructor(
         private authService: AuthService,
-        http: Http) {
-        this.appHttp = http as AppHttp;
+        private httpClient: HttpClient) {
+        
     }
 
     createAnother(): void {
@@ -49,7 +49,7 @@ export class ODataUserElementFieldComponent {
 
     deleteNotFound(): void {
         const url = this.getODataUrl(this.invalidUserId, this.invalidElementFieldId);
-        this.appHttp.delete(url).subscribe(this.handleResponse);
+        this.httpClient.delete(url).subscribe(this.handleResponse);
     }
 
     deleteOwn(): void {
@@ -62,7 +62,7 @@ export class ODataUserElementFieldComponent {
 
     updateNotFound(): void {
         const url = this.getODataUrl(this.invalidUserId, this.invalidElementFieldId);
-        this.appHttp.patch(url, {}).subscribe(this.handleResponse);
+        this.httpClient.patch(url, {}).subscribe(this.handleResponse);
     }
 
     updateOwn(): void {
@@ -71,7 +71,7 @@ export class ODataUserElementFieldComponent {
 
     /* Private methods */
 
-    private create(userId: number): Observable<Response> {
+    private create(userId: number): Observable<any> {
 
         return this.getElementField(userId).mergeMap((elementField) => {
 
@@ -83,17 +83,17 @@ export class ODataUserElementFieldComponent {
 
             var url = `${AppSettings.serviceODataUrl}/UserElementField`;
 
-            return this.appHttp.post(url, userElementField);
+            return this.httpClient.post(url, userElementField);
         });
     }
 
-    private delete(userId: number): Observable<Response> {
+    private delete(userId: number): Observable<any> {
 
         return this.getElementField(userId, true).mergeMap((elementField) => {
 
             const url = this.getODataUrl(userId, elementField.Id);
 
-            return this.appHttp.delete(url);
+            return this.httpClient.delete(url);
         });
     }
 
@@ -105,8 +105,8 @@ export class ODataUserElementFieldComponent {
 
         const url = `${AppSettings.serviceODataUrl}/Project?$expand=ElementSet/ElementFieldSet/UserElementFieldSet&$filter=UserId eq ${userId}`;
 
-        return this.appHttp.get(url)
-            .map((response: Response) => {
+        return this.httpClient.get(url)
+            .map((response) => {
 
                 var results = (response as any).value as Project[];
 
@@ -136,11 +136,11 @@ export class ODataUserElementFieldComponent {
             });
     }
 
-    private handleResponse(response: Response) {
+    private handleResponse(response) {
         console.log("response", response);
     }
 
-    private update(userId: number): Observable<Response> {
+    private update(userId: number): Observable<any> {
 
         return this.getElementField(userId, true).mergeMap((elementField) => {
 
@@ -153,7 +153,7 @@ export class ODataUserElementFieldComponent {
 
             const url = this.getODataUrl(userId, elementField.Id);
 
-            return this.appHttp.patch(url, body);
+            return this.httpClient.patch(url, body);
         });
     }
 }

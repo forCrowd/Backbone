@@ -1,10 +1,10 @@
-﻿import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
+﻿import { Injectable, Injector } from "@angular/core";
+import { HTTP_INTERCEPTORS, HttpClient } from "@angular/common/http";
 import { EntityQuery } from "../../libraries/breeze-client";
 import { Observable } from "rxjs";
 
 import { AppSettings } from "../../app-settings/app-settings";
-import { AppHttp } from "../core/app-http.service";
+import { BusyInterceptor } from "../core/app-http-client/busy-interceptor";
 import { AuthService } from "../core/auth.service";
 import { AppEntityManager } from "../core/app-entity-manager.service";
 import { Project } from "../core/entities/project";
@@ -18,17 +18,19 @@ export class AdminService {
     }
 
     get isBusy(): boolean {
-        return this.appEntityManager.isBusy || this.appHttp.isBusy || this.isBusyLocal;
+        return this.appEntityManager.isBusy || this.busyInterceptor.isBusy || this.isBusyLocal;
     }
+    private readonly busyInterceptor: BusyInterceptor = null;
     private isBusyLocal: boolean = false; // Use this flag for functions that contain multiple http requests (e.g. saveChanges())
-
-    private appHttp: AppHttp;
 
     constructor(private appEntityManager: AppEntityManager,
         private authService: AuthService,
-        http: Http) {
+        private httpClient: HttpClient,
+        private injector: Injector) {
 
-        this.appHttp = http as AppHttp;
+        // Busy interceptor
+        var interceptors = injector.get(HTTP_INTERCEPTORS);
+        this.busyInterceptor = interceptors.find(i => i instanceof BusyInterceptor) as BusyInterceptor;
     }
 
     getProjectSet(onlyCount?: boolean) {
@@ -75,6 +77,6 @@ export class AdminService {
 
         const url = `${AppSettings.serviceApiUrl}/ProjectApi/${project.Id}/UpdateComputedFields`;
 
-        return this.appHttp.post<void>(url, null);
+        return this.httpClient.post<void>(url, null);
     }
 }

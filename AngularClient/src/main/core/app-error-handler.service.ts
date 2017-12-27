@@ -1,22 +1,19 @@
 ﻿import { ErrorHandler, Injectable } from "@angular/core";
-import { Http } from "@angular/http";
+import { HttpClient } from "@angular/common/http";
 import { Observable, Subscription } from "rxjs";
 import { SourceMapConsumer } from "source-map";
 
 import { AppSettings } from "../../app-settings/app-settings";
-import { AppHttp } from "./app-http.service";
 
 @Injectable()
 export class AppErrorHandler implements ErrorHandler {
 
-    appHttp: AppHttp;
     sourceMapCache = {};
     errorCounter = 0;
     errorLimitResetTimer: Subscription = null;
     get errorLimitReached(): boolean { return this.errorCounter > 10 };
 
-    constructor(private http: Http) {
-        this.appHttp = http as AppHttp;
+    constructor(private httpClient: HttpClient) {
     }
 
     handleError(error: Error): void {
@@ -48,7 +45,7 @@ export class AppErrorHandler implements ErrorHandler {
 
                 const errorHandlerUrl = AppSettings.serviceApiUrl + "/Exception/Record";
 
-                this.http.post(errorHandlerUrl, model).subscribe();
+                this.httpClient.post(errorHandlerUrl, model).subscribe();
             });
         }
     }
@@ -62,13 +59,13 @@ export class AppErrorHandler implements ErrorHandler {
 
         } else {
 
-            const observable = this.appHttp.get<string>(url).mergeMap(body => {
+            const observable = this.httpClient.get(url, { responseType: "text" }).mergeMap(body => {
 
                 const match = body.match(/\/\/# sourceMappingURL=([^"\s]+\.map)/);
 
                 if (match) {
                     const sourceMapUrl = match[1];
-                    return this.appHttp.get(sourceMapUrl)
+                    return this.httpClient.get(sourceMapUrl, { responseType: "text" })
                         .map((response: any) => {
                             return new SourceMapConsumer(response);
                         });

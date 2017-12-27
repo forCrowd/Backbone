@@ -1,11 +1,11 @@
 import { Observable } from "rxjs";
 import { Component } from "@angular/core";
-import { Http, Response } from "@angular/http";
+import { HttpClient } from "@angular/common/http";
 
 import { AppSettings } from "../app-settings/app-settings";
 import { Project } from "../main/core/entities/project";
 import { User } from "../main/core/entities/user";
-import { AppHttp } from "../main/core/app-http.service";
+
 import { AuthService } from "../main/core/auth.service";
 import { getUniqueValue } from "../main/shared/utils";
 
@@ -18,7 +18,7 @@ export class ODataProjectComponent {
     get anotherUserId(): number {
         return 2;
     }
-    appHttp: AppHttp;
+    
     get currentUser(): User {
         return this.authService.currentUser;
     }
@@ -27,8 +27,8 @@ export class ODataProjectComponent {
     }
 
     constructor(private authService: AuthService,
-        http: Http) {
-        this.appHttp = http as AppHttp;
+        private httpClient: HttpClient) {
+        
     }
 
     createAnother(): void {
@@ -46,7 +46,7 @@ export class ODataProjectComponent {
 
     deleteNotFound(): void {
         const url = this.getODataUrl(this.invalidUserId);
-        this.appHttp.delete(url).subscribe(this.handleResponse);
+        this.httpClient.delete(url).subscribe(this.handleResponse);
     }
 
     deleteOwn(): void {
@@ -67,14 +67,14 @@ export class ODataProjectComponent {
 
     updateNotFound(): void {
         const url = this.getODataUrl(this.invalidUserId);
-        this.appHttp.patch(url, {}).subscribe(this.handleResponse);
+        this.httpClient.patch(url, {}).subscribe(this.handleResponse);
     }
 
     updateOwn(): void {
         this.update(this.currentUser.Id).subscribe(this.handleResponse);
     }
 
-    private create(userId: number): Observable<Response> {
+    private create(userId: number): Observable<any> {
 
         const project = {
             UserId: userId,
@@ -85,16 +85,16 @@ export class ODataProjectComponent {
 
         const url = `${AppSettings.serviceODataUrl}/Project`;
 
-        return this.appHttp.post(url, project);
+        return this.httpClient.post(url, project);
     }
 
-    private delete(userId: number): Observable<Response> {
+    private delete(userId: number): Observable<any> {
 
         return this.get(userId).mergeMap(project => {
 
             const url = this.getODataUrl(project.Id);
 
-            return this.appHttp.delete(url);
+            return this.httpClient.delete(url);
         });
     }
 
@@ -102,8 +102,8 @@ export class ODataProjectComponent {
 
         const url = `${AppSettings.serviceODataUrl}/Project?$filter=UserId eq ${userId}`;
 
-        return this.appHttp.get(url)
-            .map((response: Response) => {
+        return this.httpClient.get(url)
+            .map((response) => {
 
                 var results = (response as any).value;
 
@@ -121,11 +121,11 @@ export class ODataProjectComponent {
         return `${AppSettings.serviceODataUrl}/Project(${projectId})`;
     }
 
-    private handleResponse(response: Response) {
+    private handleResponse(response) {
         console.log("response", response);
     }
 
-    private update(userId): Observable<Response> {
+    private update(userId): Observable<any> {
 
         return this.get(userId).mergeMap((project) => {
 
@@ -136,7 +136,7 @@ export class ODataProjectComponent {
 
             const url = this.getODataUrl(project.Id);
 
-            return this.appHttp.patch(url, body);
+            return this.httpClient.patch(url, body);
         });
     }
 }

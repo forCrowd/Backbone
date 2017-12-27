@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.1.3**
+
+* AngularClient - HttpModule was replaced with HttpClientModule
+* AngularClient - Brand color as material palette
+
 **0.1.2**
 
 * NumericValue -> DecimalValue - coni2k

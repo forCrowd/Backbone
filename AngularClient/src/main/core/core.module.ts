@@ -1,5 +1,4 @@
 ﻿import { APP_INITIALIZER, ErrorHandler, NgModule } from "@angular/core";
-import { Http, HttpModule, RequestOptions, XHRBackend } from "@angular/http";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
@@ -7,6 +6,8 @@ import { Angulartics2GoogleAnalytics, Angulartics2Module } from "angulartics2";
 import { BreezeBridgeAngularModule } from "../../libraries/breeze-bridge-angular";
 import "./rxjs-extensions";
 
+// Internal modules
+import { AppHttpClientModule } from "./app-http-client/app-http-client.module";
 import { SharedModule } from "../shared/shared.module";
 
 // Components
@@ -20,7 +21,6 @@ import { ShowcaseComponent } from "./components/showcase.component";
 // Services
 import { AppEntityManager } from "./app-entity-manager.service";
 import { AppErrorHandler } from "./app-error-handler.service";
-import { AppHttp } from "./app-http.service";
 import { AuthGuard } from "./auth-guard.service";
 import { AuthService } from "./auth.service";
 import { CanDeactivateGuard } from "./can-deactivate-guard.service";
@@ -73,7 +73,7 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
         SharedModule,
         BrowserModule,
         BrowserAnimationsModule,
-        HttpModule,
+        AppHttpClientModule,
         RouterModule.forRoot(coreRoutes),
         Angulartics2Module.forRoot([Angulartics2GoogleAnalytics]),
         BreezeBridgeAngularModule
@@ -90,12 +90,6 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
         {
             provide: ErrorHandler,
             useClass: AppErrorHandler
-        },
-        // Http
-        {
-            provide: Http,
-            useClass: AppHttp,
-            deps: [XHRBackend, NotificationService, RequestOptions]
         },
         AppEntityManager,
         AuthGuard,

@@ -20,8 +20,6 @@
     }
 
 .header {
-    /*background-color: #3f647f;
-    color: #ffffff;*/
     left: 6px;
     position: fixed;
     right: 6px;
@@ -35,10 +33,7 @@
     }
 
     .header h1 {
-        color: #3f647f;
         display: inline-block;
-        /*margin-left: 5px;*/
-        /*text-shadow: 0.5px 0.5px #000;*/
     }
 
 .sidenav {

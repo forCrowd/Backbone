@@ -1,17 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
-@import "./theme";
-@import "./callout";
+@import "theme.scss";
+@import "callout.scss";
+@import "variables.scss";
 
 body {
     margin: 0;
 }
 
-h2 {
-    color: #3f647f;
+h1, h2, h3 {
+    color: $primary;
 }
 
 hr {
-    border: 0.9px solid #3f647f;
+    border: 0.9px solid $primary;
 }
 
 [hidden] {

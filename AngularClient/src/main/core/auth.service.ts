@@ -1,10 +1,10 @@
-﻿import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
+﻿import { Injectable, Injector } from "@angular/core";
+import { HTTP_INTERCEPTORS, HttpClient } from "@angular/common/http";
 import { EntityQuery, EntityState, MergeStrategy } from "../../libraries/breeze-client";
 import { Observable, Subject } from "rxjs";
 
 import { AppSettings } from "../../app-settings/app-settings";
-import { AppHttp } from "./app-http.service";
+import { BusyInterceptor } from "./app-http-client/busy-interceptor";
 import { AppEntityManager } from "./app-entity-manager.service";
 import { NotificationService } from "./notification.service";
 import { Role } from "./entities/role";
@@ -20,7 +20,7 @@ export class AuthService {
     currentUserChanged = new Subject<User>();
 
     get isBusy(): boolean {
-        return this.appEntityManager.isBusy || this.appHttp.isBusy;
+        return this.appEntityManager.isBusy || this.busyInterceptor.isBusy;
     }
 
     get loginReturnUrl(): string {
@@ -43,14 +43,19 @@ export class AuthService {
     ];
 
     // Private
-    private appHttp: AppHttp;
+    private readonly busyInterceptor: BusyInterceptor = null;
     private currentUserUrl: string = "";
     private registerUrl: string = "";
     private tokenUrl: string = "";
 
-    constructor(private appEntityManager: AppEntityManager, http: Http, private notificationService: NotificationService) {
+    constructor(private appEntityManager: AppEntityManager,
+        private httpClient: HttpClient,
+        private injector: Injector,
+        private notificationService: NotificationService) {
 
-        this.appHttp = http as AppHttp;
+        // Busy interceptor
+        var interceptors = injector.get(HTTP_INTERCEPTORS);
+        this.busyInterceptor = interceptors.find(i => i instanceof BusyInterceptor) as BusyInterceptor;
 
         // Service urls
         this.currentUserUrl = AppSettings.serviceApiUrl + "/Account/CurrentUser";
@@ -88,7 +93,7 @@ export class AuthService {
             .where("UserName", "eq", username);
 
         return this.appEntityManager.executeQueryObservable<User>(query)
-            .map(response => {
+            .map((response) => {
 
                 // If there is no result
                 if (response.results.length === 0) {
@@ -237,7 +242,7 @@ export class AuthService {
 
         const tokenData = `grant_type=password&username=${username}&password=${password}&rememberMe=${rememberMe}&singleUseToken=${singleUseToken}`;
 
-        return this.appHttp.post<Object>(this.tokenUrl, tokenData)
+        return this.httpClient.post<Object>(this.tokenUrl, tokenData)
             .map((token) => {
                 localStorage.setItem("token", JSON.stringify(token)); // Store the token in localStorage
             });
@@ -247,8 +252,8 @@ export class AuthService {
 
         registerBindingModel.ClientAppUrl = window.location.origin;
 
-        return this.appHttp.post<User>(this.registerUrl, registerBindingModel)
-            .map((updatedUser) => {
+        return this.httpClient.post<User>(this.registerUrl, registerBindingModel)
+            .map((updatedUser: User) => {
                 this.updateCurrentUser(updatedUser);
 
                 localStorage.removeItem("guestUserName");
@@ -296,8 +301,8 @@ export class AuthService {
 
             } else {
 
-                return this.appHttp.get<User>(this.currentUserUrl)
-                    .map((currentUser) => {
+                return this.httpClient.get<User>(this.currentUserUrl)
+                    .map((currentUser: User) => {
 
                         if (currentUser === null) {
 
