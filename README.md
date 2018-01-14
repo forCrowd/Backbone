@@ -3,9 +3,16 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/forCrowd.svg?style=social)](https://twitter.com/forCrowd)
 [![Join the chat at https://gitter.im/forCrowd/Backbone](https://badges.gitter.im/forCrowd/Backbone.svg)](https://gitter.im/forCrowd/Backbone?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Experimental ideas on increasing sustainability and productivity
+An API service for rapid app prototyping
 
 ## Current Stack
+
+### Server
+
+* .NET Framework 4.6
+* ASP.NET Web API 2 & OData v3
+* Entity Framework 6
+* SQL Server 2014
 
 ### Client
 
@@ -15,25 +22,14 @@ Experimental ideas on increasing sustainability and productivity
 * BreezeJS
 * Karma & Jasmine
 
-### Server
-
-* .NET Framework 4.6
-* ASP.NET Web API 2 & OData v3
-* Entity Framework 6
-* SQL Server 2014
-
 ## Setup
 
-### Getting Started
+Follow this document to setup the application on your computer:  
 [Getting Started](https://github.com/forcrowd/Backbone/wiki/Getting-Started)
 
-### First Mission: Contributors Page
-This is an experimental attempt to help you to get familiar with our project and make your first pull request.
+## Deployment
 
-Follow this tutorial to get started:
-[First Mission](https://github.com/forCrowd/Backbone/wiki/First-Mission)
-
-### WebApi Deployment
+### Server (WebAPI)
 
 You can deploy WebApi appliation through Visual Studio publish.  
 
@@ -45,7 +41,7 @@ When deploying the project, update following configuration files with your own s
 
 If you would like to make the application offline during the deployment, you can use **app_offline.htm_**.
 
-### AngularClient Deployment
+### Client (AngularClient)
 
 AngularClient is a Angular CLI project and all of its commands are available.
 
@@ -59,6 +55,14 @@ To prepare a production bundle, run the following on your command console:
     ng build -prod
 
 For more options, please visit [Angular CLI](https://github.com/angular/angular-cli)
+
+## Contribute
+
+### First Mission: Contributors Page
+This is an experimental attempt to help you to get familiar with our project and make your first pull request.
+
+Follow the document for detailed instructions:
+[First Mission](https://github.com/forCrowd/Backbone/wiki/First-Mission)
 
 ## Changelog
 

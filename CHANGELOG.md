@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.1.4**
+
+* General - README update
+
 **0.1.3**
 
 * AngularClient - HttpModule was replaced with HttpClientModule
