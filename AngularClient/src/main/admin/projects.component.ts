@@ -3,13 +3,18 @@ import { Component, OnInit } from "@angular/core";
 import { Project } from "../core/entities/project";
 import { AdminService } from "./admin.service";
 
+
+import {MatTableDataSource} from '@angular/material';
+
 @Component({
     selector: "projects",
-    templateUrl: "projects.component.html"
+    templateUrl: "projects.component.html",
+    styleUrls: ["projects.component.css"]
 })
 export class ProjectsComponent implements OnInit {
 
-    projectSet: Project[] = [];
+    displayedColumns = ['Project', 'User', 'Ratings', 'Created', 'Modified', 'Number'];
+    myDataSource = new MatTableDataSource();
 
     constructor(private adminService: AdminService) {
     }
@@ -27,7 +32,7 @@ export class ProjectsComponent implements OnInit {
     private getProjectSet(): void {
         this.adminService.getProjectSet()
             .subscribe((response) => {
-                this.projectSet = response.results;
+                this.myDataSource.data = response.results;
             });
     }
 }

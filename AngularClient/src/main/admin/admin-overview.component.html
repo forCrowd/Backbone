@@ -1,18 +1,19 @@
 ﻿<h2>Admin Overview</h2>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <a routerLink="/app/admin/projects">Projects</a>
-    </div>
-    <div class="col-md-2">
+
+<div>
+    <div class="g-mt-20">
+        <label class="mat-body-2">
+            <a routerLink="/app/admin/projects">Projects</a>
+        </label>
+        <div>
         {{ projectCount }}
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        Users
-    </div>
-    <div class="col-md-2">
-        {{ userCount }}
+    <div class="g-mt-20">
+        <label class="mat-body-2">Users</label>
+        <div>
+            {{ userCount }}
+        </div>
     </div>
 </div>
