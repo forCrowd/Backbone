@@ -1,10 +1,9 @@
 import { Component, OnInit } from "@angular/core";
+import { MatTableDataSource } from "@angular/material";
+import { Observable } from "rxjs";
 
 import { Project } from "../core/entities/project";
 import { AdminService } from "./admin.service";
-
-
-import {MatTableDataSource} from '@angular/material';
 
 @Component({
     selector: "projects",
@@ -13,26 +12,27 @@ import {MatTableDataSource} from '@angular/material';
 })
 export class ProjectsComponent implements OnInit {
 
-    displayedColumns = ['Project', 'User', 'Ratings', 'Created', 'Modified', 'Number'];
-    myDataSource = new MatTableDataSource();
+    dataSource = new MatTableDataSource();
+    displayedColumns = ["Project", "User", "Ratings", "Created", "Modified", "Number"];
 
     constructor(private adminService: AdminService) {
     }
 
     ngOnInit(): void {
-        this.getProjectSet();
+        this.getProjectSet().subscribe();
     }
 
     updateComputedFields(project: Project): void {
-        this.adminService.updateComputedFields(project).subscribe(() => {
-            this.getProjectSet();
-        });
+        this.adminService.updateComputedFields(project)
+            .flatMap(() => {
+                return this.getProjectSet(true);
+            }).subscribe();
     }
 
-    private getProjectSet(): void {
-        this.adminService.getProjectSet()
-            .subscribe((response) => {
-                this.myDataSource.data = response.results;
+    private getProjectSet(forceRefresh = false): Observable<void> {
+        return this.adminService.getProjectSet(false, forceRefresh)
+            .map((response) => {
+                this.dataSource.data = response.results;
             });
     }
 }

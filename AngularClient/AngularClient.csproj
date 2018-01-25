@@ -99,6 +99,7 @@
     <Content Include="src\main\account\add-password.component.css" />
     <Content Include="src\main\account\register.component.css" />
     <Content Include="src\main\account\login.component.css" />
+    <Content Include="src\main\admin\projects.component.css" />
     <Content Include="src\main\core\components\core.component.css" />
     <Content Include="src\main\core\components\core.component.html" />
     <Content Include="src\main\core\components\contributors.component.css" />

@@ -1,56 +1,52 @@
 <h2>Projects</h2>
-
 <hr />
+
 <div class="g-mt-20">
-    <div [hidden]="myDataSource.data.length > 0">
-        <mat-card>No projects available. 
-            <a routerLink="/admin/new">Create one.</a>
-        </mat-card>
+    <div class="noResults" [hidden]="dataSource.data.length > 0">
+        Nothing to display!
     </div>
-    <div class="projects-data-table" [hidden]="myDataSource.data.length === 0">
-        <mat-table #table [dataSource]="myDataSource">
-    
-        <!--- Note that these columns can be defined in any order.
-                The actual rendered columns are set as a property on the row definition" -->
-        <!-- Position Column -->
-        <ng-container matColumnDef="Project">
-            <mat-header-cell *matHeaderCellDef> Project </mat-header-cell>
-            <mat-cell *matCellDef="let project"> <a routerLink="{{ '/' + project.User.UserName + '/' + project.Key }}">{{ project.Name }}</a> </mat-cell>
-        </ng-container>
 
-        <ng-container matColumnDef="User">
-            <mat-header-cell *matHeaderCellDef> User </mat-header-cell>
-            <mat-cell *matCellDef="let project"> <a routerLink="{{ '/' + project.User.UserName }}">{{ project.User.UserName }}</a> </mat-cell>
-        </ng-container>
+    <div [hidden]="dataSource.data.length === 0">
+        <mat-table #table [dataSource]="dataSource">
 
-        <ng-container matColumnDef="Ratings">
-            <mat-header-cell *matHeaderCellDef> # Ratings </mat-header-cell>
-            <mat-cell *matCellDef="let project"> {{ project.RatingCount }} </mat-cell>
-        </ng-container>
+            <ng-container matColumnDef="Project">
+                <mat-header-cell *matHeaderCellDef> Project </mat-header-cell>
+                <mat-cell *matCellDef="let project"> {{ project.Name }} </mat-cell>
+            </ng-container>
 
-        <ng-container matColumnDef="Created">
-            <mat-header-cell *matHeaderCellDef> Created On </mat-header-cell>
-            <mat-cell *matCellDef="let project"> {{ project.CreatedOn | amTimeAgo }} </mat-cell>
-        </ng-container>
+            <ng-container matColumnDef="User">
+                <mat-header-cell *matHeaderCellDef> User </mat-header-cell>
+                <mat-cell *matCellDef="let project"> <a routerLink="{{ '/' + project.User.UserName }}">{{ project.User.UserName }}</a> </mat-cell>
+            </ng-container>
 
-        <ng-container matColumnDef="Modified">
-            <mat-header-cell *matHeaderCellDef> Modified On </mat-header-cell>
-            <mat-cell *matCellDef="let project"> {{ project.ModifiedOn | amTimeAgo }} </mat-cell>
-        </ng-container>
+            <ng-container matColumnDef="Ratings">
+                <mat-header-cell *matHeaderCellDef> # Ratings </mat-header-cell>
+                <mat-cell *matCellDef="let project"> {{ project.RatingCount }} </mat-cell>
+            </ng-container>
 
-        <ng-container matColumnDef="Number">
-            <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
-            <mat-cell *matCellDef="let project"> 
-                <div>
-                    <button mat-raised-button (click)="updateComputedFields(project)">
-                        <i class="fa fa-refresh" aria-hidden="true"></i> Update
-                    </button>
-                </div>
-            </mat-cell>
-        </ng-container>
-    
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            <ng-container matColumnDef="Created">
+                <mat-header-cell *matHeaderCellDef> Created On </mat-header-cell>
+                <mat-cell *matCellDef="let project"> {{ project.CreatedOn | amTimeAgo }} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="Modified">
+                <mat-header-cell *matHeaderCellDef> Modified On </mat-header-cell>
+                <mat-cell *matCellDef="let project"> {{ project.ModifiedOn | amTimeAgo }} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="Number">
+                <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+                <mat-cell *matCellDef="let project">
+                    <div>
+                        <button mat-raised-button (click)="updateComputedFields(project)">
+                            <i class="fa fa-refresh" aria-hidden="true"></i> Update
+                        </button>
+                    </div>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </mat-table>
     </div>
 </div>

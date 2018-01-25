@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.1.5**
+
+* AngularClient - Admin panel update - chrised123
+
 **0.1.4**
 
 * General - README update

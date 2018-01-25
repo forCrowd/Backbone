@@ -33,8 +33,7 @@ export class AdminService {
         this.busyInterceptor = interceptors.find(i => i instanceof BusyInterceptor) as BusyInterceptor;
     }
 
-    getProjectSet(onlyCount?: boolean) {
-        onlyCount = onlyCount || false;
+    getProjectSet(onlyCount = false, forceRefresh = false) {
 
         let query = EntityQuery.from("Project");
 
@@ -45,7 +44,7 @@ export class AdminService {
                 .orderByDesc("ModifiedOn");
         }
 
-        return this.appEntityManager.executeQueryObservable<Project>(query);
+        return this.appEntityManager.executeQueryObservable<Project>(query, forceRefresh);
     }
 
     getUserCount() {
