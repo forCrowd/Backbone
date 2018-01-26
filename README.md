@@ -35,7 +35,6 @@ You can deploy WebApi appliation through Visual Studio publish.
 
 Only remark is, configuration files are excluded from deploy (Build Action: 'None').  
 When deploying the project, update following configuration files with your own settings and manually copy them:
-* WebApi\googleanalytics.js
 * WebApi\Web.config
 * WebApi\Configs\\*.config
 

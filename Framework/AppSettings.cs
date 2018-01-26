@@ -52,5 +52,10 @@
         /// Notification emails will be send to this address
         /// </summary>
         public static string NotificationEmailAddress => ConfigurationManager.AppSettings["NotificationEmailAddress"];
+
+        /// <summary>
+        /// Google Analytics Tracking ID
+        /// </summary>
+        public static string GoogleAnalyticsTrackingID => ConfigurationManager.AppSettings["GoogleAnalyticsTrackingID"];
     }
 }

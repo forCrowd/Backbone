@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.1.6**
+
+* Framework & WebApi - Google Analytrics - Tag Manager update - coni2k
+* AngularClient - Package updates - coni2k
+
 **0.1.5**
 
 * AngularClient - Admin panel update - chrised123

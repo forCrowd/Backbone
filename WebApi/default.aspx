@@ -4,7 +4,16 @@
     <title>Backbone API</title>
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="favicon.ico?v=0.1.0" />
-    <script src="googleanalytics.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<%= forCrowd.Backbone.Framework.AppSettings.GoogleAnalyticsTrackingID %>"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag("js", new Date());
+
+        gtag("config", "<%= forCrowd.Backbone.Framework.AppSettings.GoogleAnalyticsTrackingID %>");
+    </script>
 </head>
 <body>
     <header>
