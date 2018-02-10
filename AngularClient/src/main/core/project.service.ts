@@ -85,6 +85,7 @@ export class ProjectService {
         }) as Project;
 
         project.Name = `New project ${getUniqueValue()}`;
+        project.Origin = "http://";
         project.RatingCount = 1; // Computed field
 
         return project;

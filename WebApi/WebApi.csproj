@@ -209,6 +209,7 @@
     <Compile Include="..\SolutionItems\Properties\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="App_Start\CorsPolicyProvider.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\ODataConfig.cs" />
     <Compile Include="App_Start\ServiceConfig.cs" />

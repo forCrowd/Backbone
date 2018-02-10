@@ -50,8 +50,9 @@ export class Project extends EntityBase {
         }
     }
 
-    Description: string;
-    RatingCount: number = 0;
+    Origin = "";
+    Description = "";
+    RatingCount = 0;
     ElementSet: Element[];
 
     // Client-side

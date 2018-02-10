@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.2.0**
+
+* Project - Origin field & CORS dynamic origin validation
+
 **0.1.6**
 
 * Framework & WebApi - Google Analytrics - Tag Manager update - coni2k

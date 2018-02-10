@@ -30,8 +30,17 @@
                         <mat-form-field>
                             <input matInput [(ngModel)]="project.Key" id="Key" name="Key" placeholder="Key" aria-describedby="KeyHelp" />
                             <mat-hint id="KeyHelp">
-                                Title that will be used in the url.<br />
+                                The key/title that will be used in the url.<br />
                                 No special characters allowed, except dash "-" and underscore "_".
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+
+                    <div [ngClass]="{ 'has-error': project.entityAspect.getValidationErrors('Origin').length > 0 }" class="g-mt-20">
+                        <mat-form-field>
+                            <input matInput [(ngModel)]="project.Origin" id="Origin" name="Origin" placeholder="Origin URL" />
+                            <mat-hint id="KeyHelp">
+                                The host/domain that the client application will be making the requests from.
                             </mat-hint>
                         </mat-form-field>
                     </div>

@@ -23,18 +23,7 @@
         /// <summary>
         /// Allowed origins in CORS policy
         /// </summary>
-        public static bool AllowAnyOrigin => bool.Parse(ConfigurationManager.AppSettings["AllowAnyOrigin"]);
-
-        public static IEnumerable<string> AllowedOrigins
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings["AllowedOrigins"]
-                    .Split(';')
-                    .Select(item => item.Trim())
-                    .Where(item => item != string.Empty);
-            }
-        }
+        public static string DefaultClientOrigin => ConfigurationManager.AppSettings["DefaultClientOrigin"];
 
         /// <summary>
         /// Determines whether SSL connection required for api & odata calls & email service

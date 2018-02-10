@@ -19,6 +19,10 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
         public int UserId { get; set; }
 
         [Required]
+        [StringLength(50)]
+        public string Name { get; set; }
+
+        [Required]
         [StringLength(250)]
         [Index("UX_Project_UserId_Key", 2, IsUnique = true)]
         public string Key
@@ -28,8 +32,8 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
         }
 
         [Required]
-        [StringLength(50)]
-        public string Name { get; set; }
+        [StringLength(500)]
+        public string Origin { get; set; }
 
         [StringLength(5000)]
         public string Description { get; set; }
