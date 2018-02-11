@@ -45,7 +45,7 @@ export class ProfileComponent implements OnInit {
     }
 
     manageProject(project: Project): void {
-        const editLink = this.getProjectLink(project) + "/edit";
+        const editLink = `${this.getProjectLink(project)}/edit`;
         this.router.navigate([editLink]);
     }
 
@@ -83,5 +83,10 @@ export class ProfileComponent implements OnInit {
 
     userActionsEnabled(): boolean {
         return this.user === this.userService.currentUser;
+    }
+
+    viewProject(project: Project) {
+        const editLink = this.getProjectLink(project);
+        this.router.navigate([editLink]);
     }
 }

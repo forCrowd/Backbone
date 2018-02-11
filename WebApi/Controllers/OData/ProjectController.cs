@@ -36,6 +36,23 @@ namespace forCrowd.Backbone.WebApi.Controllers.OData
             return list;
         }
 
+        // GET odata/Project(1)
+        [AllowAnonymous]
+        public IQueryable<Project> Get([FromODataUri] int key)
+        {
+            var list = _projectManager.GetProjectSet(key, true, project => project.User);
+
+            // TODO Handle this by intercepting the query either on OData or EF level
+            // Currently it queries the database twice / coni2k - 20 Feb. '17
+            var currentUserId = User.Identity.GetUserId<int>();
+            foreach (var item in list.Where(item => item.UserId != currentUserId))
+            {
+                item.User.ResetValues();
+            }
+
+            return list;
+        }
+
         // POST odata/Project
         public async Task<IHttpActionResult> Post(Delta<Project> patch)
         {

@@ -12,13 +12,13 @@ export class SymbolicPipe implements PipeTransform {
 
     transform(value: string): string {
 
-        if (typeof value === "undefined") {
+        if (!value) {
             return null;
         }
 
         let number = +value;
-        let symbol: string = "";
-        let result: string = "";
+        let symbol = "";
+        let result = "";
 
         if (isNaN(number)) {
             result = "N/A";

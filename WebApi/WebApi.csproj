@@ -235,8 +235,8 @@
     <Compile Include="Controllers\OData\UsersController.cs" />
     <Compile Include="Controllers\OData\UserElementCellController.cs" />
     <Compile Include="Controllers\OData\UserElementFieldController.cs" />
-    <Compile Include="ExceptionHandling\ElmahExceptionLogger.cs" />
-    <Compile Include="ExceptionHandling\GenericExceptionHandler.cs" />
+    <Compile Include="Services\ElmahExceptionLogger.cs" />
+    <Compile Include="Filters\ExceptionHandlerAttribute.cs" />
     <Compile Include="Filters\EntityExistsValidatorAttribute.cs" />
     <Compile Include="Filters\ConcurrencyValidatorAttribute.cs" />
     <Compile Include="Filters\ForbiddenFieldsValidatorAttribute.cs" />

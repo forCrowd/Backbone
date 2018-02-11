@@ -31,6 +31,9 @@
             <ng-container matColumnDef="functions">
                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
                 <mat-cell *matCellDef="let project">
+                    <button mat-raised-button (click)="viewProject(project)" type="button">
+                        <i class="fa fa-pencil" aria-hidden="true"></i> View
+                    </button>
                     <div [hidden]="!userActionsEnabled()">
                         <button mat-raised-button (click)="manageProject(project)" type="button">
                             <i class="fa fa-pencil" aria-hidden="true"></i> Manage

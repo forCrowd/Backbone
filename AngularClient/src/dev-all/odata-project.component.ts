@@ -80,6 +80,7 @@ export class ODataProjectComponent {
             UserId: userId,
             Name: `New project ${getUniqueValue()}`,
             Key: `New-project-${getUniqueValue()}`,
+            Origin: `http://localhost:15001`,
             Description: "Description of the project",
         };
 

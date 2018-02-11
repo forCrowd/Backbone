@@ -1,6 +1,6 @@
 ﻿namespace forCrowd.Backbone.WebApi
 {
-    using ExceptionHandling;
+    using forCrowd.Backbone.WebApi.Services;
     using System.Web.Http.Controllers;
     using System.Web.Http.ExceptionHandling;
 
@@ -10,9 +10,6 @@
         {
             // Exception logger
             services.Add(typeof(IExceptionLogger), new ElmahExceptionLogger());
-
-            // Exception handler
-            services.Replace(typeof(IExceptionHandler), new GenericExceptionHandler());
         }
     }
 }

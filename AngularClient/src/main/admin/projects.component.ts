@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { MatTableDataSource } from "@angular/material";
 import { Observable } from "rxjs";
 
@@ -13,9 +14,9 @@ import { AdminService } from "./admin.service";
 export class ProjectsComponent implements OnInit {
 
     dataSource = new MatTableDataSource();
-    displayedColumns = ["Project", "User", "Ratings", "Created", "Modified", "Number"];
+    displayedColumns = ["name", "user", "ratingCount", "createdOn", "modifiedOn", "functions"];
 
-    constructor(private adminService: AdminService) {
+    constructor(private adminService: AdminService, private router: Router) {
     }
 
     ngOnInit(): void {
@@ -27,6 +28,11 @@ export class ProjectsComponent implements OnInit {
             .flatMap(() => {
                 return this.getProjectSet(true);
             }).subscribe();
+    }
+
+    viewProject(project: Project) {
+        const editLink = `/${project.User.UserName}/${project.Key}`;
+        this.router.navigate([editLink]);
     }
 
     private getProjectSet(forceRefresh = false): Observable<void> {

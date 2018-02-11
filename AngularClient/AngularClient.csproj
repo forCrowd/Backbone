@@ -105,7 +105,6 @@
     <Content Include="src\main\core\components\contributors.component.css" />
     <Content Include="src\main\project\element-manager.component.css" />
     <TypeScriptCompile Include="src\main\project\element-manager.component.ts" />
-    <TypeScriptCompile Include="src\main\project\project-editor.component.ts" />
     <TypeScriptCompile Include="src\main\project\project-manager.component.ts" />
     <TypeScriptCompile Include="src\main\project\project-viewer.component.ts" />
     <TypeScriptCompile Include="src\main\project\project.module.ts" />
@@ -149,8 +148,6 @@
     <Content Include="src\main\core\components\showcase.component.css" />
     <Content Include="src\main\core\components\showcase.component.html" />
     <Content Include="src\main\project\project-manager.component.css" />
-    <Content Include="src\main\project\project-editor.component.css" />
-    <Content Include="src\main\project\project-editor.component.html" />
     <Content Include="src\main\user\profile-remove-project.component.html" />
     <Content Include="src\main\user\profile.component.css" />
     <Content Include="src\styles\callout.scss" />

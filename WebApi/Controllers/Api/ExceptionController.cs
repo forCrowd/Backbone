@@ -1,5 +1,6 @@
 ﻿namespace forCrowd.Backbone.WebApi.Controllers.Api
 {
+    using forCrowd.Backbone.WebApi.Services;
     using System;
     using System.Net;
     using System.Web.Http;
@@ -18,7 +19,7 @@
             var loggerContext = new ExceptionLoggerContext(context);
 
             // Call elmah & log the exception
-            var logger = new ExceptionHandling.ElmahExceptionLogger();
+            var logger = new ElmahExceptionLogger();
             logger.Log(loggerContext);
 
             // Return

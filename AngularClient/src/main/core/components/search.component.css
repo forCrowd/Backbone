@@ -3,6 +3,10 @@
     align-items: center;
 }
 
+.mat-cell {
+    padding: 4px 0;
+}
+
 .mat-table {
     max-height: 500px;
 }

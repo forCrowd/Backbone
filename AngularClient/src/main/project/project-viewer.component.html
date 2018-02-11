@@ -1,1 +1,61 @@
-﻿<project-editor [config]="editorConfig"></project-editor>
+﻿<div *ngIf="project">
+
+    <h2>{{ project.Name }}</h2>
+    <hr />
+
+    <div class="g-mt-20">
+        <div class="g-mt-20">
+            <label class="mat-body-2">Created by</label>
+            <div>
+                <a routerLink="/{{ project.User.UserName }}">{{ project.User.UserName }}</a>
+            </div>
+        </div>
+        <div class="g-mt-20">
+            <label class="mat-body-2">Description</label>
+            <div>
+                {{ project.Description || "N/A" }}
+            </div>
+        </div>
+        <div class="g-mt-20">
+            <label class="mat-body-2">Origin (Domain/Host)</label>
+            <div>
+                <a href="{{ project.Origin }}" target="_blank">{{ project.Origin }}</a>
+            </div>
+        </div>
+        <div class="g-mt-20">
+            <label class="mat-body-2">Created - Last modified on</label>
+            <div>
+                {{ project.CreatedOn | date: 'medium' }} - {{ project.ModifiedOn | date: 'medium' }}
+            </div>
+        </div>
+    </div>
+    <div class="g-mt-20">
+        <h4>Backbone API</h4>
+        <div class="g-mt-20">
+            <label class="mat-body-2">
+                Project - Basic
+            </label>
+            <div>
+                <a href="{{ projectBasicApiUrl }}" target="_blank">{{ projectBasicApiUrl }}</a><br />
+            </div>
+        </div>
+        <div class="g-mt-20">
+            <label class="mat-body-2">Project - Expanded for guest access</label>
+            <div>
+                <a href="{{ projectGuestExpandedApiUrl }}" target="_blank">{{ projectGuestExpandedApiUrl }}</a><br />
+            </div>
+        </div>
+        <div class="g-mt-20">
+            <label class="mat-body-2">Project - Expanded for project owners (Authorization required):</label>
+            <div>
+                <a href="{{ projectOwnerExpandedApiUrl }}" target="_blank">{{ projectOwnerExpandedApiUrl }}</a><br />
+            </div>
+        </div>
+        <div class="g-mt-20">
+            <label class="mat-body-2">API Metadata:</label>
+            <div>
+                <a href="{{ metadataUrl }}" target="_blank">{{ metadataUrl }}</a><br />
+            </div>
+        </div>
+    </div>
+</div>

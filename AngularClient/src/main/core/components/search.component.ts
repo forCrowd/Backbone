@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { Router } from "@angular/router";
 import { MatTableDataSource } from "@angular/material";
 
 import { Project } from "../entities/project";
@@ -12,12 +13,12 @@ import { ProjectService } from "../project.service";
 export class SearchComponent {
 
     isBusy: boolean;
-    displayedColumns = ["name", "userName", "ratingCount", "createdOn"];
+    displayedColumns = ["name", "userName", "ratingCount", "createdOn", "functions"];
     dataSource = new MatTableDataSource<Project>([]);
     hasResult = false;
     searchKey = "";
 
-    constructor(private projectService: ProjectService) {
+    constructor(private projectService: ProjectService, private router: Router) {
     }
 
     search(): void {
@@ -36,5 +37,10 @@ export class SearchComponent {
 
     trackBy(index: number, item: Project): number {
         return item.Id;
+    }
+
+    viewProject(project: Project) {
+        const editLink = `/${project.User.UserName}/${project.Key}`;
+        this.router.navigate([editLink]);
     }
 }

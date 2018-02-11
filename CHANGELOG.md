@@ -1,5 +1,14 @@
 ### Changelog
 
+**0.3.0**
+
+* AngularClient
+  * New project viewer
+  * Project editor removed
+* WebApi
+  * ProjectController - Get(int key) endpoint
+  * ExceptionHandler filter
+
 **0.2.0**
 
 * Project - Origin field & CORS dynamic origin validation

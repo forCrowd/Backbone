@@ -10,10 +10,7 @@ import { NgChartModule } from "../shared/ng-chart/ng-chart.module";
 import { ElementManagerComponent } from "./element-manager.component";
 import { ProjectManagerComponent } from "./project-manager.component";
 import { ProjectViewerComponent } from "./project-viewer.component";
-import { IConfig as IProjectEditorConfig, ProjectEditorComponent } from "./project-editor.component";
 import { SymbolicPipe } from "./symbolic.pipe";
-
-export { IProjectEditorConfig }
 
 const projectRoutes: Routes = [
     { path: ":username/new", component: ProjectManagerComponent, canDeactivate: [CanDeactivateGuard], resolve: { title: DynamicTitleResolve } },
@@ -24,7 +21,6 @@ const projectRoutes: Routes = [
 @NgModule({
     declarations: [
         ElementManagerComponent,
-        ProjectEditorComponent,
         ProjectManagerComponent,
         ProjectViewerComponent,
         SymbolicPipe
@@ -32,7 +28,6 @@ const projectRoutes: Routes = [
     exports: [
         RouterModule,
 
-        ProjectEditorComponent,
         SymbolicPipe
     ],
     imports: [

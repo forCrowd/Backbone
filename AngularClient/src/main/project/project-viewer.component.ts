@@ -1,8 +1,9 @@
 ﻿import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
+import { AppSettings } from "../../app-settings/app-settings";
 import { ProjectService } from "../core/core.module";
-import { IProjectEditorConfig } from "../project/project.module";
+import { IUniqueKey, Project } from "../core/entities/project";
 
 @Component({
     selector: "project-viewer",
@@ -10,12 +11,24 @@ import { IProjectEditorConfig } from "../project/project.module";
 })
 export class ProjectViewerComponent implements OnInit {
 
-    editorConfig: IProjectEditorConfig = {
-        projectUniqueKey: {
-            projectKey: "",
-            username: ""
-        }
-    };
+    project: Project = null;
+    serviceODataUrl = AppSettings.serviceODataUrl;
+
+    get projectBasicApiUrl(): string {
+        return `${AppSettings.serviceODataUrl}/Project(${this.project.Id})`;
+    }
+
+    get projectGuestExpandedApiUrl(): string {
+        return `${AppSettings.serviceODataUrl}/Project(${this.project.Id})?$expand=User,ElementSet/ElementFieldSet,ElementSet/ElementItemSet/ElementCellSet`;
+    }
+
+    get projectOwnerExpandedApiUrl(): string {
+        return `${AppSettings.serviceODataUrl}/Project(${this.project.Id})?$expand=User,ElementSet/ElementFieldSet/UserElementFieldSet,ElementSet/ElementItemSet/ElementCellSet/UserElementCellSet`;
+    }
+
+    get metadataUrl(): string {
+        return `${AppSettings.serviceODataUrl}/$metadata`;
+    }
 
     constructor(private activatedRoute: ActivatedRoute,
         private projectService: ProjectService,
@@ -27,13 +40,13 @@ export class ProjectViewerComponent implements OnInit {
         const projectKey = this.activatedRoute.snapshot.params["projectKey"];
         const username = this.activatedRoute.snapshot.params["username"];
 
-        this.editorConfig.projectUniqueKey = {
+        var projectUniqueKey: IUniqueKey = {
             projectKey: projectKey,
             username: username
         };
 
         // Title
-        this.projectService.getProjectExpanded(this.editorConfig.projectUniqueKey)
+        this.projectService.getProjectExpanded(projectUniqueKey)
             .subscribe(project => {
 
                 // Not found, navigate to 404
@@ -42,6 +55,8 @@ export class ProjectViewerComponent implements OnInit {
                     this.router.navigate(["/app/not-found", { url: url }]);
                     return;
                 }
+
+                this.project = project;
             });
     }
 }

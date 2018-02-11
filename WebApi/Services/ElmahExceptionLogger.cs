@@ -1,4 +1,4 @@
-﻿namespace forCrowd.Backbone.WebApi.ExceptionHandling
+﻿namespace forCrowd.Backbone.WebApi.Services
 {
     using Elmah;
     using System;
