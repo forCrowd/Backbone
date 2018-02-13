@@ -3,7 +3,6 @@ import { Resolve, ActivatedRouteSnapshot } from "@angular/router";
 import { Observable } from "rxjs";
 
 import { AuthService } from "./auth.service";
-import { IUniqueKey } from "./entities/project";
 import { ProjectService } from "./project.service";
 
 @Injectable()
@@ -14,25 +13,20 @@ export class DynamicTitleResolve implements Resolve<string> {
     resolve(route: ActivatedRouteSnapshot): Observable<string> {
 
         const username = route.params["username"];
-        const projectKey = route.params["projectKey"];
+        const projectId = route.params["project-id"];
         const lastUrl = route.url[route.url.length - 1];
 
-        if (username && projectKey) { // Project title
+        if (projectId) { // Project title
 
             let title = "";
 
-            // Project unique key
-            const projectUniqueKey: IUniqueKey = {
-                username: username,
-                projectKey: projectKey
-            };
-
-            return this.projectService.getProjectExpanded(projectUniqueKey)
+            return this.projectService.getProjectExpanded(projectId)
                 .map((project): string => {
 
                     if (project !== null) {
 
-                        title += project.User.UserName + " - " + project.Name;
+                        title += project.Name;
+
                         if (lastUrl && lastUrl.path === "edit") {
                             title += " - Edit";
                         }

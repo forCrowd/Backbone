@@ -30,11 +30,6 @@ export class ProjectsComponent implements OnInit {
             }).subscribe();
     }
 
-    viewProject(project: Project) {
-        const editLink = `/${project.User.UserName}/${project.Key}`;
-        this.router.navigate([editLink]);
-    }
-
     private getProjectSet(forceRefresh = false): Observable<void> {
         return this.adminService.getProjectSet(false, forceRefresh)
             .map((response) => {

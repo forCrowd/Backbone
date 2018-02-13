@@ -9,7 +9,7 @@ import { Element } from "./entities/element";
 import { ElementCell } from "./entities/element-cell";
 import { ElementField, ElementFieldDataType } from "./entities/element-field";
 import { ElementItem } from "./entities/element-item";
-import { IUniqueKey, Project } from "./entities/project";
+import { Project } from "./entities/project";
 import { UserElementCell } from "./entities/user-element-cell";
 import { UserElementField } from "./entities/user-element-field";
 import { AppEntityManager } from "./app-entity-manager.service";
@@ -234,22 +234,15 @@ export class ProjectService {
         }
     }
 
-    getProjectExpanded(projectUniqueKey: IUniqueKey, forceRefresh = false) {
+    getProjectExpanded(projectId: number, forceRefresh = false) {
 
         // Prepare the query
-        let query = EntityQuery.from("Project");
+        let query = EntityQuery.from("Project").where("Id", "eq", projectId);
 
         // Is authorized? No, then get only the public data, yes, then get include user's own records
-        if (this.authService.currentUser.isAuthenticated()) {
-            query = query.expand("User, ElementSet.ElementFieldSet.UserElementFieldSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet");
-        } else {
-            query = query.expand("User, ElementSet.ElementFieldSet, ElementSet.ElementItemSet.ElementCellSet");
-        }
-
-        const userNamePredicate = new Predicate("User.UserName", "eq", projectUniqueKey.username);
-        const projectKeyPredicate = new Predicate("Key", "eq", projectUniqueKey.projectKey);
-
-        query = query.where(userNamePredicate.and(projectKeyPredicate));
+        query = this.authService.currentUser.isAuthenticated()
+            ? query.expand("User, ElementSet.ElementFieldSet.UserElementFieldSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet")
+            : query.expand("User, ElementSet.ElementFieldSet, ElementSet.ElementItemSet.ElementCellSet");
 
         return this.appEntityManager.executeQueryObservable<Project>(query, forceRefresh)
             .map(response => {
@@ -304,7 +297,7 @@ export class ProjectService {
         const updateComputedFieldsUrl = this.getUpdateComputedFieldsUrl(project.Id);
 
         return this.httpClient.post<void>(updateComputedFieldsUrl, null).mergeMap(() => {
-            return this.getProjectExpanded(project.uniqueKey, true).map(() => { });
+            return this.getProjectExpanded(project.Id, true).map(() => { });
         });
     }
 

@@ -1,5 +1,12 @@
 ### Changelog
 
+**0.4.0**
+
+* AngularClient
+  * New routing: /users/[username] + /projects/[project-id]
+  * Highcharts removed
+* Business - Project - Key field removed
+
 **0.3.0**
 
 * AngularClient

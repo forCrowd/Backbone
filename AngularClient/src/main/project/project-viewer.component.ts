@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 import { AppSettings } from "../../app-settings/app-settings";
 import { ProjectService } from "../core/core.module";
-import { IUniqueKey, Project } from "../core/entities/project";
+import { Project } from "../core/entities/project";
 
 @Component({
     selector: "project-viewer",
@@ -12,7 +12,10 @@ import { IUniqueKey, Project } from "../core/entities/project";
 export class ProjectViewerComponent implements OnInit {
 
     project: Project = null;
-    serviceODataUrl = AppSettings.serviceODataUrl;
+
+    get metadataUrl(): string {
+        return `${AppSettings.serviceODataUrl}/$metadata`;
+    }
 
     get projectBasicApiUrl(): string {
         return `${AppSettings.serviceODataUrl}/Project(${this.project.Id})`;
@@ -26,10 +29,6 @@ export class ProjectViewerComponent implements OnInit {
         return `${AppSettings.serviceODataUrl}/Project(${this.project.Id})?$expand=User,ElementSet/ElementFieldSet/UserElementFieldSet,ElementSet/ElementItemSet/ElementCellSet/UserElementCellSet`;
     }
 
-    get metadataUrl(): string {
-        return `${AppSettings.serviceODataUrl}/$metadata`;
-    }
-
     constructor(private activatedRoute: ActivatedRoute,
         private projectService: ProjectService,
         private router: Router) {
@@ -37,16 +36,10 @@ export class ProjectViewerComponent implements OnInit {
 
     ngOnInit(): void {
 
-        const projectKey = this.activatedRoute.snapshot.params["projectKey"];
-        const username = this.activatedRoute.snapshot.params["username"];
-
-        var projectUniqueKey: IUniqueKey = {
-            projectKey: projectKey,
-            username: username
-        };
+        const projectId = this.activatedRoute.snapshot.params["project-id"];
 
         // Title
-        this.projectService.getProjectExpanded(projectUniqueKey)
+        this.projectService.getProjectExpanded(projectId)
             .subscribe(project => {
 
                 // Not found, navigate to 404

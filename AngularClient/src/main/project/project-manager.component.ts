@@ -6,7 +6,7 @@ import { Element } from "../core/entities/element";
 import { ElementCell } from "../core/entities/element-cell";
 import { ElementField, ElementFieldDataType } from "../core/entities/element-field";
 import { ElementItem } from "../core/entities/element-item";
-import { IUniqueKey, Project } from "../core/entities/project";
+import { Project } from "../core/entities/project";
 import { User } from "../core/entities/user";
 import { ProjectService } from "../core/core.module";
 import { NotificationService } from "../core/notification.service";
@@ -145,7 +145,7 @@ export class ProjectManagerComponent implements OnInit {
 
         this.project.entityAspect.rejectChanges();
 
-        const command = `/${this.project.User.UserName}`;
+        const command = `/users/${this.project.User.UserName}`;
         this.router.navigate([command]);
     }
 
@@ -166,10 +166,9 @@ export class ProjectManagerComponent implements OnInit {
     createProjectEmpty(): void {
         this.project = this.projectService.createProjectEmpty();
 
-        const command = `/${this.project.User.UserName}/${this.project.Key}/edit`;
-
         this.projectService.saveChanges()
             .subscribe(() => {
+                const command = `/projects/${this.project.Id}/edit`;
                 this.router.navigate([command]);
             });
     }
@@ -177,10 +176,9 @@ export class ProjectManagerComponent implements OnInit {
     createProjectBasic(): void {
         this.project = this.projectService.createProjectBasic();
 
-        const command = `/${this.project.User.UserName}/${this.project.Key}/edit`;
-
         this.projectService.saveChanges()
             .subscribe(() => {
+                const command = `/projects/${this.project.Id}/edit`;
                 this.router.navigate([command]);
             });
     }
@@ -245,12 +243,9 @@ export class ProjectManagerComponent implements OnInit {
 
         if (this.viewMode === "existing") {
 
-            const username = this.activatedRoute.snapshot.params["username"];
-            const projectKey = this.activatedRoute.snapshot.params["projectKey"];
+            const projectId: number = this.activatedRoute.snapshot.params["project-id"];
 
-            var projectUniqueKey: IUniqueKey = { username: username, projectKey: projectKey };
-
-            this.projectService.getProjectExpanded(projectUniqueKey)
+            this.projectService.getProjectExpanded(projectId)
                 .subscribe(project => {
 
                     // Not found, navigate to 404
@@ -339,7 +334,7 @@ export class ProjectManagerComponent implements OnInit {
 
                 this.notificationService.notification.next("Your changes have been saved!");
 
-                const command = `/${this.project.User.UserName}`;
+                const command = `/projects/${this.project.Id}`;
                 this.router.navigate([command]);
             });
     }
@@ -374,21 +369,5 @@ export class ProjectManagerComponent implements OnInit {
 
     trackBy(index: number, entity: any) {
         return entity.Id;
-    }
-
-    viewProject(): void {
-
-        let projectKey = "";
-
-        // If project's state is modified, first check "original values"
-        if (this.project.entityAspect.entityState.isModified()) {
-            projectKey = (this.project.entityAspect.originalValues as Project).Key || this.project.Key;
-        } else {
-            projectKey = this.project.Key;
-        }
-
-        const command = `/${this.project.User.UserName}/${projectKey}`;
-
-        this.router.navigate([command]);
     }
 }

@@ -86,10 +86,6 @@
     <TypeScriptCompile Include="src\main\core\components\not-found.component.ts" />
     <TypeScriptCompile Include="src\main\core\project.service.ts" />
     <TypeScriptCompile Include="src\main\core\components\search.component.ts" />
-    <TypeScriptCompile Include="src\main\shared\ng-chart\chart-config.ts" />
-    <TypeScriptCompile Include="src\main\shared\ng-chart\chart-data-item.ts" />
-    <TypeScriptCompile Include="src\main\shared\ng-chart\ng-chart.component.ts" />
-    <TypeScriptCompile Include="src\main\shared\ng-chart\ng-chart.module.ts" />
     <Content Include="src\assets\images\Logo+Text_142x30.png" />
     <Content Include="src\assets\images\Logo_30x30.jpg" />
     <Content Include="src\main\account\reset-password.component.css" />
@@ -182,8 +178,6 @@
     <Content Include="src\main\core\components\home.component.html" />
     <Content Include="src\main\core\components\not-found.component.html" />
     <Content Include="src\main\core\components\search.component.html" />
-    <Content Include="src\main\shared\ng-chart\ng-chart.component.css" />
-    <Content Include="src\main\shared\ng-chart\ng-chart.component.html" />
     <Content Include="src\main\project\element-manager.component.html" />
     <Content Include="src\main\project\project-manager.component.html" />
     <Content Include="src\main\project\project-viewer.component.html" />

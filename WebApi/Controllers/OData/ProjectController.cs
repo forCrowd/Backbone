@@ -5,10 +5,8 @@ namespace forCrowd.Backbone.WebApi.Controllers.OData
     using Facade;
     using Filters;
     using Microsoft.AspNet.Identity;
-    using Results;
     using System;
     using System.Data.Entity;
-    using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
@@ -75,20 +73,7 @@ namespace forCrowd.Backbone.WebApi.Controllers.OData
                 return StatusCode(HttpStatusCode.Forbidden);
             }
 
-            try
-            {
-                await _projectManager.AddProjectAsync(project);
-            }
-            catch (DbUpdateException)
-            {
-                // Unique key exception
-                if (await _projectManager.GetProjectSet(null, false).AnyAsync(item => item.Key == project.Key))
-                {
-                    return new UniqueKeyConflictResult(Request, nameof(Project.Key), project.Key);
-                }
-
-                throw;
-            }
+            await _projectManager.AddProjectAsync(project);
 
             return Created(project);
         }
@@ -111,28 +96,7 @@ namespace forCrowd.Backbone.WebApi.Controllers.OData
 
             patch.Patch(project);
 
-            try
-            {
-                await _projectManager.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                // Unique key exception
-                if (patch.GetChangedPropertyNames().All(item => item != "Key"))
-                    throw;
-
-                patch.TryGetPropertyValue("Key", out var projectKey);
-
-                if (projectKey == null)
-                    throw;
-
-                if (await _projectManager.GetProjectSet(null, false).AnyAsync(item => item.Key == projectKey.ToString()))
-                {
-                    return new UniqueKeyConflictResult(Request, "Key", projectKey.ToString());
-                }
-
-                throw;
-            }
+            await _projectManager.SaveChangesAsync();
 
             return Ok(project);
         }

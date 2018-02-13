@@ -16,7 +16,7 @@
 
             <ng-container matColumnDef="user">
                 <mat-header-cell *matHeaderCellDef> User </mat-header-cell>
-                <mat-cell *matCellDef="let project"> <a routerLink="{{ '/' + project.User.UserName }}">{{ project.User.UserName }}</a> </mat-cell>
+                <mat-cell *matCellDef="let project"> <a routerLink="/users/{{ project.User.UserName }}">{{ project.User.UserName }}</a> </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="ratingCount">
@@ -37,9 +37,9 @@
             <ng-container matColumnDef="functions">
                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
                 <mat-cell *matCellDef="let project">
-                    <button mat-raised-button (click)="viewProject(project)" type="button">
+                    <a mat-raised-button routerLink="/projects/{{ project.Id }}">
                         <i class="fa fa-pencil" aria-hidden="true"></i> View
-                    </button>
+                    </a>
                     <button mat-raised-button (click)="updateComputedFields(project)">
                         <i class="fa fa-refresh" aria-hidden="true"></i> Update
                     </button>

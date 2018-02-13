@@ -31,13 +31,13 @@
             <ng-container matColumnDef="functions">
                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
                 <mat-cell *matCellDef="let project">
-                    <button mat-raised-button (click)="viewProject(project)" type="button">
+                    <a mat-raised-button routerLink="/projects/{{ project.Id }}">
                         <i class="fa fa-pencil" aria-hidden="true"></i> View
-                    </button>
+                    </a>
                     <div [hidden]="!userActionsEnabled()">
-                        <button mat-raised-button (click)="manageProject(project)" type="button">
+                        <a mat-raised-button routerLink="/projects/{{ project.Id }}/edit">
                             <i class="fa fa-pencil" aria-hidden="true"></i> Manage
-                        </button>
+                        </a>
                         <button mat-raised-button (click)="confirmRemove(project)" type="button">
                             <i class="fa fa-times" aria-hidden="true"></i> Remove
                         </button>

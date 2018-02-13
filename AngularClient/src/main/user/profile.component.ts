@@ -40,15 +40,6 @@ export class ProfileComponent implements OnInit {
         });
     }
 
-    getProjectLink(project: Project): string {
-        return `/${project.User.UserName}/${project.Key}`;
-    }
-
-    manageProject(project: Project): void {
-        const editLink = `${this.getProjectLink(project)}/edit`;
-        this.router.navigate([editLink]);
-    }
-
     ngOnInit(): void {
 
         // UserName
@@ -83,10 +74,5 @@ export class ProfileComponent implements OnInit {
 
     userActionsEnabled(): boolean {
         return this.user === this.userService.currentUser;
-    }
-
-    viewProject(project: Project) {
-        const editLink = this.getProjectLink(project);
-        this.router.navigate([editLink]);
     }
 }

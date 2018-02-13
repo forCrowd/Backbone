@@ -77,7 +77,7 @@ export class ShowcaseComponent implements OnInit {
 
     ngOnInit(): void {
 
-        this.projectService.getProjectExpanded({ projectKey: "Showcase-1", username: "admin" })
+        this.projectService.getProjectExpanded(2)
             .subscribe(project => {
 
                 if (!project) return;

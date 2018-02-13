@@ -9,7 +9,7 @@
 
 <mat-sidenav-container class="sidenav-container mat-elevation-z6">
     <mat-sidenav #sidenav mode="side" opened="true" class="sidenav mat-elevation-z9">
-        <a mat-button matTooltip="New project" routerLink="{{ '/' + currentUser.UserName + '/new' }}">
+        <a mat-button matTooltip="New project" routerLink="/projects/new">
             <i class="material-icons">create</i>
         </a>
         <a mat-button matTooltip="Search" routerLink="/app/search">
@@ -26,7 +26,7 @@
             <span class="fa fa-info-circle fa-lg" aria-hidden="true"></span>
           </button>
         </a>-->
-        <a mat-button matTooltip="Profile" routerLink="{{ '/' + currentUser.UserName }}" [hidden]="!currentUser.isAuthenticated()">
+        <a mat-button matTooltip="Profile" routerLink="/users/{{ currentUser.UserName }}" [hidden]="!currentUser.isAuthenticated()">
             <i class="material-icons">face</i>
         </a>
         <a mat-button matTooltip="Account" routerLink="/app/account" [hidden]="!currentUser.isAuthenticated()">

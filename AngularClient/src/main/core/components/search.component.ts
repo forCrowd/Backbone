@@ -38,9 +38,4 @@ export class SearchComponent {
     trackBy(index: number, item: Project): number {
         return item.Id;
     }
-
-    viewProject(project: Project) {
-        const editLink = `/${project.User.UserName}/${project.Key}`;
-        this.router.navigate([editLink]);
-    }
 }
