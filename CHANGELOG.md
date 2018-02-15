@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.4.1**
+
+* AngularClient + WebApi - HTTPS enabled
+* AngularClient - Project viewer minor fix
+
 **0.4.0**
 
 * AngularClient

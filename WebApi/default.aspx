@@ -28,8 +28,7 @@
             <span><%= System.Diagnostics.FileVersionInfo.GetVersionInfo(Reflection.Assembly.GetAssembly(New forCrowd.Backbone.WebApi.Controllers.Api.WebApiInfo().GetType()).Location).ProductVersion %></span>
         </p>
         <p>
-            <a href="http://forcrowd.org" target="_blank">forCrowd Foundation
-            </a>
+            <a href="https://forcrowd.org" target="_blank">forCrowd Foundation</a>
         </p>
     </footer>
 </body>
