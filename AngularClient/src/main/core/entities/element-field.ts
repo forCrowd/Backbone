@@ -24,9 +24,16 @@ export enum ElementFieldDataType {
 export class ElementField extends EntityBase {
 
     // Server-side
-    Id: number = 0;
+    Id = 0;
     Element: Element;
-    Name: string = "";
+    SelectedElement: Element;
+    UseFixedValue = false;
+    RatingEnabled = false;
+    SortOrder = 0;
+    RatingTotal = 0;
+    RatingCount = 0;
+    ElementCellSet: ElementCell[];
+    UserElementFieldSet: UserElementField[];
 
     get DataType(): ElementFieldDataType {
         return this.fields.dataType;
@@ -37,68 +44,43 @@ export class ElementField extends EntityBase {
 
             if (this.initialized) {
 
-                // a. UseFixedValue must be "true" for String & Element types
+                // UseFixedValue must be "true" and RatingEnabled must be "false" for String & Element types
                 if (value === ElementFieldDataType.String
                     || value === ElementFieldDataType.Element) {
                     this.UseFixedValue = true;
-                }
-
-                // b. RatingEnabled must be "false" for String & Element types
-                if (value === ElementFieldDataType.String
-                    || ElementFieldDataType.Element) {
                     this.RatingEnabled = false;
                 }
-
-                // Event
-                this.dataTypeChanged.next(this);
             }
         }
     }
 
-    SelectedElement: Element;
-    UseFixedValue = false;
-
-    get RatingEnabled(): boolean {
-        return this.fields.ratingEnabled;
+    get Name(): string {
+        return this.fields.name;
     }
-    set RatingEnabled(value: boolean) {
-        if (this.fields.ratingEnabled !== value) {
-            this.fields.ratingEnabled = value;
-
-            if (this.initialized) {
-                this.ratingEnabledChanged.next(this);
-            }
-        }
+    set Name(value: string) {
+        this.fields.name = value.trim();
     }
-    SortOrder: number = 0;
-    RatingTotal: number = 0;
-    RatingCount: number = 0;
-    ElementCellSet: ElementCell[];
-    UserElementFieldSet: UserElementField[];
 
     // Client-side
     get DataTypeText(): string {
 
         let text = ElementFieldDataType[this.DataType];
 
-        if (this.DataType === ElementFieldDataType.Element) {
-            text += ` (${this.SelectedElement.Name})`;
+        if (this.DataType === ElementFieldDataType.Element && this.SelectedElement) {
+            text += ` - ${this.SelectedElement.Name}`;
         }
 
         return text;
     }
+
     otherUsersRatingTotal = 0;
     otherUsersRatingCount = 0;
-
-    // Events
-    dataTypeChanged = new Subject<ElementField>();
-    ratingEnabledChanged = new Subject<ElementField>();
-    ratingUpdated = new Subject<number>();
 
     private fields: {
         currentUserRating: number,
         dataType: ElementFieldDataType,
         decimalValue: number,
+        name: string,
         ratingEnabled: boolean,
         rating: number,
         ratingPercentage: number,
@@ -106,6 +88,7 @@ export class ElementField extends EntityBase {
         currentUserRating: 0,
         dataType: ElementFieldDataType.String,
         decimalValue: 0,
+        name: "",
         ratingEnabled: false,
         rating: 0,
         ratingPercentage: 0,
@@ -175,54 +158,6 @@ export class ElementField extends EntityBase {
         return this.fields.decimalValue;
     }
 
-    rejectChanges(): void {
-
-        const element = this.Element;
-
-        // Related cells
-        const elementCellSet = this.ElementCellSet.slice();
-        elementCellSet.forEach(elementCell => {
-            elementCell.rejectChanges();
-        });
-
-        // Related user element fields
-        if (this.UserElementFieldSet[0]) {
-            this.UserElementFieldSet[0].entityAspect.rejectChanges();
-        }
-
-        this.entityAspect.rejectChanges();
-
-        // Update related
-        element.setRating();
-    }
-
-    remove() {
-
-        const element = this.Element;
-
-        const elementCellSet = this.ElementCellSet.slice();
-        elementCellSet.forEach(elementCell => {
-
-            // User element cell
-            if (elementCell.UserElementCellSet[0]) {
-                elementCell.UserElementCellSet[0].entityAspect.setDeleted();
-            }
-
-            // Cell
-            elementCell.entityAspect.setDeleted();
-        });
-
-        // User element field
-        if (this.UserElementFieldSet[0]) {
-            this.UserElementFieldSet[0].entityAspect.setDeleted();
-        }
-
-        this.entityAspect.setDeleted();
-
-        // Update related
-        element.setRating();
-    }
-
     setCurrentUserRating() {
 
         const value = this.UserElementFieldSet[0]
@@ -254,8 +189,6 @@ export class ElementField extends EntityBase {
             // Update related
             //this.ratingPercentage(); - No need to call this one since element is going to update it anyway! / coni2k - 05 Nov. '17 
             this.Element.Project.ElementSet[0].setRating();
-
-            this.ratingUpdated.next(this.fields.rating);
         }
     }
 

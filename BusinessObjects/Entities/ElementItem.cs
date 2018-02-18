@@ -18,11 +18,13 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
 
         [Required]
         [StringLength(150)]
-        public string Name { get; set; }
+        public string Name { get => name; set => name = value.Trim(); }
 
         public virtual Element Element { get; set; }
         public virtual ICollection<ElementCell> ElementCellSet { get; set; }
         [InverseProperty("SelectedElementItem")]
         public virtual ICollection<ElementCell> ParentCellSet { get; set; }
+
+        string name;
     }
 }

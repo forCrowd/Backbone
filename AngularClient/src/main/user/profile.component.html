@@ -34,14 +34,12 @@
                     <a mat-raised-button routerLink="/projects/{{ project.Id }}">
                         <i class="fa fa-pencil" aria-hidden="true"></i> View
                     </a>
-                    <div [hidden]="!userActionsEnabled()">
-                        <a mat-raised-button routerLink="/projects/{{ project.Id }}/edit">
-                            <i class="fa fa-pencil" aria-hidden="true"></i> Manage
-                        </a>
-                        <button mat-raised-button (click)="confirmRemove(project)" type="button">
-                            <i class="fa fa-times" aria-hidden="true"></i> Remove
-                        </button>
-                    </div>
+                    <a mat-raised-button routerLink="/projects/{{ project.Id }}/edit" [hidden]="!userActionsEnabled()">
+                        <i class="fa fa-pencil" aria-hidden="true"></i> Manage
+                    </a>
+                    <button mat-raised-button (click)="confirmRemove(project)" type="button" [hidden]="!userActionsEnabled()">
+                        <i class="fa fa-times" aria-hidden="true"></i> Remove
+                    </button>
                 </mat-cell>
             </ng-container>
 

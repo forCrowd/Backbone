@@ -1,7 +1,7 @@
 ﻿<h2>Change Username</h2>
 <hr />
 
-<form #changeUserNameForm="ngForm">
+<form #changeUserNameForm="ngForm" autocomplete="off">
     <div class="g-mt-20" [ngClass]="{'has-error': UserName.dirty && UserName.invalid}">
         <mat-form-field>
             <input matInput id="UserName" name="UserName" type="text" placeholder="Username" [(ngModel)]="bindingModel.UserName" #UserName="ngModel" aria-describedby="UserNameHelp" required />

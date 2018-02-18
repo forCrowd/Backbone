@@ -1,13 +1,13 @@
 ﻿<div [hidden]="viewMode !== 'new'">
-    
+
     <h2>Choose your template</h2>
     <hr />
-    
+
     <div class="templateContainer g-mt-20">
-        <button mat-raised-button (click)="createProjectBasic()">Basic</button>
-        <button mat-raised-button (click)="createProjectEmpty()">Blank</button>
+        <button mat-raised-button (click)="createProjectBasic()" [disabled]="isBusy">Basic</button>
+        <button mat-raised-button (click)="createProjectEmpty()" [disabled]="isBusy">Blank</button>
     </div>
-    
+
 </div>
 <div [hidden]="viewMode !== 'existing'">
     <div *ngIf="project">
@@ -15,11 +15,11 @@
         <h2>{{ project.Name }}</h2>
         <hr />
 
-        <mat-tab-group>
+        <mat-tab-group (selectedTabChange)="selectedTabChanged($event)">
 
-            <mat-tab label="Project">
+            <mat-tab label="Project" [disabled]="isEditing">
 
-                <form #projectForm="ngForm">
+                <form #projectForm="ngForm" autocomplete="off">
                     <div [ngClass]="{ 'has-error': project.entityAspect.getValidationErrors('Name').length > 0 }" class="g-mt-20">
                         <mat-form-field>
                             <input matInput [(ngModel)]="project.Name" id="Name" name="Name" placeholder="Name" />
@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="g-mt-20">
-                        <button mat-raised-button (click)="saveProject()" [disabled]="submitDisabled('project')" type="submit" color="primary">
+                        <button mat-raised-button (click)="saveProject()" [disabled]="submitDisabled()" type="submit" color="primary">
                             Save project
                         </button>
                         <button mat-raised-button (click)="cancelProject()" [disabled]="isBusy" type="button">
@@ -53,400 +53,20 @@
 
             </mat-tab>
 
-            <mat-tab label="Elements">
-
-                <!-- Element add/edit -->
-                <div *ngIf="selectedElement">
-                    <element-manager [element]="selectedElement" (cancelled)="onElementManagerClosed()" (saved)="onElementManagerClosed()"></element-manager>
-                </div>
-
-                <!-- Element list -->
-                <div *ngIf="!selectedElement">
-                    <div class="g-mt-20">
-                        <button mat-raised-button (click)="addElement()" type="button">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Create New
-                        </button>
-                    </div>
-
-                    <mat-table #table [dataSource]="elementDataSource" [trackBy]="trackBy" class="g-mt-20">
-
-                        <!-- Name -->
-                        <ng-container matColumnDef="name">
-                            <mat-header-cell *matHeaderCellDef> Element </mat-header-cell>
-                            <mat-cell *matCellDef="let element"> {{ element.Name }} </mat-cell>
-                        </ng-container>
-
-                        <!-- CreatedOn -->
-                        <ng-container matColumnDef="createdOn">
-                            <mat-header-cell *matHeaderCellDef> Created On</mat-header-cell>
-                            <mat-cell *matCellDef="let element"> {{ element.CreatedOn | amTimeAgo }} </mat-cell>
-                        </ng-container>
-
-                        <!-- Functions -->
-                        <ng-container matColumnDef="functions">
-                            <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                            <mat-cell *matCellDef="let element">
-                                <button mat-raised-button (click)="editElement(element)" [disabled]="isBusy" type="button">
-                                    <i class="fa fa-pencil" aria-hidden="true"></i> Edit
-                                </button>
-                                <button mat-raised-button (click)="removeElement(element)" [disabled]="isBusy" type="button">
-                                    <i class="fa fa-times" aria-hidden="true"></i> Remove
-                                </button>
-                            </mat-cell>
-                        </ng-container>
-
-                        <mat-header-row *matHeaderRowDef="elementDisplayedColumns"></mat-header-row>
-                        <mat-row *matRowDef="let row; columns: elementDisplayedColumns;"></mat-row>
-                    </mat-table>
-                </div>
+            <mat-tab label="Elements" [disabled]="isEditing">
+                <element-manager *ngIf="selectedTabIndex === 1" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-manager>
             </mat-tab>
 
-            <mat-tab label="Fields">
-
-                <!-- Element field add/edit -->
-                <div *ngIf="isElementFieldEdit">
-                    <form #elementFieldForm="ngForm">
-                        <div class="g-mt-40">
-                            <div *ngIf="elementField.entityAspect.entityState.isAdded()" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('Element').length > 0 }" class="g-mt-20">
-                                <mat-form-field>
-                                    <mat-select id="ElementId" name="ElementId" placeholder="Element" [(value)]="elementField.Element">
-                                        <mat-option *ngFor="let element of project.ElementSet" [value]="element">{{ element.Name }}</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                            <div *ngIf="!elementField.entityAspect.entityState.isAdded()" class="g-mt-20">
-                                <label class="mat-body-1" for="ElementId">Element</label>
-                                <p>{{ elementField.Element.Name }}</p>
-                            </div>
-                            <div [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('Name').length > 0 }" class="g-mt-20">
-                                <mat-form-field>
-                                    <input matInput placeholder="Name" id="Name" name="Name" [(ngModel)]="elementField.Name" />
-                                </mat-form-field>
-                            </div>
-                            <div [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('DataType').length > 0 }" class="g-mt-20">
-                                <mat-form-field>
-                                    <mat-select id="DataType" name="DataType" placeholder="Data Type" [(value)]="elementField.DataType">
-                                        <mat-option [value]="elementFieldDataType.String">String</mat-option>
-                                        <mat-option [value]="elementFieldDataType.Decimal">Decimal</mat-option>
-                                        <mat-option [value]="elementFieldDataType.Element">Element</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                            <div *ngIf="elementField.DataType === elementFieldDataType.Element" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('SelectedElement').length > 0 }" class="g-mt-20">
-                                <mat-form-field>
-                                    <mat-select id="SelectedElementId" name="SelectedElementId" placeholder="Selected Element" [(value)]="elementField.SelectedElement">
-                                        <mat-option *ngFor="let element of project.ElementSet" [value]="element">{{ element.Name }}</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                            <div *ngIf="elementField.DataType === elementFieldDataType.Decimal" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('UseFixedValue').length > 0 }" class="g-mt-20">
-                                <mat-form-field>
-                                    <mat-select id="UseFixedValue" name="UseFixedValue" placeholder="Use Fixed Value" [(value)]="elementField.UseFixedValue" aria-describedby="UseFixedValueHelp">
-                                        <mat-option [value]="true">Yes</mat-option>
-                                        <mat-option [value]="false">No</mat-option>
-                                    </mat-select>
-                                    <mat-hint id="UseFixedValueHelp">
-                                        Determines whether the values of this field will contain static data or will be set by users.<br />
-                                        e.g. 'Product Price' field should use a fixed value and 'Rating' field should be set by all users.
-                                    </mat-hint>
-                                </mat-form-field>
-                            </div>
-                            <div *ngIf="elementField.DataType !== elementFieldDataType.String && elementField.DataType !== elementFieldDataType.Element" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('RatingEnabled').length > 0 }" class="g-mt-20">
-                                <mat-form-field>
-                                    <mat-select id="RatingEnabled" name="RatingEnabled" placeholder="Rating Enabled" [(value)]="elementField.RatingEnabled" aria-describedby="RatingEnabledHelp">
-                                        <mat-option [value]="true">Yes</mat-option>
-                                        <mat-option [value]="false">No</mat-option>
-                                    </mat-select>
-                                    <mat-hint id="RatingEnabledHelp">
-                                        Determines whether the users can enter ratings for this field.
-                                        e.g. Should be 'true' for 'Rating' field.
-                                    </mat-hint>
-                                </mat-form-field>
-                            </div>
-                            <div [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('SortOrder').length > 0 }" class="g-mt-20">
-                                <mat-form-field>
-                                    <input matInput placeholder="Sort Order" id="SortOrder" name="SortOrder" [(ngModel)]="elementField.SortOrder" />
-                                </mat-form-field>
-                            </div>
-                            <div *ngIf="elementField.RatingEnabled" [ngClass]="{ 'has-error': elementField.UserElementFieldSet[0].entityAspect.getValidationErrors('Rating').length > 0 }" class="g-mt-20">
-                                <mat-form-field>
-                                    <input matInput placeholder="Rating" id="Rating" name="Rating" [(ngModel)]="elementField.UserElementFieldSet[0].Rating" />
-                                </mat-form-field>
-                            </div>
-                            <div class="g-mt-20">
-                                <button mat-raised-button (click)="saveElementField()" [disabled]="submitDisabled('elementField')" type="button" color="primary">
-                                    Save Field
-                                </button>
-                                <button mat-raised-button (click)="cancelElementField()" [disabled]="isBusy" type="button">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Element field list -->
-                <div *ngIf="!isElementFieldEdit">
-
-                    <div class="g-mt-20">
-                        <mat-form-field>
-                            <mat-select placeholder="Select an element" [(value)]="selectedFilterElement">
-                                <mat-option *ngFor="let element of project.ElementSet" [value]="element">{{ element.Name }}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-
-                    <div class="g-mt-20">
-                        <button mat-raised-button (click)="addElementField()" type="button" [disabled]="project.ElementSet.length === 0">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Create New
-                        </button>
-                    </div>
-
-                    <mat-table #table [dataSource]="elementFieldDataSource" [trackBy]="trackBy" class="g-mt-20">
-
-                        <!-- Element -->
-                        <ng-container matColumnDef="element">
-                            <mat-header-cell *matHeaderCellDef> Element </mat-header-cell>
-                            <mat-cell *matCellDef="let elementField"> {{ elementField.Element.Name }} </mat-cell>
-                        </ng-container>
-
-                        <!-- Name -->
-                        <ng-container matColumnDef="name">
-                            <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-                            <mat-cell *matCellDef="let elementField"> {{ elementField.Name }} </mat-cell>
-                        </ng-container>
-
-                        <!-- DataType -->
-                        <ng-container matColumnDef="dataType">
-                            <mat-header-cell *matHeaderCellDef> Data Type </mat-header-cell>
-                            <mat-cell *matCellDef="let elementField"> {{ elementField.DataTypeText }} </mat-cell>
-                        </ng-container>
-
-                        <!-- CreatedOn -->
-                        <ng-container matColumnDef="createdOn">
-                            <mat-header-cell *matHeaderCellDef> Created On</mat-header-cell>
-                            <mat-cell *matCellDef="let elementField"> {{ elementField.CreatedOn | amTimeAgo }} </mat-cell>
-                        </ng-container>
-
-                        <!-- Functions -->
-                        <ng-container matColumnDef="functions">
-                            <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                            <mat-cell *matCellDef="let elementField">
-                                <button mat-raised-button (click)="editElementField(elementField)" type="button">
-                                    <i class="fa fa-pencil" aria-hidden="true"></i> Edit
-                                </button>
-                                <button mat-raised-button (click)="removeElementField(elementField)" [disabled]="isBusy" type="button">
-                                    <i class="fa fa-times" aria-hidden="true"></i> Remove
-                                </button>
-                            </mat-cell>
-                        </ng-container>
-
-                        <mat-header-row *matHeaderRowDef="elementFieldDisplayedColumns"></mat-header-row>
-                        <mat-row *matRowDef="let row; columns: elementFieldDisplayedColumns;"></mat-row>
-                    </mat-table>
-                </div>
-
+            <mat-tab label="Fields" [disabled]="isEditing">
+                <element-field-manager *ngIf="selectedTabIndex === 2" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-field-manager>
             </mat-tab>
 
-            <mat-tab label="Items">
-
-                <!-- Element item add/edit -->
-                <div *ngIf="isElementItemEdit">
-                    <form #elementItemForm="ngForm">
-                        <div class="g-mt-40">
-                            <div *ngIf="elementItem.entityAspect.entityState.isAdded()" [ngClass]="{ 'has-error': elementItem.entityAspect.getValidationErrors('Element').length > 0 }" class="g-mt-20">
-                                <mat-form-field>
-                                    <mat-select id="ElementId" name="ElementId" placeholder="Element" [(value)]="elementItem.Element">
-                                        <mat-option *ngFor="let element of project.ElementSet" [value]="element">{{ element.Name }}</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                            <div *ngIf="!elementItem.entityAspect.entityState.isAdded()">
-                                <label class="mat-body-1" for="ElementId">Element</label>
-                                <p>{{ elementItem.Element.Name }}</p>
-                            </div>
-                            <div [ngClass]="{ 'has-error': elementItem.entityAspect.getValidationErrors('Name').length > 0 }" class="g-mt-20">
-                                <mat-form-field>
-                                    <input matInput placeholder="Name" id="Name" name="Name" [(ngModel)]="elementItem.Name" />
-                                </mat-form-field>
-                            </div>
-                            <div class="g-mt-20">
-                                <button mat-raised-button (click)="saveElementItem()" [disabled]="submitDisabled('elementItem')" type="button" color="primary">
-                                    Save Item
-                                </button>
-                                <button mat-raised-button (click)="cancelElementItem()" [disabled]="isBusy" type="button">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Element item list -->
-                <div *ngIf="!isElementItemEdit">
-
-                    <div class="g-mt-20">
-                        <mat-form-field>
-                            <mat-select placeholder="Select an element" [(value)]="selectedFilterElement">
-                                <mat-option *ngFor="let element of project.ElementSet" [value]="element">{{ element.Name }}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-
-                    <div class="g-mt-20">
-                        <button mat-raised-button (click)="addElementItem()" type="button" [disabled]="project.ElementSet.length === 0">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Create New
-                        </button>
-                    </div>
-
-                    <mat-table #table [dataSource]="elementItemDataSource" [trackBy]="trackBy" class="g-mt-20">
-
-                        <!-- Element -->
-                        <ng-container matColumnDef="element">
-                            <mat-header-cell *matHeaderCellDef> Element </mat-header-cell>
-                            <mat-cell *matCellDef="let elementItem"> {{ elementItem.Element.Name }} </mat-cell>
-                        </ng-container>
-
-                        <!-- Name -->
-                        <ng-container matColumnDef="name">
-                            <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-                            <mat-cell *matCellDef="let elementItem"> {{ elementItem.Name }} </mat-cell>
-                        </ng-container>
-
-                        <!-- CreatedOn -->
-                        <ng-container matColumnDef="createdOn">
-                            <mat-header-cell *matHeaderCellDef> Created On</mat-header-cell>
-                            <mat-cell *matCellDef="let elementItem"> {{ elementItem.CreatedOn | amTimeAgo }} </mat-cell>
-                        </ng-container>
-
-                        <!-- Functions -->
-                        <ng-container matColumnDef="functions">
-                            <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                            <mat-cell *matCellDef="let elementItem">
-                                <button mat-raised-button (click)="editElementItem(elementItem)" type="button">
-                                    <i class="fa fa-pencil" aria-hidden="true"></i> Edit
-                                </button>
-                                <button mat-raised-button (click)="removeElementItem(elementItem)" [disabled]="isBusy" type="button">
-                                    <i class="fa fa-times" aria-hidden="true"></i> Remove
-                                </button>
-                            </mat-cell>
-                        </ng-container>
-
-                        <mat-header-row *matHeaderRowDef="elementItemDisplayedColumns"></mat-header-row>
-                        <mat-row *matRowDef="let row; columns: elementItemDisplayedColumns;"></mat-row>
-                    </mat-table>
-                </div>
-
+            <mat-tab label="Items" [disabled]="isEditing">
+                <element-item-manager *ngIf="selectedTabIndex === 3" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-item-manager>
             </mat-tab>
 
-            <mat-tab label="Cells">
-
-                <div *ngIf="isElementCellEdit">
-                    <form #elementCellForm="ngForm">
-                        <div class="g-mt-40">
-                            <div class="g-mt-20">
-                                <label>Element</label>
-                                <p>{{ elementCell.ElementField.Element.Name }}</p>
-                            </div>
-                            <div class="g-mt-20">
-                                <label>Element Field</label>
-                                <p>{{ elementCell.ElementField.Name }}</p>
-                            </div>
-                            <div class="g-mt-20">
-                                <label>Element Item</label>
-                                <p>{{ elementCell.ElementItem.Name }}</p>
-                            </div>
-                            <div *ngIf="elementCell.ElementField.DataType === elementFieldDataType.String" [ngClass]="{ 'has-error': elementCell.entityAspect.getValidationErrors('StringValue').length > 0 }" class="g-mt-20">
-                                <mat-form-field>
-                                    <input matInput placeholder="Value" id="StringValue" name="StringValue" [(ngModel)]="elementCell.StringValue" />
-                                </mat-form-field>
-                            </div>
-                            <div *ngIf="elementCell.ElementField.DataType === elementFieldDataType.Decimal" [ngClass]="{ 'has-error': elementCell.UserElementCellSet[0].entityAspect.getValidationErrors('DecimalValue').length > 0 }" class="g-mt-20">
-                                <mat-form-field>
-                                    <input matInput placeholder="Value" id="DecimalValue" name="DecimalValue" [(ngModel)]="elementCell.UserElementCellSet[0].DecimalValue" />
-                                </mat-form-field>
-                            </div>
-                            <div *ngIf="elementCell.ElementField.DataType === elementFieldDataType.Element" [ngClass]="{ 'has-error': elementCell.entityAspect.getValidationErrors('SelectedItem').length > 0 }" class="g-mt-20">
-                                <mat-form-field>
-                                    <mat-select id="SelectedElementItemId" name="SelectedElementItemId" placeholder="Selected Item" [(value)]="elementCell.SelectedElementItem">
-                                        <mat-option *ngFor="let elementItem of elementCell.ElementField.SelectedElement.ElementItemSet" [value]="elementItem">{{ elementItem.Name }}</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                            <div class="g-mt-20">
-                                <button mat-raised-button (click)="saveElementCell()" [disabled]="submitDisabled('elementCell')" type="button" color="primary">
-                                    Save Cell
-                                </button>
-                                <button mat-raised-button (click)="cancelElementCell()" [disabled]="isBusy" type="button">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Element cell list -->
-                <div *ngIf="!isElementCellEdit">
-
-                    <div class="cellFilterContainer g-mt-20">
-                        <mat-form-field>
-                            <mat-select placeholder="Select an element" [(value)]="selectedFilterElement">
-                                <mat-option *ngFor="let element of project.ElementSet" [value]="element">{{ element.Name }}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-
-                        <mat-form-field>
-                            <mat-select placeholder="Select a field" [(value)]="selectedFilterElementField">
-                                <mat-option *ngFor="let elementField of selectedFilterElement?.ElementFieldSet" [value]="elementField">{{ elementField.Name }}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-
-                    <mat-table #table [dataSource]="elementCellDataSource" [trackBy]="trackBy" class="g-mt-20">
-
-                        <!-- ElementItem -->
-                        <ng-container matColumnDef="elementItem">
-                            <mat-header-cell *matHeaderCellDef> Item </mat-header-cell>
-                            <mat-cell *matCellDef="let elementCell"> {{ elementCell.ElementItem.Name }} </mat-cell>
-                        </ng-container>
-
-                        <!-- Value -->
-                        <ng-container matColumnDef="value">
-                            <mat-header-cell *matHeaderCellDef> Value </mat-header-cell>
-                            <mat-cell *matCellDef="let elementCell">
-                                <span *ngIf="elementCell.ElementField.DataType === elementFieldDataType.String">
-                                    {{ elementCell.StringValue }}
-                                </span>
-                                <span *ngIf="elementCell.ElementField.DataType === elementFieldDataType.Decimal">
-                                    {{ elementCell.UserElementCellSet[0] ? elementCell.UserElementCellSet[0].DecimalValue : "N/A" }}
-                                </span>
-                                <span *ngIf="elementCell.ElementField.DataType === elementFieldDataType.Element">
-                                    {{ elementCell.SelectedElementItem ? elementCell.SelectedElementItem.Name : "N/A" }}
-                                </span>
-                            </mat-cell>
-                        </ng-container>
-
-                        <!-- CreatedOn -->
-                        <ng-container matColumnDef="createdOn">
-                            <mat-header-cell *matHeaderCellDef> Created On</mat-header-cell>
-                            <mat-cell *matCellDef="let elementCell"> {{ elementCell.CreatedOn | amTimeAgo }} </mat-cell>
-                        </ng-container>
-
-                        <!-- Functions -->
-                        <ng-container matColumnDef="functions">
-                            <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                            <mat-cell *matCellDef="let elementCell">
-                                <button mat-raised-button (click)="editElementCell(elementCell)" type="button">
-                                    <i class="fa fa-pencil" aria-hidden="true"></i> Edit
-                                </button>
-                            </mat-cell>
-                        </ng-container>
-
-                        <mat-header-row *matHeaderRowDef="elementCellDisplayedColumns"></mat-header-row>
-                        <mat-row *matRowDef="let row; columns: elementCellDisplayedColumns;"></mat-row>
-                    </mat-table>
-                </div>
-
+            <mat-tab label="Cells" [disabled]="isEditing">
+                <element-cell-manager *ngIf="selectedTabIndex === 4" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-cell-manager>
             </mat-tab>
         </mat-tab-group>
 

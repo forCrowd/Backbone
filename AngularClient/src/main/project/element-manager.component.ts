@@ -1,6 +1,8 @@
-﻿import { Component, EventEmitter, Input, Output } from "@angular/core";
+﻿import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { MatTableDataSource } from "@angular/material";
 
 import { Element } from "../core/entities/element";
+import { Project } from "../core/entities/project";
 import { ProjectService } from "../core/core.module";
 
 @Component({
@@ -8,11 +10,32 @@ import { ProjectService } from "../core/core.module";
     templateUrl: "element-manager.component.html",
     styleUrls: ["element-manager.component.css"]
 })
-export class ElementManagerComponent {
+export class ElementManagerComponent implements OnInit {
 
-    @Input() element: Element;
-    @Output() cancelled = new EventEmitter();
-    @Output() saved = new EventEmitter();
+    @Input() project: Project = null;
+    @Output() isEditingChanged = new EventEmitter<boolean>();
+
+    elementDataSource = new MatTableDataSource<Element>([]);
+    elementDisplayedColumns = ["name", "createdOn", "functions"];
+
+    get selectedElement(): Element {
+        return this.fields.selectedElement;
+    }
+    set selectedElement(value: Element) {
+        if (this.fields.selectedElement !== value) {
+            this.fields.selectedElement = value;
+
+            this.isEditingChanged.emit(value ? true : false);
+        }
+    }
+
+    private fields: {
+        project: Project,
+        selectedElement: Element,
+    } = {
+        project: null,
+        selectedElement: null,
+    }
 
     get isBusy(): boolean {
         return this.projectService.isBusy;
@@ -20,18 +43,48 @@ export class ElementManagerComponent {
 
     constructor(private projectService: ProjectService) { }
 
-    cancelElement() {
-        this.element.rejectChanges();
-        this.cancelled.emit();
+    addElement(): void {
+        this.selectedElement = this.projectService.createElement({
+            Project: this.project,
+            Name: "New element"
+        }) as Element;
     }
 
-    saveElement() {
+    cancelElement(): void {
+        this.projectService.rejectChangesElement(this.selectedElement);
+        this.selectedElement = null;
+    }
+
+    editElement(element: Element): void {
+        this.selectedElement = element;
+    }
+
+    ngOnInit(): void {
+        this.elementDataSource.data = this.project.ElementSet;
+    }
+
+    removeElement(element: Element): void {
+
+        this.elementDataSource.data = null;
+        this.projectService.removeElement(element);
+        
+        this.projectService.saveChanges()
+            .finally(() => {
+                this.elementDataSource.data = this.project.ElementSet;
+            }).subscribe();
+    }
+
+    saveElement(): void {
         this.projectService.saveChanges().subscribe(() => {
-            this.saved.emit();
+            this.selectedElement = null;
         });
     }
 
-    submitDisabled() {
-        return this.isBusy || this.element.entityAspect.getValidationErrors().length > 0;
+    submitDisabled(): boolean {
+        return this.isBusy || this.selectedElement.entityAspect.getValidationErrors().length > 0;
+    }
+
+    trackBy(index: number, element: Element) {
+        return element.Id;
     }
 }

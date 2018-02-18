@@ -38,7 +38,7 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
 
         [Required]
         [StringLength(50)]
-        public string Name { get; set; }
+        public string Name { get => name; set => name = value.Trim(); }
 
         // Can't use Enum itself, OData v3 doesn't allow it:
         // System.Runtime.Serialization.SerializationException 'forCrowd.Backbone.BusinessObjects.ElementFieldDataType' cannot be serialized using the ODataMediaTypeFormatter.
@@ -64,5 +64,7 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
         public virtual Element SelectedElement { get; set; }
         public virtual ICollection<ElementCell> ElementCellSet { get; set; }
         public virtual ICollection<UserElementField> UserElementFieldSet { get; set; }
+
+        string name;
     }
 }

@@ -9,25 +9,10 @@ export class User extends EntityBase {
 
     // Server-side
     Id = 0;
-    Email = "";
     EmailConfirmed = false;
     EmailConfirmationSentOn: Date | null;
-    get UserName(): string {
-        return this.fields.userName;
-    }
-    set UserName(value: string) {
-        const newValue = stripInvalidChars(value);
-
-        if (this.fields.userName !== newValue) {
-            this.fields.userName = newValue;
-        }
-    }
-
     SingleUseToken: string = null;
     HasPassword = false;
-    FirstName = "";
-    MiddleName = "";
-    LastName = "";
     PhoneNumber = "";
     PhoneNumberConfirmed = false;
     TwoFactorEnabled = false;
@@ -41,6 +26,41 @@ export class User extends EntityBase {
     ProjectSet: Project[];
     UserElementFieldSet: UserElementField[];
     UserElementCellSet: UserElementCell[];
+
+    get Email(): string {
+        return this.fields.email;
+    }
+    set Email(value: string) {
+        this.fields.email = value.trim();
+    }
+
+    get FirstName(): string {
+        return this.fields.firstName;
+    }
+    set FirstName(value: string) {
+        this.fields.firstName = value ? value.trim() : null;
+    }
+
+    get MiddleName(): string {
+        return this.fields.middleName;
+    }
+    set MiddleName(value: string) {
+        this.fields.middleName = value ? value.trim() : null;
+    }
+
+    get LastName(): string {
+        return this.fields.lastName;
+    }
+    set LastName(value: string) {
+        this.fields.lastName = value ? value.trim() : null;
+    }
+
+    get UserName(): string {
+        return this.fields.userName;
+    }
+    set UserName(value: string) {
+        this.fields.userName = stripInvalidChars(value);
+    }
 
     get userText(): string {
 
@@ -58,22 +78,19 @@ export class User extends EntityBase {
     }
 
     private fields: {
-        userName: string
+        email: string,
+        firstName: string,
+        lastName: string,
+        middleName: string,
+        userName: string,
     } = {
-        userName: ""
+        email: "",
+        firstName: null,
+        lastName: null,
+        middleName: null,
+        userName: "",
     };
 
-    getProjectSetSorted(): Project[] {
-        return this.ProjectSet.sort((a, b) => {
-            const nameA = a.Name.toLowerCase();
-            const nameB = b.Name.toLowerCase();
-            if (nameA < nameB) { return -1 };
-            if (nameA > nameB) { return 1 };
-            return 0;
-        });
-    }
-
-    // Functions
     isAuthenticated(): boolean {
         return this.Id > 0;
     }

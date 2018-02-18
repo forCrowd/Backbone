@@ -19,7 +19,7 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
         [Index("UX_ElementCell_ElementFieldId_ElementItemId", 2, IsUnique = true)]
         public int ElementItemId { get; set; }
 
-        public string StringValue { get; set; }
+        public string StringValue { get => stringValue; set => stringValue = value?.Trim(); }
 
         public decimal DecimalValueTotal { get; set; }
         public int DecimalValueCount { get; set; }
@@ -34,5 +34,7 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
         public virtual ElementItem SelectedElementItem { get; set; }
         public virtual ICollection<UserElementCell> UserElementCellSet { get; set; }
         public UserElementCell UserElementCell => UserElementCellSet.SingleOrDefault();
+
+        string stringValue;
     }
 }

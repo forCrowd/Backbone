@@ -3,14 +3,16 @@
 
 <div class="container g-mt-20">
 
-    <div class="searchInput">
-        <mat-form-field>
-            <input matInput placeholder="Enter a project or user name" [(ngModel)]="searchKey">
-        </mat-form-field>
-        <button mat-icon-button type="submit" (click)="search()">
-            <i class="material-icons">search</i>
-        </button>
-    </div>
+    <form #searchForm="ngForm" autocomplete="off">
+        <div class="searchInput">
+            <mat-form-field>
+                <input matInput id="searchKey" name="searchKey" placeholder="Enter a project or user name" [(ngModel)]="searchKey">
+            </mat-form-field>
+            <button mat-icon-button type="submit" (click)="search()">
+                <i class="material-icons">search</i>
+            </button>
+        </div>
+    </form>
 
     <mat-progress-bar mode="indeterminate" [hidden]="!isBusy"></mat-progress-bar>
 

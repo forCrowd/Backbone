@@ -6,6 +6,8 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
 {
     public class Role : IdentityRole<int, UserRole>, IEntity
     {
+        public new string Name { get => name; set => name = value.Trim(); }
+
         public DateTime CreatedOn { get; set; }
 
         public DateTime ModifiedOn { get; set; }
@@ -14,5 +16,7 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
 
         [Timestamp]
         public byte[] RowVersion { get; set; }
+
+        string name;
     }
 }

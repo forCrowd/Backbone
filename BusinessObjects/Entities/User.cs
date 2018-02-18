@@ -19,12 +19,14 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
             : this()
         {
             Validations.ArgumentNullOrDefault(userName, nameof(userName));
-            // TODO Valid email address check?
             Validations.ArgumentNullOrDefault(email, nameof(email));
 
             UserName = userName;
             Email = email;
         }
+
+        public override string UserName { get => base.UserName; set => base.UserName = value.Trim(); }
+        public override string Email { get => base.Email; set => base.Email = value.Trim(); }
 
         public DateTime? EmailConfirmationSentOn { get; set; }
 
@@ -41,13 +43,13 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
         public string SingleUseToken { get; set; }
 
         [StringLength(50)]
-        public string FirstName { get; set; }
+        public string FirstName { get => firstName; set => firstName = value?.Trim(); }
 
         [StringLength(50)]
-        public string MiddleName { get; set; }
+        public string MiddleName { get => middleName; set => middleName = value?.Trim(); }
 
         [StringLength(50)]
-        public string LastName { get; set; }
+        public string LastName { get => lastName; set => lastName = value?.Trim(); }
 
         public string Notes { get; set; }
 
@@ -72,7 +74,7 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
         public void ResetValues()
         {
             AccessFailedCount = default(int);
-            Email = default(string);
+            Email = string.Empty;
             EmailConfirmed = default(bool);
             EmailConfirmationSentOn = null;
             LockoutEnabled = default(bool);
@@ -94,5 +96,9 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
             DeletedOn = default(DateTime?);
             RowVersion = new byte[] { };
         }
+
+        string firstName;
+        string middleName;
+        string lastName;
     }
 }

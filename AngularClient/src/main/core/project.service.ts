@@ -19,7 +19,7 @@ import { getUniqueValue } from "../shared/utils";
 @Injectable()
 export class ProjectService {
 
-    get isBusy(): boolean { 
+    get isBusy(): boolean {
         return this.appEntityManager.isBusy || this.busyInterceptor.isBusy || this.isBusyLocal;
     }
 
@@ -41,37 +41,11 @@ export class ProjectService {
     }
 
     createElementCell(initialValues: Object) {
-
-        const elementCell = this.appEntityManager.createEntity("ElementCell", initialValues) as ElementCell;
-
-        // User element cell
-        if (elementCell.ElementField.DataType === ElementFieldDataType.Decimal) {
-            elementCell.DecimalValueTotal = 50;
-            elementCell.DecimalValueCount = 1;
-
-            this.createUserElementCell(elementCell, null);
-        }
-
-        return elementCell;
+        return this.appEntityManager.createEntity("ElementCell", initialValues) as ElementCell;
     }
 
     createElementField(initialValues: Object) {
-
-        const elementField = this.appEntityManager.createEntity("ElementField", initialValues) as ElementField;
-
-        if (elementField.RatingEnabled) {
-            elementField.RatingTotal = 50; // Computed field
-            elementField.RatingCount = 1; // Computed field
-
-            this.createUserElementField(elementField);
-        }
-
-        // Todo Is there a better way of doing this? / coni2k - 25 Feb. '17
-        // Event handlers
-        elementField.dataTypeChanged.subscribe(elementField => { this.elementField_DataTypeChanged(elementField); });
-        elementField.ratingEnabledChanged.subscribe(elementField => { this.elementField_RatingEnabledChanged(elementField); });
-
-        return elementField;
+        return this.appEntityManager.createEntity("ElementField", initialValues) as ElementField;
     }
 
     createElementItem(initialValues: Object): ElementItem {
@@ -137,103 +111,6 @@ export class ProjectService {
         return project;
     }
 
-    createUserElementCell(elementCell: ElementCell, value: any) {
-
-        // Search for an existing entity: deleted but not synced with remote entities are still in metadataStore
-        const existingKey = [this.authService.currentUser.Id, elementCell.Id];
-        let userElementCell = this.appEntityManager.getEntityByKey("UserElementCell", existingKey) as UserElementCell;
-
-        if (userElementCell) {
-
-            // If it's deleted, restore it
-            if (userElementCell.entityAspect.entityState.isDeleted()) {
-                userElementCell.entityAspect.rejectChanges();
-            }
-
-            switch (elementCell.ElementField.DataType) {
-                case ElementFieldDataType.String: { break; }
-                case ElementFieldDataType.Decimal: { userElementCell.DecimalValue = value !== null ? value : 50; break; }
-                case ElementFieldDataType.Element: { break; }
-            }
-
-        } else {
-
-            const userElementCellInitial = {
-                User: this.authService.currentUser,
-                ElementCell: elementCell
-            } as any;
-
-            switch (elementCell.ElementField.DataType) {
-                case ElementFieldDataType.String: { break; }
-                case ElementFieldDataType.Decimal: { userElementCellInitial.DecimalValue = value !== null ? value : 50; break; }
-                case ElementFieldDataType.Element: { break; }
-            }
-
-            userElementCell = this.appEntityManager.createEntity("UserElementCell", userElementCellInitial) as UserElementCell;
-        }
-
-        return userElementCell;
-    }
-
-    createUserElementField(elementField: ElementField, rating: number = 50) {
-
-        // Search for an existing entity: deleted but not synced with remote entities are still in metadataStore
-        const existingKey = [this.authService.currentUser.Id, elementField.Id];
-        let userElementField = this.appEntityManager.getEntityByKey("UserElementField", existingKey) as UserElementField;
-
-        if (userElementField) {
-
-            // If it's deleted, restore it
-            if (userElementField.entityAspect.entityState.isDeleted()) {
-                userElementField.entityAspect.rejectChanges();
-            }
-
-            userElementField.Rating = rating;
-
-        } else {
-
-            const userElementFieldInitial = {
-                User: this.authService.currentUser,
-                ElementField: elementField,
-                Rating: rating
-            };
-
-            userElementField = this.appEntityManager.createEntity("UserElementField", userElementFieldInitial) as UserElementField;
-        }
-
-        return userElementField;
-    }
-
-    elementField_DataTypeChanged(elementField: ElementField) {
-
-        // Related element cells: Clear old values and set default values if necessary
-        elementField.ElementCellSet.forEach(elementCell => {
-
-            elementCell.SelectedElementItem = null;
-            elementCell.StringValue = "";
-
-            if (elementCell.UserElementCellSet[0]) {
-                elementCell.UserElementCellSet[0].entityAspect.setDeleted();
-            }
-
-            if (elementCell.ElementField.DataType === ElementFieldDataType.Decimal) {
-                this.createUserElementCell(elementCell, null);
-            }
-        });
-    }
-
-    elementField_RatingEnabledChanged(elementField: ElementField) {
-
-        // Add user element field, if RatingEnabled and there is none
-        if (elementField.RatingEnabled && !elementField.UserElementFieldSet[0]) {
-            this.createUserElementField(elementField);
-        } else if (!elementField.RatingEnabled && elementField.UserElementFieldSet[0]) {
-            if (elementField.UserElementFieldSet[0]) {
-                elementField.UserElementFieldSet[0].entityAspect.setDeleted();
-            }
-        }
-    }
-
     getProjectExpanded(projectId: number, forceRefresh = false) {
 
         // Prepare the query
@@ -246,25 +123,7 @@ export class ProjectService {
 
         return this.appEntityManager.executeQueryObservable<Project>(query, forceRefresh)
             .map(response => {
-
-                // If there is no project with this Id, return null
-                if (response.results.length === 0) {
-                    return null;
-                }
-
-                // Project
-                var project = response.results[0];
-
-                // Todo Is there a better way of doing this? / coni2k - 25 Feb. '17
-                // Events handlers
-                project.ElementSet.forEach(element => {
-                    element.ElementFieldSet.forEach(elementField => {
-                        elementField.dataTypeChanged.subscribe(elementField => { this.elementField_DataTypeChanged(elementField); });
-                        elementField.ratingEnabledChanged.subscribe(elementField => { this.elementField_RatingEnabledChanged(elementField); });
-                    });
-                });
-
-                return project;
+                return response.results[0] || null;
             });
     }
 
@@ -305,6 +164,92 @@ export class ProjectService {
         this.appEntityManager.rejectChanges();
     }
 
+    rejectChangesElement(element: Element): void {
+        element.entityAspect.rejectChanges();
+    }
+
+    rejectChangesElementCell(elementCell: ElementCell): void {
+
+        if (elementCell.UserElementCellSet[0]) {
+            elementCell.UserElementCellSet[0].entityAspect.rejectChanges();
+        }
+
+        elementCell.entityAspect.rejectChanges();
+    }
+
+    rejectChangesElementField(elementField: ElementField): void {
+        elementField.entityAspect.rejectChanges();
+    }
+
+    rejectChangesElementItem(elementItem: ElementItem): void {
+        elementItem.entityAspect.rejectChanges();
+    }
+
+    removeElement(element: Element) {
+
+        // Related items
+        const elementItemSet = element.ElementItemSet.slice();
+        elementItemSet.forEach(elementItem => {
+            this.removeElementItem(elementItem);
+        });
+
+        // Related fields
+        const elementFieldSet = element.ElementFieldSet.slice();
+        elementFieldSet.forEach(elementField => {
+            this.removeElementField(elementField);
+        });
+
+        element.entityAspect.setDeleted();
+    }
+
+    removeElementField(elementField: ElementField) {
+
+        const element = elementField.Element;
+
+        const elementCellSet = elementField.ElementCellSet.slice();
+        elementCellSet.forEach(elementCell => {
+            this.removeElementCell(elementCell);
+        });
+
+        // User element field
+        if (elementField.UserElementFieldSet[0]) {
+            elementField.UserElementFieldSet[0].entityAspect.setDeleted();
+        }
+
+        elementField.entityAspect.setDeleted();
+
+        // Update related
+        element.setRating();
+    }
+
+    removeElementItem(elementItem: ElementItem) {
+
+        const element = elementItem.Element;
+
+        const elementCellSet = elementItem.ElementCellSet.slice();
+        elementCellSet.forEach(elementCell => {
+            this.removeElementCell(elementCell);
+        });
+
+        elementItem.entityAspect.setDeleted();
+
+        // Update related
+        element.ElementFieldSet.forEach(field => {
+            field.setDecimalValue();
+        });
+    }
+
+    removeProject(project: Project) {
+
+        // Related elements
+        const elementSet = project.ElementSet.slice();
+        elementSet.forEach(element => {
+            this.removeElement(element);
+        });
+
+        project.entityAspect.setDeleted();
+    }
+
     saveChanges(): Observable<void> {
         this.isBusyLocal = true;
         return this.authService.ensureAuthenticatedUser()
@@ -316,73 +261,57 @@ export class ProjectService {
             });
     }
 
-    // These "updateX" functions were defined in their related entities (user.js).
-    // Only because they had to use createEntity() on dataService, it was moved to this service.
-    // Try do handle them in a better way, maybe by using broadcast?
+    // Todo Improve these later on (merge into saveChanges() itself?) / coni2k - 19 Feb. '18
+    saveElementField(elementField: ElementField): Observable<void> {
+
+        // Related cells
+        if (elementField.ElementCellSet.length === 0) {
+            elementField.Element.ElementItemSet.forEach(elementItem => {
+                this.createElementCell({
+                    ElementField: elementField,
+                    ElementItem: elementItem
+                });
+            });
+        }
+
+        return this.saveChanges()
+            .map(() => {
+                elementField.Element.setRating(); // Update related
+            });
+    }
+
+    // Todo Improve these later on (merge into saveChanges() itself?) / coni2k - 19 Feb. '18
+    saveElementItem(elementItem: ElementItem): Observable<void> {
+
+        // Related cells
+        if (elementItem.ElementCellSet.length === 0) {
+            elementItem.Element.ElementFieldSet.forEach(elementField => {
+                this.createElementCell({
+                    ElementField: elementField,
+                    ElementItem: elementItem
+                });
+            });
+        }
+
+        return this.saveChanges();
+    }
+
     updateElementCellDecimalValue(elementCell: ElementCell, value: number) {
-
-        const userElementCell = elementCell.UserElementCellSet[0];
-
-        if (!userElementCell) { // If there is no item, create it
-
-            this.createUserElementCell(elementCell, value);
-
-        } else { // If there is an item, update DecimalValue, but cannot be smaller than zero and cannot be bigger than 100
-
-            userElementCell.DecimalValue = value;
-
-        }
-    }
-
-    updateElementFieldRatingNew(elementField: ElementField, value: number) {
-
-        // If there is no item, create it
-        if (!elementField.UserElementFieldSet[0]) {
-
-            this.createUserElementField(elementField, value);
-
-        } else { // If there is an item, set the Rating
-
-            elementField.UserElementFieldSet[0].Rating = value;
-
-        }
-    }
-
-    updateElementFieldRating(elementField: ElementField, updateType: string) {
-
-        switch (updateType) {
-            case "increase":
-            case "decrease": {
-
-                const userElementField = elementField.UserElementFieldSet[0];
-
-                // If there is no item, create it
-                if (!userElementField) {
-
-                    const rating = updateType === "increase" ? 55 : 45;
-                    this.createUserElementField(elementField, rating);
-
-                } else { // If there is an item, update Rating, but cannot be smaller than zero and cannot be bigger than 100
-
-                    userElementField.Rating = updateType === "increase" ?
-                        userElementField.Rating + 5 > 100 ? 100 : userElementField.Rating + 5 :
-                        userElementField.Rating - 5 < 0 ? 0 : userElementField.Rating - 5;
-                }
-
-                break;
-            }
-            case "reset": {
-
-                if (elementField.UserElementFieldSet[0]) {
-                    elementField.UserElementFieldSet[0].Rating = 50;
-                }
-
-                break;
-            }
-        }
+        // Todo Implement!
     }
 
     private getUpdateComputedFieldsUrl(projectId: number) {
         return `${AppSettings.serviceApiUrl}/ProjectApi/${projectId}/UpdateComputedFields`;
+    }
+
+    private removeElementCell(elementCell: ElementCell): void {
+
+        // User element cell
+        if (elementCell.UserElementCellSet[0]) {
+            elementCell.UserElementCellSet[0].entityAspect.setDeleted();
+        }
+
+        // Cell
+        elementCell.entityAspect.setDeleted();
     }
 }

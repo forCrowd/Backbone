@@ -13,13 +13,31 @@ export enum RatingMode {
 export class Project extends EntityBase {
 
     // Server-side
-    Id: number = 0;
+    Id = 0;
     User: User;
-    Name = "";
-    Origin = "";
-    Description = "";
     RatingCount = 0;
     ElementSet: Element[];
+
+    get Name(): string {
+        return this.fields.name;
+    }
+    set Name(value: string) {
+        this.fields.name = value.trim();
+    }
+
+    get Origin(): string {
+        return this.fields.origin;
+    }
+    set Origin(value: string) {
+        this.fields.origin = value.trim();
+    }
+
+    get Description(): string {
+        return this.fields.description;
+    }
+    set Description(value: string) {
+        this.fields.description = value ? value.trim() : null;
+    }
 
     // Client-side
     get RatingMode(): RatingMode {
@@ -35,8 +53,14 @@ export class Project extends EntityBase {
     ratingModeUpdated = new Subject<RatingMode>();
 
     private fields: {
+        description: string,
+        name: string,
+        origin: string,
         ratingMode: number,
     } = {
+        description: null,
+        name: "",
+        origin: "",
         ratingMode: RatingMode.CurrentUser,
     };
 
@@ -48,17 +72,6 @@ export class Project extends EntityBase {
         });
 
         return true;
-    }
-
-    remove() {
-
-        // Related elements
-        const elementSet = this.ElementSet.slice();
-        elementSet.forEach(element => {
-            element.remove();
-        });
-
-        this.entityAspect.setDeleted();
     }
 
     toggleRatingMode() {

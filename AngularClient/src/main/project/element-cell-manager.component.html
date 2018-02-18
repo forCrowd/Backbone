@@ -1,0 +1,106 @@
+﻿<div *ngIf="project">
+
+    <!-- Element cell list -->
+    <div *ngIf="!selectedElementCell">
+        <div class="cellFilterContainer g-mt-20">
+            <mat-form-field>
+                <mat-select placeholder="Select an element" [(value)]="elementFilter">
+                    <mat-option *ngFor="let element of project.ElementSet" [value]="element">{{ element.Name }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-select placeholder="Select a field" [(value)]="elementFieldFilter">
+                    <mat-option *ngFor="let elementField of elementFilter?.ElementFieldSet" [value]="elementField">{{ elementField.Name }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <mat-table #table [dataSource]="elementCellDataSource" [trackBy]="trackBy" class="g-mt-20">
+
+            <ng-container matColumnDef="elementItem">
+                <mat-header-cell *matHeaderCellDef> Item </mat-header-cell>
+                <mat-cell *matCellDef="let cell"> {{ cell.ElementItem.Name }} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="value">
+                <mat-header-cell *matHeaderCellDef> Value </mat-header-cell>
+                <mat-cell *matCellDef="let cell">
+                    <span *ngIf="cell.ElementField.DataType === elementFieldDataType.String">
+                        {{ cell.StringValue }}
+                    </span>
+                    <span *ngIf="cell.ElementField.DataType === elementFieldDataType.Decimal">
+                        {{ cell.UserElementCellSet[0] ? cell.UserElementCellSet[0].DecimalValue : "N/A" }}
+                    </span>
+                    <span *ngIf="cell.ElementField.DataType === elementFieldDataType.Element">
+                        {{ cell.SelectedElementItem ? cell.SelectedElementItem.Name : "N/A" }}
+                    </span>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="createdOn">
+                <mat-header-cell *matHeaderCellDef> Created On</mat-header-cell>
+                <mat-cell *matCellDef="let cell"> {{ cell.CreatedOn | amTimeAgo }} </mat-cell>
+            </ng-container>
+
+            <!-- Functions -->
+            <ng-container matColumnDef="functions">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let cell">
+                    <button mat-raised-button (click)="editElementCell(cell)" type="button">
+                        <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="elementCellDisplayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: elementCellDisplayedColumns;"></mat-row>
+        </mat-table>
+    </div>
+
+    <!-- Element cell edit -->
+    <div *ngIf="selectedElementCell">
+        <form #elementCellForm="ngForm" autocomplete="off">
+            <div class="g-mt-40">
+                <div class="g-mt-20">
+                    <label>Element</label>
+                    <p>{{ selectedElementCell.ElementField.Element.Name }}</p>
+                </div>
+                <div class="g-mt-20">
+                    <label>Element Field</label>
+                    <p>{{ selectedElementCell.ElementField.Name }}</p>
+                </div>
+                <div class="g-mt-20">
+                    <label>Element Item</label>
+                    <p>{{ selectedElementCell.ElementItem.Name }}</p>
+                </div>
+                <div *ngIf="selectedElementCell.ElementField.DataType === elementFieldDataType.String" [ngClass]="{ 'has-error': selectedElementCell.entityAspect.getValidationErrors('StringValue').length > 0 }" class="g-mt-20">
+                    <mat-form-field>
+                        <input matInput placeholder="Value" id="StringValue" name="StringValue" [(ngModel)]="selectedElementCell.StringValue" />
+                    </mat-form-field>
+                </div>
+                <div *ngIf="selectedElementCell.ElementField.DataType === elementFieldDataType.Decimal" [ngClass]="{ 'has-error': selectedElementCell.UserElementCellSet[0].entityAspect.getValidationErrors('DecimalValue').length > 0 }" class="g-mt-20">
+                    <mat-form-field>
+                        <input matInput placeholder="Value" id="DecimalValue" name="DecimalValue" [(ngModel)]="selectedElementCell.UserElementCellSet[0].DecimalValue" />
+                    </mat-form-field>
+                </div>
+                <div *ngIf="selectedElementCell.ElementField.DataType === elementFieldDataType.Element" [ngClass]="{ 'has-error': selectedElementCell.entityAspect.getValidationErrors('SelectedItem').length > 0 }" class="g-mt-20">
+                    <mat-form-field>
+                        <mat-select id="SelectedElementItemId" name="SelectedElementItemId" placeholder="Selected Item" [(value)]="selectedElementCell.SelectedElementItem">
+                            <mat-option *ngFor="let elementItem of selectedElementCell.ElementField.SelectedElement.ElementItemSet" [value]="elementItem">{{ elementItem.Name }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="g-mt-20">
+                    <button mat-raised-button (click)="saveElementCell()" [disabled]="submitDisabled()" type="button" color="primary">
+                        Save cell
+                    </button>
+                    <button mat-raised-button (click)="cancelElementCell()" [disabled]="isBusy" type="button">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>

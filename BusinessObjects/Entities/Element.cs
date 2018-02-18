@@ -32,7 +32,7 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
 
         [Required]
         [StringLength(50)]
-        public string Name { get; set; }
+        public string Name { get => name; set => name = value.Trim(); }
 
         public virtual Project Project { get; set; }
 
@@ -40,5 +40,7 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
         public virtual ICollection<ElementItem> ElementItemSet { get; set; }
         [InverseProperty("SelectedElement")]
         public virtual ICollection<ElementField> ParentFieldSet { get; set; }
+
+        string name;
     }
 }

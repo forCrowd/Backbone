@@ -7,6 +7,9 @@ import { AuthGuard } from "../core/auth-guard.service";
 import { DynamicTitleResolve } from "../core/dynamic-title-resolve.service";
 import { CanDeactivateGuard } from "../core/can-deactivate-guard.service";
 import { ElementManagerComponent } from "./element-manager.component";
+import { ElementCellManagerComponent } from "./element-cell-manager.component";
+import { ElementFieldManagerComponent } from "./element-field-manager.component";
+import { ElementItemManagerComponent } from "./element-item-manager.component";
 import { ProjectManagerComponent } from "./project-manager.component";
 import { ProjectViewerComponent } from "./project-viewer.component";
 import { SymbolicPipe } from "./symbolic.pipe";
@@ -20,6 +23,9 @@ const projectRoutes: Routes = [
 @NgModule({
     declarations: [
         ElementManagerComponent,
+        ElementCellManagerComponent,
+        ElementFieldManagerComponent,
+        ElementItemManagerComponent,
         ProjectManagerComponent,
         ProjectViewerComponent,
         SymbolicPipe

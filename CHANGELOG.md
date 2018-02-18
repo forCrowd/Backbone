@@ -1,5 +1,12 @@
 ### Changelog
 
+**0.4.2**
+
+* AngularClient - Manager - Element & field filter fixes
+* AngularClient - Separate manager components
+* AngularClient - html forms autocomplete off
+* AngularClient - Refactoring
+
 **0.4.1**
 
 * AngularClient + WebApi - HTTPS enabled

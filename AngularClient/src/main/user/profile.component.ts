@@ -4,6 +4,7 @@ import { MatDialog, MatTableDataSource } from "@angular/material";
 
 import { Project } from "../core/entities/project";
 import { User } from "../core/entities/user";
+import { ProjectService } from "../core/core.module";
 import { ProfileRemoveProjectComponent } from "./profile-remove-project.component";
 import { UserService } from "./user.service";
 
@@ -20,6 +21,7 @@ export class ProfileComponent implements OnInit {
 
     constructor(private activatedRoute: ActivatedRoute,
         private dialog: MatDialog,
+        private projectService: ProjectService,
         private router: Router,
         private userService: UserService) {
     }
@@ -28,15 +30,16 @@ export class ProfileComponent implements OnInit {
 
         const dialogRef = this.dialog.open(ProfileRemoveProjectComponent);
 
-        dialogRef.afterClosed().subscribe(result => {
+        dialogRef.afterClosed().subscribe(confirmed => {
 
-            if (!result) return;
+            if (!confirmed) return;
 
-            project.remove();
-
-            this.userService.saveChanges().subscribe(() => {
-                this.dataSource.data = this.user.ProjectSet;
-            });
+            this.dataSource.data = [];
+            this.projectService.removeProject(project);
+            this.userService.saveChanges()
+                .finally(() => {
+                    this.dataSource.data = this.user.ProjectSet;
+                }).subscribe();
         });
     }
 

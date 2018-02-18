@@ -9,14 +9,20 @@ import { UserElementCell } from "./user-element-cell";
 export class ElementCell extends EntityBase {
 
     // Public - Server-side
-    Id: number = 0;
+    Id = 0;
     ElementField: ElementField;
     ElementItem: ElementItem;
-    StringValue: string = "";
-    DecimalValueTotal: number = 0;
-    DecimalValueCount: number = 0;
+    DecimalValueTotal = 0;
+    DecimalValueCount = 0;
     SelectedElementItem: ElementItem;
     UserElementCellSet: UserElementCell[];
+
+    get StringValue(): string {
+        return this.fields.stringValue;
+    }
+    set StringValue(value: string) {
+        this.fields.stringValue = value ? value.trim() : null;
+    }
 
     // Client
     otherUsersDecimalValueTotal = 0;
@@ -30,10 +36,12 @@ export class ElementCell extends EntityBase {
         currentUserDecimalValue: number,
         decimalValue: number,
         decimalValuePercentage: number,
+        stringValue: string,
     } = {
         currentUserDecimalValue: 0,
         decimalValue: 0,
         decimalValuePercentage: 0,
+        stringValue: null,
     };
 
     currentUserDecimalValue() {
@@ -93,15 +101,6 @@ export class ElementCell extends EntityBase {
                 ? this.currentUserDecimalValue()
                 : this.otherUsersDecimalValueTotal
             : this.otherUsersDecimalValueTotal + this.currentUserDecimalValue();
-    }
-
-    rejectChanges(): void {
-
-        if (this.UserElementCellSet[0]) {
-            this.UserElementCellSet[0].entityAspect.rejectChanges();
-        }
-
-        this.entityAspect.rejectChanges();
     }
 
     setCurrentUserDecimalValue() {

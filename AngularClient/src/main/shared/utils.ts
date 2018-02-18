@@ -31,7 +31,7 @@ export function pad(value: string) {
 export function stripInvalidChars(value: string) {
 
     // Trim, remove special chars and replace space with dash
-    if (value !== null) {
+    if (value) {
         value = value.trim()
             .replace(/[^-\w\s]/gi, "")
             .replace(/\s+/g, "-");
