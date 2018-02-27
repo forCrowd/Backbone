@@ -24,49 +24,57 @@ An API service for rapid app prototyping
 
 ## Setup
 
-Follow this document to setup the application on your computer:  
-[Getting Started](https://github.com/forcrowd/Backbone/wiki/Getting-Started)
+Follow this document to setup the application: [Getting Started](https://github.com/forcrowd/Backbone/wiki/Getting-Started)
 
 ## Deployment
 
 ### Server (WebAPI)
 
-You can deploy WebApi appliation through Visual Studio publish.  
+To deploy WebAPI application, you can use **Publish** feature in **Visual Studio**.  
 
-Only remark is, configuration files are excluded from deploy (Build Action: 'None').  
-When deploying the project, update following configuration files with your own settings and manually copy them:
-* WebApi\Web.config
+Only remark is, configuration files are excluded from deploy operation (**Build Action: 'None'**).  
+
+When deploying the project, update following configuration files with your own settings and manually copy them to your server:
 * WebApi\Configs\\*.config
 
-If you would like to make the application offline during the deployment, you can use **app_offline.htm_**.
+To make the application offline during the deployment, you can use `app_offline.htm_`.
 
 ### Client (AngularClient)
 
-AngularClient is a Angular CLI project and all of its commands are available.
+AngularClient is a **Angular CLI** project and you can use its commands.
 
-Thera are three environments defined in `.angular-cli.json` file: `dev`, `test` & `prod`.  
-For `test` & `prod`, please create your own files by copying `dev` configuration file:
+For deployment, there are three environments defined in `.angular-cli.json` file:
+* dev
+* test
+* prod
+
+You can use **dev** configuration as a base file to create your own **test** and **prod** configuration files:
 
     AngularClient\src\app-settings\environments\environment-settings.ts
 
-To prepare a production bundle, run the following on your command console:
+To prepare a production bundle by generating sourcemap files, run the following on your command console:
 
-    ng build -prod
+    ng build -prod -sm
 
 For more options, please visit [Angular CLI](https://github.com/angular/angular-cli)
 
 ## Contribute
 
-### First Mission: Contributors Page
-This is an experimental attempt to help you to get familiar with our project and make your first pull request.
+We welcome all contributors and all kinds of contributions.  
 
-Follow the document for detailed instructions:
-[First Mission](https://github.com/forCrowd/Backbone/wiki/First-Mission)
+For more about our community rules: [Code of Conduct](/CODE_OF_CONDUCT.md)
+
+### First Mission: Contributors Page
+We created an experimental attempt to help you to get familiar with our project and make your first pull request.
+
+Follow this document for detailed instructions: [First Mission](https://github.com/forCrowd/Backbone/wiki/First-Mission)
 
 ## Changelog
 
-See [Changelog.md](/CHANGELOG.md) for a detailed list.
+To see the changes in our project: [Changelog](/CHANGELOG.md)
 
 ## License
 
-Backbone is licensed under [MIT license](/LICENSE).
+Backbone is licensed under MIT license.
+
+You are free to use, modify and distribute it, even in commercial activities: [MIT license](/LICENSE)

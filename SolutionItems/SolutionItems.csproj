@@ -52,6 +52,9 @@
     <None Include="..\appveyor.yml">
       <Link>Documents\appveyor.yml</Link>
     </None>
+    <None Include="..\CODE_OF_CONDUCT.md">
+      <Link>Documents\CODE_OF_CONDUCT.md</Link>
+    </None>
     <None Include="..\LICENSE">
       <Link>Documents\LICENSE</Link>
     </None>

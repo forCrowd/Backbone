@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.4.3**
+
+* Solution - Code of Conduct file & Readme file update
+
 **0.4.2**
 
 * AngularClient - Manager - Element & field filter fixes
