@@ -7,7 +7,7 @@ import { BreezeBridgeAngularModule } from "../../libraries/breeze-bridge-angular
 import "./rxjs-extensions";
 
 // Internal modules
-import { AppHttpClientModule } from "./app-http-client/app-http-client.module";
+import { AppHttpClient, AppHttpClientModule } from "./app-http-client/app-http-client.module";
 import { SharedModule } from "../shared/shared.module";
 
 // Components
@@ -29,7 +29,7 @@ import { GoogleAnalyticsService } from "./google-analytics.service";
 import { NotificationService } from "./notification.service";
 import { ProjectService } from "./project.service";
 
-export { Angulartics2GoogleAnalytics, ProjectService }
+export { AppEntityManager, AppHttpClient, AuthGuard, AuthService, CanDeactivateGuard, DynamicTitleResolve, NotificationService, ProjectService }
 
 const coreRoutes: Routes = [
     { path: "", component: HomeComponent, data: { title: "Home" } },
@@ -81,10 +81,10 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
     providers: [
         // Application initializer
         {
-            "provide": APP_INITIALIZER,
-            "useFactory": appInitializer,
-            "deps": [AuthService, GoogleAnalyticsService],
-            "multi": true,
+            deps: [AuthService, GoogleAnalyticsService],
+            multi: true,
+            provide: APP_INITIALIZER,
+            useFactory: appInitializer,
         },
         // Error handler
         {

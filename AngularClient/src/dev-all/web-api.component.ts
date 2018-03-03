@@ -1,8 +1,8 @@
-import { Component, Injector } from "@angular/core";
-import { HTTP_INTERCEPTORS, HttpClient } from "@angular/common/http";
+import { Component } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 
 import { AppSettings } from "../app-settings/app-settings";
-import { BusyInterceptor } from "../main/core/app-http-client/busy-interceptor";
+import { AppHttpClient } from "../main/core/core.module";
 
 @Component({
     selector: "web-api",
@@ -10,18 +10,16 @@ import { BusyInterceptor } from "../main/core/app-http-client/busy-interceptor";
 })
 export class WebApiComponent {
 
-    private readonly busyInterceptor: BusyInterceptor = null;
+    private readonly appHttpClient: AppHttpClient = null;
 
     get isBusy(): boolean {
-        return this.busyInterceptor.isBusy;
+        return this.appHttpClient.isBusy;
     }
 
     constructor(
-        private httpClient: HttpClient,
-        private injector: Injector) {
+        private httpClient: HttpClient) {
 
-        var interceptors = injector.get(HTTP_INTERCEPTORS);
-        this.busyInterceptor = interceptors.find(i => i instanceof BusyInterceptor) as BusyInterceptor;
+        this.appHttpClient = httpClient as AppHttpClient;
     }
 
     badRequest(): void {

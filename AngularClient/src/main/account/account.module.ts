@@ -16,8 +16,7 @@ import { ResetPasswordComponent } from "./reset-password.component";
 
 // Services
 import { AccountService } from "./account.service";
-import { AuthGuard } from "../core/auth-guard.service";
-import { CanDeactivateGuard } from "../core/can-deactivate-guard.service";
+import { AuthGuard, CanDeactivateGuard } from "../core/core.module";
 
 export { AccountService }
 
@@ -44,7 +43,7 @@ const accountRoutes: Routes = [
         ConfirmEmailComponent,
         LoginComponent,
         RegisterComponent,
-        ResetPasswordComponent
+        ResetPasswordComponent,
     ],
     exports: [
         RouterModule

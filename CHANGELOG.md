@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.4.4**
+
+* AngularClient - Package updates, refactoring
+* BusinessObjects - User - Email trim fix
+
 **0.4.3**
 
 * Solution - Code of Conduct file & Readme file update

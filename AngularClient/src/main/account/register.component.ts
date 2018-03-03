@@ -3,8 +3,7 @@ import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 
 import { AppSettings } from "../../app-settings/app-settings";
-import { AuthService } from "../core/auth.service";
-import { NotificationService } from "../core/notification.service";
+import { AuthService, NotificationService } from "../core/core.module";
 import { getUniqueEmail, getUniqueUserName, stripInvalidChars } from "../shared/utils";
 
 @Component({

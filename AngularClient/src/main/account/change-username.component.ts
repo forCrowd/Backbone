@@ -3,8 +3,7 @@ import { Router } from "@angular/router";
 
 import { AppSettings } from "../../app-settings/app-settings";
 import { AccountService } from "./account.service";
-import { AuthService } from "../core/auth.service";
-import { NotificationService } from "../core/notification.service";
+import { AuthService, NotificationService } from "../core/core.module";
 import { getUniqueUserName, stripInvalidChars } from "../shared/utils";
 
 @Component({
@@ -25,6 +24,7 @@ export class ChangeUserNameComponent implements OnInit {
             userName: ""
         }
     };
+	
     get isBusy(): boolean {
         return this.accountService.isBusy || this.authService.isBusy;
     }

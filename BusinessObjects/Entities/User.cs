@@ -26,7 +26,7 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
         }
 
         public override string UserName { get => base.UserName; set => base.UserName = value.Trim(); }
-        public override string Email { get => base.Email; set => base.Email = value.Trim(); }
+        public override string Email { get => base.Email; set => base.Email = value?.Trim(); }
 
         public DateTime? EmailConfirmationSentOn { get; set; }
 

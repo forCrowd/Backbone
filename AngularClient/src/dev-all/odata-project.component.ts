@@ -6,7 +6,7 @@ import { AppSettings } from "../app-settings/app-settings";
 import { Project } from "../main/core/entities/project";
 import { User } from "../main/core/entities/user";
 
-import { AuthService } from "../main/core/auth.service";
+import { AuthService } from "../main/core/core.module";
 import { getUniqueValue } from "../main/shared/utils";
 
 @Component({

@@ -2,7 +2,6 @@
 import { animate, keyframes, state, style, transition, trigger } from "@angular/animations";
 import { Subject } from "rxjs";
 
-import { AdminService } from "../../admin/admin.service";
 import { RatingMode, Project } from "../entities/project";
 import { ProjectService } from "../project.service";
 
@@ -72,7 +71,7 @@ export class ShowcaseComponent implements OnInit {
         return (this.viewMode === "results").toString();
     }
 
-    constructor(private projectService: ProjectService, private adminService: AdminService) {
+    constructor(private projectService: ProjectService) {
     }
 
     ngOnInit(): void {

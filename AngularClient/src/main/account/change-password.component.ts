@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 
 import { AppSettings } from "../../app-settings/app-settings";
 import { AccountService } from "./account.service";
-import { NotificationService } from "../core/notification.service";
+import { NotificationService } from "../core/core.module";
 
 @Component({
     selector: "change-password",

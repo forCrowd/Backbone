@@ -12,8 +12,6 @@ import "../../libraries/breeze-client/breeze.uriBuilder.odata";
 import "datajs";
 
 import { AppSettings } from "../../app-settings/app-settings";
-import { AppErrorHandler } from "./app-error-handler.service";
-import { NotificationService } from "./notification.service";
 import { Element } from "./entities/element";
 import { EntityBase } from "./entities/entity-base";
 import { ElementCell } from "./entities/element-cell";
@@ -25,6 +23,8 @@ import { User } from "./entities/user";
 import { UserElementCell } from "./entities/user-element-cell";
 import { UserElementField } from "./entities/user-element-field";
 import { UserRole } from "./entities/user-role";
+import { AppErrorHandler } from "./app-error-handler.service";
+import { NotificationService } from "./notification.service";
 
 export interface IQueryResult<T> {
     count: number;
@@ -291,7 +291,6 @@ export class AppEntityManager extends EntityManager {
                         break;
                     }
                     case "403": { // Forbidden
-                        console.log("e", error);
                         errorMessage = "The operation you attempted to execute is forbidden.";
                         handled = true;
                         break;

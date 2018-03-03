@@ -7,7 +7,7 @@ import { ElementCell } from "../main/core/entities/element-cell";
 import { Project } from "../main/core/entities/project";
 import { User } from "../main/core/entities/user";
 
-import { AuthService } from "../main/core/auth.service";
+import { AuthService } from "../main/core/core.module";
 
 @Component({
     selector: "odata-user-element-cell",

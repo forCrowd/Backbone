@@ -7,7 +7,7 @@ import { ElementField } from "../main/core/entities/element-field";
 import { Project } from "../main/core/entities/project";
 import { User } from "../main/core/entities/user";
 
-import { AuthService } from "../main/core/auth.service";
+import { AuthService } from "../main/core/core.module";
 
 @Component({
     selector: "odata-user-element-field",

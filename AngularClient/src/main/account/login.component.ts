@@ -1,9 +1,8 @@
-﻿import { OnInit, Component } from "@angular/core";
+﻿import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs";
 
-import { AuthService } from "../core/auth.service";
-import { NotificationService } from "../core/notification.service";
+import { AuthService, NotificationService } from "../core/core.module";
 
 @Component({
     selector: "login",

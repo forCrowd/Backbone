@@ -2,7 +2,7 @@
 import { Router } from "@angular/router";
 
 import { AccountService } from "./account.service";
-import { NotificationService } from "../core/notification.service";
+import { NotificationService } from "../core/core.module";
 
 @Component({
     selector: "add-password",

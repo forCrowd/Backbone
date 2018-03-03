@@ -1,10 +1,10 @@
-﻿import { Injectable, Injector } from "@angular/core";
-import { HTTP_INTERCEPTORS, HttpClient } from "@angular/common/http";
+﻿import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 import { EntityQuery, Predicate } from "../../libraries/breeze-client";
 import { Observable } from "rxjs";
 
 import { AppSettings } from "../../app-settings/app-settings";
-import { BusyInterceptor } from "./app-http-client/busy-interceptor";
+import { AppHttpClient } from "./app-http-client/app-http-client.module";
 import { Element } from "./entities/element";
 import { ElementCell } from "./entities/element-cell";
 import { ElementField, ElementFieldDataType } from "./entities/element-field";
@@ -20,20 +20,17 @@ import { getUniqueValue } from "../shared/utils";
 export class ProjectService {
 
     get isBusy(): boolean {
-        return this.appEntityManager.isBusy || this.busyInterceptor.isBusy || this.isBusyLocal;
+        return this.appEntityManager.isBusy || this.appHttpClient.isBusy || this.isBusyLocal;
     }
 
-    private readonly busyInterceptor: BusyInterceptor = null;
+    private readonly appHttpClient: AppHttpClient = null;
     private isBusyLocal: boolean = false; // Use this flag for functions that contain multiple http requests (e.g. saveChanges())
 
     constructor(private appEntityManager: AppEntityManager,
         private authService: AuthService,
-        private httpClient: HttpClient,
-        private injector: Injector) {
+        private httpClient: HttpClient) {
 
-        // Busy interceptor
-        var interceptors = injector.get(HTTP_INTERCEPTORS);
-        this.busyInterceptor = interceptors.find(i => i instanceof BusyInterceptor) as BusyInterceptor;
+        this.appHttpClient = httpClient as AppHttpClient;
     }
 
     createElement(initialValues: Object) {

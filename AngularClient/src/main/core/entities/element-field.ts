@@ -26,6 +26,7 @@ export class ElementField extends EntityBase {
     // Server-side
     Id = 0;
     Element: Element;
+    DataType = ElementFieldDataType.String;
     SelectedElement: Element;
     UseFixedValue = false;
     RatingEnabled = false;
@@ -34,25 +35,6 @@ export class ElementField extends EntityBase {
     RatingCount = 0;
     ElementCellSet: ElementCell[];
     UserElementFieldSet: UserElementField[];
-
-    get DataType(): ElementFieldDataType {
-        return this.fields.dataType;
-    }
-    set DataType(value: ElementFieldDataType) {
-        if (this.fields.dataType !== value) {
-            this.fields.dataType = value;
-
-            if (this.initialized) {
-
-                // UseFixedValue must be "true" and RatingEnabled must be "false" for String & Element types
-                if (value === ElementFieldDataType.String
-                    || value === ElementFieldDataType.Element) {
-                    this.UseFixedValue = true;
-                    this.RatingEnabled = false;
-                }
-            }
-        }
-    }
 
     get Name(): string {
         return this.fields.name;
@@ -78,18 +60,14 @@ export class ElementField extends EntityBase {
 
     private fields: {
         currentUserRating: number,
-        dataType: ElementFieldDataType,
         decimalValue: number,
         name: string,
-        ratingEnabled: boolean,
         rating: number,
         ratingPercentage: number,
     } = {
         currentUserRating: 0,
-        dataType: ElementFieldDataType.String,
         decimalValue: 0,
         name: "",
-        ratingEnabled: false,
         rating: 0,
         ratingPercentage: 0,
     };

@@ -1,7 +1,7 @@
 ﻿import { Component } from "@angular/core";
 
-import { AuthService } from "../core/auth.service";
 import { User } from "../core/entities/user";
+import { AuthService } from "../core/core.module";
 
 @Component({
     selector: "account-overview",

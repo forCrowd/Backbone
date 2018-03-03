@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 
-import { AuthService } from "../main/core/auth.service";
+import { AuthService } from "../main/core/core.module";
 import { User } from "../main/core/entities/user";
 
 @Component({

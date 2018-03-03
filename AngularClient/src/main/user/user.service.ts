@@ -1,9 +1,8 @@
 ﻿import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 
-import { AuthService } from "../core/auth.service";
-import { AppEntityManager } from "../core/app-entity-manager.service";
 import { User } from "../core/entities/user";
+import { AuthService, AppEntityManager } from "../core/core.module";
 
 @Injectable()
 export class UserService {

@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 
 import { AppSettings } from "../app-settings/app-settings";
 import { User } from "../main/core/entities/user";
-import { AuthService } from "../main/core/auth.service";
+import { AuthService } from "../main/core/core.module";
 
 @Component({
     selector: "odata-user",

@@ -1,38 +1,34 @@
-﻿import { Injectable, Injector } from "@angular/core";
-import { HTTP_INTERCEPTORS, HttpClient } from "@angular/common/http";
+﻿import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 
 import { AppSettings } from "../../app-settings/app-settings";
-import { BusyInterceptor } from "../core/app-http-client/busy-interceptor";
-import { AuthService } from "../core/auth.service";
 import { User } from "../core/entities/user";
+import { AppHttpClient, AuthService } from "../core/core.module";
 
 @Injectable()
 export class AccountService {
 
     get isBusy(): boolean {
-        return this.busyInterceptor.isBusy;
+        return this.appHttpClient.isBusy;
     }
 
     // Service urls
-    addPasswordUrl: string = "";
-    changeEmailUrl: string = "";
-    changePasswordUrl: string = "";
-    changeUserNameUrl: string = "";
-    confirmEmailUrl: string = "";
-    resendConfirmationEmailUrl: string = "";
-    resetPasswordUrl: string = "";
-    resetPasswordRequestUrl: string = "";
+    addPasswordUrl = "";
+    changeEmailUrl = "";
+    changePasswordUrl = "";
+    changeUserNameUrl = "";
+    confirmEmailUrl = "";
+    resendConfirmationEmailUrl = "";
+    resetPasswordUrl = "";
+    resetPasswordRequestUrl = "";
 
-    private readonly busyInterceptor: BusyInterceptor = null;
+    private readonly appHttpClient: AppHttpClient = null;
 
     constructor(private authService: AuthService,
-        private httpClient: HttpClient,
-        private injector: Injector) {
+        private httpClient: HttpClient) {
 
-        // Busy interceptor
-        var interceptors = injector.get(HTTP_INTERCEPTORS);
-        this.busyInterceptor = interceptors.find(i => i instanceof BusyInterceptor) as BusyInterceptor;
+        this.appHttpClient = httpClient as AppHttpClient;
 
         // Service urls
         this.addPasswordUrl = AppSettings.serviceApiUrl + "/Account/AddPassword";

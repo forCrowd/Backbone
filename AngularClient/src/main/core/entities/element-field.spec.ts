@@ -79,12 +79,12 @@ describe("main/core/entities/element-field", () => {
 
     it("ratingPercentage", () => {
 
-        // Case 1: One index
+        // Case 1: One rating field
         const decimalField1 = TestHelpers.createElementField(null, ElementFieldDataType.Decimal, null, null, 25);
 
         expect(decimalField1.ratingPercentage()).toBe(1);
 
-        // Case 2: Two indexes
+        // Case 2: Two rating fields
         const decimalField2 = TestHelpers.createElementField(decimalField1.Element, ElementFieldDataType.Decimal, null, null, 75);
 
         expect(decimalField1.ratingPercentage()).toBe(0.25);

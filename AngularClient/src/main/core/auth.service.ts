@@ -1,15 +1,15 @@
-﻿import { Injectable, Injector } from "@angular/core";
-import { HTTP_INTERCEPTORS, HttpClient } from "@angular/common/http";
+﻿import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 import { EntityQuery, EntityState, MergeStrategy } from "../../libraries/breeze-client";
 import { Observable, Subject } from "rxjs";
 
 import { AppSettings } from "../../app-settings/app-settings";
-import { BusyInterceptor } from "./app-http-client/busy-interceptor";
-import { AppEntityManager } from "./app-entity-manager.service";
-import { NotificationService } from "./notification.service";
 import { Role } from "./entities/role";
 import { User } from "./entities/user";
 import { UserRole } from "./entities/user-role";
+import { AppHttpClient } from "./app-http-client/app-http-client.module";
+import { AppEntityManager } from "./app-entity-manager.service";
+import { NotificationService } from "./notification.service";
 import { getUniqueUserName } from "../shared/utils";
 
 @Injectable()
@@ -20,7 +20,7 @@ export class AuthService {
     currentUserChanged = new Subject<User>();
 
     get isBusy(): boolean {
-        return this.appEntityManager.isBusy || this.busyInterceptor.isBusy;
+        return this.appEntityManager.isBusy || this.appHttpClient.isBusy;
     }
 
     get loginReturnUrl(): string {
@@ -43,19 +43,16 @@ export class AuthService {
     ];
 
     // Private
-    private readonly busyInterceptor: BusyInterceptor = null;
-    private currentUserUrl: string = "";
-    private registerUrl: string = "";
-    private tokenUrl: string = "";
+    private appHttpClient: AppHttpClient = null;
+    private currentUserUrl = "";
+    private registerUrl = "";
+    private tokenUrl = "";
 
     constructor(private appEntityManager: AppEntityManager,
         private httpClient: HttpClient,
-        private injector: Injector,
         private notificationService: NotificationService) {
 
-        // Busy interceptor
-        var interceptors = injector.get(HTTP_INTERCEPTORS);
-        this.busyInterceptor = interceptors.find(i => i instanceof BusyInterceptor) as BusyInterceptor;
+        this.appHttpClient = httpClient as AppHttpClient;
 
         // Service urls
         this.currentUserUrl = AppSettings.serviceApiUrl + "/Account/CurrentUser";
@@ -101,30 +98,6 @@ export class AuthService {
                 }
 
                 return response.results[0];
-            });
-    }
-
-    register(registerBindingModel: any, rememberMe: boolean): Observable<void> {
-
-        // Validate: Don't allow to set a username that is in "restrict usernames" list
-        const username = registerBindingModel.UserName.toLowerCase();
-        const restrictUsername = this.restrictUserNames.indexOf(username) > -1;
-
-        if (restrictUsername) {
-            return Observable.throw("Username is already taken.");
-        }
-
-        return this.registerInternal(registerBindingModel)
-            .mergeMap(() => {
-                return this.getToken(registerBindingModel.UserName, registerBindingModel.Password, rememberMe);
-            });
-    }
-
-    saveChanges(): Observable<void> {
-
-        return this.ensureAuthenticatedUser()
-            .mergeMap(() => {
-                return this.appEntityManager.saveChangesObservable();
             });
     }
 
@@ -179,6 +152,30 @@ export class AuthService {
         localStorage.removeItem("token");
 
         return this.setCurrentUser();
+    }
+	
+    register(registerBindingModel: any, rememberMe: boolean): Observable<void> {
+
+        // Validate: Don't allow to set a username that is in "restrict usernames" list
+        const username = registerBindingModel.UserName.toLowerCase();
+        const restrictUsername = this.restrictUserNames.indexOf(username) > -1;
+
+        if (restrictUsername) {
+            return Observable.throw("Username is already taken.");
+        }
+
+        return this.registerInternal(registerBindingModel)
+            .mergeMap(() => {
+                return this.getToken(registerBindingModel.UserName, registerBindingModel.Password, rememberMe);
+            });
+    }
+	
+    saveChanges(): Observable<void> {
+
+        return this.ensureAuthenticatedUser()
+            .mergeMap(() => {
+                return this.appEntityManager.saveChangesObservable();
+            });
     }
 
     updateCurrentUser(updatedUser: User) {
@@ -237,12 +234,27 @@ export class AuthService {
 
         return user;
     }
+	
+    // Ensures Role entities are retrieved
+    private ensureRolesEntities(): Observable<void> {
+
+        if (this.appEntityManager.getEntities("Role").length > 0) {
+
+            return Observable.of(null);
+
+        } else {
+
+            const query = EntityQuery.from("Roles");
+
+            return this.appEntityManager.executeQueryObservable(query).map(() => { });
+        }
+    }	
 
     private getToken(username: string, password: string, rememberMe: boolean, singleUseToken?: string) {
 
         const tokenData = `grant_type=password&username=${username}&password=${password}&rememberMe=${rememberMe}&singleUseToken=${singleUseToken}`;
 
-        return this.httpClient.post<Object>(this.tokenUrl, tokenData)
+        return this.appHttpClient.post<Object>(this.tokenUrl, tokenData)
             .map((token) => {
                 localStorage.setItem("token", JSON.stringify(token)); // Store the token in localStorage
             });
@@ -252,7 +264,7 @@ export class AuthService {
 
         registerBindingModel.ClientAppUrl = window.location.origin;
 
-        return this.httpClient.post<User>(this.registerUrl, registerBindingModel)
+        return this.appHttpClient.post<User>(this.registerUrl, registerBindingModel)
             .map((updatedUser: User) => {
                 this.updateCurrentUser(updatedUser);
 
@@ -268,21 +280,6 @@ export class AuthService {
 
         localStorage.removeItem("guestUserName");
 
-    }
-
-    // Ensures Role entities are retrieved
-    private ensureRolesEntities(): Observable<void> {
-
-        if (this.appEntityManager.getEntities("Role").length > 0) {
-
-            return Observable.of(null);
-
-        } else {
-
-            const query = EntityQuery.from("Roles");
-
-            return this.appEntityManager.executeQueryObservable(query).map(() => { });
-        }
     }
 
     private setCurrentUser(): Observable<void> {
@@ -301,8 +298,8 @@ export class AuthService {
 
             } else {
 
-                return this.httpClient.get<User>(this.currentUserUrl)
-                    .map((currentUser: User) => {
+                return this.appHttpClient.get<User>(this.currentUserUrl)
+                    .map(currentUser => {
 
                         if (currentUser === null) {
 
