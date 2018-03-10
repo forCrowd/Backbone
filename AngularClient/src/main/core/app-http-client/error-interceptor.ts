@@ -1,4 +1,4 @@
-﻿import { Injectable } from "@angular/core";
+﻿import { Injectable, Injector } from "@angular/core";
 import { HttpErrorResponse, HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from "@angular/common/http";
 import { Observable } from "rxjs";
 
@@ -7,16 +7,20 @@ import { NotificationService } from "../notification.service";
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-    constructor(private readonly notificationService: NotificationService) {  }
+    constructor(private injector: Injector) {
+    }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(req)
             .catch((error: any) => this.handleHttpErrors(error));
-
     }
 
     private handleHttpErrors(response: HttpErrorResponse) {
 
+        // Somehow asking "NotificationService" from DI, returns a new instance,
+        // which is not handled by "core.component" and doesn't display the message
+        // Had to use injector here / coni2k - 12 Mar. '18
+        const notificationService = this.injector.get(NotificationService);
         let errorMessage = "";
         let handled = false;
 
@@ -112,7 +116,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         }
 
         // Display the error message
-        this.notificationService.notification.next(errorMessage);
+        notificationService.notification.next(errorMessage);
 
         if (handled) {
 

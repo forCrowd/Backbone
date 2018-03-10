@@ -29,10 +29,10 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
         /// Other values are stored on UserElementCell, but since this one has FK, it's directly set on ElementCell.
         /// </summary>
         public int? SelectedElementItemId { get; set; }
-        public virtual ElementItem ElementItem { get; set; }
-        public virtual ElementField ElementField { get; set; }
-        public virtual ElementItem SelectedElementItem { get; set; }
-        public virtual ICollection<UserElementCell> UserElementCellSet { get; set; }
+        public ElementItem ElementItem { get; set; }
+        public ElementField ElementField { get; set; }
+        public ElementItem SelectedElementItem { get; set; }
+        public ICollection<UserElementCell> UserElementCellSet { get; set; }
         public UserElementCell UserElementCell => UserElementCellSet.SingleOrDefault();
 
         string stringValue;

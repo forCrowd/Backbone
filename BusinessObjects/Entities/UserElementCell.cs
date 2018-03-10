@@ -16,8 +16,8 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
 
         public decimal? DecimalValue { get; set; }
 
-        public virtual User User { get; set; }
+        public User User { get; set; }
 
-        public virtual ElementCell ElementCell { get; set; }
+        public ElementCell ElementCell { get; set; }
     }
 }

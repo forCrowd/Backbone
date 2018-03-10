@@ -21,18 +21,14 @@ export class Element extends EntityBase {
 
     private fields: {
         name: string,
-        rating: number,
     } = {
         name: "",
-        rating: 0,
     };
 
-    rating() {
-        return this.fields.rating;
-    }
+    initialize(): void {
+        if (this.initialized) return;
 
-    initialize(): boolean {
-        if (!super.initialize()) return false;
+        super.initialize();
 
         // Fields
         this.ElementFieldSet.forEach(field => {
@@ -43,27 +39,6 @@ export class Element extends EntityBase {
         this.ElementItemSet.forEach(item => {
             item.initialize();
         });
-
-        return true;
-    }
-
-    setRating() {
-
-        const fieldSet = this.getElementFieldSet(this);
-
-        var value = 0;
-        fieldSet.forEach(field => {
-            value += field.rating();
-        });
-
-        if (this.fields.rating !== value) {
-            this.fields.rating = value;
-
-            // Update related
-            fieldSet.forEach(field => {
-                field.setRatingPercentage();
-            });
-        }
     }
 
     private getElementFieldSet(element: Element) {

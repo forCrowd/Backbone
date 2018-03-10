@@ -6,7 +6,7 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
 {
     public class UserClaim : IdentityUserClaim<int>, IEntity
     {
-        public virtual User User { get; set; }
+        public User User { get; set; }
 
         public DateTime CreatedOn { get; set; }
 

@@ -18,8 +18,6 @@ import { ResetPasswordComponent } from "./reset-password.component";
 import { AccountService } from "./account.service";
 import { AuthGuard, CanDeactivateGuard } from "../core/core.module";
 
-export { AccountService }
-
 // Routes
 const accountRoutes: Routes = [
     { path: "app/account", component: AccountOverviewComponent, canActivate: [AuthGuard], data: { title: "Account Overview" } },

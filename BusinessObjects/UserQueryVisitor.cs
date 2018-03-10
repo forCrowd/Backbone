@@ -4,6 +4,7 @@ using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Threading;
 using System.Security;
 using System.Security.Claims;
+using forCrowd.Backbone.Framework;
 
 namespace forCrowd.Backbone.BusinessObjects
 {
@@ -19,26 +20,8 @@ namespace forCrowd.Backbone.BusinessObjects
             var column = UserAwareAttribute.GetUserColumnName(expression.Target.ElementType);
             if (!string.IsNullOrEmpty(column))
             {
-                // Check that there is an authenticated user in this context
-                var principal = Thread.CurrentPrincipal;
-
-                var identity = principal.Identity as ClaimsIdentity;
-                if (identity == null)
-                {
-                    throw new SecurityException("Unauthenticated access");
-                }
-
-                var userIdclaim = identity.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
-                if (userIdclaim == null)
-                {
-                    throw new SecurityException("Unauthenticated access");
-                }
-
-                // If it's admin, then no need to filter
-                if (principal.IsInRole("Administrator"))
-                {
-                    return expression;
-                }
+                // Validate user
+                Security.ValidateCurrentUser();
 
                 // Get the current expression binding 
                 var currentExpressionBinding = DbExpressionBuilder.Bind(expression);

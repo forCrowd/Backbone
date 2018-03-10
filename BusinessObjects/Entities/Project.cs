@@ -27,8 +27,8 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
 
         public int RatingCount { get; set; }
 
-        public virtual User User { get; set; }
-        public virtual ICollection<Element> ElementSet { get; set; }
+        public User User { get; set; }
+        public ICollection<Element> ElementSet { get; set; }
 
         string name;
         string origin;

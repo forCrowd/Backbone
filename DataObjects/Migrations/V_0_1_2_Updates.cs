@@ -38,11 +38,11 @@ namespace forCrowd.Backbone.DataObjects.Migrations
                 HasPassword = true
             };
             var adminUserPassword = DateTime.Now.ToString("yyyyMMdd");
-            userManager.Create(adminUser, adminUserPassword);
+            HandleResult(userManager.Create(adminUser, adminUserPassword));
             context.SaveChanges();
 
             // Add to "admin" role
-            userManager.AddToRole(adminUser.Id, "Administrator");
+            HandleResult(userManager.AddToRole(adminUser.Id, "Administrator"));
             context.SaveChanges();
         }
 
@@ -54,15 +54,15 @@ namespace forCrowd.Backbone.DataObjects.Migrations
 
             // Guest role
             var guestRole = new Role { Name = "Guest" };
-            roleManager.Create(guestRole);
+            HandleResult(roleManager.Create(guestRole));
 
             // Regular role
             var regularRole = new Role { Name = "Regular" };
-            roleManager.Create(regularRole);
+            HandleResult(roleManager.Create(regularRole));
 
             // Admin role
             var adminRole = new Role { Name = "Administrator" };
-            roleManager.Create(adminRole);
+            HandleResult(roleManager.Create(adminRole));
 
             // Save
             context.SaveChanges();
@@ -84,11 +84,13 @@ namespace forCrowd.Backbone.DataObjects.Migrations
                 HasPassword = true
             };
             var sampleUserPassword = DateTime.Now.ToString("yyyyMMdd");
-            userManager.Create(sampleUser, sampleUserPassword);
+            HandleResult(userManager.Create(sampleUser, sampleUserPassword));
+
             context.SaveChanges();
 
             // Add to regular role
-            userManager.AddToRole(sampleUser.Id, "Regular");
+            HandleResult(userManager.AddToRole(sampleUser.Id, "Regular"));
+
             context.SaveChanges();
 
             // Login as (required in order to save the rest of the items)
@@ -96,6 +98,15 @@ namespace forCrowd.Backbone.DataObjects.Migrations
 
             // First save
             context.SaveChanges();
+        }
+
+        private static void HandleResult(IdentityResult result)
+        {
+            if (!result.Succeeded)
+            {
+                var errorMessages = string.Join(" - ", result.Errors);
+                throw new Exception(errorMessages);
+            }
         }
     }
 }

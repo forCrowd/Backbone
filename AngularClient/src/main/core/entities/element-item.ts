@@ -24,14 +24,14 @@ export class ElementItem extends EntityBase {
         name: "",
     };
 
-    initialize(): boolean {
-        if (!super.initialize()) return false;
+    initialize(): void {
+        if (this.initialized) return;
+
+        super.initialize();
 
         // Cells
         this.ElementCellSet.forEach(cell => {
             cell.initialize();
         });
-
-        return true;
     }
 }

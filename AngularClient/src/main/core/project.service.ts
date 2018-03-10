@@ -214,9 +214,6 @@ export class ProjectService {
         }
 
         elementField.entityAspect.setDeleted();
-
-        // Update related
-        element.setRating();
     }
 
     removeElementItem(elementItem: ElementItem) {
@@ -229,11 +226,6 @@ export class ProjectService {
         });
 
         elementItem.entityAspect.setDeleted();
-
-        // Update related
-        element.ElementFieldSet.forEach(field => {
-            field.setDecimalValue();
-        });
     }
 
     removeProject(project: Project) {
@@ -271,10 +263,7 @@ export class ProjectService {
             });
         }
 
-        return this.saveChanges()
-            .map(() => {
-                elementField.Element.setRating(); // Update related
-            });
+        return this.saveChanges();
     }
 
     // Todo Improve these later on (merge into saveChanges() itself?) / coni2k - 19 Feb. '18

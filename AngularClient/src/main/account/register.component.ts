@@ -52,8 +52,6 @@ export class RegisterComponent implements OnInit {
             .subscribe(() => {
                 this.notificationService.notification.next("You have been registered!");
                 this.router.navigate(["/app/account/confirm-email"]);
-            }, (error: any) => {
-                this.notificationService.notification.next(error); // Todo error!
             });
     }
 }

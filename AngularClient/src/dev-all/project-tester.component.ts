@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 
 import { AdminService } from "../main/admin/admin.service";
-import { RatingMode, Project } from "../main/core/entities/project";
+import { Project } from "../main/core/entities/project";
 import { ProjectService } from "../main/core/core.module";
 
 @Component({
@@ -11,7 +11,6 @@ import { ProjectService } from "../main/core/core.module";
 })
 export class ProjectTesterComponent implements OnInit {
 
-    RatingMode = RatingMode;
     project: Project = null;
 
     constructor(private adminService: AdminService, private projectService: ProjectService) {

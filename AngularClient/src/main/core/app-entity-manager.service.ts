@@ -39,7 +39,7 @@ export class AppEntityManager extends EntityManager {
     metadata: Object = null;
     queryCache: string[] = [];
 
-    constructor(private breezeBridgeAngularModule: BreezeBridgeAngularModule, private notificationService: NotificationService,  errorHandler: ErrorHandler) {
+    constructor(private breezeBridgeAngularModule: BreezeBridgeAngularModule, private notificationService: NotificationService, errorHandler: ErrorHandler) {
 
         super({
             serviceName: AppSettings.serviceODataUrl

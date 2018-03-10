@@ -21,15 +21,14 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
 
     public class BackboneContext : IdentityDbContext<User, Role, int, UserLogin, UserRole, UserClaim>
     {
-        public BackboneContext()
-            : this("BackboneContext")
+        public BackboneContext() : this("BackboneContext")
         {
         }
 
-        public BackboneContext(string nameOrConnectionString)
-            : base(nameOrConnectionString)
+        public BackboneContext(string nameOrConnectionString) : base(nameOrConnectionString)
         {
             Configuration.LazyLoadingEnabled = false;
+            Configuration.ProxyCreationEnabled = false;
         }
 
         // TODO Is this correct to make DbContext accessible from Web application?
@@ -38,14 +37,16 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
             return new BackboneContext();
         }
 
-        // These definitions are used in generating OData metadata at the moment / coni2k - 07 Nov '14
-        public virtual DbSet<Project> Project { get; set; }
-        public virtual DbSet<Element> Element { get; set; }
-        public virtual DbSet<ElementField> ElementField { get; set; }
-        public virtual DbSet<ElementItem> ElementItem { get; set; }
-        public virtual DbSet<ElementCell> ElementCell { get; set; }
-        public virtual DbSet<UserElementField> UserElementField { get; set; }
-        public virtual DbSet<UserElementCell> UserElementCell { get; set; }
+        // These definitions are being used in generating OData metadata / coni2k - 07 Nov '14
+        public DbSet<Project> Project { get; set; }
+        public DbSet<Element> Element { get; set; }
+        public DbSet<ElementField> ElementField { get; set; }
+        public DbSet<ElementItem> ElementItem { get; set; }
+        public DbSet<ElementCell> ElementCell { get; set; }
+        public DbSet<UserElementField> UserElementField { get; set; }
+        public DbSet<UserElementCell> UserElementCell { get; set; }
+        public DbSet<UserLogin> UserLogin { get; set; }
+        public DbSet<UserRole> UserRole { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

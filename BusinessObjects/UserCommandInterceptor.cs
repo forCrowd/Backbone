@@ -49,8 +49,7 @@ namespace forCrowd.Backbone.BusinessObjects
             var userClaim = identity.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
             if (userClaim != null)
             {
-                int userId;
-                int.TryParse(userClaim.Value, out userId);
+                int.TryParse(userClaim.Value, out int userId);
                 // Enumerate all command parameters and assign the correct value in the one we added inside query visitor
                 foreach (DbParameter param in command.Parameters)
                 {

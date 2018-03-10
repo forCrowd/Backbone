@@ -16,16 +16,12 @@ export class EntityBase implements Entity {
         return this.entityAspect.getKey().entityType.shortName;
     }
 
-    initialize(): boolean {
-
-        if (this.initialized) {
-            return false;
-        }
-
-        //console.log(`id: ${this["Id"] || "n/a"} - name: ${this["Name"] || "n/a"}`, this);
-
+    // This function is being called after createEntity for each entity,
+    // or the entities being retrieved with executeQueryObservable function
+    // Initial preparation of the entity can be done here
+    // First time calls return "true" flag, so the child objects can also complete their implementation
+    initialize(): void {
+        if (this.initialized) return;
         this.initialized = true;
-
-        return true;
     }
 }

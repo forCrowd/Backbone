@@ -3,7 +3,6 @@
 import { EntityBase } from "./entity-base";
 import { Element } from "./element";
 import { ElementCell } from "./element-cell";
-import { RatingMode } from "./project";
 import { UserElementField } from "./user-element-field";
 
 export enum ElementFieldDataType {
@@ -59,47 +58,15 @@ export class ElementField extends EntityBase {
     otherUsersRatingCount = 0;
 
     private fields: {
-        currentUserRating: number,
-        decimalValue: number,
         name: string,
-        rating: number,
-        ratingPercentage: number,
     } = {
-        currentUserRating: 0,
-        decimalValue: 0,
         name: "",
-        rating: 0,
-        ratingPercentage: 0,
     };
 
-    currentUserRating() {
-        return this.fields.currentUserRating;
-    }
+    initialize(): void {
+        if (this.initialized) return;
 
-    rating() {
-        return this.fields.rating;
-    }
-
-    ratingAverage() { // a.k.a allUsersRating
-        return this.ratingCount() === 0 ?
-            0 :
-            this.ratingTotal() / this.ratingCount();
-    }
-
-    ratingCount() {
-        return this.otherUsersRatingCount + 1; // There is always default value, increase count by 1
-    }
-
-    ratingPercentage() {
-        return this.fields.ratingPercentage;
-    }
-
-    ratingTotal() {
-        return this.otherUsersRatingTotal + this.currentUserRating();
-    }
-
-    initialize(): boolean {
-        if (!super.initialize()) return false;
+        super.initialize();
 
         // Cells
         this.ElementCellSet.forEach(cell => {
@@ -120,82 +87,5 @@ export class ElementField extends EntityBase {
         this.UserElementFieldSet.forEach(userField => {
             userField.initialize();
         });
-
-        // Initial values
-        this.setCurrentUserRating();
-
-        // Event handlers
-        this.Element.Project.ratingModeUpdated.subscribe(() => {
-            this.setRating();
-        });
-
-        return true;
-    }
-
-    decimalValue() {
-        return this.fields.decimalValue;
-    }
-
-    setCurrentUserRating() {
-
-        const value = this.UserElementFieldSet[0]
-            ? this.UserElementFieldSet[0].Rating
-            : this.RatingEnabled
-                ? 50 // Default value for RatingEnabled
-                : 0; // Otherwise 0
-
-        if (this.fields.currentUserRating !== value) {
-            this.fields.currentUserRating = value;
-
-            // Update related
-            this.setRating();
-        }
-    }
-
-    setRating() {
-
-        let value = 0; // Default value
-
-        switch (this.Element.Project.RatingMode) {
-            case RatingMode.CurrentUser: { value = this.currentUserRating(); break; }
-            case RatingMode.AllUsers: { value = this.ratingAverage(); break; }
-        }
-
-        if (this.fields.rating !== value) {
-            this.fields.rating = value;
-
-            // Update related
-            //this.ratingPercentage(); - No need to call this one since element is going to update it anyway! / coni2k - 05 Nov. '17 
-            this.Element.Project.ElementSet[0].setRating();
-        }
-    }
-
-    setRatingPercentage() {
-
-        const elementRating = this.Element.Project.ElementSet[0].rating();
-
-        const value = elementRating === 0 ? 0 : this.rating() / elementRating;
-
-        if (this.fields.ratingPercentage !== value) {
-            this.fields.ratingPercentage = value;
-        }
-    }
-
-    setDecimalValue() {
-
-        var value = 0;
-
-        this.ElementCellSet.forEach(cell => {
-            value += cell.decimalValue();
-        });
-
-        if (this.fields.decimalValue !== value) {
-            this.fields.decimalValue = value;
-
-            // Update related
-            this.ElementCellSet.forEach(cell => {
-                cell.setDecimalValuePercentage();
-            });
-        }
     }
 }

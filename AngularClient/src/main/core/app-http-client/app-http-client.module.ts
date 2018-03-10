@@ -15,27 +15,26 @@ export { AppHttpClient }
     ],
     providers: [
         {
-            deps: [HttpHandler, Injector],
             provide: HttpClient,
             useClass: AppHttpClient,
         },
         // Auth Interceptor
         {
+            multi: true,
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,
-            multi: true
         },
         // Busy Interceptor
         {
+            multi: true,
             provide: HTTP_INTERCEPTORS,
             useClass: BusyInterceptor,
-            multi: true
         },
         // Error Interceptor
         {
+            multi: true,
             provide: HTTP_INTERCEPTORS,
             useClass: ErrorInterceptor,
-            multi: true
         },
     ]
 })

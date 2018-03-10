@@ -20,10 +20,10 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
         [StringLength(150)]
         public string Name { get => name; set => name = value.Trim(); }
 
-        public virtual Element Element { get; set; }
-        public virtual ICollection<ElementCell> ElementCellSet { get; set; }
+        public Element Element { get; set; }
+        public ICollection<ElementCell> ElementCellSet { get; set; }
         [InverseProperty("SelectedElementItem")]
-        public virtual ICollection<ElementCell> ParentCellSet { get; set; }
+        public ICollection<ElementCell> ParentCellSet { get; set; }
 
         string name;
     }

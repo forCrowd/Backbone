@@ -1,5 +1,15 @@
 ### Changelog
 
+**0.5.0**
+
+* AngularClient
+ * Http client error interceptor - Notification service fix
+ * Refactoring
+* DataMigrator - New project for transferring data between databases
+* BusinessObjects
+  * Current user & admin checks improved
+  * Role - Name field base class fix
+
 **0.4.4**
 
 * AngularClient - Package updates, refactoring

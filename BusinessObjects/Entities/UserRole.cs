@@ -6,8 +6,8 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
 {
     public class UserRole : IdentityUserRole<int>, IEntity
     {
-        public virtual User User { get; set; }
-        public virtual Role Role { get; set; }
+        public User User { get; set; }
+        public Role Role { get; set; }
 
         public DateTime CreatedOn { get; set; }
 

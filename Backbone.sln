@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionItems", "SolutionIt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework", "Framework\Framework.csproj", "{1F435477-27E9-405E-B061-A0A9AFB63053}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataMigrator", "DataMigrator\DataMigrator.csproj", "{B397A094-E447-48D6-AA36-4E1B961441CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -135,6 +137,14 @@ Global
 		{1F435477-27E9-405E-B061-A0A9AFB63053}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1F435477-27E9-405E-B061-A0A9AFB63053}.Release|x86.ActiveCfg = Release|Any CPU
 		{1F435477-27E9-405E-B061-A0A9AFB63053}.Release|x86.Build.0 = Release|Any CPU
+		{B397A094-E447-48D6-AA36-4E1B961441CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B397A094-E447-48D6-AA36-4E1B961441CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B397A094-E447-48D6-AA36-4E1B961441CC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B397A094-E447-48D6-AA36-4E1B961441CC}.Debug|x86.Build.0 = Debug|Any CPU
+		{B397A094-E447-48D6-AA36-4E1B961441CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B397A094-E447-48D6-AA36-4E1B961441CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B397A094-E447-48D6-AA36-4E1B961441CC}.Release|x86.ActiveCfg = Release|Any CPU
+		{B397A094-E447-48D6-AA36-4E1B961441CC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -152,6 +162,7 @@ Global
 		{D0799D73-6455-4F3C-ACFC-9A2DE3CAAC32} = {2019F59D-3017-444E-AF01-AD9E312C2282}
 		{31A79C6F-6F5E-4C4A-B500-876CFA133FD1} = {6EDC51DC-DC0A-4396-A308-545D9A990B30}
 		{1F435477-27E9-405E-B061-A0A9AFB63053} = {6EDC51DC-DC0A-4396-A308-545D9A990B30}
+		{B397A094-E447-48D6-AA36-4E1B961441CC} = {6EDC51DC-DC0A-4396-A308-545D9A990B30}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C31EB61-3537-44C7-9D5B-9F4CA7EE1875}

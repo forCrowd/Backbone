@@ -16,7 +16,6 @@ import { CoreComponent } from "./components/core.component";
 import { HomeComponent } from "./components/home.component";
 import { NotFoundComponent } from "./components/not-found.component";
 import { SearchComponent } from "./components/search.component";
-import { ShowcaseComponent } from "./components/showcase.component";
 
 // Services
 import { AppEntityManager } from "./app-entity-manager.service";
@@ -63,7 +62,6 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
         HomeComponent,
         NotFoundComponent,
         SearchComponent,
-        ShowcaseComponent
     ],
     exports: [
         RouterModule,

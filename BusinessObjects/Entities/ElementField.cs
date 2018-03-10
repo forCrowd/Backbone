@@ -60,10 +60,10 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
         public decimal RatingTotal { get; set; }
         public int RatingCount { get; set; }
 
-        public virtual Element Element { get; set; }
-        public virtual Element SelectedElement { get; set; }
-        public virtual ICollection<ElementCell> ElementCellSet { get; set; }
-        public virtual ICollection<UserElementField> UserElementFieldSet { get; set; }
+        public Element Element { get; set; }
+        public Element SelectedElement { get; set; }
+        public ICollection<ElementCell> ElementCellSet { get; set; }
+        public ICollection<UserElementField> UserElementFieldSet { get; set; }
 
         string name;
     }

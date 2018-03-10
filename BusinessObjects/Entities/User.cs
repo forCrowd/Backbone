@@ -62,9 +62,9 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
         [Timestamp]
         public byte[] RowVersion { get; set; }
 
-        public virtual ICollection<Project> ProjectSet { get; set; }
-        public virtual ICollection<UserElementField> UserElementFieldSet { get; set; }
-        public virtual ICollection<UserElementCell> UserElementCellSet { get; set; }
+        public ICollection<Project> ProjectSet { get; set; }
+        public ICollection<UserElementField> UserElementFieldSet { get; set; }
+        public ICollection<UserElementCell> UserElementCellSet { get; set; }
 
         /// <summary>
         /// Reset properties to their default values, except for UserName and CreatedOn

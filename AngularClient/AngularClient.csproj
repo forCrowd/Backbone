@@ -82,7 +82,6 @@
     <TypeScriptCompile Include="src\main\account\reset-password.component.ts" />
     <TypeScriptCompile Include="src\main\core\can-deactivate-guard.service.ts" />
     <TypeScriptCompile Include="src\main\core\components\contributors.component.ts" />
-    <TypeScriptCompile Include="src\main\core\components\showcase.component.ts" />
     <TypeScriptCompile Include="src\main\core\core.module.ts" />
     <TypeScriptCompile Include="src\main\core\dynamic-title-resolve.service.ts" />
     <TypeScriptCompile Include="src\main\core\google-analytics.service.ts" />
@@ -151,8 +150,6 @@
     <Content Include="src\main\admin\admin-overview.component.html" />
     <Content Include="src\main\admin\projects.component.html" />
     <Content Include="src\main\core\components\search.component.css" />
-    <Content Include="src\main\core\components\showcase.component.css" />
-    <Content Include="src\main\core\components\showcase.component.html" />
     <Content Include="src\main\project\project-manager.component.css" />
     <Content Include="src\main\user\profile-remove-project.component.html" />
     <Content Include="src\main\user\profile.component.css" />

@@ -8,7 +8,6 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
 {
     public class Element : BaseEntity
     {
-        [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
         public Element()
         {
             ElementFieldSet = new HashSet<ElementField>();
@@ -34,12 +33,12 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
         [StringLength(50)]
         public string Name { get => name; set => name = value.Trim(); }
 
-        public virtual Project Project { get; set; }
+        public Project Project { get; set; }
 
-        public virtual ICollection<ElementField> ElementFieldSet { get; set; }
-        public virtual ICollection<ElementItem> ElementItemSet { get; set; }
+        public ICollection<ElementField> ElementFieldSet { get; set; }
+        public ICollection<ElementItem> ElementItemSet { get; set; }
         [InverseProperty("SelectedElement")]
-        public virtual ICollection<ElementField> ParentFieldSet { get; set; }
+        public ICollection<ElementField> ParentFieldSet { get; set; }
 
         string name;
     }

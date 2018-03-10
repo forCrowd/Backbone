@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using forCrowd.Backbone.Framework;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity.Core.Common.CommandTrees;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
@@ -20,6 +21,12 @@ namespace forCrowd.Backbone.BusinessObjects
         {
             if (interceptionContext.OriginalResult.DataSpace == DataSpace.SSpace)
             {
+                // If it's admin, then no need to filter
+                if (Thread.CurrentPrincipal.IsInRole("Administrator"))
+                {
+                    return;
+                }
+
                 if (InterceptQueryCommand(interceptionContext))
                 {
                     return;
@@ -60,26 +67,9 @@ namespace forCrowd.Backbone.BusinessObjects
 
         private static int GetCurrentUserId()
         {
-            // Check that there is an authenticated user in this context
             var identity = Thread.CurrentPrincipal.Identity as ClaimsIdentity;
-            if (identity == null)
-            {
-                throw new SecurityException("Unauthenticated access");
-            }
             var userIdclaim = identity.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
-            if (userIdclaim == null)
-            {
-                throw new SecurityException("Unauthenticated access");
-            }
-
-            int userId;
-            int.TryParse(userIdclaim.Value, out userId);
-            if (userId == 0)
-            {
-                throw new SecurityException("Unauthenticated access");
-            }
-
-            return userId;
+            return int.Parse(userIdclaim.Value);
         }
 
         /// <summary>
@@ -93,6 +83,9 @@ namespace forCrowd.Backbone.BusinessObjects
                 var column = UserAwareAttribute.GetUserColumnName(insertCommand.Target.VariableType.EdmType);
                 if (!string.IsNullOrEmpty(column))
                 {
+                    // Validate user
+                    Security.ValidateCurrentUser();
+
                     // Get the userId (throw an exception if there is none)
                     var userId = GetCurrentUserId();
 
@@ -144,6 +137,9 @@ namespace forCrowd.Backbone.BusinessObjects
                 var column = UserAwareAttribute.GetUserColumnName(updateCommand.Target.VariableType.EdmType);
                 if (!string.IsNullOrEmpty(column))
                 {
+                    // Validate user
+                    Security.ValidateCurrentUser();
+
                     // Get the userId (throw an exception if there is none)
                     var userId = GetCurrentUserId();
 
@@ -196,6 +192,9 @@ namespace forCrowd.Backbone.BusinessObjects
                 var column = UserAwareAttribute.GetUserColumnName(deleteCommand.Target.VariableType.EdmType);
                 if (!string.IsNullOrEmpty(column))
                 {
+                    // Validate user
+                    Security.ValidateCurrentUser();
+
                     // Get the userId (throw an exception if there is none)
                     var userId = GetCurrentUserId();
 
@@ -221,6 +220,5 @@ namespace forCrowd.Backbone.BusinessObjects
                 }
             }
         }
-
     }
 }
