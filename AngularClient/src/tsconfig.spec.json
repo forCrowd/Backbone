@@ -4,11 +4,10 @@
         "baseUrl": "./",
         "outDir": "../out-tsc/spec",
         "module": "commonjs",
-        "target": "es5",
         "types": [
-		"jasmine",
-		"node"
-	    ]
+            "jasmine",
+            "node"
+        ]
     },
     "files": [
         "test.ts"

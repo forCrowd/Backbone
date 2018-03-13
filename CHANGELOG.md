@@ -1,10 +1,14 @@
 ### Changelog
 
+**0.5.1**
+
+* Solution - Minor
+
 **0.5.0**
 
 * AngularClient
- * Http client error interceptor - Notification service fix
- * Refactoring
+  * Http client error interceptor - Notification service fix
+  * Refactoring
 * DataMigrator - New project for transferring data between databases
 * BusinessObjects
   * Current user & admin checks improved
