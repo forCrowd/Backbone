@@ -2,6 +2,7 @@
 
 **0.5.1**
 
+* AngularClient - Contributors page - jackrataty
 * Solution - Minor
 
 **0.5.0**
