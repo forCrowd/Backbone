@@ -25,8 +25,8 @@ Follow this tutorial to get started: https://github.com/forCrowd/Backbone/wiki/F
         {{ getJoinedOnDate([day], [month], [year]) | amTimeAgo }}
     </div>
 </div>
-
 -->
+
 <h2>
     Contributors
 </h2>
@@ -49,72 +49,94 @@ Follow this tutorial to get started: https://github.com/forCrowd/Backbone/wiki/F
 </div>
 
 <div class="mat-table g-mt-20" role="grid">
-	<div class="mat-header-row" role="row">
-		<div class="mat-header-cell" role="columnheader">Name</div>
-		<div class="mat-header-cell" role="columnheader">Role</div>
-		<div class="mat-header-cell" role="columnheader">Skills</div>
-		<div class="mat-header-cell" role="columnheader">Experience</div>
-		<div class="mat-header-cell" role="columnheader">Contacts</div>
-		<div class="mat-header-cell" role="columnheader">Joined on</div>
-	</div>
+    <div class="mat-header-row" role="row">
+        <div class="mat-header-cell" role="columnheader">Name</div>
+        <div class="mat-header-cell" role="columnheader">Role</div>
+        <div class="mat-header-cell" role="columnheader">Skills</div>
+        <div class="mat-header-cell" role="columnheader">Experience</div>
+        <div class="mat-header-cell" role="columnheader">Contacts</div>
+        <div class="mat-header-cell" role="columnheader">Joined on</div>
+    </div>
 
-	<div class="mat-row" role="row">
-		<div class="mat-cell" role="gridcell">
-			Jacquelien Van Euwen<br />
-			<span class="userName">jackrataty</span>
-		</div>
-		<div class="mat-cell" role="gridcell">
-			gopher
-		</div>
-		<div class="mat-cell" role="gridcell">
-			newbie learned programming on a commodore 64
-		</div>
-		<div class="mat-cell" role="gridcell">
-			{{ getExperienceYears([2018]) }}
-		</div>
-		<div class="mat-cell" role="gridcell">
-			<a mat-icon-button href="[Link]" target="_blank">
-				<span class="fa fa-[Related Font Awesome icon] fa-lg" aria-hidden="true"></span>
-			</a>
-		</div>
-		<div class="mat-cell" role="gridcell">
-			{{ getJoinedOnDate([17], [3], [2018]) | amTimeAgo }}
-		</div>
-	</div>
+    <div class="mat-row" role="row">
+        <div class="mat-cell" role="gridcell">
+            Ryan King<br />
+            <span class="userName">ryking02</span>
+        </div>
+        <div class="mat-cell" role="gridcell">
+            Hobbiest
+        </div>
+        <div class="mat-cell" role="gridcell">
+            Not many, FreeCodeCamp is trying to change that
+        </div>
+        <div class="mat-cell" role="gridcell">
+            {{ getExperienceYears(2017) }}
+        </div>
+        <div class="mat-cell" role="gridcell">
+            <a mat-icon-button href="http://ryanking.us" target="_blank">
+                <span class="fa fa-globe fa-lg" aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="mat-cell" role="gridcell">
+            {{ getJoinedOnDate(20, 03, 2018) | amTimeAgo }}
+        </div>
+    </div>
 
-		<div class="mat-row" role="row">
-			<div class="mat-cell" role="gridcell">
-				Serkan Holat<br />
-				<span class="userName">coni2k</span>
-			</div>
-			<div class="mat-cell" role="gridcell">
-				Software Developer
-			</div>
-			<div class="mat-cell" role="gridcell">
-				ASP.NET, Angular, C#, MS SQL
-			</div>
-			<div class="mat-cell" role="gridcell">
-				{{ getExperienceYears(2001) }}
-			</div>
-			<div class="mat-cell" role="gridcell">
-				<a mat-icon-button href="https://twitter.com/coni2k" target="_blank">
-					<span class="fa fa-twitter fa-lg" aria-hidden="true"></span>
-				</a>
-				<a mat-icon-button href="https://www.linkedin.com/in/serkanholat" target="_blank">
-					<span class="fa fa-linkedin fa-lg" aria-hidden="true"></span>
-				</a>
-				<a mat-icon-button href="mailto:serkan.holat@forcrowd.org" target="_blank">
-					<span class="fa fa-envelope fa-lg" aria-hidden="true"></span>
-				</a>
-				<a mat-icon-button href="https://forcrowd.org" target="_blank">
-					<span class="fa fa-globe fa-lg" aria-hidden="true"></span>
-				</a>
-			</div>
-			<div class="mat-cell" role="gridcell">
-				{{ getJoinedOnDate(16, 6, 2016) | amTimeAgo }}
-			</div>
-		</div>
-	</div>
+    <div class="mat-row" role="row">
+        <div class="mat-cell" role="gridcell">
+            Jacquelien Van Euwen<br />
+            <span class="userName">jackrataty</span>
+        </div>
+        <div class="mat-cell" role="gridcell">
+            Gopher
+        </div>
+        <div class="mat-cell" role="gridcell">
+            Newbie learned programming on a Commodore 64
+        </div>
+        <div class="mat-cell" role="gridcell">
+            {{ getExperienceYears(2018) }}
+        </div>
+        <div class="mat-cell" role="gridcell">
+            &nbsp;
+        </div>
+        <div class="mat-cell" role="gridcell">
+            {{ getJoinedOnDate(17, 3, 2018) | amTimeAgo }}
+        </div>
+    </div>
+
+    <div class="mat-row" role="row">
+        <div class="mat-cell" role="gridcell">
+            Serkan Holat<br />
+            <span class="userName">coni2k</span>
+        </div>
+        <div class="mat-cell" role="gridcell">
+            Software Developer
+        </div>
+        <div class="mat-cell" role="gridcell">
+            ASP.NET, Angular, C#, MS SQL
+        </div>
+        <div class="mat-cell" role="gridcell">
+            {{ getExperienceYears(2001) }}
+        </div>
+        <div class="mat-cell" role="gridcell">
+            <a mat-icon-button href="https://twitter.com/coni2k" target="_blank">
+                <span class="fa fa-twitter fa-lg" aria-hidden="true"></span>
+            </a>
+            <a mat-icon-button href="https://www.linkedin.com/in/serkanholat" target="_blank">
+                <span class="fa fa-linkedin fa-lg" aria-hidden="true"></span>
+            </a>
+            <a mat-icon-button href="mailto:serkan.holat@forcrowd.org" target="_blank">
+                <span class="fa fa-envelope fa-lg" aria-hidden="true"></span>
+            </a>
+            <a mat-icon-button href="https://forcrowd.org" target="_blank">
+                <span class="fa fa-globe fa-lg" aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="mat-cell" role="gridcell">
+            {{ getJoinedOnDate(16, 6, 2016) | amTimeAgo }}
+        </div>
+    </div>
+</div>
 
 <!--A silly trick to load mat-table classes; without adding this, "contributors" table doesn't use mat-table classes / coni2k - 16 Dec. '17-->
 <mat-table [dataSource]="null" [hidden]="true">

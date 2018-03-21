@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.5.2**
+
+* AngularClient - Contributors page - ryki02
+
 **0.5.1**
 
 * AngularClient - Contributors page - jackrataty
