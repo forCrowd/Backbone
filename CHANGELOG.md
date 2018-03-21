@@ -1,8 +1,8 @@
 ### Changelog
 
-**0.5.1**
+**0.5.2**
 
-* AngularClient - Contributors page - jackrataty
+* AngularClient - Contributors page - ryki02
 * Solution - Minor
 
 **0.5.0**
