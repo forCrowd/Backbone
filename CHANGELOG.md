@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.5.3**
+
+* AngularClient - Create initial user element field / cell fix
+
 **0.5.2**
 
 * AngularClient - Contributors page - ryki02

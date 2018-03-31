@@ -38,11 +38,47 @@ export class ProjectService {
     }
 
     createElementCell(initialValues: Object) {
-        return this.appEntityManager.createEntity("ElementCell", initialValues) as ElementCell;
+
+        const elementCell = this.appEntityManager.createEntity("ElementCell", initialValues) as ElementCell;
+
+        // If DataType is decimal, also create "User element cell"
+        if (elementCell.ElementField.DataType === ElementFieldDataType.Decimal) {
+
+            elementCell.DecimalValueTotal = 0; // Computed field
+            elementCell.DecimalValueCount = 1; // Computed field
+
+            const userElementCellInitial = {
+                User: this.authService.currentUser,
+                ElementCell: elementCell,
+                DecimalValue: 0,
+            } as any;
+
+            this.appEntityManager.createEntity("UserElementCell", userElementCellInitial) as UserElementCell;
+        }
+
+        return elementCell;
     }
 
     createElementField(initialValues: Object) {
-        return this.appEntityManager.createEntity("ElementField", initialValues) as ElementField;
+
+        const elementField = this.appEntityManager.createEntity("ElementField", initialValues) as ElementField;
+
+        // If RatingEnabled, also create "User element field"
+        if (elementField.RatingEnabled) {
+
+            elementField.RatingTotal = 0; // Computed field
+            elementField.RatingCount = 1; // Computed field
+
+            const userElementFieldInitial = {
+                User: this.authService.currentUser,
+                ElementField: elementField,
+                Rating: 0
+            };
+
+            this.appEntityManager.createEntity("UserElementField", userElementFieldInitial) as UserElementField;
+        }
+
+        return elementField;
     }
 
     createElementItem(initialValues: Object): ElementItem {
