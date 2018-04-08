@@ -69,6 +69,16 @@ export class ProjectManagerComponent implements OnInit {
             });
     }
 
+    createProjectTodo(): void {
+        this.project = this.projectService.createProjectTodo();
+
+        this.projectService.saveChanges()
+            .subscribe(() => {
+                const command = `/projects/${this.project.Id}/edit`;
+                this.router.navigate([command]);
+            });
+    }
+
     isEditingChanged(isEditing: boolean): void {
         this.isEditing = isEditing;
     }

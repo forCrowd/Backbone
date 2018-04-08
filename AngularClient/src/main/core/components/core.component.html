@@ -35,7 +35,7 @@
         <a mat-button matTooltip="Admin" routerLink="/app/admin" [hidden]="!currentUser.isAdmin()">
             <i class="material-icons">settings_applications</i>
         </a>
-        <button mat-button matTooltip="Logout" (click)="logout()" [hidden]="!currentUser.isAuthenticated()" title="logout">
+        <button mat-button matTooltip="Logout" (click)="logout()" [hidden]="!currentUser.isAuthenticated()">
             <i class="material-icons">exit_to_app</i>
         </button>
     </mat-sidenav>

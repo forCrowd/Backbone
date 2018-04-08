@@ -40,6 +40,8 @@
     <TypeScriptCompile Include="src\main\core\app-http-client\busy-interceptor.ts" />
     <TypeScriptCompile Include="src\main\core\app-http-client\error-interceptor.ts" />
     <TypeScriptCompile Include="src\main\core\auth-guard.service.ts" />
+    <TypeScriptCompile Include="src\main\core\token.ts" />
+    <TypeScriptCompile Include="src\main\core\components\getting-started.component.ts" />
     <TypeScriptCompile Include="src\main\core\notification.service.ts" />
     <TypeScriptCompile Include="src\main\core\auth.service.ts" />
     <TypeScriptCompile Include="src\main\core\components\core.component.ts" />
@@ -89,6 +91,8 @@
     <TypeScriptCompile Include="src\main\core\components\not-found.component.ts" />
     <TypeScriptCompile Include="src\main\core\project.service.ts" />
     <TypeScriptCompile Include="src\main\core\components\search.component.ts" />
+    <Content Include="src\assets\examples\todo-app\index.css" />
+    <Content Include="src\assets\examples\todo-app\index.js" />
     <Content Include="src\assets\images\Logo+Text_142x30.png" />
     <Content Include="src\assets\images\Logo_30x30.jpg" />
     <Content Include="src\main\account\reset-password.component.css" />
@@ -99,6 +103,8 @@
     <Content Include="src\main\account\register.component.css" />
     <Content Include="src\main\account\login.component.css" />
     <Content Include="src\main\admin\projects.component.css" />
+    <Content Include="src\main\core\components\getting-started.component.css" />
+    <Content Include="src\main\core\components\getting-started.component.html" />
     <Content Include="src\main\core\components\core.component.css" />
     <Content Include="src\main\core\components\core.component.html" />
     <Content Include="src\main\core\components\contributors.component.css" />

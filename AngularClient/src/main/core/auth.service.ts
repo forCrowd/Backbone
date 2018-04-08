@@ -10,6 +10,7 @@ import { UserRole } from "./entities/user-role";
 import { AppHttpClient } from "./app-http-client/app-http-client.module";
 import { AppEntityManager } from "./app-entity-manager.service";
 import { NotificationService } from "./notification.service";
+import { Token } from "./token";
 import { getUniqueUserName } from "../shared/utils";
 
 @Injectable()
@@ -136,22 +137,19 @@ export class AuthService {
 
     login(username: string, password: string, rememberMe: boolean, singleUseToken?: string): Observable<void> {
 
+        this.logout();
+
         return this.getToken(username, password, rememberMe, singleUseToken)
             .mergeMap((): Observable<void> => {
-
-                this.resetCurrentUser();
-
                 return this.setCurrentUser();
             });
     }
 
-    logout(): Observable<void> {
-
-        this.resetCurrentUser();
-
+    logout(): void {
+        this.appEntityManager.clear();
+        this.currentUser = null;
+        localStorage.removeItem("guestUserName");
         localStorage.removeItem("token");
-
-        return this.setCurrentUser();
     }
 	
     register(registerBindingModel: any, rememberMe: boolean): Observable<void> {
@@ -254,9 +252,14 @@ export class AuthService {
 
         const tokenData = `grant_type=password&username=${username}&password=${password}&rememberMe=${rememberMe}&singleUseToken=${singleUseToken}`;
 
-        return this.appHttpClient.post<Object>(this.tokenUrl, tokenData)
-            .map((token) => {
+        return this.appHttpClient.post<Token>(this.tokenUrl, tokenData)
+            .map(token => {
+
+                // Store token in localStorage
                 localStorage.setItem("token", JSON.stringify(token)); // Store the token in localStorage
+
+                // Set to current user
+                if (this.currentUser) this.currentUser.token = token;
             });
     }
 
@@ -265,38 +268,21 @@ export class AuthService {
         registerBindingModel.ClientAppUrl = window.location.origin;
 
         return this.appHttpClient.post<User>(this.registerUrl, registerBindingModel)
-            .map((updatedUser: User) => {
+            .map(updatedUser => {
                 this.updateCurrentUser(updatedUser);
 
                 localStorage.removeItem("guestUserName");
             });
     }
 
-    private resetCurrentUser(): void {
-
-        this.appEntityManager.clear();
-
-        this.currentUser = null;
-
-        localStorage.removeItem("guestUserName");
-
-    }
-
-    private setCurrentUser(): Observable<void> {
+    setCurrentUser(): Observable<void> {
 
         return this.ensureRolesEntities().mergeMap(() => {
 
             const tokenItem = localStorage.getItem("token");
+            const token = JSON.parse(tokenItem.toString()) as Token;
 
-            if (tokenItem === null) {
-
-                this.currentUser = this.createGuestAccount();
-
-                this.currentUserChanged.next(this.currentUser);
-
-                return Observable.of(null);
-
-            } else {
+            if (token) {
 
                 return this.appHttpClient.get<User>(this.currentUserUrl)
                     .map(currentUser => {
@@ -313,10 +299,22 @@ export class AuthService {
                             this.currentUser = this.appEntityManager.createEntity("User", currentUser, EntityState.Unchanged) as User;
                             this.appEntityManager.createEntity("UserRole", currentUser.Roles[0], EntityState.Unchanged);
 
+                            // Set token
+                            this.currentUser.token = token;
+
                         }
 
                         this.currentUserChanged.next(this.currentUser);
                     });
+
+            } else {
+
+                this.currentUser = this.createGuestAccount();
+
+                this.currentUserChanged.next(this.currentUser);
+
+                return Observable.of(null);
+
             }
         });
     }

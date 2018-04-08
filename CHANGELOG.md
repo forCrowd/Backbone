@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.6.0**
+
+* AngularClient - Todo App example
+
 **0.5.3**
 
 * AngularClient - Create initial user element field / cell fix

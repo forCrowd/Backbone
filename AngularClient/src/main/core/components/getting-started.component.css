@@ -1,0 +1,54 @@
+﻿h3 {
+    margin-top: 20px !important;
+    color: none;
+}
+
+.code-example-block {
+    border: .5px solid #dbdbdb;
+    border-radius: 5px;
+}
+
+    .code-example-block header {
+        background-color: #3f647f;
+        border-radius: 5px 5px 0 0;
+        color: #fafafa;
+        font-size: 16px;
+        padding: 8px 16px;
+    }
+
+    .code-example-block .content {
+        padding: 16px 32px;
+    }
+
+    .code-example-block pre {
+        -webkit-align-items: center;
+        align-items: center;
+        display: flex; /* Browser support? */
+        margin: 0;
+        position: relative;
+        white-space: pre-wrap;
+    }
+
+        .code-example-block pre code {
+            line-height: 24px;
+        }
+
+    .code-example-block button {
+        position: absolute;
+        top: -8px;
+        right: -32px;
+        color: rgba(63, 100, 127, 1);
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
+
+        .code-example-block button:hover,
+        .code-example-block button:focus {
+            color: rgba(63, 100, 127, 0.5);
+        }
+
+/*.code-example-block textarea {
+            position: absolute;
+            visibility: hidden;
+        }*/

@@ -22,6 +22,7 @@ export class AppComponent {
     }
 
     logout(): void {
-        this.authService.logout().subscribe();
+        this.authService.logout();
+        this.authService.setCurrentUser().subscribe();
     }
 }

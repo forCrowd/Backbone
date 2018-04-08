@@ -13,6 +13,7 @@ import { SharedModule } from "../shared/shared.module";
 // Components
 import { ContributorsComponent } from "./components/contributors.component";
 import { CoreComponent } from "./components/core.component";
+import { GettingStartedComponent } from "./components/getting-started.component";
 import { HomeComponent } from "./components/home.component";
 import { NotFoundComponent } from "./components/not-found.component";
 import { SearchComponent } from "./components/search.component";
@@ -32,9 +33,10 @@ export { AppEntityManager, AppHttpClient, AuthGuard, AuthService, CanDeactivateG
 
 const coreRoutes: Routes = [
     { path: "", component: HomeComponent, data: { title: "Home" } },
-    { path: "app/search", component: SearchComponent, data: { title: "Search" } },
     { path: "app/contributors", component: ContributorsComponent, data: { title: "Contributors" } },
+    { path: "app/getting-started", component: GettingStartedComponent, data: { title: "Getting Started" } },
     { path: "app/not-found", component: NotFoundComponent, data: { title: "Not Found" } },
+    { path: "app/search", component: SearchComponent, data: { title: "Search" } },
 
     /* Home alternatives */
     { path: "app/home", redirectTo: "", pathMatch: "full" },
@@ -59,6 +61,7 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
     declarations: [
         ContributorsComponent,
         CoreComponent,
+        GettingStartedComponent,
         HomeComponent,
         NotFoundComponent,
         SearchComponent,

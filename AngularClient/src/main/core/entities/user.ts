@@ -3,6 +3,7 @@ import { Project } from "./project";
 import { UserElementCell } from "./user-element-cell";
 import { UserElementField } from "./user-element-field";
 import { UserRole } from "./user-role";
+import { Token } from "../token";
 import { stripInvalidChars } from "../../shared/utils";
 
 export class User extends EntityBase {
@@ -26,6 +27,9 @@ export class User extends EntityBase {
     ProjectSet: Project[];
     UserElementFieldSet: UserElementField[];
     UserElementCellSet: UserElementCell[];
+
+    // Client-side
+    token: Token = null;
 
     get Email(): string {
         return this.fields.email;

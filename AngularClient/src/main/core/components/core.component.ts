@@ -37,10 +37,11 @@ export class CoreComponent implements OnDestroy, OnInit {
     }
 
     logout(): void {
-        this.authService.logout()
-            .subscribe(() => {
-                this.router.navigate([""]);
-            });
+        this.authService.logout();
+
+        this.authService.setCurrentUser().subscribe(() => {
+            this.router.navigate([""]);
+        });
     }
 
     ngOnDestroy(): void {

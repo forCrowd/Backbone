@@ -100,8 +100,10 @@ export class ProjectService {
 
     createProjectBasic() {
 
+        // Project
         const project = this.createProjectEmpty();
 
+        // Element
         const element = this.createElement({
             Project: project,
             Name: "New element"
@@ -111,7 +113,7 @@ export class ProjectService {
         const elementField = this.createElementField({
             Element: element,
             Name: "New field",
-            DataType: 4,
+            DataType: ElementFieldDataType.Decimal,
             UseFixedValue: false,
             RatingEnabled: true,
             SortOrder: 1
@@ -139,6 +141,81 @@ export class ProjectService {
         this.createElementCell({
             ElementField: elementField,
             ElementItem: elementItem2
+        });
+
+        return project;
+    }
+
+    createProjectTodo() {
+
+        // Project
+        const project = this.createProjectEmpty();
+        project.Name = "Todo App";
+        project.Origin = "https://s.codepen.io";
+
+        // Element
+        const element = this.createElement({
+            Project: project,
+            Name: "Main"
+        }) as Element;
+
+        // Field
+        const elementField = this.createElementField({
+            Element: element,
+            Name: "Completed",
+            DataType: ElementFieldDataType.Decimal,
+            UseFixedValue: false,
+            RatingEnabled: false,
+            SortOrder: 1
+        }) as ElementField;
+
+        // Item 1
+        const elementItem1 = this.createElementItem({
+            Element: element,
+            Name: "Create a project on Backbone"
+        }) as ElementItem;
+
+        // Cell 1
+        const cell1 = this.createElementCell({
+            ElementField: elementField,
+            ElementItem: elementItem1
+        });
+        cell1.UserElementCellSet[0].DecimalValue = 1;
+
+        // Item 2
+        const elementItem2 = this.createElementItem({
+            Element: element,
+            Name: "Visit Niagara falls"
+        });
+
+        // Cell 2
+        this.createElementCell({
+            ElementField: elementField,
+            ElementItem: elementItem2
+        });
+
+        // Item 3
+        const elementItem3 = this.createElementItem({
+            Element: element,
+            Name: "Watch 'Shawshank Redemption'"
+        });
+
+        // Cell 3
+        this.createElementCell({
+            ElementField: elementField,
+            ElementItem: elementItem3
+        });
+
+        // Item 4
+        const elementItem4 = this.createElementItem({
+            Element: element,
+            Name: "Read 'The Little Prince'"
+        });
+
+        // Cell 4
+        this.createElementCell({
+            ElementField: elementField,
+            ElementItem: elementItem4
         });
 
         return project;
