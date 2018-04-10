@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.6.1**
+
+* AngularClient - Auth service - tokenItem parse fix
+
 **0.6.0**
 
 * AngularClient - Todo App example

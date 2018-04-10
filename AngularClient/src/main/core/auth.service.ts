@@ -280,9 +280,10 @@ export class AuthService {
         return this.ensureRolesEntities().mergeMap(() => {
 
             const tokenItem = localStorage.getItem("token");
-            const token = JSON.parse(tokenItem.toString()) as Token;
 
-            if (token) {
+            if (tokenItem) {
+
+                const token = JSON.parse(tokenItem.toString()) as Token;
 
                 return this.appHttpClient.get<User>(this.currentUserUrl)
                     .map(currentUser => {
