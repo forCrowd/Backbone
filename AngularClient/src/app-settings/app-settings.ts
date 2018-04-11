@@ -32,5 +32,5 @@ export class AppSettings {
     /**
      * Application version number
      */
-    static get version(): string { return "0.6.1"; }
+    static get version(): string { return "0.6.2"; }
 }

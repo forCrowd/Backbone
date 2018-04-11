@@ -13,18 +13,23 @@ export class GettingStartedComponent implements OnInit {
 
     project: Project = null;
 
+    get currentUser() {
+        return this.authService.currentUser;
+    }
+
     constructor(private readonly authService: AuthService,
         private readonly projectService: ProjectService) { }
 
     ngOnInit(): void {
 
-        var currentUser = this.authService.currentUser;
+        if (!this.currentUser || !this.currentUser.isAuthenticated()) return;
 
-        if (!currentUser.isAuthenticated()) return;
+        this.authService.getUser(this.currentUser.UserName).subscribe(() => {
 
-        this.authService.getUser(currentUser.UserName).subscribe(() => {
-            for (var i = 0; i < currentUser.ProjectSet.length; i++) {
-                var project = currentUser.ProjectSet[i];
+            for (var i = 0; i < this.currentUser.ProjectSet.length; i++) {
+
+                var project = this.currentUser.ProjectSet[i];
+
                 if (project.Name === "Todo App") {
                     this.project = project;
                     break;
@@ -51,7 +56,10 @@ export class GettingStartedComponent implements OnInit {
 
     getExampleCode(): string {
 
-        if (!this.project) return "";
+        if (!(this.currentUser
+            && this.currentUser.token
+            && this.project))
+            return "";
 
         const exampleCode =
             `<!doctype html>
@@ -80,7 +88,7 @@ export class GettingStartedComponent implements OnInit {
     <script type="text/javascript">
 
         var projectId = ${this.project.Id};
-        var token = "${this.authService.currentUser.token.access_token}";
+        var token = "${this.currentUser.token.access_token}";
 
         init(projectId, token);
 

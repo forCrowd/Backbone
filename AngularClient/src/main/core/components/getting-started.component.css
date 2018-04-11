@@ -31,6 +31,8 @@
 
         .code-example-block pre code {
             line-height: 24px;
+            overflow: hidden;
+            word-wrap: break-word;
         }
 
     .code-example-block button {

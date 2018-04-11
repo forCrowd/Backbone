@@ -1,5 +1,11 @@
 ### Changelog
 
+**0.6.2**
+
+* AngularClient - Getting started
+  * currentUser.token null fix
+  * Token overflow fix
+
 **0.6.1**
 
 * AngularClient - Auth service - tokenItem parse fix
