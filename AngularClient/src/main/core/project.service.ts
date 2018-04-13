@@ -151,7 +151,7 @@ export class ProjectService {
         // Project
         const project = this.createProjectEmpty();
         project.Name = "Todo App";
-        project.Origin = "https://s.codepen.io";
+        project.Origin = AppSettings.todoAppOrigin;
 
         // Element
         const element = this.createElement({
@@ -183,15 +183,15 @@ export class ProjectService {
         cell1.UserElementCellSet[0].DecimalValue = 1;
 
         // Item 2
-        const elementItem2 = this.createElementItem({
+        const elementItem4 = this.createElementItem({
             Element: element,
-            Name: "Visit Niagara falls"
+            Name: "Read 'The Little Prince'"
         });
 
         // Cell 2
         this.createElementCell({
             ElementField: elementField,
-            ElementItem: elementItem2
+            ElementItem: elementItem4
         });
 
         // Item 3
@@ -207,15 +207,15 @@ export class ProjectService {
         });
 
         // Item 4
-        const elementItem4 = this.createElementItem({
+        const elementItem2 = this.createElementItem({
             Element: element,
-            Name: "Read 'The Little Prince'"
+            Name: "Visit 'Niagara Falls'"
         });
 
         // Cell 4
         this.createElementCell({
             ElementField: elementField,
-            ElementItem: elementItem4
+            ElementItem: elementItem2
         });
 
         return project;

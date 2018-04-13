@@ -11,14 +11,17 @@ import { ProjectService } from "../project.service";
 })
 export class GettingStartedComponent implements OnInit {
 
+    exampleCode = "";
     project: Project = null;
+    version = "1.0";
 
     get currentUser() {
         return this.authService.currentUser;
     }
 
     constructor(private readonly authService: AuthService,
-        private readonly projectService: ProjectService) { }
+        private readonly projectService: ProjectService) {
+    }
 
     ngOnInit(): void {
 
@@ -32,6 +35,7 @@ export class GettingStartedComponent implements OnInit {
 
                 if (project.Name === "Todo App") {
                     this.project = project;
+                    this.generateExampleCode();
                     break;
                 }
             }
@@ -40,7 +44,7 @@ export class GettingStartedComponent implements OnInit {
 
     copy() {
         var textarea = document.createElement("textarea") as HTMLTextAreaElement;
-        textarea.innerHTML = this.getExampleCode()
+        textarea.innerHTML = this.exampleCode;
         document.body.appendChild(textarea);
         textarea.select();
         document.execCommand("copy");
@@ -51,52 +55,62 @@ export class GettingStartedComponent implements OnInit {
 
         this.project = this.projectService.createProjectTodo();
 
-        this.projectService.saveChanges().subscribe();
+        this.projectService.saveChanges().subscribe(() => {
+            this.generateExampleCode();
+        });
     }
 
-    getExampleCode(): string {
+    private generateExampleCode(): void {
 
-        if (!(this.currentUser
-            && this.currentUser.token
-            && this.project))
-            return "";
-
-        const exampleCode =
-            `<!doctype html>
+        this.exampleCode =
+            `<!DOCTYPE html>
+<html>
 <head>
+    <title>Todo App</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://backbone.forcrowd.org/assets/examples/todo-app/index.css" />
+    <link rel="stylesheet" href="${location.origin}/assets/examples/todo-app/index.css?v=${this.version}" />
 </head>
 <body>
     <div id="todo-app">
         <header>
-            <h1 id="project-name"></h1>
-            <div id="status" class="hide">
+            <h1 id="project-name">Todo App</h1>
+            <h2>User: <span id="user-name">Guest</span></h2>
+            <div class="hide" id="status">
                 Please wait ...
             </div>
         </header>
         <div id="main">
-            <ul id="todo-list"></ul>
+            <input autofocus="" id="new-item-input" onkeyup="app.createItem(event)" placeholder="What needs to be done?" >
+            <ul id="todo-list">
+                <li id="todo-item-0">
+                    <input class="toggle" id="item-input-0" onclick="app.updateItem(0);" type="checkbox" />
+                    <label for="item-input-0" id="item-label-0">Todo item</label>
+                    <button class="destroy" id="item-button-0" onclick="app.removeItem(0);"></button>
+                </li>
+            </ul>
         </div>
     </div>
     <footer id="info">
         Powered by <a href="https://backbone.forcrowd.org" target="_blank">Backbone</a><br />
         Design by <a href="http://todomvc.com" target="_blank">TodoMVC</a><br />
-        Version 0.3<br />
+        Version ${this.version}<br />
     </footer>
-    <script type="text/javascript" src="https://backbone.forcrowd.org/assets/examples/todo-app/index.js"></script>
     <script type="text/javascript">
 
-        var projectId = ${this.project.Id};
-        var token = "${this.currentUser.token.access_token}";
+        var app = this.app = {
 
-        init(projectId, token);
+            /* Access token of your Backbone account
+             * Please be aware that this is not the best security practice! */
+            currentUserToken: "${this.currentUser.token.access_token}",
+
+            /* Project ID of your 'Todo App' */
+            projectId: ${this.project.Id}
+        };
 
     </script>
+    <script type="text/javascript" src="${location.origin}/assets/examples/todo-app/index.js?v=${this.version}"></script>
 </body>
 </html>`;
-
-        return exampleCode;
 
     }
 }

@@ -1,5 +1,11 @@
 ### Changelog
 
+**0.6.3**
+
+* AngularClient - Getting started
+  * Create and remove todo items
+  * Cache breaking by using version info
+
 **0.6.2**
 
 * AngularClient - Getting started

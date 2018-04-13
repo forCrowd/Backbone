@@ -12,7 +12,7 @@
     </button>
 </div>
 
-<div *ngIf="currentUser?.token && project">
+<div *ngIf="exampleCode">
     <h3>
         2. Copy the following HTML block:
     </h3>
@@ -24,7 +24,7 @@
             <button (click)="copy()" class="material-icons" title="Copy code snippet" aria-label="Copy code snippet index.html">
             <span aria-hidden="true">content_copy</span>
             </button>
-            <code>{{ getExampleCode() }}</code>
+            <code>{{ exampleCode }}</code>
             </pre>
         </div>
     </div>
