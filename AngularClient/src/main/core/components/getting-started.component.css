@@ -1,6 +1,6 @@
-﻿h3 {
-    margin-top: 20px !important;
-    color: none;
+﻿p {
+    font-size: 16px;
+    margin-top: 20px;
 }
 
 .code-example-block {
@@ -23,7 +23,7 @@
     .code-example-block pre {
         -webkit-align-items: center;
         align-items: center;
-        display: flex; /* Browser support? */
+        display: flex; /* Doesn't work correctly with IE Edge? */
         margin: 0;
         position: relative;
         white-space: pre-wrap;
@@ -49,8 +49,3 @@
         .code-example-block button:focus {
             color: rgba(63, 100, 127, 0.5);
         }
-
-/*.code-example-block textarea {
-            position: absolute;
-            visibility: hidden;
-        }*/

@@ -3,9 +3,9 @@
 </h2>
 <hr />
 
-<h3 class="g-mt-20">
+<p class="g-mt-20">
     1. Create a new project with 'Todo App' template
-</h3>
+</p>
 <div class="g-mt-20">
     <button mat-raised-button (click)="createProject()" type="button" color="primary" [disabled]="project">
         Create a new project
@@ -13,9 +13,9 @@
 </div>
 
 <div *ngIf="exampleCode">
-    <h3>
+    <p>
         2. Copy the following HTML block:
-    </h3>
+    </p>
 
     <div class="code-example-block">
         <header>index.html</header>
@@ -29,13 +29,15 @@
         </div>
     </div>
 
-    <h3>
+    <p>
         3. Navigate to <a href="https://codepen.io/pen" target="_blank">Codepen</a> and paste the copied block into HTML section
-    </h3>
+    </p>
 
-    <h3>
+    <p>
         4. Voila! You created your first application on Backbone.<br />
-        When you 'Complete' your items, your changes will be saved in Backbone.<br />
-        If you wish, you can continue with updating your <a routerLink="/projects/{{ project.Id }}/edit">Todo App</a> by adding or removing items
-    </h3>
+        When you add, remove or 'complete' items, your changes will be saved in Backbone.
+    </p>
+    <p>
+        If you wish, you can continue playing around by updating your <a routerLink="/projects/{{ project.Id }}/edit">Todo App</a>
+    </p>
 </div>

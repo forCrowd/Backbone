@@ -16,9 +16,10 @@ An API service for rapid app prototyping
 
 ### Client
 
-* Angular
+* Angular 5.x
+* TypeScript 2.x
+* Angular Material
 * Angular CLI
-* TypeScript
 * BreezeJS
 * Karma & Jasmine
 

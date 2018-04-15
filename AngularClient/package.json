@@ -2,7 +2,7 @@
     "name": "forcrowd-backbone-angularclient",
     "description": "An API service for rapid app prototyping",
     "author": "Stichting forCrowd",
-    "version": "0.6.4",
+    "version": "0.6.5",
     "license": "MIT",
     "scripts": {
         "ng": "ng",

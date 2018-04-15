@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.6.5**
+
+* AngularClient - Getting started texts
+* General - Projects target framework are set to 4.6
+
 **0.6.4**
 
 * AngularClient - Getting started - Checkbox fix
