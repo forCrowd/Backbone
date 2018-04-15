@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.6.4**
+
+* AngularClient - Getting started - Checkbox fix
+
 **0.6.3**
 
 * AngularClient - Getting started

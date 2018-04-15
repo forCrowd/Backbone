@@ -33,6 +33,7 @@ Thumbs.db
 
 # AngularClient
 AngularClient/dist
+AngularClient/dist-last
 AngularClient/out-tsc
 
 #AngularClient/e2e/*.js

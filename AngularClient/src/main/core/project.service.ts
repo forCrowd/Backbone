@@ -183,7 +183,7 @@ export class ProjectService {
         cell1.UserElementCellSet[0].DecimalValue = 1;
 
         // Item 2
-        const elementItem4 = this.createElementItem({
+        const elementItem2 = this.createElementItem({
             Element: element,
             Name: "Read 'The Little Prince'"
         });
@@ -191,7 +191,7 @@ export class ProjectService {
         // Cell 2
         this.createElementCell({
             ElementField: elementField,
-            ElementItem: elementItem4
+            ElementItem: elementItem2
         });
 
         // Item 3
@@ -207,7 +207,7 @@ export class ProjectService {
         });
 
         // Item 4
-        const elementItem2 = this.createElementItem({
+        const elementItem4 = this.createElementItem({
             Element: element,
             Name: "Visit 'Niagara Falls'"
         });
@@ -215,7 +215,7 @@ export class ProjectService {
         // Cell 4
         this.createElementCell({
             ElementField: elementField,
-            ElementItem: elementItem2
+            ElementItem: elementItem4
         });
 
         return project;

@@ -22,13 +22,10 @@ app._init = function () {
 
     // Get template elements
     app.elements = {};
-    app.elements.todoInput = document.getElementById("item-input-0");
-    app.elements.todoLabel = document.getElementById("item-label-0");
-    app.elements.todoButton = document.getElementById("item-button-0");
-    app.elements.todoListItem = document.getElementById("todo-item-0");
-
-    // Clear template
-    document.getElementById("todo-item-0").outerHTML = "";
+    app.elements.todoItem = document.getElementById("todo-item-0");
+    app.elements.itemInput = document.getElementById("item-input-0");
+    app.elements.itemLabel = document.getElementById("item-label-0");
+    app.elements.itemButton = document.getElementById("item-button-0");
 
     // Get current user
     app.executeHttpRequest("GET", app.urls.currentUserUrl, null, app.loadCurrentUser);
@@ -43,38 +40,39 @@ app.addTodoItem = function (elementItem) {
         .DecimalValue === "1.00";
 
     // Input element
-    app.elements.todoInput.setAttribute("id", `item-input-${elementItem.Id}`);
-    app.elements.todoInput.setAttribute("onclick", `app.updateItem(${elementItem.Id});`);
+    app.elements.itemInput.setAttribute("id", `item-input-${elementItem.Id}`);
+    app.elements.itemInput.setAttribute("onclick", `app.updateItem(${elementItem.Id});`);
+
     if (completed)
-        app.elements.todoInput.setAttribute("checked", "");
+        app.elements.itemInput.setAttribute("checked", "checked");
     else
-        app.elements.todoInput.removeAttribute("checked");
+        app.elements.itemInput.removeAttribute("checked");
 
     // Label element
-    app.elements.todoLabel.setAttribute("id", `item-label-${elementItem.Id}`);
-    app.elements.todoLabel.setAttribute("for", `item-input-${elementItem.Id}`);
-    app.elements.todoLabel.innerHTML = elementItem.Name;
+    app.elements.itemLabel.setAttribute("id", `item-label-${elementItem.Id}`);
+    app.elements.itemLabel.setAttribute("for", `item-input-${elementItem.Id}`);
+    app.elements.itemLabel.innerHTML = elementItem.Name;
 
     // Button element
-    app.elements.todoButton.setAttribute("id", `item-button-${elementItem.Id}`);
-    app.elements.todoButton.setAttribute("onclick", `app.removeItem(${elementItem.Id});`);
+    app.elements.itemButton.setAttribute("id", `item-button-${elementItem.Id}`);
+    app.elements.itemButton.setAttribute("onclick", `app.removeItem(${elementItem.Id});`);
 
     // List item element
-    app.elements.todoListItem.setAttribute("id", `todo-item-${elementItem.Id}`);
+    app.elements.todoItem.setAttribute("id", `todo-item-${elementItem.Id}`);
     if (completed)
-        app.elements.todoListItem.classList.add("completed");
+        app.elements.todoItem.classList.add("completed");
     else
-        app.elements.todoListItem.classList.remove("completed");
+        app.elements.todoItem.classList.remove("completed");
 
-    app.elements.todoListItem.innerHTML = app.elements.todoInput.outerHTML + app.elements.todoLabel.outerHTML + app.elements.todoButton.outerHTML;
+    app.elements.todoItem.innerHTML = app.elements.itemInput.outerHTML + app.elements.itemLabel.outerHTML + app.elements.itemButton.outerHTML;
 
     // Append
-    document.getElementById("todo-list").innerHTML += app.elements.todoListItem.outerHTML;
+    document.getElementById("todo-list").innerHTML += app.elements.todoItem.outerHTML;
 }
 
 app.createItem = function (event) {
 
-    // Ignore, except "Enter"
+    // Only allow "Enter" key
     if (event.keyCode !== 13) return;
 
     // Target
@@ -83,6 +81,9 @@ app.createItem = function (event) {
     // Element item name
     var elementItemName = target.value;
     target.value = "";
+
+    // Update Backbone
+    if (!app.project) return;
 
     // Element item
     var elementItemData = {
@@ -158,6 +159,8 @@ app.executeHttpRequest = function (method, url, requestData, callback) {
 
 app.loadCurrentUser = function (currentUser) {
 
+    if (!currentUser) return;
+
     app.currentUser = currentUser;
 
     // Update UI
@@ -171,13 +174,11 @@ app.loadCurrentUser = function (currentUser) {
 }
 
 app.loadProject = function (projects) {
-    
-    if (!projects) return;
+
+    if (!projects || !projects.value[0]) return;
 
     // Get the project
     app.project = projects.value[0];
-
-    if (!app.project) return;
 
     // Title
     document.title = app.project.Name;
@@ -185,15 +186,17 @@ app.loadProject = function (projects) {
     // Header
     document.getElementById("project-name").innerText = app.project.Name;
 
-    // Update UI 
-    var elementItems = app.project.ElementSet[0].ElementItemSet;
+    // Clear existing template
+    document.getElementById("todo-item-0").outerHTML = "";
 
+    // Update UI
+    var elementItems = app.project.ElementSet[0].ElementItemSet;
     for (var i = 0; i < elementItems.length; i++) {
 
         // Get element item
         var elementItem = elementItems[i];
 
-        // Update UI
+        // Add todo item
         app.addTodoItem(elementItem);
     }
 }
@@ -204,14 +207,16 @@ app.updateItem = function (elementItemId) {
     var input = document.getElementById(`item-input-${elementItemId}`);
 
     // Current state
-    var completed = !input.checked;
+    var completed = input.hasAttribute("checked");
 
     // Update UI
     var listItem = document.getElementById(`todo-item-${elementItemId}`);
 
     if (completed) {
+        input.removeAttribute("checked");
         listItem.classList.remove("completed");
     } else {
+        input.setAttribute("checked", "checked");
         listItem.classList.add("completed");
     }
 
