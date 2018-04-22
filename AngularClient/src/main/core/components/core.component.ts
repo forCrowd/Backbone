@@ -57,13 +57,13 @@ export class CoreComponent implements OnDestroy, OnInit {
         this.router.events
             .filter(event => event instanceof NavigationEnd)
             .map(() => this.activatedRoute)
-            .map((route: any) => {
+            .map(route => {
                 while (route.firstChild) { route = route.firstChild; }
                 return route;
             })
-            .filter((route: any) => route.outlet === "primary")
+            .filter(route => route.outlet === "primary")
             .mergeMap(route => route.data)
-            .subscribe((data: any) => {
+            .subscribe(data => {
                 if (data.title) {
                     this.titleService.setTitle(`Backbone - ${data.title}`);
                 }

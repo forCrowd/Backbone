@@ -1,7 +1,9 @@
 ﻿import { EntityBase } from "./entity-base";
 import { Project } from "./project";
+import { UserClaim } from "./user-claim";
 import { UserElementCell } from "./user-element-cell";
 import { UserElementField } from "./user-element-field";
+import { UserLogin } from "./user-login";
 import { UserRole } from "./user-role";
 import { Token } from "../token";
 import { stripInvalidChars } from "../../shared/utils";
@@ -21,8 +23,8 @@ export class User extends EntityBase {
     LockoutEnabled = false;
     LockoutEndDateUtc: Date = null;
     Notes = "";
-    Claims: any[];
-    Logins: any[];
+    Claims: UserClaim[];
+    Logins: UserLogin[];
     Roles: UserRole[];
     ProjectSet: Project[];
     UserElementFieldSet: UserElementField[];

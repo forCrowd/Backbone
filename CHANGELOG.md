@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.6.6**
+
+* AngularClient - Minor
+
 **0.6.5**
 
 * AngularClient - Getting started texts

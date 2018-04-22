@@ -42,6 +42,8 @@
     <TypeScriptCompile Include="src\main\core\app-http-client\busy-interceptor.ts" />
     <TypeScriptCompile Include="src\main\core\app-http-client\error-interceptor.ts" />
     <TypeScriptCompile Include="src\main\core\auth-guard.service.ts" />
+    <TypeScriptCompile Include="src\main\core\entities\user-login.ts" />
+    <TypeScriptCompile Include="src\main\core\entities\user-claim.ts" />
     <TypeScriptCompile Include="src\main\core\token.ts" />
     <TypeScriptCompile Include="src\main\core\components\getting-started.component.ts" />
     <TypeScriptCompile Include="src\main\core\notification.service.ts" />
