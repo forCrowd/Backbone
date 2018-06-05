@@ -57,7 +57,29 @@ Follow this tutorial to get started: https://github.com/forCrowd/Backbone/wiki/F
         <div class="mat-header-cell" role="columnheader">Contacts</div>
         <div class="mat-header-cell" role="columnheader">Joined on</div>
     </div>
-
+    <div class="mat-row" role="row">
+        <div class="mat-cell" role="gridcell">
+            Noel Yunginger<br />
+            <span class="userName">thenoelman</span>
+        </div>
+        <div class="mat-cell" role="gridcell">
+            Software Engineer
+        </div>
+        <div class="mat-cell" role="gridcell">
+            pressure cooking
+        </div>
+        <div class="mat-cell" role="gridcell">
+            {{ getExperienceYears(2000) }}
+        </div>
+        <div class="mat-cell" role="gridcell">
+            <a mat-icon-button href="https://www.linkedin.com/in/noel-yunginger-88580a9a/" target="_blank">
+                <span class="fa fa-linkedin fa-lg" aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="mat-cell" role="gridcell">
+            {{ getJoinedOnDate(30, 05, 2018) | amTimeAgo }}
+        </div>
+    </div>
     <div class="mat-row" role="row">
         <div class="mat-cell" role="gridcell">
             Ryan King<br />
