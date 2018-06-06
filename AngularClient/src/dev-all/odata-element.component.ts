@@ -10,136 +10,136 @@ import { AuthService } from "../main/core/core.module";
 import { getUniqueValue } from "../main/shared/utils";
 
 @Component({
-    selector: "odata-element",
-    templateUrl: "odata-element.component.html"
+  selector: "odata-element",
+  templateUrl: "odata-element.component.html"
 })
 export class ODataElementComponent {
 
-    get anotherUserId(): number {
-        return 2;
-    }
-    
-    get currentUser(): User {
-        return this.authService.currentUser;
-    }
-    get invalidUserId(): number {
-        return -1;
-    }
+  get anotherUserId(): number {
+    return 2;
+  }
 
-    constructor(
-        private authService: AuthService,
-        private httpClient: HttpClient) {
-        
-    }
+  get currentUser(): User {
+    return this.authService.currentUser;
+  }
+  get invalidUserId(): number {
+    return -1;
+  }
 
-    createAnother(): void {
-        this.create(this.anotherUserId).subscribe(this.handleResponse);
-    }
+  constructor(
+    private authService: AuthService,
+    private httpClient: HttpClient) {
 
-    createOwn(): void {
-        this.create(this.currentUser.Id).subscribe(this.handleResponse);
-    }
+  }
 
-    deleteAnother(): void {
-        this.delete(this.anotherUserId).subscribe(this.handleResponse);
-    }
+  createAnother(): void {
+    this.create(this.anotherUserId).subscribe(this.handleResponse);
+  }
 
-    deleteNotFound(): void {
-        const url = this.getODataUrl(this.invalidUserId);
-        this.httpClient.delete(url).subscribe(this.handleResponse);
-    }
+  createOwn(): void {
+    this.create(this.currentUser.Id).subscribe(this.handleResponse);
+  }
 
-    deleteOwn(): void {
-        this.delete(this.currentUser.Id).subscribe(this.handleResponse);
-    }
+  deleteAnother(): void {
+    this.delete(this.anotherUserId).subscribe(this.handleResponse);
+  }
 
-    updateAnother(): void {
-        this.update(this.anotherUserId).subscribe(this.handleResponse);
-    }
+  deleteNotFound(): void {
+    const url = this.getODataUrl(this.invalidUserId);
+    this.httpClient.delete(url).subscribe(this.handleResponse);
+  }
 
-    updateNotFound(): void {
-        const url = this.getODataUrl(this.invalidUserId);
-        this.httpClient.patch(url, {}).subscribe(this.handleResponse);
-    }
+  deleteOwn(): void {
+    this.delete(this.currentUser.Id).subscribe(this.handleResponse);
+  }
 
-    updateOwn(): void {
-        this.update(this.currentUser.Id).subscribe(this.handleResponse);
-    }
+  updateAnother(): void {
+    this.update(this.anotherUserId).subscribe(this.handleResponse);
+  }
 
-    /* Private methods */
+  updateNotFound(): void {
+    const url = this.getODataUrl(this.invalidUserId);
+    this.httpClient.patch(url, {}).subscribe(this.handleResponse);
+  }
 
-    private create(userId: number): Observable<any> {
+  updateOwn(): void {
+    this.update(this.currentUser.Id).subscribe(this.handleResponse);
+  }
 
-        return this.getProject(userId).mergeMap(project => {
+  /* Private methods */
 
-                var element = {
-                    ProjectId: project.Id,
-                    Name: `New element ${getUniqueValue()}`
-                };
+  private create(userId: number): Observable<any> {
 
-                const url = `${AppSettings.serviceODataUrl}/Element`;
+    return this.getProject(userId).mergeMap(project => {
 
-                return this.httpClient.post(url, element);
-            });
-    }
+      var element = {
+        ProjectId: project.Id,
+        Name: `New element ${getUniqueValue()}`
+      };
 
-    private delete(userId: number): Observable<any> {
+      const url = `${AppSettings.serviceODataUrl}/Element`;
 
-        return this.getProject(userId, true).mergeMap(project => {
+      return this.httpClient.post(url, element);
+    });
+  }
 
-            var element = project.ElementSet[0];
+  private delete(userId: number): Observable<any> {
 
-            const url = this.getODataUrl(element.Id);
+    return this.getProject(userId, true).mergeMap(project => {
 
-            return this.httpClient.delete(url);
-        });
-    }
+      var element = project.ElementSet[0];
 
-    private getODataUrl(elementId: number) {
-        return `${AppSettings.serviceODataUrl}/Element(${elementId})`;
-    }
+      const url = this.getODataUrl(element.Id);
 
-    private getProject(userId: number, checkHasElement: boolean = false): Observable<Project> {
+      return this.httpClient.delete(url);
+    });
+  }
 
-        const url = `${AppSettings.serviceODataUrl}/Project?$expand=ElementSet&$filter=UserId eq ${userId}`;
+  private getODataUrl(elementId: number) {
+    return `${AppSettings.serviceODataUrl}/Element(${elementId})`;
+  }
 
-        return this.httpClient.get(url)
-            .map((response) => {
+  private getProject(userId: number, checkHasElement: boolean = false): Observable<Project> {
 
-                var results = (response as any).value as Project[];
+    const url = `${AppSettings.serviceODataUrl}/Project?$expand=ElementSet&$filter=UserId eq ${userId}`;
 
-                var project = results[0];
+    return this.httpClient.get(url)
+      .map((response) => {
 
-                if (!project) {
-                    throw new Error(`Create a new project first - user: ${userId}`);
-                }
+        var results = (response as any).value as Project[];
 
-                if (checkHasElement && !project.ElementSet[0]) {
-                    throw new Error(`Create a new element first - user: ${userId} - project: ${project.Id}`);
-                }
+        var project = results[0];
 
-                return project;
-            });
-    }
+        if (!project) {
+          throw new Error(`Create a new project first - user: ${userId}`);
+        }
 
-    private handleResponse(response) {
-        console.log("response", response);
-    }
+        if (checkHasElement && !project.ElementSet[0]) {
+          throw new Error(`Create a new element first - user: ${userId} - project: ${project.Id}`);
+        }
 
-    private update(userId: number): Observable<any> {
+        return project;
+      });
+  }
 
-        return this.getProject(userId, true).mergeMap((project) => {
+  private handleResponse(response) {
+    console.log("response", response);
+  }
 
-            var element = project.ElementSet[0];
+  private update(userId: number): Observable<any> {
 
-            var body = {
-                Name: `Updated element ${getUniqueValue()}`,
-                RowVersion: element.RowVersion
-            };
+    return this.getProject(userId, true).mergeMap((project) => {
 
-            const url = this.getODataUrl(element.Id);
+      var element = project.ElementSet[0];
 
-            return this.httpClient.patch(url, body);
-        });
-    }
+      var body = {
+        Name: `Updated element ${getUniqueValue()}`,
+        RowVersion: element.RowVersion
+      };
+
+      const url = this.getODataUrl(element.Id);
+
+      return this.httpClient.patch(url, body);
+    });
+  }
 }

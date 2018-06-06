@@ -1,8 +1,13 @@
 ### Changelog
 
+**0.6.7**
+
+* AngularClient - .editorconfig file
+* AngularClient - Minor updates
+
 **0.6.6**
 
-* AngularClient - Minor
+* AngularClient - Minor updates
 
 **0.6.5**
 

@@ -6,18 +6,18 @@ import { AdminService } from "./admin.service";
 @Injectable()
 export class AdminGuard implements CanActivate {
 
-    constructor(private adminService: AdminService, private router: Router) {
+  constructor(private adminService: AdminService, private router: Router) {
+  }
+
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+
+    // Success
+    if (this.adminService.currentUser.isAdmin()) {
+      return true;
     }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-
-        // Success
-        if (this.adminService.currentUser.isAdmin()) {
-            return true;
-        }
-
-        // Failure
-        this.router.navigate(["/app/home"]);
-        return false;
-    }
+    // Failure
+    this.router.navigate(["/app/home"]);
+    return false;
+  }
 }

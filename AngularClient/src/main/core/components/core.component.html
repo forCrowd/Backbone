@@ -1,69 +1,69 @@
 <mat-toolbar class="header mat-elevation-z6">
-    <a mat-button routerLink="/">
-        <img alt="Logo" src="/assets/images/Logo_30x30.jpg?v=0.1.0">
-        <h1>
-            Backbone
-        </h1>
-    </a>
+  <a mat-button routerLink="/">
+    <img alt="Logo" src="/assets/images/Logo_30x30.jpg?v=0.1.0">
+    <h1>
+      Backbone
+    </h1>
+  </a>
 </mat-toolbar>
 
 <mat-sidenav-container class="sidenav-container mat-elevation-z6">
-    <mat-sidenav #sidenav mode="side" opened="true" class="sidenav mat-elevation-z9">
-        <a mat-button matTooltip="New project" routerLink="/projects/new">
-            <i class="material-icons">create</i>
-        </a>
-        <a mat-button matTooltip="Search" routerLink="/app/search">
-            <i class="material-icons">search</i>
-        </a>
-        <a mat-button matTooltip="Register" routerLink="/app/account/register" [hidden]="currentUser.isAuthenticated()">
-            <i class="material-icons">person_add</i>
-        </a>
-        <a mat-button matTooltip="Login" routerLink="/app/account/login" [hidden]="currentUser.isAuthenticated()">
-            <i class="material-icons rotate">exit_to_app</i>
-        </a>
-        <!--<a [hidden]="true">
-          <button (click)="showGuestAccountInfoBox()" type="button" class="btn-link">
-            <span class="fa fa-info-circle fa-lg" aria-hidden="true"></span>
-          </button>
-        </a>-->
-        <a mat-button matTooltip="Profile" routerLink="/users/{{ currentUser.UserName }}" [hidden]="!currentUser.isAuthenticated()">
-            <i class="material-icons">face</i>
-        </a>
-        <a mat-button matTooltip="Account" routerLink="/app/account" [hidden]="!currentUser.isAuthenticated()">
-            <i class="material-icons">settings</i>
-        </a>
-        <a mat-button matTooltip="Admin" routerLink="/app/admin" [hidden]="!currentUser.isAdmin()">
-            <i class="material-icons">settings_applications</i>
-        </a>
-        <button mat-button matTooltip="Logout" (click)="logout()" [hidden]="!currentUser.isAuthenticated()">
-            <i class="material-icons">exit_to_app</i>
-        </button>
-    </mat-sidenav>
-    <mat-sidenav-content>
-        <div class="sidenav-content">
-            <router-outlet></router-outlet>
-        </div>
-    </mat-sidenav-content>
+  <mat-sidenav #sidenav mode="side" opened="true" class="sidenav mat-elevation-z9">
+    <a mat-button matTooltip="New project" routerLink="/projects/new">
+      <i class="material-icons">create</i>
+    </a>
+    <a mat-button matTooltip="Search" routerLink="/app/search">
+      <i class="material-icons">search</i>
+    </a>
+    <a mat-button matTooltip="Register" routerLink="/app/account/register" [hidden]="currentUser.isAuthenticated()">
+      <i class="material-icons">person_add</i>
+    </a>
+    <a mat-button matTooltip="Login" routerLink="/app/account/login" [hidden]="currentUser.isAuthenticated()">
+      <i class="material-icons rotate">exit_to_app</i>
+    </a>
+    <!--<a [hidden]="true">
+      <button (click)="showGuestAccountInfoBox()" type="button" class="btn-link">
+        <span class="fa fa-info-circle fa-lg" aria-hidden="true"></span>
+      </button>
+    </a>-->
+    <a mat-button matTooltip="Profile" routerLink="/users/{{ currentUser.UserName }}" [hidden]="!currentUser.isAuthenticated()">
+      <i class="material-icons">face</i>
+    </a>
+    <a mat-button matTooltip="Account" routerLink="/app/account" [hidden]="!currentUser.isAuthenticated()">
+      <i class="material-icons">settings</i>
+    </a>
+    <a mat-button matTooltip="Admin" routerLink="/app/admin" [hidden]="!currentUser.isAdmin()">
+      <i class="material-icons">settings_applications</i>
+    </a>
+    <button mat-button matTooltip="Logout" (click)="logout()" [hidden]="!currentUser.isAuthenticated()">
+      <i class="material-icons">exit_to_app</i>
+    </button>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="sidenav-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
 </mat-sidenav-container>
 
 <mat-toolbar class="footer mat-elevation-z6">
-    <a href="https://forcrowd.org" target="_blank" class="footer-left">
-        <img alt="Logo" src="/assets/images/Logo+Text_142x30.png?v=0.1.2">
-    </a>
-    <a mat-icon-button href="https://twitter.com/forCrowd" target="_blank" class="footer-left">
-        <i class="fa fa-twitter fa-lg" aria-hidden="true"></i>
-    </a>
-    <a mat-icon-button href="https://github.com/forCrowd/Backbone" target="_blank" class="footer-left">
-        <i class="fa fa-github fa-lg" aria-hidden="true"></i>
-    </a>
-    <a mat-icon-button href="mailto:contact.backbone@forCrowd.org" class="footer-left">
-        <i class="fa fa-envelope fa-lg" aria-hidden="true"></i>
-    </a>
-    <span style="margin: auto;">&nbsp;</span>
-    <a mat-button routerLink="/app/contributors" class="footer-right">
-        Contributors
-    </a>
-    <a mat-button href="https://github.com/forCrowd/Backbone/blob/master/CHANGELOG.md" target="_blank" class="footer-right">
-        Version {{ appVersion }}
-    </a>
+  <a href="https://forcrowd.org" target="_blank" class="footer-left">
+    <img alt="Logo" src="/assets/images/Logo+Text_142x30.png?v=0.1.2">
+  </a>
+  <a mat-icon-button href="https://twitter.com/forCrowd" target="_blank" class="footer-left">
+    <i class="fa fa-twitter fa-lg" aria-hidden="true"></i>
+  </a>
+  <a mat-icon-button href="https://github.com/forCrowd/Backbone" target="_blank" class="footer-left">
+    <i class="fa fa-github fa-lg" aria-hidden="true"></i>
+  </a>
+  <a mat-icon-button href="mailto:contact.backbone@forCrowd.org" class="footer-left">
+    <i class="fa fa-envelope fa-lg" aria-hidden="true"></i>
+  </a>
+  <span style="margin: auto;">&nbsp;</span>
+  <a mat-button routerLink="/app/contributors" class="footer-right">
+    Contributors
+  </a>
+  <a mat-button href="https://github.com/forCrowd/Backbone/blob/master/CHANGELOG.md" target="_blank" class="footer-right">
+    Version {{ appVersion }}
+  </a>
 </mat-toolbar>

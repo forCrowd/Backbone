@@ -6,64 +6,64 @@ import { AuthService } from "../auth.service";
 import { ProjectService } from "../project.service";
 
 @Component({
-    templateUrl: "getting-started.component.html",
-    styleUrls: ["getting-started.component.css"]
+  templateUrl: "getting-started.component.html",
+  styleUrls: ["getting-started.component.css"]
 })
 export class GettingStartedComponent implements OnInit {
 
-    exampleCode = "";
-    project: Project = null;
-    version = "1.0";
+  exampleCode = "";
+  project: Project = null;
+  version = "1.0";
 
-    get currentUser() {
-        return this.authService.currentUser;
-    }
+  get currentUser() {
+    return this.authService.currentUser;
+  }
 
-    constructor(private readonly authService: AuthService,
-        private readonly projectService: ProjectService) {
-    }
+  constructor(private readonly authService: AuthService,
+    private readonly projectService: ProjectService) {
+  }
 
-    ngOnInit(): void {
+  ngOnInit(): void {
 
-        if (!this.currentUser || !this.currentUser.isAuthenticated()) return;
+    if (!this.currentUser || !this.currentUser.isAuthenticated()) return;
 
-        this.authService.getUser(this.currentUser.UserName).subscribe(() => {
+    this.authService.getUser(this.currentUser.UserName).subscribe(() => {
 
-            for (var i = 0; i < this.currentUser.ProjectSet.length; i++) {
+      for (var i = 0; i < this.currentUser.ProjectSet.length; i++) {
 
-                var project = this.currentUser.ProjectSet[i];
+        var project = this.currentUser.ProjectSet[i];
 
-                if (project.Name === "Todo App") {
-                    this.project = project;
-                    this.generateExampleCode();
-                    break;
-                }
-            }
-        });
-    }
+        if (project.Name === "Todo App") {
+          this.project = project;
+          this.generateExampleCode();
+          break;
+        }
+      }
+    });
+  }
 
-    copy() {
-        var textarea = document.createElement("textarea") as HTMLTextAreaElement;
-        textarea.innerHTML = this.exampleCode;
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand("copy");
-        document.body.removeChild(textarea);
-    }
+  copy() {
+    var textarea = document.createElement("textarea") as HTMLTextAreaElement;
+    textarea.innerHTML = this.exampleCode;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+  }
 
-    createProject(): void {
+  createProject(): void {
 
-        this.project = this.projectService.createProjectTodo();
+    this.project = this.projectService.createProjectTodo();
 
-        this.projectService.saveChanges().subscribe(() => {
-            this.generateExampleCode();
-        });
-    }
+    this.projectService.saveChanges().subscribe(() => {
+      this.generateExampleCode();
+    });
+  }
 
-    private generateExampleCode(): void {
+  private generateExampleCode(): void {
 
-        this.exampleCode =
-            `<!DOCTYPE html>
+    this.exampleCode =
+      `<!DOCTYPE html>
 <html>
 <head>
     <title>Todo App</title>
@@ -112,5 +112,5 @@ export class GettingStartedComponent implements OnInit {
 </body>
 </html>`;
 
-    }
+  }
 }

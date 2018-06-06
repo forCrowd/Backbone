@@ -1,75 +1,75 @@
-﻿<div [hidden]="viewMode !== 'new'">
+<div [hidden]="viewMode !== 'new'">
 
-    <h2>Choose your template</h2>
-    <hr />
+  <h2>Choose your template</h2>
+  <hr />
 
-    <div class="templateContainer g-mt-20">
-        <button mat-raised-button (click)="createProjectEmpty()" [disabled]="isBusy">Blank</button>
-        <button mat-raised-button (click)="createProjectBasic()" [disabled]="isBusy">Basic</button>
-        <button mat-raised-button (click)="createProjectTodo()" [disabled]="isBusy">Todo App</button>
-    </div>
+  <div class="templateContainer g-mt-20">
+    <button mat-raised-button (click)="createProjectEmpty()" [disabled]="isBusy">Blank</button>
+    <button mat-raised-button (click)="createProjectBasic()" [disabled]="isBusy">Basic</button>
+    <button mat-raised-button (click)="createProjectTodo()" [disabled]="isBusy">Todo App</button>
+  </div>
 
 </div>
 <div [hidden]="viewMode !== 'existing'">
-    <div *ngIf="project">
+  <div *ngIf="project">
 
-        <h2>{{ project.Name }}</h2>
-        <hr />
+    <h2>{{ project.Name }}</h2>
+    <hr />
 
-        <mat-tab-group (selectedTabChange)="selectedTabChanged($event)">
+    <mat-tab-group (selectedTabChange)="selectedTabChanged($event)">
 
-            <mat-tab label="Project" [disabled]="isEditing">
+      <mat-tab label="Project" [disabled]="isEditing">
 
-                <form #projectForm="ngForm" autocomplete="off">
-                    <div [ngClass]="{ 'has-error': project.entityAspect.getValidationErrors('Name').length > 0 }" class="g-mt-20">
-                        <mat-form-field>
-                            <input matInput [(ngModel)]="project.Name" id="Name" name="Name" placeholder="Name" />
-                        </mat-form-field>
-                    </div>
+        <form #projectForm="ngForm" autocomplete="off">
+          <div [ngClass]="{ 'has-error': project.entityAspect.getValidationErrors('Name').length > 0 }" class="g-mt-20">
+            <mat-form-field>
+              <input matInput [(ngModel)]="project.Name" id="Name" name="Name" placeholder="Name" />
+            </mat-form-field>
+          </div>
 
-                    <div [ngClass]="{ 'has-error': project.entityAspect.getValidationErrors('Origin').length > 0 }" class="g-mt-20">
-                        <mat-form-field>
-                            <input matInput [(ngModel)]="project.Origin" id="Origin" name="Origin" placeholder="Origin URL" />
-                            <mat-hint id="KeyHelp">
-                                The host/domain that the client application will be making the requests from.
-                            </mat-hint>
-                        </mat-form-field>
-                    </div>
+          <div [ngClass]="{ 'has-error': project.entityAspect.getValidationErrors('Origin').length > 0 }" class="g-mt-20">
+            <mat-form-field>
+              <input matInput [(ngModel)]="project.Origin" id="Origin" name="Origin" placeholder="Origin URL" />
+              <mat-hint id="KeyHelp">
+                The host/domain that the client application will be making the requests from.
+              </mat-hint>
+            </mat-form-field>
+          </div>
 
-                    <div [ngClass]="{ 'has-error': project.entityAspect.getValidationErrors('Description').length > 0 }" class="g-mt-20">
-                        <mat-form-field>
-                            <textarea matInput [(ngModel)]="project.Description" id="Description" name="Description" placeholder="Description"></textarea>
-                        </mat-form-field>
-                    </div>
+          <div [ngClass]="{ 'has-error': project.entityAspect.getValidationErrors('Description').length > 0 }" class="g-mt-20">
+            <mat-form-field>
+              <textarea matInput [(ngModel)]="project.Description" id="Description" name="Description" placeholder="Description"></textarea>
+            </mat-form-field>
+          </div>
 
-                    <div class="g-mt-20">
-                        <button mat-raised-button (click)="saveProject()" [disabled]="submitDisabled()" type="submit" color="primary">
-                            Save project
-                        </button>
-                        <button mat-raised-button (click)="cancelProject()" [disabled]="isBusy" type="button">
-                            {{ project.entityAspect.entityState.isModified() ? "Cancel" : "Close" }}
-                        </button>
-                    </div>
-                </form>
+          <div class="g-mt-20">
+            <button mat-raised-button (click)="saveProject()" [disabled]="submitDisabled()" type="submit" color="primary">
+              Save project
+            </button>
+            <button mat-raised-button (click)="cancelProject()" [disabled]="isBusy" type="button">
+              {{ project.entityAspect.entityState.isModified() ? "Cancel" : "Close" }}
+            </button>
+          </div>
+        </form>
 
-            </mat-tab>
+      </mat-tab>
 
-            <mat-tab label="Elements" [disabled]="isEditing">
-                <element-manager *ngIf="selectedTabIndex === 1" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-manager>
-            </mat-tab>
+      <mat-tab label="Elements" [disabled]="isEditing">
+        <element-manager *ngIf="selectedTabIndex === 1" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-manager>
+      </mat-tab>
 
-            <mat-tab label="Fields" [disabled]="isEditing">
-                <element-field-manager *ngIf="selectedTabIndex === 2" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-field-manager>
-            </mat-tab>
+      <mat-tab label="Fields" [disabled]="isEditing">
+        <element-field-manager *ngIf="selectedTabIndex === 2" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-field-manager>
+      </mat-tab>
 
-            <mat-tab label="Items" [disabled]="isEditing">
-                <element-item-manager *ngIf="selectedTabIndex === 3" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-item-manager>
-            </mat-tab>
+      <mat-tab label="Items" [disabled]="isEditing">
+        <element-item-manager *ngIf="selectedTabIndex === 3" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-item-manager>
+      </mat-tab>
 
-            <mat-tab label="Cells" [disabled]="isEditing">
-                <element-cell-manager *ngIf="selectedTabIndex === 4" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-cell-manager>
-            </mat-tab>
-        </mat-tab-group>
+      <mat-tab label="Cells" [disabled]="isEditing">
+        <element-cell-manager *ngIf="selectedTabIndex === 4" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-cell-manager>
+      </mat-tab>
+    </mat-tab-group>
 
-    </div>
+  </div>
 </div>

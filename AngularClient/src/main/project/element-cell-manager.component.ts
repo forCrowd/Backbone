@@ -1,4 +1,4 @@
-﻿import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { MatTableDataSource } from "@angular/material";
 
 import { Element } from "../core/entities/element";
@@ -9,95 +9,95 @@ import { ElementItem } from "../core/entities/element-item";
 import { ProjectService } from "../core/core.module";
 
 @Component({
-    selector: "element-cell-manager",
-    templateUrl: "element-cell-manager.component.html",
-    styleUrls: ["element-cell-manager.component.css"]
+  selector: "element-cell-manager",
+  templateUrl: "element-cell-manager.component.html",
+  styleUrls: ["element-cell-manager.component.css"]
 })
 export class ElementCellManagerComponent implements OnInit {
 
-    @Input() project: Project = null;
-    @Output() isEditingChanged = new EventEmitter<boolean>();
+  @Input() project: Project = null;
+  @Output() isEditingChanged = new EventEmitter<boolean>();
 
-    elementCellDataSource = new MatTableDataSource<ElementCell>([]);
-    elementCellDisplayedColumns = ["elementItem", "value", "createdOn", "functions"];
-    elementFieldDataType = ElementFieldDataType;
+  elementCellDataSource = new MatTableDataSource<ElementCell>([]);
+  elementCellDisplayedColumns = ["elementItem", "value", "createdOn", "functions"];
+  elementFieldDataType = ElementFieldDataType;
 
-    get elementFilter(): Element {
-        return this.fields.elementFilter;
+  get elementFilter(): Element {
+    return this.fields.elementFilter;
+  }
+  set elementFilter(value: Element) {
+    if (this.fields.elementFilter !== value) {
+      this.fields.elementFilter = value;
+
+      this.elementFieldFilter = value ? value.ElementFieldSet[0] : null;
     }
-    set elementFilter(value: Element) {
-        if (this.fields.elementFilter !== value) {
-            this.fields.elementFilter = value;
+  }
 
-            this.elementFieldFilter = value ? value.ElementFieldSet[0] : null;
-        }
+  get elementFieldFilter(): ElementField {
+    return this.fields.elementFieldFilter;
+  }
+  set elementFieldFilter(value: ElementField) {
+    if (this.fields.elementFieldFilter !== value) {
+      this.fields.elementFieldFilter = value;
+
+      this.elementCellDataSource.data = value ? value.ElementCellSet : [];
     }
+  }
 
-    get elementFieldFilter(): ElementField {
-        return this.fields.elementFieldFilter;
+  get selectedElementCell(): ElementCell {
+    return this.fields.selectedElementCell;
+  }
+  set selectedElementCell(value: ElementCell) {
+    if (this.fields.selectedElementCell !== value) {
+      this.fields.selectedElementCell = value;
+
+      this.isEditingChanged.emit(value ? true : false);
     }
-    set elementFieldFilter(value: ElementField) {
-        if (this.fields.elementFieldFilter !== value) {
-            this.fields.elementFieldFilter = value;
+  }
 
-            this.elementCellDataSource.data = value ? value.ElementCellSet : [];
-        }
-    }
-
-    get selectedElementCell(): ElementCell {
-        return this.fields.selectedElementCell;
-    }
-    set selectedElementCell(value: ElementCell) {
-        if (this.fields.selectedElementCell !== value) {
-            this.fields.selectedElementCell = value;
-
-            this.isEditingChanged.emit(value ? true : false);
-        }
-    }
-
-    private fields: {
-        elementItem: ElementItem,
-        elementFilter: Element,
-        elementFieldFilter: ElementField,
-        selectedElementCell: ElementCell,
-    } = {
-        elementItem: null,
-        elementFilter: null,
-        elementFieldFilter: null,
-        selectedElementCell: null,
-    }
-
-    get isBusy(): boolean {
-        return this.projectService.isBusy;
+  private fields: {
+    elementItem: ElementItem,
+    elementFilter: Element,
+    elementFieldFilter: ElementField,
+    selectedElementCell: ElementCell,
+  } = {
+      elementItem: null,
+      elementFilter: null,
+      elementFieldFilter: null,
+      selectedElementCell: null,
     }
 
-    constructor(private projectService: ProjectService) { }
+  get isBusy(): boolean {
+    return this.projectService.isBusy;
+  }
 
-    cancelElementCell() {
-        this.projectService.rejectChangesElementCell(this.selectedElementCell);
+  constructor(private projectService: ProjectService) { }
+
+  cancelElementCell() {
+    this.projectService.rejectChangesElementCell(this.selectedElementCell);
+    this.selectedElementCell = null;
+  }
+
+  editElementCell(elementCell: ElementCell) {
+    this.selectedElementCell = elementCell;
+  }
+
+  ngOnInit(): void {
+    this.elementFilter = this.project.ElementSet[0];
+  }
+
+  saveElementCell() {
+    this.projectService.saveChanges()
+      .subscribe(() => {
         this.selectedElementCell = null;
-    }
+      });
+  }
 
-    editElementCell(elementCell: ElementCell) {
-        this.selectedElementCell = elementCell;
-    }
+  submitDisabled(): boolean {
+    return this.isBusy || this.selectedElementCell.entityAspect.getValidationErrors().length > 0;
+  }
 
-    ngOnInit(): void {
-        this.elementFilter = this.project.ElementSet[0];
-    }
-
-    saveElementCell() {
-        this.projectService.saveChanges()
-            .subscribe(() => {
-                this.selectedElementCell = null;
-            });
-    }
-
-    submitDisabled(): boolean {
-        return this.isBusy || this.selectedElementCell.entityAspect.getValidationErrors().length > 0;
-    }
-
-    trackBy(index: number, elementCell: ElementCell) {
-        return elementCell.Id;
-    }
+  trackBy(index: number, elementCell: ElementCell) {
+    return elementCell.Id;
+  }
 }

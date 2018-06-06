@@ -2,52 +2,52 @@
 <hr />
 
 <div class="g-mt-20">
-    <div class="noResults" [hidden]="dataSource.data.length > 0">
-        Nothing to display!
-    </div>
+  <div class="noResults" [hidden]="dataSource.data.length > 0">
+    Nothing to display!
+  </div>
 
-    <div [hidden]="dataSource.data.length === 0">
-        <mat-table #table [dataSource]="dataSource">
+  <div [hidden]="dataSource.data.length === 0">
+    <mat-table #table [dataSource]="dataSource">
 
-            <ng-container matColumnDef="name">
-                <mat-header-cell *matHeaderCellDef> Project </mat-header-cell>
-                <mat-cell *matCellDef="let project"> {{ project.Name }} </mat-cell>
-            </ng-container>
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Project </mat-header-cell>
+        <mat-cell *matCellDef="let project"> {{ project.Name }} </mat-cell>
+      </ng-container>
 
-            <ng-container matColumnDef="user">
-                <mat-header-cell *matHeaderCellDef> User </mat-header-cell>
-                <mat-cell *matCellDef="let project"> <a routerLink="/users/{{ project.User.UserName }}">{{ project.User.UserName }}</a> </mat-cell>
-            </ng-container>
+      <ng-container matColumnDef="user">
+        <mat-header-cell *matHeaderCellDef> User </mat-header-cell>
+        <mat-cell *matCellDef="let project"> <a routerLink="/users/{{ project.User.UserName }}">{{ project.User.UserName }}</a> </mat-cell>
+      </ng-container>
 
-            <ng-container matColumnDef="ratingCount">
-                <mat-header-cell *matHeaderCellDef> # Ratings </mat-header-cell>
-                <mat-cell *matCellDef="let project"> {{ project.RatingCount }} </mat-cell>
-            </ng-container>
+      <ng-container matColumnDef="ratingCount">
+        <mat-header-cell *matHeaderCellDef> # Ratings </mat-header-cell>
+        <mat-cell *matCellDef="let project"> {{ project.RatingCount }} </mat-cell>
+      </ng-container>
 
-            <ng-container matColumnDef="createdOn">
-                <mat-header-cell *matHeaderCellDef> Created On </mat-header-cell>
-                <mat-cell *matCellDef="let project"> {{ project.CreatedOn | amTimeAgo }} </mat-cell>
-            </ng-container>
+      <ng-container matColumnDef="createdOn">
+        <mat-header-cell *matHeaderCellDef> Created On </mat-header-cell>
+        <mat-cell *matCellDef="let project"> {{ project.CreatedOn | amTimeAgo }} </mat-cell>
+      </ng-container>
 
-            <ng-container matColumnDef="modifiedOn">
-                <mat-header-cell *matHeaderCellDef> Modified On </mat-header-cell>
-                <mat-cell *matCellDef="let project"> {{ project.ModifiedOn | amTimeAgo }} </mat-cell>
-            </ng-container>
+      <ng-container matColumnDef="modifiedOn">
+        <mat-header-cell *matHeaderCellDef> Modified On </mat-header-cell>
+        <mat-cell *matCellDef="let project"> {{ project.ModifiedOn | amTimeAgo }} </mat-cell>
+      </ng-container>
 
-            <ng-container matColumnDef="functions">
-                <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                <mat-cell *matCellDef="let project">
-                    <a mat-raised-button routerLink="/projects/{{ project.Id }}">
-                        <i class="fa fa-pencil" aria-hidden="true"></i> View
-                    </a>
-                    <button mat-raised-button (click)="updateComputedFields(project)">
-                        <i class="fa fa-refresh" aria-hidden="true"></i> Update
-                    </button>
-                </mat-cell>
-            </ng-container>
+      <ng-container matColumnDef="functions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let project">
+          <a mat-raised-button routerLink="/projects/{{ project.Id }}">
+            <i class="fa fa-pencil" aria-hidden="true"></i> View
+          </a>
+          <button mat-raised-button (click)="updateComputedFields(project)">
+            <i class="fa fa-refresh" aria-hidden="true"></i> Update
+          </button>
+        </mat-cell>
+      </ng-container>
 
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-    </div>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
 </div>

@@ -8,54 +8,54 @@ import { ProjectService } from "./project.service";
 @Injectable()
 export class DynamicTitleResolve implements Resolve<string> {
 
-    constructor(private authService: AuthService, private projectService: ProjectService) { }
+  constructor(private authService: AuthService, private projectService: ProjectService) { }
 
-    resolve(route: ActivatedRouteSnapshot): Observable<string> {
+  resolve(route: ActivatedRouteSnapshot): Observable<string> {
 
-        const username = route.params["username"];
-        const projectId = route.params["project-id"];
-        const lastUrl = route.url[route.url.length - 1];
+    const username = route.params["username"];
+    const projectId = route.params["project-id"];
+    const lastUrl = route.url[route.url.length - 1];
 
-        if (projectId) { // Project title
+    if (projectId) { // Project title
 
-            let title = "";
+      let title = "";
 
-            return this.projectService.getProjectExpanded(projectId)
-                .map((project): string => {
+      return this.projectService.getProjectExpanded(projectId)
+        .map((project): string => {
 
-                    if (project !== null) {
+          if (project !== null) {
 
-                        title += project.Name;
+            title += project.Name;
 
-                        if (lastUrl && lastUrl.path === "edit") {
-                            title += " - Edit";
-                        }
-                    }
+            if (lastUrl && lastUrl.path === "edit") {
+              title += " - Edit";
+            }
+          }
 
-                    return title;
-                });
+          return title;
+        });
 
-        } else if (username) { // User title
+    } else if (username) { // User title
 
-            return this.authService.getUser(username)
-                .map((user): string => {
+      return this.authService.getUser(username)
+        .map((user): string => {
 
-                    let title = "";
+          let title = "";
 
-                    if (user !== null) {
-                        title = user.UserName;
+          if (user !== null) {
+            title = user.UserName;
 
-                        if (lastUrl && lastUrl.path === "new") {
-                            title += " - New";
-                        }
-                    }
+            if (lastUrl && lastUrl.path === "new") {
+              title += " - New";
+            }
+          }
 
-                    return title;
-                });
+          return title;
+        });
 
-        } else { // None
+    } else { // None
 
-            return Observable.of("");
-        }
+      return Observable.of("");
     }
+  }
 }

@@ -138,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".angular-cli.json" />
+    <None Include=".editorconfig" />
     <None Include="e2e\tsconfig.e2e.json" />
     <None Include="package.json" />
     <None Include="src\app-settings\environments\Readme.md" />
