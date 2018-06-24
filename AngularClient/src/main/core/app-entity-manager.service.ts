@@ -1,5 +1,6 @@
 import { ErrorHandler, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+
 import {
   config, Entity, EntityManager, EntityQuery, EntityState, EntityStateSymbol, EntityType, ExecuteQueryErrorCallback,
   ExecuteQuerySuccessCallback, FetchStrategy, MergeStrategySymbol, QueryResult, SaveChangesErrorCallback, SaveChangesSuccessCallback,
@@ -127,7 +128,7 @@ export class AppEntityManager extends EntityManager {
     throw new Error("Not implemented, use executeQueryObservable function");
   }
 
-  executeQueryObservable<T>(query: EntityQuery, forceRefresh = false): Observable<IQueryResult<T>> {
+  executeQueryObservable<T extends Entity>(query: EntityQuery, forceRefresh = false): Observable<IQueryResult<T>> {
 
     this.isBusy = true;
 
@@ -156,7 +157,7 @@ export class AppEntityManager extends EntityManager {
 
         return {
           count: response.inlineCount,
-          results: response.results
+          results: response.results as T[]
         }
       })
       .catch((error: any) => this.handleODataErrors(error))
