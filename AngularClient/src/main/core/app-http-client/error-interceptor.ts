@@ -1,6 +1,7 @@
 import { Injectable, Injector } from "@angular/core";
 import { HttpErrorResponse, HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { throwError as observableThrowError, Observable } from "rxjs";
+import { catchError } from "rxjs/operators";
 
 import { NotificationService } from "../notification.service";
 
@@ -11,8 +12,8 @@ export class ErrorInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(req)
-      .catch((error: any) => this.handleHttpErrors(error));
+    return next.handle(req).pipe(
+      catchError((error: any) => this.handleHttpErrors(error)));
   }
 
   private handleHttpErrors(response: HttpErrorResponse) {
@@ -121,7 +122,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     if (handled) {
 
       // If handled, continue with Observable flow
-      return Observable.throw(response);
+      return observableThrowError(response);
 
     } else {
 

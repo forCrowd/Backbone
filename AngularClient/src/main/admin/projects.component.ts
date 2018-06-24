@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { MatTableDataSource } from "@angular/material";
 import { Observable } from "rxjs";
+import { map, mergeMap } from "rxjs/operators";
 
 import { Project } from "../core/entities/project";
 import { AdminService } from "./admin.service";
@@ -24,16 +25,16 @@ export class ProjectsComponent implements OnInit {
   }
 
   updateComputedFields(project: Project): void {
-    this.adminService.updateComputedFields(project)
-      .flatMap(() => {
+    this.adminService.updateComputedFields(project).pipe(
+      mergeMap(() => {
         return this.getProjectSet(true);
-      }).subscribe();
+      })).subscribe();
   }
 
   private getProjectSet(forceRefresh = false): Observable<void> {
-    return this.adminService.getProjectSet(false, forceRefresh)
-      .map((response) => {
+    return this.adminService.getProjectSet(false, forceRefresh).pipe(
+      map((response) => {
         this.dataSource.data = response.results;
-      });
+      }));
   }
 }

@@ -1,6 +1,7 @@
-import { Observable } from "rxjs";
 import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { mergeMap, map } from "rxjs/operators";
 
 import { AppSettings } from "../app-settings/app-settings";
 import { ElementCell } from "../main/core/entities/element-cell";
@@ -73,7 +74,7 @@ export class ODataUserElementCellComponent {
 
   private create(userId: number): Observable<any> {
 
-    return this.getElementCell(userId).mergeMap((elementCell) => {
+    return this.getElementCell(userId).pipe(mergeMap((elementCell) => {
 
       var userElementCell = {
         UserId: userId,
@@ -84,17 +85,17 @@ export class ODataUserElementCellComponent {
       var url = `${AppSettings.serviceODataUrl}/UserElementCell`;
 
       return this.httpClient.post(url, userElementCell);
-    });
+    }));
   }
 
   private delete(userId: number): Observable<any> {
 
-    return this.getElementCell(userId, true).mergeMap((elementCell) => {
+    return this.getElementCell(userId, true).pipe(mergeMap((elementCell) => {
 
       const url = this.getODataUrl(userId, elementCell.Id);
 
       return this.httpClient.delete(url);
-    });
+    }));
   }
 
   private getODataUrl(userId: number, elementCellId: number) {
@@ -105,8 +106,8 @@ export class ODataUserElementCellComponent {
 
     const url = `${AppSettings.serviceODataUrl}/Project?$expand=ElementSet/ElementFieldSet/ElementCellSet/UserElementCellSet&$filter=UserId eq ${userId}`;
 
-    return this.httpClient.get(url)
-      .map((response) => {
+    return this.httpClient.get(url).pipe(
+      map((response) => {
 
         var results = (response as any).value as Project[];
 
@@ -139,7 +140,7 @@ export class ODataUserElementCellComponent {
         }
 
         return elementCell;
-      });
+      }));
   }
 
   private handleResponse(response) {
@@ -148,7 +149,7 @@ export class ODataUserElementCellComponent {
 
   private update(userId: number): Observable<any> {
 
-    return this.getElementCell(userId, true).mergeMap((elementCell) => {
+    return this.getElementCell(userId, true).pipe(mergeMap((elementCell) => {
 
       var userElementCell = elementCell.UserElementCellSet[0];
 
@@ -160,6 +161,6 @@ export class ODataUserElementCellComponent {
       const url = this.getODataUrl(userId, elementCell.Id);
 
       return this.httpClient.patch(url, body);
-    });
+    }));
   }
 }

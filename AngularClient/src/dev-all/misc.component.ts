@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Observable } from "rxjs";
+import { timer as observableTimer, Observable } from "rxjs";
 
 @Component({
   selector: "misc",
@@ -20,7 +20,7 @@ export class MiscComponent {
   }
 
   rxjsTest(): void {
-    Observable.timer(1000).subscribe(() => {
+    observableTimer(1000).subscribe(() => {
       console.log("rxjs test");
     });
   }

@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { EntityQuery } from "../../libraries/breeze-client";
 import { Observable } from "rxjs";
+import { finalize, mergeMap, map } from "rxjs/operators";
 
 import { AppSettings } from "../../app-settings/app-settings";
 import { Project } from "../core/entities/project";
@@ -49,22 +50,22 @@ export class AdminService {
       .take(0)
       .inlineCount(true);
 
-    return this.appEntityManager.executeQueryObservable<User>(query)
-      .map((response) => {
+    return this.appEntityManager.executeQueryObservable<User>(query).pipe(
+      map((response) => {
         return response.count;
-      });
+      }));
   }
 
   saveChanges(): Observable<void> {
     this.isBusyLocal = true;
 
-    return this.authService.ensureAuthenticatedUser()
-      .mergeMap(() => {
+    return this.authService.ensureAuthenticatedUser().pipe(
+      mergeMap(() => {
         return this.appEntityManager.saveChangesObservable();
-      })
-      .finally(() => {
+      }),
+      finalize(() => {
         this.isBusyLocal = false;
-      });
+      }),);
   }
 
   updateComputedFields(project: Project): Observable<void> {

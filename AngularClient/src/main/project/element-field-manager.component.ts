@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { MatTableDataSource } from "@angular/material";
+import { finalize } from "rxjs/operators";
 
 import { Element } from "../core/entities/element";
 import { Project } from "../core/entities/project";
@@ -91,10 +92,10 @@ export class ElementFieldManagerComponent implements OnInit {
 
     this.elementFieldDataSource.data = null;
     this.projectService.removeElementField(elementField);
-    this.projectService.saveChanges()
-      .finally(() => {
+    this.projectService.saveChanges().pipe(
+      finalize(() => {
         this.elementFieldDataSource.data = this.elementFilter.ElementFieldSet;
-      }).subscribe();
+      })).subscribe();
   }
 
   saveElementField(): void {

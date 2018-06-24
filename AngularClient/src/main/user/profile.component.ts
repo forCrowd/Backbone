@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatDialog, MatTableDataSource } from "@angular/material";
+import { finalize } from "rxjs/operators";
 
 import { Project } from "../core/entities/project";
 import { User } from "../core/entities/user";
@@ -36,10 +37,10 @@ export class ProfileComponent implements OnInit {
 
       this.dataSource.data = [];
       this.projectService.removeProject(project);
-      this.userService.saveChanges()
-        .finally(() => {
+      this.userService.saveChanges().pipe(
+        finalize(() => {
           this.dataSource.data = this.user.ProjectSet;
-        }).subscribe();
+        })).subscribe();
     });
   }
 

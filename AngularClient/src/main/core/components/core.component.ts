@@ -4,6 +4,7 @@ import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
 import { Angulartics2GoogleAnalytics } from "angulartics2";
 import { Subscription } from "rxjs";
+import { mergeMap, map, filter } from "rxjs/operators";
 
 import { AppSettings } from "../../../app-settings/app-settings";
 import { User } from "../entities/user";
@@ -54,15 +55,15 @@ export class CoreComponent implements OnDestroy, OnInit {
 
     // Title
     // https://toddmotto.com/dynamic-page-titles-angular-2-router-events
-    this.router.events
-      .filter(event => event instanceof NavigationEnd)
-      .map(() => this.activatedRoute)
-      .map(route => {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      map(() => this.activatedRoute),
+      map(route => {
         while (route.firstChild) { route = route.firstChild; }
         return route;
-      })
-      .filter(route => route.outlet === "primary")
-      .mergeMap(route => route.data)
+      }),
+      filter(route => route.outlet === "primary"),
+      mergeMap(route => route.data), )
       .subscribe(data => {
         if (data.title) {
           this.titleService.setTitle(`Backbone - ${data.title}`);

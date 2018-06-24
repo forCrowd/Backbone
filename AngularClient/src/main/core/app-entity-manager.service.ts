@@ -1,5 +1,6 @@
 import { ErrorHandler, Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { throwError as observableThrowError, of as observableOf, from as observableFrom, Observable } from "rxjs";
+import { map, finalize, catchError } from "rxjs/operators";
 
 import {
   config, Entity, EntityManager, EntityQuery, EntityState, EntityStateSymbol, EntityType, ExecuteQueryErrorCallback,
@@ -148,8 +149,8 @@ export class AppEntityManager extends EntityManager {
     }
 
     // Execute
-    return Observable.fromPromise(super.executeQuery(query))
-      .map((response) => {
+    return observableFrom(super.executeQuery(query)).pipe(
+      map((response) => {
 
         response.results.forEach((result: EntityBase) => {
           result.initialize();
@@ -159,25 +160,25 @@ export class AppEntityManager extends EntityManager {
           count: response.inlineCount,
           results: response.results as T[]
         }
-      })
-      .catch((error: any) => this.handleODataErrors(error))
-      .finally(() => { this.isBusy = false; });
+      }),
+      catchError((error: any) => this.handleODataErrors(error)),
+      finalize(() => { this.isBusy = false; }),);
   }
 
   getMetadata(): Observable<Object> {
 
     if (this.metadata) {
-      return Observable.of(this.metadata);
+      return observableOf(this.metadata);
     }
 
     this.isBusy = true;
-    return Observable.fromPromise(this.fetchMetadata())
-      .map((metadata: Object) => {
+    return observableFrom(this.fetchMetadata()).pipe(
+      map((metadata: Object) => {
         this.metadata = metadata;
         return metadata;
-      })
-      .catch((error: any) => this.handleODataErrors(error))
-      .finally(() => { this.isBusy = false; });
+      }),
+      catchError((error: any) => this.handleODataErrors(error)),
+      finalize(() => { this.isBusy = false; }),);
   }
 
   saveChanges(entities?: Entity[],
@@ -208,15 +209,15 @@ export class AppEntityManager extends EntityManager {
     // There is nothing to save?
     if (promise === null) {
       this.isBusy = false;
-      return Observable.of(null);
+      return observableOf(null);
     }
 
-    return Observable.fromPromise(promise)
-      .map(() => {
+    return observableFrom(promise).pipe(
+      map(() => {
         this.notificationService.notification.next(`Saved ${count} change(s)`);
-      })
-      .catch((error: any) => this.handleODataErrors(error))
-      .finally(() => { this.isBusy = false; });
+      }),
+      catchError((error: any) => this.handleODataErrors(error)),
+      finalize(() => { this.isBusy = false; }),);
   }
 
   // When an entity gets updated through angular, unlike breeze updates, it doesn't sync RowVersion automatically
@@ -336,7 +337,7 @@ export class AppEntityManager extends EntityManager {
     if (handled) {
 
       // If handled, continue with Observable flow
-      return Observable.throw(error);
+      return observableThrowError(error);
 
     } else {
 

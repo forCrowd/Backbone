@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Observable } from "rxjs";
+import { timer as observableTimer, Observable } from "rxjs";
 
 import { AccountService } from "./account.service";
 import { NotificationService } from "../core/core.module";
@@ -32,7 +32,7 @@ export class ConfirmEmailComponent implements OnInit {
   ngOnInit() {
 
     // Todo This timer silliness is necessary probably cos of this issue: https://github.com/angular/angular/issues/15634
-    Observable.timer(0).subscribe(() => {
+    observableTimer(0).subscribe(() => {
 
       // Get token
       const token = this.activatedRoute.snapshot.params["token"];

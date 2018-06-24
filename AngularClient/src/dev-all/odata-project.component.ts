@@ -1,6 +1,7 @@
-import { Observable } from "rxjs";
 import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { mergeMap, map } from "rxjs/operators";
 
 import { AppSettings } from "../app-settings/app-settings";
 import { Project } from "../main/core/entities/project";
@@ -91,20 +92,20 @@ export class ODataProjectComponent {
 
   private delete(userId: number): Observable<any> {
 
-    return this.get(userId).mergeMap(project => {
+    return this.get(userId).pipe(mergeMap(project => {
 
       const url = this.getODataUrl(project.Id);
 
       return this.httpClient.delete(url);
-    });
+    }));
   }
 
   private get(userId: number): Observable<Project> {
 
     const url = `${AppSettings.serviceODataUrl}/Project?$filter=UserId eq ${userId}`;
 
-    return this.httpClient.get(url)
-      .map((response) => {
+    return this.httpClient.get(url).pipe(
+      map((response) => {
 
         var results = (response as any).value;
 
@@ -115,7 +116,7 @@ export class ODataProjectComponent {
         }
 
         return project;
-      });
+      }));
   }
 
   private getODataUrl(projectId: number) {
@@ -128,7 +129,7 @@ export class ODataProjectComponent {
 
   private update(userId): Observable<any> {
 
-    return this.get(userId).mergeMap((project) => {
+    return this.get(userId).pipe(mergeMap((project) => {
 
       var body = {
         Name: `Updated project ${getUniqueValue()}`,
@@ -138,6 +139,6 @@ export class ODataProjectComponent {
       const url = this.getODataUrl(project.Id);
 
       return this.httpClient.patch(url, body);
-    });
+    }));
   }
 }

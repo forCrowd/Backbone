@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { MatTableDataSource } from "@angular/material";
+import { finalize } from "rxjs/operators";
 
 import { Element } from "../core/entities/element";
 import { Project } from "../core/entities/project";
@@ -79,10 +80,10 @@ export class ElementItemManagerComponent implements OnInit {
   removeElementItem(elementItem: ElementItem) {
     this.elementItemDataSource.data = null;
     this.projectService.removeElementItem(elementItem);
-    this.projectService.saveChanges()
-      .finally(() => {
+    this.projectService.saveChanges().pipe(
+      finalize(() => {
         this.elementItemDataSource.data = this.elementFilter.ElementItemSet;
-      }).subscribe();
+      })).subscribe();
   }
 
   saveElementItem() {

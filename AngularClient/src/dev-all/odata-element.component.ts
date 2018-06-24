@@ -1,6 +1,7 @@
-import { Observable } from "rxjs";
 import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { mergeMap, map } from "rxjs/operators";
 
 import { AppSettings } from "../app-settings/app-settings";
 import { Project } from "../main/core/entities/project";
@@ -70,7 +71,7 @@ export class ODataElementComponent {
 
   private create(userId: number): Observable<any> {
 
-    return this.getProject(userId).mergeMap(project => {
+    return this.getProject(userId).pipe(mergeMap(project => {
 
       var element = {
         ProjectId: project.Id,
@@ -80,19 +81,19 @@ export class ODataElementComponent {
       const url = `${AppSettings.serviceODataUrl}/Element`;
 
       return this.httpClient.post(url, element);
-    });
+    }));
   }
 
   private delete(userId: number): Observable<any> {
 
-    return this.getProject(userId, true).mergeMap(project => {
+    return this.getProject(userId, true).pipe(mergeMap(project => {
 
       var element = project.ElementSet[0];
 
       const url = this.getODataUrl(element.Id);
 
       return this.httpClient.delete(url);
-    });
+    }));
   }
 
   private getODataUrl(elementId: number) {
@@ -103,8 +104,8 @@ export class ODataElementComponent {
 
     const url = `${AppSettings.serviceODataUrl}/Project?$expand=ElementSet&$filter=UserId eq ${userId}`;
 
-    return this.httpClient.get(url)
-      .map((response) => {
+    return this.httpClient.get(url).pipe(
+      map((response) => {
 
         var results = (response as any).value as Project[];
 
@@ -119,7 +120,7 @@ export class ODataElementComponent {
         }
 
         return project;
-      });
+      }));
   }
 
   private handleResponse(response) {
@@ -128,7 +129,7 @@ export class ODataElementComponent {
 
   private update(userId: number): Observable<any> {
 
-    return this.getProject(userId, true).mergeMap((project) => {
+    return this.getProject(userId, true).pipe(mergeMap((project) => {
 
       var element = project.ElementSet[0];
 
@@ -140,6 +141,6 @@ export class ODataElementComponent {
       const url = this.getODataUrl(element.Id);
 
       return this.httpClient.patch(url, body);
-    });
+    }));
   }
 }

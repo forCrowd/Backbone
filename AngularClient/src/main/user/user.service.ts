@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { mergeMap } from "rxjs/operators";
 
 import { User } from "../core/entities/user";
 import { AuthService, AppEntityManager } from "../core/core.module";
@@ -20,8 +21,8 @@ export class UserService {
   }
 
   saveChanges(): Observable<void> {
-    return this.authService.ensureAuthenticatedUser().mergeMap(() => {
+    return this.authService.ensureAuthenticatedUser().pipe(mergeMap(() => {
       return this.appEntityManager.saveChangesObservable();
-    });
+    }));
   }
 }

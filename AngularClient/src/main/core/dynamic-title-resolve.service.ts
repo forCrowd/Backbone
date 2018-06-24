@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Resolve, ActivatedRouteSnapshot } from "@angular/router";
-import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
+import { of as observableOf, Observable } from "rxjs";
 
 import { AuthService } from "./auth.service";
 import { ProjectService } from "./project.service";
@@ -20,8 +21,8 @@ export class DynamicTitleResolve implements Resolve<string> {
 
       let title = "";
 
-      return this.projectService.getProjectExpanded(projectId)
-        .map((project): string => {
+      return this.projectService.getProjectExpanded(projectId).pipe(
+        map((project): string => {
 
           if (project !== null) {
 
@@ -33,12 +34,12 @@ export class DynamicTitleResolve implements Resolve<string> {
           }
 
           return title;
-        });
+        }));
 
     } else if (username) { // User title
 
-      return this.authService.getUser(username)
-        .map((user): string => {
+      return this.authService.getUser(username).pipe(
+        map((user): string => {
 
           let title = "";
 
@@ -51,11 +52,11 @@ export class DynamicTitleResolve implements Resolve<string> {
           }
 
           return title;
-        });
+        }));
 
     } else { // None
 
-      return Observable.of("");
+      return observableOf("");
     }
   }
 }

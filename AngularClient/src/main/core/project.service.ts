@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { EntityQuery, Predicate } from "../../libraries/breeze-client";
 import { Observable } from "rxjs";
+import { mergeMap, finalize, map } from "rxjs/operators";
 
 import { AppSettings } from "../../app-settings/app-settings";
 import { AppHttpClient } from "./app-http-client/app-http-client.module";
@@ -231,10 +232,10 @@ export class ProjectService {
       ? query.expand("User, ElementSet.ElementFieldSet.UserElementFieldSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet")
       : query.expand("User, ElementSet.ElementFieldSet, ElementSet.ElementItemSet.ElementCellSet");
 
-    return this.appEntityManager.executeQueryObservable<Project>(query, forceRefresh)
-      .map(response => {
+    return this.appEntityManager.executeQueryObservable<Project>(query, forceRefresh).pipe(
+      map(response => {
         return response.results[0] || null;
-      });
+      }));
   }
 
   getProjectSet(searchKey: string = "") {
@@ -250,10 +251,10 @@ export class ProjectService {
       query = query.where(projectNamePredicate.or(userNamePredicate));
     }
 
-    return this.appEntityManager.executeQueryObservable<Project>(query)
-      .map(response => {
+    return this.appEntityManager.executeQueryObservable<Project>(query).pipe(
+      map(response => {
         return response.results;
-      });
+      }));
   }
 
   hasChanges(): boolean {
@@ -265,9 +266,9 @@ export class ProjectService {
 
     const updateComputedFieldsUrl = this.getUpdateComputedFieldsUrl(project.Id);
 
-    return this.httpClient.post<void>(updateComputedFieldsUrl, null).mergeMap(() => {
-      return this.getProjectExpanded(project.Id, true).map(() => { });
-    });
+    return this.httpClient.post<void>(updateComputedFieldsUrl, null).pipe(mergeMap(() => {
+      return this.getProjectExpanded(project.Id, true).pipe(map(() => { }));
+    }));
   }
 
   rejectChanges(): void {
@@ -354,13 +355,13 @@ export class ProjectService {
 
   saveChanges(): Observable<void> {
     this.isBusyLocal = true;
-    return this.authService.ensureAuthenticatedUser()
-      .mergeMap(() => {
+    return this.authService.ensureAuthenticatedUser().pipe(
+      mergeMap(() => {
         return this.appEntityManager.saveChangesObservable();
-      })
-      .finally(() => {
+      }),
+      finalize(() => {
         this.isBusyLocal = false;
-      });
+      }), );
   }
 
   // Todo Improve these later on (merge into saveChanges() itself?) / coni2k - 19 Feb. '18

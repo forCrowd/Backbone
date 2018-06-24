@@ -1,6 +1,7 @@
-import { Observable } from "rxjs";
 import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { mergeMap, map } from "rxjs/operators";
 
 import { AppSettings } from "../app-settings/app-settings";
 import { ElementField } from "../main/core/entities/element-field";
@@ -73,7 +74,7 @@ export class ODataUserElementFieldComponent {
 
   private create(userId: number): Observable<any> {
 
-    return this.getElementField(userId).mergeMap((elementField) => {
+    return this.getElementField(userId).pipe(mergeMap((elementField) => {
 
       var userElementField = {
         UserId: userId,
@@ -84,17 +85,17 @@ export class ODataUserElementFieldComponent {
       var url = `${AppSettings.serviceODataUrl}/UserElementField`;
 
       return this.httpClient.post(url, userElementField);
-    });
+    }));
   }
 
   private delete(userId: number): Observable<any> {
 
-    return this.getElementField(userId, true).mergeMap((elementField) => {
+    return this.getElementField(userId, true).pipe(mergeMap((elementField) => {
 
       const url = this.getODataUrl(userId, elementField.Id);
 
       return this.httpClient.delete(url);
-    });
+    }));
   }
 
   private getODataUrl(userId: number, elementFieldId: number) {
@@ -105,8 +106,8 @@ export class ODataUserElementFieldComponent {
 
     const url = `${AppSettings.serviceODataUrl}/Project?$expand=ElementSet/ElementFieldSet/UserElementFieldSet&$filter=UserId eq ${userId}`;
 
-    return this.httpClient.get(url)
-      .map((response) => {
+    return this.httpClient.get(url).pipe(
+      map((response) => {
 
         var results = (response as any).value as Project[];
 
@@ -133,7 +134,7 @@ export class ODataUserElementFieldComponent {
         }
 
         return elementField;
-      });
+      }));
   }
 
   private handleResponse(response) {
@@ -142,7 +143,7 @@ export class ODataUserElementFieldComponent {
 
   private update(userId: number): Observable<any> {
 
-    return this.getElementField(userId, true).mergeMap((elementField) => {
+    return this.getElementField(userId, true).pipe(mergeMap((elementField) => {
 
       var userElementField = elementField.UserElementFieldSet[0];
 
@@ -154,6 +155,6 @@ export class ODataUserElementFieldComponent {
       const url = this.getODataUrl(userId, elementField.Id);
 
       return this.httpClient.patch(url, body);
-    });
+    }));
   }
 }

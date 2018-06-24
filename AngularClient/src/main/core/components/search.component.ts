@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { MatTableDataSource } from "@angular/material";
+import { finalize } from "rxjs/operators";
 
 import { Project } from "../entities/project";
 import { ProjectService } from "../project.service";
@@ -25,10 +26,10 @@ export class SearchComponent {
 
     this.isBusy = true;
 
-    this.projectService.getProjectSet(this.searchKey)
-      .finally(() => {
+    this.projectService.getProjectSet(this.searchKey).pipe(
+      finalize(() => {
         this.isBusy = false;
-      })
+      }))
       .subscribe(results => {
         this.dataSource.data = results;
         this.hasResult = true;
