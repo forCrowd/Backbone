@@ -1,3 +1,7 @@
-﻿.mat-cell {
-    padding: 4px 0;
+.mat-cell {
+  padding: 4px 0;
+}
+
+.mat-row {
+  padding-left: 24px;
 }

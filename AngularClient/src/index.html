@@ -1,51 +1,60 @@
-﻿<!doctype html>
+<!doctype html>
 <html>
 <head>
-    <base href="/" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico?v=0.1.0">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Backbone</title>
+  <base href="/" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico?v=0.1.0">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- https://github.com/aws/aws-amplify/issues/678 fix: -->
+  <script>
+    if (global === undefined) {
+      var global = window;
+    }
+  </script>
+  <!-- https://github.com/aws/aws-amplify/issues/678 fix end-->
+  <title>Backbone</title>
 </head>
 <body class="mat-typography">
-    <app>
-        <div style="align-items: center; background-color: #fafafa; display: flex; font-family: Roboto, Arial, sans-serif; height: 100vh; justify-content: center;">
-            <div style="text-align: center;">
-                <div style="font-size: 1.3em;">
-                    Hello
-                </div>
-                <div id="dots" style="font-size: 2em;"></div>
-            </div>
+  <app>
+    <div style="align-items: center; background-color: #fafafa; display: flex; font-family: Roboto, Arial, sans-serif; height: 100vh; justify-content: center;">
+      <div style="text-align: center;">
+        <div style="font-size: 1.3em;">
+          Hello
         </div>
-        <script>
+        <div id="dots" style="font-size: 2em;"></div>
+      </div>
+    </div>
+    <script>
 
-            var direction = true;
+      var direction = true;
 
-            hello();
+      hello();
 
-            function hello() {
+      function hello() {
 
-                var dots = document.getElementById("dots");
+          var dots = document.getElementById("dots");
 
-                // After "app" content has loaded, no need to continue
-                if (!dots) {
-                    return;
-                }
+          // After "app" content has loaded, no need to continue
+          if (!dots) {
+              return;
+          }
 
-                dots.innerHTML = direction ? `${dots.innerHTML}.` : dots.innerHTML.slice(0, -1);
+          dots.innerHTML = direction ? `${dots.innerHTML}.` : dots.innerHTML.slice(0, -1);
 
-                // Change direction
-                var len = dots.innerHTML.length;
-                if (len === 6) {
-                    direction = false;
-                } else if (len === 1) {
-                    direction = true;
-                }
+          // Change direction
+          var len = dots.innerHTML.length;
+          if (len === 6) {
+              direction = false;
+          } else if (len === 1) {
+              direction = true;
+          }
 
-                setTimeout(hello, 400);
-            }
+          setTimeout(hello, 400);
+      }
 
-        </script>
-    </app>
+    </script>
+  </app>
 </body>
 </html>

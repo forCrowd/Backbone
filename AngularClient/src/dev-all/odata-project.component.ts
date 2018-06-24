@@ -1,6 +1,7 @@
-import { Observable } from "rxjs";
 import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { mergeMap, map } from "rxjs/operators";
 
 import { AppSettings } from "../app-settings/app-settings";
 import { Project } from "../main/core/entities/project";
@@ -10,134 +11,134 @@ import { AuthService } from "../main/core/core.module";
 import { getUniqueValue } from "../main/shared/utils";
 
 @Component({
-    selector: "odata-project",
-    templateUrl: "odata-project.component.html"
+  selector: "odata-project",
+  templateUrl: "odata-project.component.html"
 })
 export class ODataProjectComponent {
 
-    get anotherUserId(): number {
-        return 2;
-    }
-    
-    get currentUser(): User {
-        return this.authService.currentUser;
-    }
-    get invalidUserId(): number {
-        return -1;
-    }
+  get anotherUserId(): number {
+    return 2;
+  }
 
-    constructor(private authService: AuthService,
-        private httpClient: HttpClient) {
-        
-    }
+  get currentUser(): User {
+    return this.authService.currentUser;
+  }
+  get invalidUserId(): number {
+    return -1;
+  }
 
-    createAnother(): void {
-        this.create(this.anotherUserId)
-            .subscribe(this.handleResponse);
-    }
+  constructor(private authService: AuthService,
+    private httpClient: HttpClient) {
 
-    createOwn(): void {
-        this.create(this.currentUser.Id).subscribe(this.handleResponse);
-    }
+  }
 
-    deleteAnother(): void {
-        this.delete(this.anotherUserId).subscribe(this.handleResponse);
-    }
+  createAnother(): void {
+    this.create(this.anotherUserId)
+      .subscribe(this.handleResponse);
+  }
 
-    deleteNotFound(): void {
-        const url = this.getODataUrl(this.invalidUserId);
-        this.httpClient.delete(url).subscribe(this.handleResponse);
-    }
+  createOwn(): void {
+    this.create(this.currentUser.Id).subscribe(this.handleResponse);
+  }
 
-    deleteOwn(): void {
-        this.delete(this.currentUser.Id).subscribe(this.handleResponse);
-    }
+  deleteAnother(): void {
+    this.delete(this.anotherUserId).subscribe(this.handleResponse);
+  }
 
-    getAnother(): void {
-        this.get(this.anotherUserId).subscribe((project) => console.log("project", project));
-    }
+  deleteNotFound(): void {
+    const url = this.getODataUrl(this.invalidUserId);
+    this.httpClient.delete(url).subscribe(this.handleResponse);
+  }
 
-    getOwn(): void {
-        this.get(this.currentUser.Id).subscribe((project) => console.log("project", project));
-    }
+  deleteOwn(): void {
+    this.delete(this.currentUser.Id).subscribe(this.handleResponse);
+  }
 
-    updateAnother(): void {
-        this.update(2).subscribe(this.handleResponse);
-    }
+  getAnother(): void {
+    this.get(this.anotherUserId).subscribe((project) => console.log("project", project));
+  }
 
-    updateNotFound(): void {
-        const url = this.getODataUrl(this.invalidUserId);
-        this.httpClient.patch(url, {}).subscribe(this.handleResponse);
-    }
+  getOwn(): void {
+    this.get(this.currentUser.Id).subscribe((project) => console.log("project", project));
+  }
 
-    updateOwn(): void {
-        this.update(this.currentUser.Id).subscribe(this.handleResponse);
-    }
+  updateAnother(): void {
+    this.update(2).subscribe(this.handleResponse);
+  }
 
-    private create(userId: number): Observable<any> {
+  updateNotFound(): void {
+    const url = this.getODataUrl(this.invalidUserId);
+    this.httpClient.patch(url, {}).subscribe(this.handleResponse);
+  }
 
-        const project = {
-            UserId: userId,
-            Name: `New project ${getUniqueValue()}`,
-            Key: `New-project-${getUniqueValue()}`,
-            Origin: `http://localhost:15001`,
-            Description: "Description of the project",
-        };
+  updateOwn(): void {
+    this.update(this.currentUser.Id).subscribe(this.handleResponse);
+  }
 
-        const url = `${AppSettings.serviceODataUrl}/Project`;
+  private create(userId: number): Observable<any> {
 
-        return this.httpClient.post(url, project);
-    }
+    const project = {
+      UserId: userId,
+      Name: `New project ${getUniqueValue()}`,
+      Key: `New-project-${getUniqueValue()}`,
+      Origin: `http://localhost:15001`,
+      Description: "Description of the project",
+    };
 
-    private delete(userId: number): Observable<any> {
+    const url = `${AppSettings.serviceODataUrl}/Project`;
 
-        return this.get(userId).mergeMap(project => {
+    return this.httpClient.post(url, project);
+  }
 
-            const url = this.getODataUrl(project.Id);
+  private delete(userId: number): Observable<any> {
 
-            return this.httpClient.delete(url);
-        });
-    }
+    return this.get(userId).pipe(mergeMap(project => {
 
-    private get(userId: number): Observable<Project> {
+      const url = this.getODataUrl(project.Id);
 
-        const url = `${AppSettings.serviceODataUrl}/Project?$filter=UserId eq ${userId}`;
+      return this.httpClient.delete(url);
+    }));
+  }
 
-        return this.httpClient.get(url)
-            .map((response) => {
+  private get(userId: number): Observable<Project> {
 
-                var results = (response as any).value;
+    const url = `${AppSettings.serviceODataUrl}/Project?$filter=UserId eq ${userId}`;
 
-                var project = results[0];
+    return this.httpClient.get(url).pipe(
+      map((response) => {
 
-                if (!project) {
-                    throw new Error(`Create a new project first - user: ${userId}`);
-                }
+        var results = (response as any).value;
 
-                return project;
-            });
-    }
+        var project = results[0];
 
-    private getODataUrl(projectId: number) {
-        return `${AppSettings.serviceODataUrl}/Project(${projectId})`;
-    }
+        if (!project) {
+          throw new Error(`Create a new project first - user: ${userId}`);
+        }
 
-    private handleResponse(response) {
-        console.log("response", response);
-    }
+        return project;
+      }));
+  }
 
-    private update(userId): Observable<any> {
+  private getODataUrl(projectId: number) {
+    return `${AppSettings.serviceODataUrl}/Project(${projectId})`;
+  }
 
-        return this.get(userId).mergeMap((project) => {
+  private handleResponse(response) {
+    console.log("response", response);
+  }
 
-            var body = {
-                Name: `Updated project ${getUniqueValue()}`,
-                RowVersion: project.RowVersion
-            };
+  private update(userId): Observable<any> {
 
-            const url = this.getODataUrl(project.Id);
+    return this.get(userId).pipe(mergeMap((project) => {
 
-            return this.httpClient.patch(url, body);
-        });
-    }
+      var body = {
+        Name: `Updated project ${getUniqueValue()}`,
+        RowVersion: project.RowVersion
+      };
+
+      const url = this.getODataUrl(project.Id);
+
+      return this.httpClient.patch(url, body);
+    }));
+  }
 }

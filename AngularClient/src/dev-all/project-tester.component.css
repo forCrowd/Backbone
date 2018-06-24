@@ -1,22 +1,22 @@
 .project-tester {
-    font-size: 10px;
+  font-size: 10px;
 }
 
-    .project-tester .details {
-        padding: 5px 10px;
+  .project-tester .details {
+    padding: 5px 10px;
+  }
+
+  .project-tester .lists {
+    display: flex;
+  }
+
+    .project-tester .lists .listHeader {
+      border-bottom: 1px solid #3f647f;
+      font-weight: bold;
+      padding: 5px 10px;
     }
 
-    .project-tester .lists {
-        display: flex;
+    .project-tester .lists .listItem {
+      border-bottom: 1px solid #3f647f;
+      margin: 10px;
     }
-
-        .project-tester .lists .listHeader {
-            border-bottom: 1px solid #3f647f;
-            font-weight: bold;
-            padding: 5px 10px;
-        }
-
-        .project-tester .lists .listItem {
-            border-bottom: 1px solid #3f647f;
-            margin: 10px;
-        }

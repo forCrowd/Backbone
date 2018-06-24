@@ -1,4 +1,11 @@
 ### Changelog
+
+**0.6.7**
+
+* AngularClient - Package updates
+* AngularClient - source-map to libraries folder
+* AngularClient - Material typography & icon libraries as links
+
 **0.6.6**
 
 * AngularClient - Contributors page - thenoelman

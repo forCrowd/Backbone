@@ -1,11 +1,15 @@
 .mat-cell {
-    padding: 4px 0;
+  padding: 4px 0;
+}
+
+.mat-row {
+  padding-left: 24px;
 }
 
 .noResults {
-    display: flex;
-    justify-content: center;
-    -o-justify-content: center;
-    -webkit-justify-content: center;
-    padding: 2em;
+  display: flex;
+  justify-content: center;
+  -o-justify-content: center;
+  -webkit-justify-content: center;
+  padding: 2em;
 }
