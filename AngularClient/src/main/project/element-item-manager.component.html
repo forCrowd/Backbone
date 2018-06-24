@@ -1,87 +1,87 @@
-﻿<div *ngIf="project">
+<div *ngIf="project">
 
-    <!-- Element item list -->
-    <div *ngIf="!selectedElementItem">
+  <!-- Element item list -->
+  <div *ngIf="!selectedElementItem">
 
-        <div class="g-mt-20">
-            <mat-form-field>
-                <mat-select placeholder="Select an element" [(value)]="elementFilter">
-                    <mat-option *ngFor="let element of project.ElementSet" [value]="element">{{ element.Name }}</mat-option>
-                </mat-select>
-            </mat-form-field>
+    <div class="g-mt-20">
+      <mat-form-field>
+        <mat-select placeholder="Select an element" [(value)]="elementFilter">
+          <mat-option *ngFor="let element of project.ElementSet" [value]="element">{{ element.Name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-            <div>
-                <button mat-raised-button (click)="addElementItem()" type="button" [disabled]="project.ElementSet.length === 0">
-                    <i class="fa fa-plus" aria-hidden="true"></i> Create new
-                </button>
-            </div>
+      <div>
+        <button mat-raised-button (click)="addElementItem()" type="button" [disabled]="project.ElementSet.length === 0">
+          <i class="fa fa-plus" aria-hidden="true"></i> Create new
+        </button>
+      </div>
+    </div>
+
+    <mat-table #table [dataSource]="elementItemDataSource" [trackBy]="trackBy" class="g-mt-20">
+
+      <ng-container matColumnDef="element">
+        <mat-header-cell *matHeaderCellDef> Element </mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{ item.Element.Name }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{ item.Name }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="createdOn">
+        <mat-header-cell *matHeaderCellDef> Created On</mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{ item.CreatedOn | amTimeAgo }} </mat-cell>
+      </ng-container>
+
+      <!-- Functions -->
+      <ng-container matColumnDef="functions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let item">
+          <button mat-raised-button (click)="editElementItem(item)" type="button">
+            <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+          </button>
+          <button mat-raised-button (click)="removeElementItem(item)" [disabled]="isBusy" type="button">
+            <i class="fa fa-times" aria-hidden="true"></i> Remove
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="elementItemDisplayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: elementItemDisplayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+
+  <!-- Element item add/edit -->
+  <div *ngIf="selectedElementItem">
+    <form #elementItemForm="ngForm" autocomplete="off">
+      <div class="g-mt-40">
+        <div *ngIf="selectedElementItem.entityAspect.entityState.isAdded()" [ngClass]="{ 'has-error': selectedElementItem.entityAspect.getValidationErrors('Element').length > 0 }" class="g-mt-20">
+          <mat-form-field>
+            <mat-select id="ElementId" name="ElementId" placeholder="Element" [(value)]="selectedElementItem.Element">
+              <mat-option *ngFor="let element of project.ElementSet" [value]="element">{{ element.Name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
-
-        <mat-table #table [dataSource]="elementItemDataSource" [trackBy]="trackBy" class="g-mt-20">
-
-            <ng-container matColumnDef="element">
-                <mat-header-cell *matHeaderCellDef> Element </mat-header-cell>
-                <mat-cell *matCellDef="let item"> {{ item.Element.Name }} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="name">
-                <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-                <mat-cell *matCellDef="let item"> {{ item.Name }} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="createdOn">
-                <mat-header-cell *matHeaderCellDef> Created On</mat-header-cell>
-                <mat-cell *matCellDef="let item"> {{ item.CreatedOn | amTimeAgo }} </mat-cell>
-            </ng-container>
-
-            <!-- Functions -->
-            <ng-container matColumnDef="functions">
-                <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                <mat-cell *matCellDef="let item">
-                    <button mat-raised-button (click)="editElementItem(item)" type="button">
-                        <i class="fa fa-pencil" aria-hidden="true"></i> Edit
-                    </button>
-                    <button mat-raised-button (click)="removeElementItem(item)" [disabled]="isBusy" type="button">
-                        <i class="fa fa-times" aria-hidden="true"></i> Remove
-                    </button>
-                </mat-cell>
-            </ng-container>
-
-            <mat-header-row *matHeaderRowDef="elementItemDisplayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: elementItemDisplayedColumns;"></mat-row>
-        </mat-table>
-    </div>
-
-    <!-- Element item add/edit -->
-    <div *ngIf="selectedElementItem">
-        <form #elementItemForm="ngForm" autocomplete="off">
-            <div class="g-mt-40">
-                <div *ngIf="selectedElementItem.entityAspect.entityState.isAdded()" [ngClass]="{ 'has-error': selectedElementItem.entityAspect.getValidationErrors('Element').length > 0 }" class="g-mt-20">
-                    <mat-form-field>
-                        <mat-select id="ElementId" name="ElementId" placeholder="Element" [(value)]="selectedElementItem.Element">
-                            <mat-option *ngFor="let element of project.ElementSet" [value]="element">{{ element.Name }}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div *ngIf="!selectedElementItem.entityAspect.entityState.isAdded()" class="g-mt-20">
-                    <label class="mat-body-1">Element</label>
-                    <p>{{ selectedElementItem.Element.Name }}</p>
-                </div>
-                <div [ngClass]="{ 'has-error': selectedElementItem.entityAspect.getValidationErrors('Name').length > 0 }" class="g-mt-20">
-                    <mat-form-field>
-                        <input matInput placeholder="Name" id="Name" name="Name" [(ngModel)]="selectedElementItem.Name" />
-                    </mat-form-field>
-                </div>
-                <div class="g-mt-20">
-                    <button mat-raised-button (click)="saveElementItem()" [disabled]="submitDisabled()" type="button" color="primary">
-                        Save item
-                    </button>
-                    <button mat-raised-button (click)="cancelElementItem()" [disabled]="isBusy" type="button">
-                        Cancel
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
+        <div *ngIf="!selectedElementItem.entityAspect.entityState.isAdded()" class="g-mt-20">
+          <label class="mat-body-1">Element</label>
+          <p>{{ selectedElementItem.Element.Name }}</p>
+        </div>
+        <div [ngClass]="{ 'has-error': selectedElementItem.entityAspect.getValidationErrors('Name').length > 0 }" class="g-mt-20">
+          <mat-form-field>
+            <input matInput placeholder="Name" id="Name" name="Name" [(ngModel)]="selectedElementItem.Name" />
+          </mat-form-field>
+        </div>
+        <div class="g-mt-20">
+          <button mat-raised-button (click)="saveElementItem()" [disabled]="submitDisabled()" type="button" color="primary">
+            Save item
+          </button>
+          <button mat-raised-button (click)="cancelElementItem()" [disabled]="isBusy" type="button">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 
 </div>

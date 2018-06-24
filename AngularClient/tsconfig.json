@@ -1,20 +1,20 @@
-﻿{
-    "compileOnSave": false,
-    "compilerOptions": {
-        "declaration": false,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "importHelpers": true,
-        "lib": [
-            "es2017",
-            "dom"
-        ],
-        "moduleResolution": "node",
-        "outDir": "./dist/out-tsc",
-        "sourceMap": true,
-        "target": "es5",
-        "typeRoots": [
-            "node_modules/@types"
-        ]
-    }
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "moduleResolution": "node",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ]
+  }
 }

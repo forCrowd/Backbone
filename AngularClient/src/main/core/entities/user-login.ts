@@ -1,10 +1,12 @@
 import { EntityBase } from "./entity-base";
-import { Role } from "./role";
 import { User } from "./user";
 
-export class UserRole extends EntityBase {
+export class UserLogin extends EntityBase {
 
   // Server-side
+  Id = 0;
   User: User;
-  Role: Role;
+  LoginProvider = "";
+  ProviderKey = "";
+
 }

@@ -1,4 +1,4 @@
-﻿## ng2Client - Development
+## ng2Client - Development
 
 A lightweight versions of 'app module' to make quick sanity checks.  
   

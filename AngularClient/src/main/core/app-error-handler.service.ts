@@ -1,4 +1,4 @@
-﻿import { ErrorHandler, Injectable } from "@angular/core";
+import { ErrorHandler, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, Subscription } from "rxjs";
 import { SourceMapConsumer } from "source-map";
@@ -8,147 +8,147 @@ import { AppSettings } from "../../app-settings/app-settings";
 @Injectable()
 export class AppErrorHandler implements ErrorHandler {
 
-    sourceMapCache = {};
-    errorCounter = 0;
-    errorLimitResetTimer: Subscription = null;
-    get errorLimitReached(): boolean { return this.errorCounter > 10 };
+  sourceMapCache = {};
+  errorCounter = 0;
+  errorLimitResetTimer: Subscription = null;
+  get errorLimitReached(): boolean { return this.errorCounter > 10 };
 
-    constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient) {
+  }
+
+  handleError(error: Error): void {
+
+    if (AppSettings.environment === "Development") {
+
+      console.error(error);
+
+    } else {
+
+      this.reportError(error);
     }
+  }
 
-    handleError(error: Error): void {
+  private reportError(error: Error): void {
 
-        if (AppSettings.environment === "Development") {
+    this.processErrorLimit();
 
-            console.error(error);
+    if (!this.errorLimitReached) {
 
-        } else {
+      this.getSourceMappedStackTrace(error).subscribe((stack: string) => {
 
-            this.reportError(error);
-        }
+        const model = {
+          Name: error.name,
+          Message: error.message,
+          Url: window.location.href,
+          Stack: stack || ""
+        };
+
+        const errorHandlerUrl = AppSettings.serviceApiUrl + "/Exception/Record";
+
+        this.httpClient.post(errorHandlerUrl, model).subscribe();
+      });
     }
+  }
 
-    private reportError(error: Error): void {
+  // Retrieve a SourceMap object for a minified script URL
+  private getMapForScript(url: any) {
 
-        this.processErrorLimit();
+    if (this.sourceMapCache[url]) {
 
-        if (!this.errorLimitReached) {
+      return this.sourceMapCache[url];
 
-            this.getSourceMappedStackTrace(error).subscribe((stack: string) => {
+    } else {
 
-                const model = {
-                    Name: error.name,
-                    Message: error.message,
-                    Url: window.location.href,
-                    Stack: stack || ""
-                };
+      const observable = this.httpClient.get(url, { responseType: "text" }).mergeMap(body => {
 
-                const errorHandlerUrl = AppSettings.serviceApiUrl + "/Exception/Record";
+        const match = body.match(/\/\/# sourceMappingURL=([^"\s]+\.map)/);
 
-                this.httpClient.post(errorHandlerUrl, model).subscribe();
+        if (match) {
+          const sourceMapUrl = match[1];
+          return this.httpClient.get(sourceMapUrl, { responseType: "text" })
+            .map((response: any) => {
+              return new SourceMapConsumer(response);
             });
-        }
-    }
-
-    // Retrieve a SourceMap object for a minified script URL
-    private getMapForScript(url: any) {
-
-        if (this.sourceMapCache[url]) {
-
-            return this.sourceMapCache[url];
-
         } else {
-
-            const observable = this.httpClient.get(url, { responseType: "text" }).mergeMap(body => {
-
-                const match = body.match(/\/\/# sourceMappingURL=([^"\s]+\.map)/);
-
-                if (match) {
-                    const sourceMapUrl = match[1];
-                    return this.httpClient.get(sourceMapUrl, { responseType: "text" })
-                        .map((response: any) => {
-                            return new SourceMapConsumer(response);
-                        });
-                } else {
-                    return Observable.throw("no 'sourceMappingURL' regex match");
-                }
-            }).share();
-
-            this.sourceMapCache[url] = observable;
-
-            return observable;
+          return Observable.throw("no 'sourceMappingURL' regex match");
         }
+      }).share();
+
+      this.sourceMapCache[url] = observable;
+
+      return observable;
+    }
+  }
+
+  /**
+   * Gets stack trace by downloading and parsing .map files
+   * Original solutions: http://stackoverflow.com/questions/19420604/angularjs-stack-trace-ignoring-source-map
+   * @param exception
+   */
+  private getSourceMappedStackTrace(error: Error) {
+
+    if (error.stack) { // not all browsers support stack traces
+
+      return Observable.forkJoin(
+
+        error.stack.split(/\n/).map((stackLine: any) => {
+
+          var match = stackLine.match(/^(.+)(http.+):(\d+):(\d+)/);
+
+          if (match) {
+            var prefix = match[1];
+            const url = match[2];
+            var line = match[3],
+              col = match[4];
+
+            return this.getMapForScript(url).map((map: any) => {
+
+              var pos = map.originalPositionFor({
+                line: parseInt(line, 10),
+                column: parseInt(col, 10)
+              });
+
+              // Experimental fixes for source
+              pos.source = pos.source.substring(0, 3) === "../"
+                ? pos.source.substring(2)
+                : pos.source.charAt(0) !== "/"
+                  ? `/${pos.source}`
+                  : pos.source;
+
+              var mangledName = prefix.match(/\s*(at)?\s*(.*?)\s*(\(|@)/);
+              mangledName = (mangledName && mangledName[2]) || "";
+
+              return `    at ${pos.name ? pos.name : mangledName} ${window.location.origin}${pos.source}:${pos.line}:${pos.column}`;
+
+            }).catch(() => {
+              return stackLine;
+            });
+          } else {
+            return Observable.of(stackLine);
+          }
+        })
+      ).map((lines: any) => lines.join("\r\n"));
+    } else {
+      return Observable.of("");
+    }
+  }
+
+  /**
+   * One client can only send 10 errors per five minutes
+   */
+  private processErrorLimit(): void {
+
+    if (this.errorCounter === 0) {
+
+      // If there is, unsubscribe from previous subscription
+      // TODO: Not sure whether this is necessary but to be sure / coni2k - 05 Jan. '17
+      if (this.errorLimitResetTimer) {
+        this.errorLimitResetTimer.unsubscribe();
+      }
+
+      this.errorLimitResetTimer = Observable.timer(5000).subscribe(() => this.errorCounter = 0);
     }
 
-    /**
-     * Gets stack trace by downloading and parsing .map files
-     * Original solutions: http://stackoverflow.com/questions/19420604/angularjs-stack-trace-ignoring-source-map
-     * @param exception
-     */
-    private getSourceMappedStackTrace(error: Error) {
-
-        if (error.stack) { // not all browsers support stack traces
-
-            return Observable.forkJoin(
-
-                error.stack.split(/\n/).map((stackLine: any) => {
-
-                    var match = stackLine.match(/^(.+)(http.+):(\d+):(\d+)/);
-
-                    if (match) {
-                        var prefix = match[1];
-                        const url = match[2];
-                        var line = match[3],
-                            col = match[4];
-
-                        return this.getMapForScript(url).map((map: any) => {
-
-                            var pos = map.originalPositionFor({
-                                line: parseInt(line, 10),
-                                column: parseInt(col, 10)
-                            });
-
-                            // Experimental fixes for source
-                            pos.source = pos.source.substring(0, 3) === "../"
-                                ? pos.source.substring(2)
-                                : pos.source.charAt(0) !== "/"
-                                    ? `/${pos.source}`
-                                    : pos.source;
-
-                            var mangledName = prefix.match(/\s*(at)?\s*(.*?)\s*(\(|@)/);
-                            mangledName = (mangledName && mangledName[2]) || "";
-
-                            return `    at ${pos.name ? pos.name : mangledName} ${window.location.origin}${pos.source}:${pos.line}:${pos.column}`;
-
-                        }).catch(() => {
-                            return stackLine;
-                        });
-                    } else {
-                        return Observable.of(stackLine);
-                    }
-                })
-            ).map((lines: any) => lines.join("\r\n"));
-        } else {
-            return Observable.of("");
-        }
-    }
-
-    /**
-     * One client can only send 10 errors per five minutes
-     */
-    private processErrorLimit(): void {
-
-        if (this.errorCounter === 0) {
-
-            // If there is, unsubscribe from previous subscription
-            // TODO: Not sure whether this is necessary but to be sure / coni2k - 05 Jan. '17
-            if (this.errorLimitResetTimer) {
-                this.errorLimitResetTimer.unsubscribe();
-            }
-
-            this.errorLimitResetTimer = Observable.timer(5000).subscribe(() => this.errorCounter = 0);
-        }
-
-        this.errorCounter++;
-    }
+    this.errorCounter++;
+  }
 }

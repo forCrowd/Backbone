@@ -10,150 +10,150 @@ import { User } from "../main/core/entities/user";
 import { AuthService } from "../main/core/core.module";
 
 @Component({
-    selector: "odata-user-element-field",
-    templateUrl: "odata-user-element-field.component.html"
+  selector: "odata-user-element-field",
+  templateUrl: "odata-user-element-field.component.html"
 })
 export class ODataUserElementFieldComponent {
 
-    get anotherUserId(): number {
-        return 2;
-    }
-    
-    get currentUser(): User {
-        return this.authService.currentUser;
-    }
-    get invalidElementFieldId(): number {
-        return -1;
-    }
-    get invalidUserId(): number {
-        return -1;
-    }
+  get anotherUserId(): number {
+    return 2;
+  }
 
-    constructor(
-        private authService: AuthService,
-        private httpClient: HttpClient) {
-        
-    }
+  get currentUser(): User {
+    return this.authService.currentUser;
+  }
+  get invalidElementFieldId(): number {
+    return -1;
+  }
+  get invalidUserId(): number {
+    return -1;
+  }
 
-    createAnother(): void {
-        this.create(this.anotherUserId).subscribe(this.handleResponse);
-    }
+  constructor(
+    private authService: AuthService,
+    private httpClient: HttpClient) {
 
-    createOwn(): void {
-        this.create(this.currentUser.Id).subscribe(this.handleResponse);
-    }
+  }
 
-    deleteAnother(): void {
-        this.delete(this.anotherUserId).subscribe(this.handleResponse);
-    }
+  createAnother(): void {
+    this.create(this.anotherUserId).subscribe(this.handleResponse);
+  }
 
-    deleteNotFound(): void {
-        const url = this.getODataUrl(this.invalidUserId, this.invalidElementFieldId);
-        this.httpClient.delete(url).subscribe(this.handleResponse);
-    }
+  createOwn(): void {
+    this.create(this.currentUser.Id).subscribe(this.handleResponse);
+  }
 
-    deleteOwn(): void {
-        this.delete(this.currentUser.Id).subscribe(this.handleResponse);
-    }
+  deleteAnother(): void {
+    this.delete(this.anotherUserId).subscribe(this.handleResponse);
+  }
 
-    updateAnother(): void {
-        this.update(this.anotherUserId).subscribe(this.handleResponse);
-    }
+  deleteNotFound(): void {
+    const url = this.getODataUrl(this.invalidUserId, this.invalidElementFieldId);
+    this.httpClient.delete(url).subscribe(this.handleResponse);
+  }
 
-    updateNotFound(): void {
-        const url = this.getODataUrl(this.invalidUserId, this.invalidElementFieldId);
-        this.httpClient.patch(url, {}).subscribe(this.handleResponse);
-    }
+  deleteOwn(): void {
+    this.delete(this.currentUser.Id).subscribe(this.handleResponse);
+  }
 
-    updateOwn(): void {
-        this.update(this.currentUser.Id).subscribe(this.handleResponse);
-    }
+  updateAnother(): void {
+    this.update(this.anotherUserId).subscribe(this.handleResponse);
+  }
 
-    /* Private methods */
+  updateNotFound(): void {
+    const url = this.getODataUrl(this.invalidUserId, this.invalidElementFieldId);
+    this.httpClient.patch(url, {}).subscribe(this.handleResponse);
+  }
 
-    private create(userId: number): Observable<any> {
+  updateOwn(): void {
+    this.update(this.currentUser.Id).subscribe(this.handleResponse);
+  }
 
-        return this.getElementField(userId).mergeMap((elementField) => {
+  /* Private methods */
 
-            var userElementField = {
-                UserId: userId,
-                ElementFieldId: elementField.Id,
-                Rating: new Date().getMilliseconds().toString()
-            };
+  private create(userId: number): Observable<any> {
 
-            var url = `${AppSettings.serviceODataUrl}/UserElementField`;
+    return this.getElementField(userId).mergeMap((elementField) => {
 
-            return this.httpClient.post(url, userElementField);
-        });
-    }
+      var userElementField = {
+        UserId: userId,
+        ElementFieldId: elementField.Id,
+        Rating: new Date().getMilliseconds().toString()
+      };
 
-    private delete(userId: number): Observable<any> {
+      var url = `${AppSettings.serviceODataUrl}/UserElementField`;
 
-        return this.getElementField(userId, true).mergeMap((elementField) => {
+      return this.httpClient.post(url, userElementField);
+    });
+  }
 
-            const url = this.getODataUrl(userId, elementField.Id);
+  private delete(userId: number): Observable<any> {
 
-            return this.httpClient.delete(url);
-        });
-    }
+    return this.getElementField(userId, true).mergeMap((elementField) => {
 
-    private getODataUrl(userId: number, elementFieldId: number) {
-        return `${AppSettings.serviceODataUrl}/UserElementField(userId=${userId},elementFieldId=${elementFieldId})`;
-    }
+      const url = this.getODataUrl(userId, elementField.Id);
 
-    private getElementField(userId: number, checkHasUserElementField: boolean = false): Observable<ElementField> {
+      return this.httpClient.delete(url);
+    });
+  }
 
-        const url = `${AppSettings.serviceODataUrl}/Project?$expand=ElementSet/ElementFieldSet/UserElementFieldSet&$filter=UserId eq ${userId}`;
+  private getODataUrl(userId: number, elementFieldId: number) {
+    return `${AppSettings.serviceODataUrl}/UserElementField(userId=${userId},elementFieldId=${elementFieldId})`;
+  }
 
-        return this.httpClient.get(url)
-            .map((response) => {
+  private getElementField(userId: number, checkHasUserElementField: boolean = false): Observable<ElementField> {
 
-                var results = (response as any).value as Project[];
+    const url = `${AppSettings.serviceODataUrl}/Project?$expand=ElementSet/ElementFieldSet/UserElementFieldSet&$filter=UserId eq ${userId}`;
 
-                var project = results[0];
+    return this.httpClient.get(url)
+      .map((response) => {
 
-                if (!project) {
-                    throw new Error(`Create a new project first - user: ${userId}`);
-                }
+        var results = (response as any).value as Project[];
 
-                var element = project.ElementSet[0];
+        var project = results[0];
 
-                if (!element) {
-                    throw new Error(`Create a new element first - user: ${userId} - project: ${project.Id}`);
-                }
+        if (!project) {
+          throw new Error(`Create a new project first - user: ${userId}`);
+        }
 
-                var elementField = element.ElementFieldSet[0];
+        var element = project.ElementSet[0];
 
-                if (!elementField) {
-                    throw new Error(`Create a new field first - user: ${userId} - project: ${project.Id} - element: ${element.Id}`);
-                }
+        if (!element) {
+          throw new Error(`Create a new element first - user: ${userId} - project: ${project.Id}`);
+        }
 
-                if (checkHasUserElementField && !elementField.UserElementFieldSet[0]) {
-                    throw new Error(`Create a new user field first - user: ${userId} - project: ${project.Id} - element: ${element.Id} - field: ${elementField.Id}`);
-                }
+        var elementField = element.ElementFieldSet[0];
 
-                return elementField;
-            });
-    }
+        if (!elementField) {
+          throw new Error(`Create a new field first - user: ${userId} - project: ${project.Id} - element: ${element.Id}`);
+        }
 
-    private handleResponse(response) {
-        console.log("response", response);
-    }
+        if (checkHasUserElementField && !elementField.UserElementFieldSet[0]) {
+          throw new Error(`Create a new user field first - user: ${userId} - project: ${project.Id} - element: ${element.Id} - field: ${elementField.Id}`);
+        }
 
-    private update(userId: number): Observable<any> {
+        return elementField;
+      });
+  }
 
-        return this.getElementField(userId, true).mergeMap((elementField) => {
+  private handleResponse(response) {
+    console.log("response", response);
+  }
 
-            var userElementField = elementField.UserElementFieldSet[0];
+  private update(userId: number): Observable<any> {
 
-            var body = {
-                Rating: new Date().getMilliseconds().toString(),
-                RowVersion: userElementField.RowVersion
-            };
+    return this.getElementField(userId, true).mergeMap((elementField) => {
 
-            const url = this.getODataUrl(userId, elementField.Id);
+      var userElementField = elementField.UserElementFieldSet[0];
 
-            return this.httpClient.patch(url, body);
-        });
-    }
+      var body = {
+        Rating: new Date().getMilliseconds().toString(),
+        RowVersion: userElementField.RowVersion
+      };
+
+      const url = this.getODataUrl(userId, elementField.Id);
+
+      return this.httpClient.patch(url, body);
+    });
+  }
 }
