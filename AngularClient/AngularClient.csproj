@@ -182,7 +182,6 @@
     <None Include="tslint.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="karma.conf.js" />
     <Content Include="src\dev-all\app.component.html" />
     <Content Include="src\favicon.ico" />
     <Content Include="src\main\account\account-overview.component.html" />
