@@ -1,149 +1,149 @@
-﻿<div *ngIf="project">
+<div *ngIf="project">
 
-    <!-- Element field list -->
-    <div *ngIf="!selectedElementField">
+  <!-- Element field list -->
+  <div *ngIf="!selectedElementField">
 
-        <div class="g-mt-20">
-            <mat-form-field>
-                <mat-select placeholder="Select an element" [(value)]="elementFilter">
-                    <mat-option *ngFor="let element of project.ElementSet" [value]="element">{{ element.Name }}</mat-option>
-                </mat-select>
-            </mat-form-field>
+    <div class="g-mt-20">
+      <mat-form-field>
+        <mat-select placeholder="Select an element" [(value)]="elementFilter">
+          <mat-option *ngFor="let element of project.ElementSet" [value]="element">{{ element.Name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-            <div>
-                <button mat-raised-button (click)="addElementField()" type="button" [disabled]="project.ElementSet.length === 0">
-                    <i class="fa fa-plus" aria-hidden="true"></i> Create new
-                </button>
-            </div>
+      <div>
+        <button mat-raised-button (click)="addElementField()" type="button" [disabled]="project.ElementSet.length === 0">
+          <i class="fa fa-plus" aria-hidden="true"></i> Create new
+        </button>
+      </div>
+    </div>
+
+    <mat-table #table [dataSource]="elementFieldDataSource" [trackBy]="trackBy" class="g-mt-20">
+
+      <ng-container matColumnDef="element">
+        <mat-header-cell *matHeaderCellDef> Element </mat-header-cell>
+        <mat-cell *matCellDef="let field"> {{ field.Element.Name }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let field"> {{ field.Name }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="dataType">
+        <mat-header-cell *matHeaderCellDef> Data Type </mat-header-cell>
+        <mat-cell *matCellDef="let field"> {{ field.DataTypeText }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="createdOn">
+        <mat-header-cell *matHeaderCellDef> Created On</mat-header-cell>
+        <mat-cell *matCellDef="let field"> {{ field.CreatedOn | amTimeAgo }} </mat-cell>
+      </ng-container>
+
+      <!-- Functions -->
+      <ng-container matColumnDef="functions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let field">
+          <button mat-raised-button (click)="editElementField(field)" type="button">
+            <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+          </button>
+          <button mat-raised-button (click)="removeElementField(field)" [disabled]="isBusy" type="button">
+            <i class="fa fa-times" aria-hidden="true"></i> Remove
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="elementFieldDisplayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: elementFieldDisplayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+
+  <!-- Element field add/edit -->
+  <div *ngIf="selectedElementField">
+    <form #elementFieldForm="ngForm" autocomplete="off">
+      <div class="g-mt-40">
+        <div *ngIf="selectedElementField.entityAspect.entityState.isAdded()" [ngClass]="{ 'has-error': selectedElementField.entityAspect.getValidationErrors('Element').length > 0 }" class="g-mt-20">
+          <mat-form-field>
+            <mat-select id="ElementId" name="ElementId" placeholder="Element" [(value)]="selectedElementField.Element">
+              <mat-option *ngFor="let element of project.ElementSet" [value]="element">{{ element.Name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div *ngIf="!selectedElementField.entityAspect.entityState.isAdded()" class="g-mt-20">
+          <label class="mat-body-1">Element</label>
+          <p>{{ selectedElementField.Element.Name }}</p>
+        </div>
+        <div [ngClass]="{ 'has-error': selectedElementField.entityAspect.getValidationErrors('Name').length > 0 }" class="g-mt-20">
+          <mat-form-field>
+            <input matInput placeholder="Name" id="Name" name="Name" [(ngModel)]="selectedElementField.Name" />
+          </mat-form-field>
+        </div>
+        <div *ngIf="selectedElementField.entityAspect.entityState.isAdded()" [ngClass]="{ 'has-error': selectedElementField.entityAspect.getValidationErrors('DataType').length > 0 }" class="g-mt-20">
+          <mat-form-field>
+            <mat-select id="DataType" name="DataType" placeholder="Data Type" [(value)]="selectedElementField.DataType">
+              <mat-option [value]="elementFieldDataType.String">String</mat-option>
+              <mat-option [value]="elementFieldDataType.Decimal">Decimal</mat-option>
+              <mat-option [value]="elementFieldDataType.Element">Element</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div *ngIf="!selectedElementField.entityAspect.entityState.isAdded()" class="g-mt-20">
+          <label class="mat-body-1">Data Type</label>
+          <p>{{ selectedElementField.DataTypeText }}</p>
+        </div>
+        <div *ngIf="selectedElementField.entityAspect.entityState.isAdded() && selectedElementField.DataType === elementFieldDataType.Element" [ngClass]="{ 'has-error': selectedElementField.entityAspect.getValidationErrors('SelectedElement').length > 0 }" class="g-mt-20">
+          <mat-form-field>
+            <mat-select id="SelectedElementId" name="SelectedElementId" placeholder="Selected Element" [(value)]="selectedElementField.SelectedElement" required>
+              <mat-option *ngFor="let element of selectedElementList" [value]="element">{{ element.Name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div *ngIf="selectedElementField.entityAspect.entityState.isAdded() && selectedElementField.DataType === elementFieldDataType.Decimal" [ngClass]="{ 'has-error': selectedElementField.entityAspect.getValidationErrors('UseFixedValue').length > 0 }" class="g-mt-20">
+          <mat-form-field>
+            <mat-select id="UseFixedValue" name="UseFixedValue" placeholder="Use Fixed Value" [(value)]="selectedElementField.UseFixedValue" aria-describedby="UseFixedValueHelp">
+              <mat-option [value]="true">Yes</mat-option>
+              <mat-option [value]="false">No</mat-option>
+            </mat-select>
+            <mat-hint id="UseFixedValueHelp">
+              Determines whether the values of this field will contain static data or will be set by users.<br />
+              e.g. 'Product Price' field should use a fixed value and 'Rating' field should be set by all users.
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <div *ngIf="!selectedElementField.entityAspect.entityState.isAdded() && selectedElementField.DataType === elementFieldDataType.Decimal" class="g-mt-20">
+          <label class="mat-body-1">Use Fixed Value</label>
+          <p>{{ selectedElementField.UseFixedValue }}</p>
+        </div>
+        <div *ngIf="selectedElementField.entityAspect.entityState.isAdded() && selectedElementField.DataType === elementFieldDataType.Decimal" [ngClass]="{ 'has-error': selectedElementField.entityAspect.getValidationErrors('RatingEnabled').length > 0 }" class="g-mt-20">
+          <mat-form-field>
+            <mat-select id="RatingEnabled" name="RatingEnabled" placeholder="Rating Enabled" [(value)]="selectedElementField.RatingEnabled" aria-describedby="RatingEnabledHelp">
+              <mat-option [value]="true">Yes</mat-option>
+              <mat-option [value]="false">No</mat-option>
+            </mat-select>
+            <mat-hint id="RatingEnabledHelp">
+              Determines whether the users can enter ratings for this field.
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <div *ngIf="!selectedElementField.entityAspect.entityState.isAdded() && selectedElementField.DataType === elementFieldDataType.Decimal" class="g-mt-20">
+          <label class="mat-body-1">Rating Enabled</label>
+          <p>{{ selectedElementField.RatingEnabled }}</p>
         </div>
 
-        <mat-table #table [dataSource]="elementFieldDataSource" [trackBy]="trackBy" class="g-mt-20">
-
-            <ng-container matColumnDef="element">
-                <mat-header-cell *matHeaderCellDef> Element </mat-header-cell>
-                <mat-cell *matCellDef="let field"> {{ field.Element.Name }} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="name">
-                <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-                <mat-cell *matCellDef="let field"> {{ field.Name }} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="dataType">
-                <mat-header-cell *matHeaderCellDef> Data Type </mat-header-cell>
-                <mat-cell *matCellDef="let field"> {{ field.DataTypeText }} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="createdOn">
-                <mat-header-cell *matHeaderCellDef> Created On</mat-header-cell>
-                <mat-cell *matCellDef="let field"> {{ field.CreatedOn | amTimeAgo }} </mat-cell>
-            </ng-container>
-
-            <!-- Functions -->
-            <ng-container matColumnDef="functions">
-                <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                <mat-cell *matCellDef="let field">
-                    <button mat-raised-button (click)="editElementField(field)" type="button">
-                        <i class="fa fa-pencil" aria-hidden="true"></i> Edit
-                    </button>
-                    <button mat-raised-button (click)="removeElementField(field)" [disabled]="isBusy" type="button">
-                        <i class="fa fa-times" aria-hidden="true"></i> Remove
-                    </button>
-                </mat-cell>
-            </ng-container>
-
-            <mat-header-row *matHeaderRowDef="elementFieldDisplayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: elementFieldDisplayedColumns;"></mat-row>
-        </mat-table>
-    </div>
-
-    <!-- Element field add/edit -->
-    <div *ngIf="selectedElementField">
-        <form #elementFieldForm="ngForm" autocomplete="off">
-            <div class="g-mt-40">
-                <div *ngIf="selectedElementField.entityAspect.entityState.isAdded()" [ngClass]="{ 'has-error': selectedElementField.entityAspect.getValidationErrors('Element').length > 0 }" class="g-mt-20">
-                    <mat-form-field>
-                        <mat-select id="ElementId" name="ElementId" placeholder="Element" [(value)]="selectedElementField.Element">
-                            <mat-option *ngFor="let element of project.ElementSet" [value]="element">{{ element.Name }}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div *ngIf="!selectedElementField.entityAspect.entityState.isAdded()" class="g-mt-20">
-                    <label class="mat-body-1">Element</label>
-                    <p>{{ selectedElementField.Element.Name }}</p>
-                </div>
-                <div [ngClass]="{ 'has-error': selectedElementField.entityAspect.getValidationErrors('Name').length > 0 }" class="g-mt-20">
-                    <mat-form-field>
-                        <input matInput placeholder="Name" id="Name" name="Name" [(ngModel)]="selectedElementField.Name" />
-                    </mat-form-field>
-                </div>
-                <div *ngIf="selectedElementField.entityAspect.entityState.isAdded()" [ngClass]="{ 'has-error': selectedElementField.entityAspect.getValidationErrors('DataType').length > 0 }" class="g-mt-20">
-                    <mat-form-field>
-                        <mat-select id="DataType" name="DataType" placeholder="Data Type" [(value)]="selectedElementField.DataType">
-                            <mat-option [value]="elementFieldDataType.String">String</mat-option>
-                            <mat-option [value]="elementFieldDataType.Decimal">Decimal</mat-option>
-                            <mat-option [value]="elementFieldDataType.Element">Element</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div *ngIf="!selectedElementField.entityAspect.entityState.isAdded()" class="g-mt-20">
-                    <label class="mat-body-1">Data Type</label>
-                    <p>{{ selectedElementField.DataTypeText }}</p>
-                </div>
-                <div *ngIf="selectedElementField.entityAspect.entityState.isAdded() && selectedElementField.DataType === elementFieldDataType.Element" [ngClass]="{ 'has-error': selectedElementField.entityAspect.getValidationErrors('SelectedElement').length > 0 }" class="g-mt-20">
-                    <mat-form-field>
-                        <mat-select id="SelectedElementId" name="SelectedElementId" placeholder="Selected Element" [(value)]="selectedElementField.SelectedElement" required>
-                            <mat-option *ngFor="let element of selectedElementList" [value]="element">{{ element.Name }}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div *ngIf="selectedElementField.entityAspect.entityState.isAdded() && selectedElementField.DataType === elementFieldDataType.Decimal" [ngClass]="{ 'has-error': selectedElementField.entityAspect.getValidationErrors('UseFixedValue').length > 0 }" class="g-mt-20">
-                    <mat-form-field>
-                        <mat-select id="UseFixedValue" name="UseFixedValue" placeholder="Use Fixed Value" [(value)]="selectedElementField.UseFixedValue" aria-describedby="UseFixedValueHelp">
-                            <mat-option [value]="true">Yes</mat-option>
-                            <mat-option [value]="false">No</mat-option>
-                        </mat-select>
-                        <mat-hint id="UseFixedValueHelp">
-                            Determines whether the values of this field will contain static data or will be set by users.<br />
-                            e.g. 'Product Price' field should use a fixed value and 'Rating' field should be set by all users.
-                        </mat-hint>
-                    </mat-form-field>
-                </div>
-                <div *ngIf="!selectedElementField.entityAspect.entityState.isAdded() && selectedElementField.DataType === elementFieldDataType.Decimal" class="g-mt-20">
-                    <label class="mat-body-1">Use Fixed Value</label>
-                    <p>{{ selectedElementField.UseFixedValue }}</p>
-                </div>
-                <div *ngIf="selectedElementField.entityAspect.entityState.isAdded() && selectedElementField.DataType === elementFieldDataType.Decimal" [ngClass]="{ 'has-error': selectedElementField.entityAspect.getValidationErrors('RatingEnabled').length > 0 }" class="g-mt-20">
-                    <mat-form-field>
-                        <mat-select id="RatingEnabled" name="RatingEnabled" placeholder="Rating Enabled" [(value)]="selectedElementField.RatingEnabled" aria-describedby="RatingEnabledHelp">
-                            <mat-option [value]="true">Yes</mat-option>
-                            <mat-option [value]="false">No</mat-option>
-                        </mat-select>
-                        <mat-hint id="RatingEnabledHelp">
-                            Determines whether the users can enter ratings for this field.
-                        </mat-hint>
-                    </mat-form-field>
-                </div>
-                <div *ngIf="!selectedElementField.entityAspect.entityState.isAdded() && selectedElementField.DataType === elementFieldDataType.Decimal" class="g-mt-20">
-                    <label class="mat-body-1">Rating Enabled</label>
-                    <p>{{ selectedElementField.RatingEnabled }}</p>
-                </div>
-
-                <div [ngClass]="{ 'has-error': selectedElementField.entityAspect.getValidationErrors('SortOrder').length > 0 }" class="g-mt-20">
-                    <mat-form-field>
-                        <input matInput placeholder="Sort Order" id="SortOrder" name="SortOrder" [(ngModel)]="selectedElementField.SortOrder" />
-                    </mat-form-field>
-                </div>
-                <div class="g-mt-20">
-                    <button mat-raised-button (click)="saveElementField()" [disabled]="submitDisabled()" type="button" color="primary">
-                        Save field
-                    </button>
-                    <button mat-raised-button (click)="cancelElementField()" [disabled]="isBusy" type="button">
-                        Cancel
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
+        <div [ngClass]="{ 'has-error': selectedElementField.entityAspect.getValidationErrors('SortOrder').length > 0 }" class="g-mt-20">
+          <mat-form-field>
+            <input matInput placeholder="Sort Order" id="SortOrder" name="SortOrder" [(ngModel)]="selectedElementField.SortOrder" />
+          </mat-form-field>
+        </div>
+        <div class="g-mt-20">
+          <button mat-raised-button (click)="saveElementField()" [disabled]="submitDisabled()" type="button" color="primary">
+            Save field
+          </button>
+          <button mat-raised-button (click)="cancelElementField()" [disabled]="isBusy" type="button">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 
 </div>

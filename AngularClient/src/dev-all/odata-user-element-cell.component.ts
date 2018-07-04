@@ -1,6 +1,7 @@
-import { Observable } from "rxjs";
 import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { mergeMap, map } from "rxjs/operators";
 
 import { AppSettings } from "../app-settings/app-settings";
 import { ElementCell } from "../main/core/entities/element-cell";
@@ -10,156 +11,156 @@ import { User } from "../main/core/entities/user";
 import { AuthService } from "../main/core/core.module";
 
 @Component({
-    selector: "odata-user-element-cell",
-    templateUrl: "odata-user-element-cell.component.html"
+  selector: "odata-user-element-cell",
+  templateUrl: "odata-user-element-cell.component.html"
 })
 export class ODataUserElementCellComponent {
 
-    get anotherUserId(): number {
-        return 2;
-    }
-    
-    get currentUser(): User {
-        return this.authService.currentUser;
-    }
-    get invalidElementCellId(): number {
-        return -1;
-    }
-    get invalidUserId(): number {
-        return -1;
-    }
+  get anotherUserId(): number {
+    return 2;
+  }
 
-    constructor(
-        private authService: AuthService,
-        private httpClient: HttpClient) {
-        
-    }
+  get currentUser(): User {
+    return this.authService.currentUser;
+  }
+  get invalidElementCellId(): number {
+    return -1;
+  }
+  get invalidUserId(): number {
+    return -1;
+  }
 
-    createAnother(): void {
-        this.create(this.anotherUserId).subscribe(this.handleResponse);
-    }
+  constructor(
+    private authService: AuthService,
+    private httpClient: HttpClient) {
 
-    createOwn(): void {
-        this.create(this.currentUser.Id).subscribe(this.handleResponse);
-    }
+  }
 
-    deleteAnother(): void {
-        this.delete(this.anotherUserId).subscribe(this.handleResponse);
-    }
+  createAnother(): void {
+    this.create(this.anotherUserId).subscribe(this.handleResponse);
+  }
 
-    deleteNotFound(): void {
-        const url = this.getODataUrl(this.invalidUserId, this.invalidElementCellId);
-        this.httpClient.delete(url).subscribe(this.handleResponse);
-    }
+  createOwn(): void {
+    this.create(this.currentUser.Id).subscribe(this.handleResponse);
+  }
 
-    deleteOwn(): void {
-        this.delete(this.currentUser.Id).subscribe(this.handleResponse);
-    }
+  deleteAnother(): void {
+    this.delete(this.anotherUserId).subscribe(this.handleResponse);
+  }
 
-    updateAnother(): void {
-        this.update(this.anotherUserId).subscribe(this.handleResponse);
-    }
+  deleteNotFound(): void {
+    const url = this.getODataUrl(this.invalidUserId, this.invalidElementCellId);
+    this.httpClient.delete(url).subscribe(this.handleResponse);
+  }
 
-    updateNotFound(): void {
-        const url = this.getODataUrl(this.invalidUserId, this.invalidElementCellId);
-        this.httpClient.patch(url, {}).subscribe(this.handleResponse);
-    }
+  deleteOwn(): void {
+    this.delete(this.currentUser.Id).subscribe(this.handleResponse);
+  }
 
-    updateOwn(): void {
-        this.update(this.currentUser.Id).subscribe(this.handleResponse);
-    }
+  updateAnother(): void {
+    this.update(this.anotherUserId).subscribe(this.handleResponse);
+  }
 
-    /* Private methods */
+  updateNotFound(): void {
+    const url = this.getODataUrl(this.invalidUserId, this.invalidElementCellId);
+    this.httpClient.patch(url, {}).subscribe(this.handleResponse);
+  }
 
-    private create(userId: number): Observable<any> {
+  updateOwn(): void {
+    this.update(this.currentUser.Id).subscribe(this.handleResponse);
+  }
 
-        return this.getElementCell(userId).mergeMap((elementCell) => {
+  /* Private methods */
 
-            var userElementCell = {
-                UserId: userId,
-                ElementCellId: elementCell.Id,
-                DecimalValue: new Date().getMilliseconds().toString()
-            };
+  private create(userId: number): Observable<any> {
 
-            var url = `${AppSettings.serviceODataUrl}/UserElementCell`;
+    return this.getElementCell(userId).pipe(mergeMap((elementCell) => {
 
-            return this.httpClient.post(url, userElementCell);
-        });
-    }
+      var userElementCell = {
+        UserId: userId,
+        ElementCellId: elementCell.Id,
+        DecimalValue: new Date().getMilliseconds().toString()
+      };
 
-    private delete(userId: number): Observable<any> {
+      var url = `${AppSettings.serviceODataUrl}/UserElementCell`;
 
-        return this.getElementCell(userId, true).mergeMap((elementCell) => {
+      return this.httpClient.post(url, userElementCell);
+    }));
+  }
 
-            const url = this.getODataUrl(userId, elementCell.Id);
+  private delete(userId: number): Observable<any> {
 
-            return this.httpClient.delete(url);
-        });
-    }
+    return this.getElementCell(userId, true).pipe(mergeMap((elementCell) => {
 
-    private getODataUrl(userId: number, elementCellId: number) {
-        return `${AppSettings.serviceODataUrl}/UserElementCell(userId=${userId},elementCellId=${elementCellId})`;
-    }
+      const url = this.getODataUrl(userId, elementCell.Id);
 
-    private getElementCell(userId: number, checkHasUserElementCell: boolean = false): Observable<ElementCell> {
+      return this.httpClient.delete(url);
+    }));
+  }
 
-        const url = `${AppSettings.serviceODataUrl}/Project?$expand=ElementSet/ElementFieldSet/ElementCellSet/UserElementCellSet&$filter=UserId eq ${userId}`;
+  private getODataUrl(userId: number, elementCellId: number) {
+    return `${AppSettings.serviceODataUrl}/UserElementCell(userId=${userId},elementCellId=${elementCellId})`;
+  }
 
-        return this.httpClient.get(url)
-            .map((response) => {
+  private getElementCell(userId: number, checkHasUserElementCell: boolean = false): Observable<ElementCell> {
 
-                var results = (response as any).value as Project[];
+    const url = `${AppSettings.serviceODataUrl}/Project?$expand=ElementSet/ElementFieldSet/ElementCellSet/UserElementCellSet&$filter=UserId eq ${userId}`;
 
-                var project = results[0];
+    return this.httpClient.get(url).pipe(
+      map((response) => {
 
-                if (!project) {
-                    throw new Error(`Create a new project first - user: ${userId}`);
-                }
+        var results = (response as any).value as Project[];
 
-                var element = project.ElementSet[0];
+        var project = results[0];
 
-                if (!element) {
-                    throw new Error(`Create a new element first - user: ${userId} - project: ${project.Id}`);
-                }
+        if (!project) {
+          throw new Error(`Create a new project first - user: ${userId}`);
+        }
 
-                var elementField = element.ElementFieldSet[0];
+        var element = project.ElementSet[0];
 
-                if (!elementField) {
-                    throw new Error(`Create a new field first - user: ${userId} - project: ${project.Id} - element: ${element.Id}`);
-                }
+        if (!element) {
+          throw new Error(`Create a new element first - user: ${userId} - project: ${project.Id}`);
+        }
 
-                var elementCell = elementField.ElementCellSet[0];
+        var elementField = element.ElementFieldSet[0];
 
-                if (!elementCell) {
-                    throw new Error(`Create a new cell first - user: ${userId} - project: ${project.Id} - element: ${element.Id} - element field: ${elementField.Id}`);
-                }
+        if (!elementField) {
+          throw new Error(`Create a new field first - user: ${userId} - project: ${project.Id} - element: ${element.Id}`);
+        }
 
-                if (checkHasUserElementCell && !elementCell.UserElementCellSet[0]) {
-                    throw new Error(`Create a new user field first - user: ${userId} - project: ${project.Id} - element: ${element.Id} - field: ${elementField.Id} - element cell: ${elementCell.Id}`);
-                }
+        var elementCell = elementField.ElementCellSet[0];
 
-                return elementCell;
-            });
-    }
+        if (!elementCell) {
+          throw new Error(`Create a new cell first - user: ${userId} - project: ${project.Id} - element: ${element.Id} - element field: ${elementField.Id}`);
+        }
 
-    private handleResponse(response) {
-        console.log("response", response);
-    }
+        if (checkHasUserElementCell && !elementCell.UserElementCellSet[0]) {
+          throw new Error(`Create a new user field first - user: ${userId} - project: ${project.Id} - element: ${element.Id} - field: ${elementField.Id} - element cell: ${elementCell.Id}`);
+        }
 
-    private update(userId: number): Observable<any> {
+        return elementCell;
+      }));
+  }
 
-        return this.getElementCell(userId, true).mergeMap((elementCell) => {
+  private handleResponse(response) {
+    console.log("response", response);
+  }
 
-            var userElementCell = elementCell.UserElementCellSet[0];
+  private update(userId: number): Observable<any> {
 
-            var body = {
-                DecimalValue: new Date().getMilliseconds().toString(),
-                RowVersion: userElementCell.RowVersion
-            };
+    return this.getElementCell(userId, true).pipe(mergeMap((elementCell) => {
 
-            const url = this.getODataUrl(userId, elementCell.Id);
+      var userElementCell = elementCell.UserElementCellSet[0];
 
-            return this.httpClient.patch(url, body);
-        });
-    }
+      var body = {
+        DecimalValue: new Date().getMilliseconds().toString(),
+        RowVersion: userElementCell.RowVersion
+      };
+
+      const url = this.getODataUrl(userId, elementCell.Id);
+
+      return this.httpClient.patch(url, body);
+    }));
+  }
 }

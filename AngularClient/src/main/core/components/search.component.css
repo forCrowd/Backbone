@@ -1,20 +1,20 @@
 .searchInput {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .mat-cell {
-    padding: 4px 0;
+  padding: 4px 0;
 }
 
 .mat-table {
-    max-height: 500px;
+  max-height: 500px;
 }
 
 .noResults {
-    display: flex;
-    justify-content: center;
-    -o-justify-content: center;
-    -webkit-justify-content: center;
-    padding: 2em;
+  display: flex;
+  justify-content: center;
+  -o-justify-content: center;
+  -webkit-justify-content: center;
+  padding: 2em;
 }

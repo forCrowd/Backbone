@@ -1,90 +1,91 @@
-﻿import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { MatTableDataSource } from "@angular/material";
+import { finalize } from "rxjs/operators";
 
 import { Element } from "../core/entities/element";
 import { Project } from "../core/entities/project";
 import { ProjectService } from "../core/core.module";
 
 @Component({
-    selector: "element-manager",
-    templateUrl: "element-manager.component.html",
-    styleUrls: ["element-manager.component.css"]
+  selector: "element-manager",
+  templateUrl: "element-manager.component.html",
+  styleUrls: ["element-manager.component.css"]
 })
 export class ElementManagerComponent implements OnInit {
 
-    @Input() project: Project = null;
-    @Output() isEditingChanged = new EventEmitter<boolean>();
+  @Input() project: Project = null;
+  @Output() isEditingChanged = new EventEmitter<boolean>();
 
-    elementDataSource = new MatTableDataSource<Element>([]);
-    elementDisplayedColumns = ["name", "createdOn", "functions"];
+  elementDataSource = new MatTableDataSource<Element>([]);
+  elementDisplayedColumns = ["name", "createdOn", "functions"];
 
-    get selectedElement(): Element {
-        return this.fields.selectedElement;
+  get selectedElement(): Element {
+    return this.fields.selectedElement;
+  }
+  set selectedElement(value: Element) {
+    if (this.fields.selectedElement !== value) {
+      this.fields.selectedElement = value;
+
+      this.isEditingChanged.emit(value ? true : false);
     }
-    set selectedElement(value: Element) {
-        if (this.fields.selectedElement !== value) {
-            this.fields.selectedElement = value;
+  }
 
-            this.isEditingChanged.emit(value ? true : false);
-        }
-    }
-
-    private fields: {
-        project: Project,
-        selectedElement: Element,
-    } = {
-        project: null,
-        selectedElement: null,
-    }
-
-    get isBusy(): boolean {
-        return this.projectService.isBusy;
+  private fields: {
+    project: Project,
+    selectedElement: Element,
+  } = {
+      project: null,
+      selectedElement: null,
     }
 
-    constructor(private projectService: ProjectService) { }
+  get isBusy(): boolean {
+    return this.projectService.isBusy;
+  }
 
-    addElement(): void {
-        this.selectedElement = this.projectService.createElement({
-            Project: this.project,
-            Name: "New element"
-        }) as Element;
-    }
+  constructor(private projectService: ProjectService) { }
 
-    cancelElement(): void {
-        this.projectService.rejectChangesElement(this.selectedElement);
-        this.selectedElement = null;
-    }
+  addElement(): void {
+    this.selectedElement = this.projectService.createElement({
+      Project: this.project,
+      Name: "New element"
+    }) as Element;
+  }
 
-    editElement(element: Element): void {
-        this.selectedElement = element;
-    }
+  cancelElement(): void {
+    this.projectService.rejectChangesElement(this.selectedElement);
+    this.selectedElement = null;
+  }
 
-    ngOnInit(): void {
+  editElement(element: Element): void {
+    this.selectedElement = element;
+  }
+
+  ngOnInit(): void {
+    this.elementDataSource.data = this.project.ElementSet;
+  }
+
+  removeElement(element: Element): void {
+
+    this.elementDataSource.data = null;
+    this.projectService.removeElement(element);
+
+    this.projectService.saveChanges().pipe(
+      finalize(() => {
         this.elementDataSource.data = this.project.ElementSet;
-    }
+      })).subscribe();
+  }
 
-    removeElement(element: Element): void {
+  saveElement(): void {
+    this.projectService.saveChanges().subscribe(() => {
+      this.selectedElement = null;
+    });
+  }
 
-        this.elementDataSource.data = null;
-        this.projectService.removeElement(element);
-        
-        this.projectService.saveChanges()
-            .finally(() => {
-                this.elementDataSource.data = this.project.ElementSet;
-            }).subscribe();
-    }
+  submitDisabled(): boolean {
+    return this.isBusy || this.selectedElement.entityAspect.getValidationErrors().length > 0;
+  }
 
-    saveElement(): void {
-        this.projectService.saveChanges().subscribe(() => {
-            this.selectedElement = null;
-        });
-    }
-
-    submitDisabled(): boolean {
-        return this.isBusy || this.selectedElement.entityAspect.getValidationErrors().length > 0;
-    }
-
-    trackBy(index: number, element: Element) {
-        return element.Id;
-    }
+  trackBy(index: number, element: Element) {
+    return element.Id;
+  }
 }

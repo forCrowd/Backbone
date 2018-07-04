@@ -21,33 +21,33 @@ import { ProjectTesterComponent } from "./project-tester.component";
 import { WebApiComponent } from "./web-api.component";
 
 @NgModule({
-    bootstrap: [
-        AppComponent
-    ],
-    declarations: [
-        AppComponent,
-        MiscComponent,
-        NavigationComponent,
-        ODataComponent,
-        ODataElementComponent,
-        ODataElementCellComponent,
-        ODataElementFieldComponent,
-        ODataElementItemComponent,
-        ODataProjectComponent,
-        ODataUserElementCellComponent,
-        ODataUserElementFieldComponent,
-        ODataUserComponent,
-        ProjectTesterComponent,
-        WebApiComponent
-    ],
-    imports: [
-        SharedModule,
+  bootstrap: [
+    AppComponent
+  ],
+  declarations: [
+    AppComponent,
+    MiscComponent,
+    NavigationComponent,
+    ODataComponent,
+    ODataElementComponent,
+    ODataElementCellComponent,
+    ODataElementFieldComponent,
+    ODataElementItemComponent,
+    ODataProjectComponent,
+    ODataUserElementCellComponent,
+    ODataUserElementFieldComponent,
+    ODataUserComponent,
+    ProjectTesterComponent,
+    WebApiComponent
+  ],
+  imports: [
+    SharedModule,
 
-        AppRouterModule, // Routes (must be before Core, to set default route!)
+    AppRouterModule, // Routes (must be before Core, to set default route!)
 
-        CoreModule,
+    CoreModule,
 
-        AdminModule
-    ]
+    AdminModule
+  ]
 })
 export class AppModule { }

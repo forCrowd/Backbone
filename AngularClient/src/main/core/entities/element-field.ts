@@ -1,4 +1,4 @@
-﻿import { Subject } from "rxjs";
+import { Subject } from "rxjs";
 
 import { EntityBase } from "./entity-base";
 import { Element } from "./element";
@@ -7,85 +7,85 @@ import { UserElementField } from "./user-element-field";
 
 export enum ElementFieldDataType {
 
-    // A field that holds string value.
-    // Use StringValue property to set its value on ElementItem level.
-    String = 1,
+  // A field that holds string value.
+  // Use StringValue property to set its value on ElementItem level.
+  String = 1,
 
-    // A field that holds decimal value.
-    // Use DecimalValue property to set its value on ElementItem level.
-    Decimal = 4,
+  // A field that holds decimal value.
+  // Use DecimalValue property to set its value on ElementItem level.
+  Decimal = 4,
 
-    // A field that holds another defined Element object within the project.
-    // Use SelectedElementItem property to set its value on ElementItem level.
-    Element = 6,
+  // A field that holds another defined Element object within the project.
+  // Use SelectedElementItem property to set its value on ElementItem level.
+  Element = 6,
 }
 
 export class ElementField extends EntityBase {
 
-    // Server-side
-    Id = 0;
-    Element: Element;
-    DataType = ElementFieldDataType.String;
-    SelectedElement: Element;
-    UseFixedValue = false;
-    RatingEnabled = false;
-    SortOrder = 0;
-    RatingTotal = 0;
-    RatingCount = 0;
-    ElementCellSet: ElementCell[];
-    UserElementFieldSet: UserElementField[];
+  // Server-side
+  Id = 0;
+  Element: Element;
+  DataType = ElementFieldDataType.String;
+  SelectedElement: Element;
+  UseFixedValue = false;
+  RatingEnabled = false;
+  SortOrder = 0;
+  RatingTotal = 0;
+  RatingCount = 0;
+  ElementCellSet: ElementCell[];
+  UserElementFieldSet: UserElementField[];
 
-    get Name(): string {
-        return this.fields.name;
-    }
-    set Name(value: string) {
-        this.fields.name = value.trim();
-    }
+  get Name(): string {
+    return this.fields.name;
+  }
+  set Name(value: string) {
+    this.fields.name = value.trim();
+  }
 
-    // Client-side
-    get DataTypeText(): string {
+  // Client-side
+  get DataTypeText(): string {
 
-        let text = ElementFieldDataType[this.DataType];
+    let text = ElementFieldDataType[this.DataType];
 
-        if (this.DataType === ElementFieldDataType.Element && this.SelectedElement) {
-            text += ` - ${this.SelectedElement.Name}`;
-        }
-
-        return text;
+    if (this.DataType === ElementFieldDataType.Element && this.SelectedElement) {
+      text += ` - ${this.SelectedElement.Name}`;
     }
 
-    otherUsersRatingTotal = 0;
-    otherUsersRatingCount = 0;
+    return text;
+  }
 
-    private fields: {
-        name: string,
-    } = {
-        name: "",
+  otherUsersRatingTotal = 0;
+  otherUsersRatingCount = 0;
+
+  private fields: {
+    name: string,
+  } = {
+      name: "",
     };
 
-    initialize(): void {
-        if (this.initialized) return;
+  initialize(): void {
+    if (this.initialized) return;
 
-        super.initialize();
+    super.initialize();
 
-        // Cells
-        this.ElementCellSet.forEach(cell => {
-            cell.initialize();
-        });
+    // Cells
+    this.ElementCellSet.forEach(cell => {
+      cell.initialize();
+    });
 
-        // Other users'
-        this.otherUsersRatingTotal = this.RatingTotal;
-        this.otherUsersRatingCount = this.RatingCount;
+    // Other users'
+    this.otherUsersRatingTotal = this.RatingTotal;
+    this.otherUsersRatingCount = this.RatingCount;
 
-        // Exclude current user's
-        if (this.UserElementFieldSet[0]) {
-            this.otherUsersRatingTotal -= this.UserElementFieldSet[0].Rating;
-            this.otherUsersRatingCount -= 1;
-        }
-
-        // User fields
-        this.UserElementFieldSet.forEach(userField => {
-            userField.initialize();
-        });
+    // Exclude current user's
+    if (this.UserElementFieldSet[0]) {
+      this.otherUsersRatingTotal -= this.UserElementFieldSet[0].Rating;
+      this.otherUsersRatingCount -= 1;
     }
+
+    // User fields
+    this.UserElementFieldSet.forEach(userField => {
+      userField.initialize();
+    });
+  }
 }

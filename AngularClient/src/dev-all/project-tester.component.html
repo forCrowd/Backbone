@@ -1,91 +1,91 @@
 <div class="project-tester" *ngIf="project">
 
-    <div class="details">
-        Id: {{ project.Id }} -
-        User: {{ project.User.UserName }} -
-        Name: {{ project.Name }}
-    </div>
+  <div class="details">
+    Id: {{ project.Id }} -
+    User: {{ project.User.UserName }} -
+    Name: {{ project.Name }}
+  </div>
 
-    <div class="lists">
-        <div>
-            <div class="listHeader">Elements</div>
-            <div *ngFor="let element of project.ElementSet" class="listItem">
-                Id: {{ element.Id }}<br />
-                Name: {{ element.Name }}<br />
-            </div>
-        </div>
-        <div>
-            <div class="listHeader">Fields</div>
-            <div *ngFor="let element of project.ElementSet">
-                <div *ngFor="let field of element.ElementFieldSet" class="listItem">
-                    Id: {{ field.Id }}<br />
-                    Element: {{ field.Element.Name }}<br />
-                    Name: {{ field.Name }}<br />
-                    DataType: {{ field.DataType }}<br />
-                    SelectedElement: {{ field.SelectedElement?.Name }}<br />
-                    UseFixedValue: {{ field.UseFixedValue }}<br />
-                    RatingEnabled: {{ field.RatingEnabled }}<br />
-                    SortOrder: {{ field.SortOrder }}<br />
-                    RatingTotal: {{ field.RatingTotal }}<br />
-                    RatingCount: {{ field.RatingCount }}<br />
-                    DataTypeText: {{ field.DataTypeText }}<br />
-                    otherUsersRatingTotal: {{ field.otherUsersRatingTotal }}<br />
-                    otherUsersRatingCount: {{ field.otherUsersRatingCount }}<br />
-                </div>
-            </div>
-        </div>
-        <div>
-            <div class="listHeader">User fields</div>
-            <div *ngFor="let element of project.ElementSet">
-                <div *ngFor="let field of element.ElementFieldSet">
-                    <div *ngFor="let userField of field.UserElementFieldSet" class="listItem">
-                        Id: {{ userField.Id }}<br />
-                        Field: {{ userField.ElementField.Name }}<br />
-                        Rating: {{ userField.Rating }}<br />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div>
-            <div class="listHeader">Items</div>
-            <div *ngFor="let element of project.ElementSet">
-                <div *ngFor="let item of element.ElementItemSet" class="listItem">
-                    Id: {{ item.Id }}<br />
-                    Element: {{ item.Element.Name }}<br />
-                    Name: {{ item.Name }}<br />
-                </div>
-            </div>
-        </div>
-        <div>
-            <div class="listHeader">Cells</div>
-            <div *ngFor="let element of project.ElementSet">
-                <div *ngFor="let field of element.ElementFieldSet">
-                    <div *ngFor="let cell of field.ElementCellSet" class="listItem">
-                        Id: {{ cell.Id }}<br />
-                        Field: {{ cell.ElementField.Name }}<br />
-                        Item: {{ cell.ElementItem.Name }}<br />
-                        StringValue: {{ cell.StringValue }}<br />
-                        DecimalValueTotal: {{ cell.DecimalValueTotal }}<br />
-                        DecimalValueCount: {{ cell.DecimalValueCount }}<br />
-                        SelectedElementItem: {{ cell.SelectedElementItem?.Name }}<br />
-                        otherUsersDecimalValueTotal: {{ cell.otherUsersDecimalValueTotal }}<br />
-                        otherUsersDecimalValueCount: {{ cell.otherUsersDecimalValueCount }}<br />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div>
-            <div class="listHeader">User cells</div>
-            <div *ngFor="let element of project.ElementSet">
-                <div *ngFor="let field of element.ElementFieldSet">
-                    <div *ngFor="let cell of field.ElementCellSet">
-                        <div *ngFor="let userCell of cell.UserElementCellSet" class="listItem">
-                            Cell: {{ userCell.ElementCell.Id }}<br />
-                            DecimalValue: {{ userCell.DecimalValue }}<br />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="lists">
+    <div>
+      <div class="listHeader">Elements</div>
+      <div *ngFor="let element of project.ElementSet" class="listItem">
+        Id: {{ element.Id }}<br />
+        Name: {{ element.Name }}<br />
+      </div>
     </div>
+    <div>
+      <div class="listHeader">Fields</div>
+      <div *ngFor="let element of project.ElementSet">
+        <div *ngFor="let field of element.ElementFieldSet" class="listItem">
+          Id: {{ field.Id }}<br />
+          Element: {{ field.Element.Name }}<br />
+          Name: {{ field.Name }}<br />
+          DataType: {{ field.DataType }}<br />
+          SelectedElement: {{ field.SelectedElement?.Name }}<br />
+          UseFixedValue: {{ field.UseFixedValue }}<br />
+          RatingEnabled: {{ field.RatingEnabled }}<br />
+          SortOrder: {{ field.SortOrder }}<br />
+          RatingTotal: {{ field.RatingTotal }}<br />
+          RatingCount: {{ field.RatingCount }}<br />
+          DataTypeText: {{ field.DataTypeText }}<br />
+          otherUsersRatingTotal: {{ field.otherUsersRatingTotal }}<br />
+          otherUsersRatingCount: {{ field.otherUsersRatingCount }}<br />
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="listHeader">User fields</div>
+      <div *ngFor="let element of project.ElementSet">
+        <div *ngFor="let field of element.ElementFieldSet">
+          <div *ngFor="let userField of field.UserElementFieldSet" class="listItem">
+            Id: {{ userField.Id }}<br />
+            Field: {{ userField.ElementField.Name }}<br />
+            Rating: {{ userField.Rating }}<br />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="listHeader">Items</div>
+      <div *ngFor="let element of project.ElementSet">
+        <div *ngFor="let item of element.ElementItemSet" class="listItem">
+          Id: {{ item.Id }}<br />
+          Element: {{ item.Element.Name }}<br />
+          Name: {{ item.Name }}<br />
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="listHeader">Cells</div>
+      <div *ngFor="let element of project.ElementSet">
+        <div *ngFor="let field of element.ElementFieldSet">
+          <div *ngFor="let cell of field.ElementCellSet" class="listItem">
+            Id: {{ cell.Id }}<br />
+            Field: {{ cell.ElementField.Name }}<br />
+            Item: {{ cell.ElementItem.Name }}<br />
+            StringValue: {{ cell.StringValue }}<br />
+            DecimalValueTotal: {{ cell.DecimalValueTotal }}<br />
+            DecimalValueCount: {{ cell.DecimalValueCount }}<br />
+            SelectedElementItem: {{ cell.SelectedElementItem?.Name }}<br />
+            otherUsersDecimalValueTotal: {{ cell.otherUsersDecimalValueTotal }}<br />
+            otherUsersDecimalValueCount: {{ cell.otherUsersDecimalValueCount }}<br />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="listHeader">User cells</div>
+      <div *ngFor="let element of project.ElementSet">
+        <div *ngFor="let field of element.ElementFieldSet">
+          <div *ngFor="let cell of field.ElementCellSet">
+            <div *ngFor="let userCell of cell.UserElementCellSet" class="listItem">
+              Cell: {{ userCell.ElementCell.Id }}<br />
+              DecimalValue: {{ userCell.DecimalValue }}<br />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

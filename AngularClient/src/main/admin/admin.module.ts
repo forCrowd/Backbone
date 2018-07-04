@@ -1,4 +1,4 @@
-﻿import { NgModule } from "@angular/core";
+import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
 import { SharedModule } from "../shared/shared.module";
@@ -13,25 +13,25 @@ import { AdminService } from "./admin.service";
 
 // Routes
 const adminRoutes: Routes = [
-    { path: "app/admin", component: AdminOverviewComponent, canActivate: [AdminGuard], data: { title: "Admin Overview" } },
-    { path: "app/admin/projects", component: ProjectsComponent, canActivate: [AdminGuard], data: { title: "Projects" } }
+  { path: "app/admin", component: AdminOverviewComponent, canActivate: [AdminGuard], data: { title: "Admin Overview" } },
+  { path: "app/admin/projects", component: ProjectsComponent, canActivate: [AdminGuard], data: { title: "Projects" } }
 ];
 
 @NgModule({
-    declarations: [
-        AdminOverviewComponent,
-        ProjectsComponent
-    ],
-    exports: [
-        RouterModule
-    ],
-    imports: [
-        SharedModule,
-        RouterModule.forChild(adminRoutes),
-    ],
-    providers: [
-        AdminGuard,
-        AdminService
-    ]
+  declarations: [
+    AdminOverviewComponent,
+    ProjectsComponent
+  ],
+  exports: [
+    RouterModule
+  ],
+  imports: [
+    SharedModule,
+    RouterModule.forChild(adminRoutes),
+  ],
+  providers: [
+    AdminGuard,
+    AdminService
+  ]
 })
 export class AdminModule { }

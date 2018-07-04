@@ -1,5 +1,6 @@
-﻿import { Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { mergeMap } from "rxjs/operators";
 
 import { User } from "../core/entities/user";
 import { AuthService, AppEntityManager } from "../core/core.module";
@@ -7,21 +8,21 @@ import { AuthService, AppEntityManager } from "../core/core.module";
 @Injectable()
 export class UserService {
 
-    get currentUser(): User {
-        return this.authService.currentUser;
-    }
+  get currentUser(): User {
+    return this.authService.currentUser;
+  }
 
-    constructor(private appEntityManager: AppEntityManager,
-        private authService: AuthService) {
-    }
+  constructor(private appEntityManager: AppEntityManager,
+    private authService: AuthService) {
+  }
 
-    getUser(userName: string): Observable<User> {
-        return this.authService.getUser(userName);
-    }
+  getUser(userName: string): Observable<User> {
+    return this.authService.getUser(userName);
+  }
 
-    saveChanges(): Observable<void> {
-        return this.authService.ensureAuthenticatedUser().mergeMap(() => {
-            return this.appEntityManager.saveChangesObservable();
-        });
-    }
+  saveChanges(): Observable<void> {
+    return this.authService.ensureAuthenticatedUser().pipe(mergeMap(() => {
+      return this.appEntityManager.saveChangesObservable();
+    }));
+  }
 }

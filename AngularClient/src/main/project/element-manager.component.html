@@ -1,65 +1,65 @@
-﻿<div *ngIf="project">
+<div *ngIf="project">
 
-    <!-- Element list -->
-    <div *ngIf="!selectedElement">
+  <!-- Element list -->
+  <div *ngIf="!selectedElement">
 
-        <div class="g-mt-20">
-            <button mat-raised-button (click)="addElement()" type="button">
-                <i class="fa fa-plus" aria-hidden="true"></i> Create new
-            </button>
+    <div class="g-mt-20">
+      <button mat-raised-button (click)="addElement()" type="button">
+        <i class="fa fa-plus" aria-hidden="true"></i> Create new
+      </button>
+    </div>
+
+    <mat-table #table [dataSource]="elementDataSource" [trackBy]="trackBy" class="g-mt-20">
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Element </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.Name }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="createdOn">
+        <mat-header-cell *matHeaderCellDef> Created On</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.CreatedOn | amTimeAgo }} </mat-cell>
+      </ng-container>
+
+      <!-- Functions -->
+      <ng-container matColumnDef="functions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button mat-raised-button (click)="editElement(element)" [disabled]="isBusy" type="button">
+            <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+          </button>
+          <button mat-raised-button (click)="removeElement(element)" [disabled]="isBusy" type="button">
+            <i class="fa fa-times" aria-hidden="true"></i> Remove
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="elementDisplayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: elementDisplayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+
+  <!-- Element add/edit -->
+  <div *ngIf="selectedElement">
+
+    <form #elementForm="ngForm" autocomplete="off">
+      <div class="g-mt-40">
+        <div [ngClass]="{ 'has-error': selectedElement.entityAspect.getValidationErrors('Name').length > 0 }">
+          <mat-form-field>
+            <input matInput id="Name" name="Name" type="text" [(ngModel)]="selectedElement.Name" placeholder="Name" />
+          </mat-form-field>
         </div>
 
-        <mat-table #table [dataSource]="elementDataSource" [trackBy]="trackBy" class="g-mt-20">
-
-            <ng-container matColumnDef="name">
-                <mat-header-cell *matHeaderCellDef> Element </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{ element.Name }} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="createdOn">
-                <mat-header-cell *matHeaderCellDef> Created On</mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{ element.CreatedOn | amTimeAgo }} </mat-cell>
-            </ng-container>
-
-            <!-- Functions -->
-            <ng-container matColumnDef="functions">
-                <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                <mat-cell *matCellDef="let element">
-                    <button mat-raised-button (click)="editElement(element)" [disabled]="isBusy" type="button">
-                        <i class="fa fa-pencil" aria-hidden="true"></i> Edit
-                    </button>
-                    <button mat-raised-button (click)="removeElement(element)" [disabled]="isBusy" type="button">
-                        <i class="fa fa-times" aria-hidden="true"></i> Remove
-                    </button>
-                </mat-cell>
-            </ng-container>
-
-            <mat-header-row *matHeaderRowDef="elementDisplayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: elementDisplayedColumns;"></mat-row>
-        </mat-table>
-    </div>
-
-    <!-- Element add/edit -->
-    <div *ngIf="selectedElement">
-
-        <form #elementForm="ngForm" autocomplete="off">
-            <div class="g-mt-40">
-                <div [ngClass]="{ 'has-error': selectedElement.entityAspect.getValidationErrors('Name').length > 0 }">
-                    <mat-form-field>
-                        <input matInput id="Name" name="Name" type="text" [(ngModel)]="selectedElement.Name" placeholder="Name" />
-                    </mat-form-field>
-                </div>
-
-                <div class="g-mt-20">
-                    <button mat-raised-button (click)="saveElement()" [disabled]="submitDisabled()" type="button" color="primary">
-                        Save element
-                    </button>
-                    <button mat-raised-button (click)="cancelElement()" [disabled]="isBusy" type="button">
-                        Cancel
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
+        <div class="g-mt-20">
+          <button mat-raised-button (click)="saveElement()" [disabled]="submitDisabled()" type="button" color="primary">
+            Save element
+          </button>
+          <button mat-raised-button (click)="cancelElement()" [disabled]="isBusy" type="button">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 
 </div>
