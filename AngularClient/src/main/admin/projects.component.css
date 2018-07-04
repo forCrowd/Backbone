@@ -2,6 +2,10 @@
   padding: 4px 0;
 }
 
+.mat-row {
+  padding-left: 24px;
+}
+
 .noResults {
   display: flex;
   justify-content: center;

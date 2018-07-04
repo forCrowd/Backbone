@@ -4,6 +4,7 @@
 
 * AngularClient - Package updates
 * AngularClient - source-map to libraries folder
+* AngularClient - Material typography & icon libraries as links
 
 **0.6.6**
 
