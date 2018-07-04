@@ -3,6 +3,7 @@
 **0.6.7**
 
 * AngularClient - Package updates
+* AngularClient - source-map to libraries folder
 
 **0.6.6**
 

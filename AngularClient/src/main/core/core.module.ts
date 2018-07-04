@@ -5,7 +5,6 @@ import { RouterModule, Routes } from "@angular/router";
 import { Angulartics2Module } from "angulartics2";
 import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
 import { BreezeBridgeAngularModule } from "../../libraries/breeze-bridge-angular";
-import "./rxjs-extensions";
 
 // Internal modules
 import { AppHttpClient, AppHttpClientModule } from "./app-http-client/app-http-client.module";
