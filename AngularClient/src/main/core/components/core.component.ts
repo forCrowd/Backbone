@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { MatSnackBar } from "@angular/material";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
-import { Angulartics2GoogleAnalytics } from "angulartics2";
+import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
 import { Subscription } from "rxjs";
 import { mergeMap, map, filter } from "rxjs/operators";
 

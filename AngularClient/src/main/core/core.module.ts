@@ -2,7 +2,8 @@ import { APP_INITIALIZER, ErrorHandler, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
-import { Angulartics2GoogleAnalytics, Angulartics2Module } from "angulartics2";
+import { Angulartics2Module } from "angulartics2";
+import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
 import { BreezeBridgeAngularModule } from "../../libraries/breeze-bridge-angular";
 import "./rxjs-extensions";
 
