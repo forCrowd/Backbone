@@ -1,4 +1,9 @@
 ### Changelog
+
+**0.6.7**
+
+* AngularClient - Package updates
+
 **0.6.6**
 
 * AngularClient - Contributors page - thenoelman
