@@ -16,10 +16,8 @@ An API service for rapid app prototyping
 
 ### Client
 
-* Angular 5.x
+* Angular 6.x
 * TypeScript 2.x
-* Angular Material
-* Angular CLI
 * BreezeJS
 * Karma & Jasmine
 
@@ -38,13 +36,13 @@ Only remark is, configuration files are excluded from deploy operation (**Build 
 When deploying the project, update following configuration files with your own settings and manually copy them to your server:
 * WebApi\Configs\\*.config
 
-To make the application offline during the deployment, you can use `app_offline.htm_`.
+To make the application offline during the deployment, you can use `_app_offline.htm`.
 
 ### Client (AngularClient)
 
 AngularClient is a **Angular CLI** project and you can use its commands.
 
-For deployment, there are three environments defined in `.angular-cli.json` file:
+For deployment, there are three environments defined in `angular.json` file:
 * dev
 * test
 * prod
@@ -55,7 +53,7 @@ You can use **dev** configuration as a base file to create your own **test** and
 
 To prepare a production bundle by generating sourcemap files, run the following on your command console:
 
-    ng build -prod -sm
+    ng build --prod --source-map
 
 For more options, please visit [Angular CLI](https://github.com/angular/angular-cli)
 
@@ -66,6 +64,7 @@ We welcome all contributors and all kinds of contributions.
 For more about our community rules: [Code of Conduct](/CODE_OF_CONDUCT.md)
 
 ### First Mission: Contributors Page
+
 We created an experimental attempt to help you to get familiar with our project and make your first pull request.
 
 Follow this document for detailed instructions: [First Mission](https://github.com/forCrowd/Backbone/wiki/First-Mission)

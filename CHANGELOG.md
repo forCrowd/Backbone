@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.6.8**
+
+* General - Documentation updates
+
 **0.6.7**
 
 * AngularClient - Package updates
