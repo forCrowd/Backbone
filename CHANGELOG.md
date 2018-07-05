@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.6.8**
+
+* AngularClient - mat-table fix
+* General - Documentation updates
+
 **0.6.7**
 
 * AngularClient - Package updates
