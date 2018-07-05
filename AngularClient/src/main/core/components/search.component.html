@@ -51,9 +51,11 @@
       <ng-container matColumnDef="functions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let project">
-          <a mat-raised-button routerLink="/projects/{{ project.Id }}">
-            <i class="fa fa-pencil" aria-hidden="true"></i> View
-          </a>
+          <div class="pull-right">
+            <a mat-raised-button routerLink="/projects/{{ project.Id }}">
+              <i class="fa fa-pencil" aria-hidden="true"></i> View
+            </a>
+          </div>
         </td>
       </ng-container>
 

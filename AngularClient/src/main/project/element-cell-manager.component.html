@@ -47,9 +47,11 @@
       <ng-container matColumnDef="functions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let cell">
-          <button mat-raised-button (click)="editElementCell(cell)" type="button">
-            <i class="fa fa-pencil" aria-hidden="true"></i> Edit
-          </button>
+          <div class="pull-right">
+            <button mat-raised-button (click)="editElementCell(cell)" type="button">
+              <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+            </button>
+          </div>
         </td>
       </ng-container>
 
