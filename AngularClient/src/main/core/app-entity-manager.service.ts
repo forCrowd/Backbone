@@ -192,7 +192,7 @@ export class AppEntityManager extends EntityManager {
 
     this.isBusy = true;
 
-    var promise: any = null;
+    var promise: Promise<SaveResult> = null;
     var count = this.getChanges().length;
     const saveBatches = this.prepareSaveBatches();
 

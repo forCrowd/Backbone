@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.6.9**
+
+* AngularClient - Profile - "Project list disappears on delete" fix
+
 **0.6.8**
 
 * AngularClient - mat-table fix

@@ -2,12 +2,12 @@
   "name": "forcrowd-backbone-angularclient",
   "description": "An API service for rapid app prototyping",
   "author": "Stichting forCrowd",
-  "version": "0.6.8",
+  "version": "0.6.9",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --source-map",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

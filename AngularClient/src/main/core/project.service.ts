@@ -315,8 +315,6 @@ export class ProjectService {
 
   removeElementField(elementField: ElementField) {
 
-    const element = elementField.Element;
-
     const elementCellSet = elementField.ElementCellSet.slice();
     elementCellSet.forEach(elementCell => {
       this.removeElementCell(elementCell);
@@ -331,8 +329,6 @@ export class ProjectService {
   }
 
   removeElementItem(elementItem: ElementItem) {
-
-    const element = elementItem.Element;
 
     const elementCellSet = elementItem.ElementCellSet.slice();
     elementCellSet.forEach(elementCell => {
@@ -361,7 +357,7 @@ export class ProjectService {
       }),
       finalize(() => {
         this.isBusyLocal = false;
-      }), );
+      }));
   }
 
   // Todo Improve these later on (merge into saveChanges() itself?) / coni2k - 19 Feb. '18
