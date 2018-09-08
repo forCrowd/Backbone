@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { mergeMap } from "rxjs/operators";
+import { mergeMap, finalize } from "rxjs/operators";
 
 import { User } from "../core/entities/user";
 import { AuthService, AppEntityManager } from "../core/core.module";
@@ -12,6 +12,12 @@ export class UserService {
     return this.authService.currentUser;
   }
 
+  get isBusy(): boolean {
+    return this.appEntityManager.isBusy || this.authService.isBusy || this.isBusyLocal;
+  }
+
+  private isBusyLocal: boolean = false; // Use this flag for functions that contain multiple http requests (e.g. saveChanges())
+
   constructor(private appEntityManager: AppEntityManager,
     private authService: AuthService) {
   }
@@ -21,8 +27,13 @@ export class UserService {
   }
 
   saveChanges(): Observable<void> {
-    return this.authService.ensureAuthenticatedUser().pipe(mergeMap(() => {
-      return this.appEntityManager.saveChangesObservable();
-    }));
+    this.isBusyLocal = true;
+    return this.authService.ensureAuthenticatedUser().pipe(
+      mergeMap(() => {
+          return this.appEntityManager.saveChangesObservable();
+      }),
+      finalize(() => {
+        this.isBusyLocal = false;
+      }));
   }
 }

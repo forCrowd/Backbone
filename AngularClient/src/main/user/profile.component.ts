@@ -20,6 +20,10 @@ export class ProfileComponent implements OnInit {
   dataSource = new MatTableDataSource<Project>([]);
   user: User = null;
 
+  get isBusy(): boolean {
+    return this.projectService.isBusy || this.userService.isBusy;
+  };
+
   constructor(private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
     private projectService: ProjectService,
@@ -35,7 +39,6 @@ export class ProfileComponent implements OnInit {
 
       if (!confirmed) return;
 
-      this.dataSource.data = [];
       this.projectService.removeProject(project);
       this.userService.saveChanges().pipe(
         finalize(() => {

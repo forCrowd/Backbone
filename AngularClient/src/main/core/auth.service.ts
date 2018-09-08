@@ -133,7 +133,7 @@ export class AuthService {
         } else {
           throw error;
         }
-      }), );
+      }));
   }
 
   login(username: string, password: string, rememberMe: boolean, singleUseToken?: string): Observable<void> {
