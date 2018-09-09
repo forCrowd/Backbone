@@ -15,9 +15,9 @@ namespace forCrowd.Backbone.Framework
             var nameIdentifierClaim = new Claim(ClaimTypes.NameIdentifier, userId.ToString(), ClaimValueTypes.Integer32);
             var roleClaim = new Claim(ClaimTypes.Role, role);
             var claims = new HashSet<Claim> { nameIdentifierClaim, roleClaim };
-            var sampleIdentity = new ClaimsIdentity(claims, AUTHENTICATIONTYPE);
-            var samplePrincipal = new ClaimsPrincipal(sampleIdentity);
-            Thread.CurrentPrincipal = samplePrincipal;
+            var identity = new ClaimsIdentity(claims, AUTHENTICATIONTYPE);
+            var principal = new ClaimsPrincipal(identity);
+            Thread.CurrentPrincipal = principal;
         }
 
         public static void ValidateCurrentUser()
