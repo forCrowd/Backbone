@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.6.10**
+
+* Framework - Minor
+
 **0.6.9**
 
 * AngularClient - Profile - "Project list disappears on delete" fix
