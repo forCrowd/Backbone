@@ -41,5 +41,34 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
         public ICollection<ElementField> ParentFieldSet { get; set; }
 
         string name;
+
+        public ElementField AddField(string name, ElementFieldDataType fieldType, bool useFixedValue = true)
+        {
+            // TODO Validation - Same name?
+            var sortOrder = Convert.ToByte(ElementFieldSet.Count + 1);
+            var field = new ElementField
+            {
+                Element = this,
+                Name = name,
+                DataType = (byte)fieldType,
+                SortOrder = sortOrder,
+                UseFixedValue = useFixedValue
+            };
+
+            ElementFieldSet.Add(field);
+            return field;
+        }
+
+        public ElementItem AddItem(string name)
+        {
+            // TODO Validation - Same name?
+            var item = new ElementItem
+            {
+                Element = this,
+                Name = name
+            };
+            ElementItemSet.Add(item);
+            return item;
+        }
     }
 }

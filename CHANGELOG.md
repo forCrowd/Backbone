@@ -2,6 +2,7 @@
 
 **0.6.10**
 
+* Wealth fixes
 * Framework - Minor
 
 **0.6.9**
