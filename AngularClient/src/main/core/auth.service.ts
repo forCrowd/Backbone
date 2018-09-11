@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { EntityQuery, EntityState, MergeStrategy } from "../../libraries/breeze-client";
+import { EntityQuery, EntityState, MergeStrategy } from "breeze-client";
 import { throwError as observableThrowError, of as observableOf, Observable, Subject } from "rxjs";
 import { catchError, mergeMap, map } from "rxjs/operators";
 

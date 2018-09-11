@@ -2,7 +2,8 @@
 
 **0.6.10**
 
-* Wealth fixes
+* Wealth Economy project fixes
+* Breeze fix moved to "breeze-client-odata-fix.ts" file
 * Framework - Minor
 
 **0.6.9**
