@@ -4,7 +4,8 @@
 
 * Wealth Economy project fixes
 * Breeze fix moved to "breeze-client-odata-fix.ts" file
-* Framework - Minor
+* AngularClient - Package updates
+* Refactoring and minor updates
 
 **0.6.9**
 

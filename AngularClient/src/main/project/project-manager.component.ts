@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { MatTableDataSource } from "@angular/material";
 
 import { Project } from "../core/entities/project";
 import { User } from "../core/entities/user";

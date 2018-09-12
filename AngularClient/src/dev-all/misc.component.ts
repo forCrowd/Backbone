@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { timer as observableTimer, Observable } from "rxjs";
+import { timer as observableTimer } from "rxjs";
 
 @Component({
   selector: "misc",

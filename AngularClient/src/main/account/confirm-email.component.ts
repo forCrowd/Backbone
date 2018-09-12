@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { timer as observableTimer, Observable } from "rxjs";
+import { timer as observableTimer } from "rxjs";
 
 import { AccountService } from "./account.service";
 import { NotificationService } from "../core/core.module";
