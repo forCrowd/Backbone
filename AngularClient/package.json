@@ -29,7 +29,7 @@
     "@angular/router": "6.0.7",
     "angular2-moment": "1.9.0",
     "angulartics2": "6.2.0",
-    "breeze-bridge-angular": "4.0.2",
+    "breeze-bridge2-angular": "1.1.0",
     "breeze-client": "1.7.1",
     "core-js": "2.5.7",
     "datajs": "1.0.3",

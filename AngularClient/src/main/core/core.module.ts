@@ -7,8 +7,7 @@ import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
 
 // Breeze
 import "./breeze-client-odata-fix";
-import { HttpModule } from "@angular/http"; // Required for breeze-bridge-angular
-import { BreezeBridgeAngularModule } from "breeze-bridge-angular";
+import { BreezeBridgeHttpClientModule } from "breeze-bridge2-angular";
 
 // Internal modules
 import { AppHttpClient, AppHttpClientModule } from "./app-http-client/app-http-client.module";
@@ -81,10 +80,7 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
     AppHttpClientModule,
     RouterModule.forRoot(coreRoutes),
     Angulartics2Module.forRoot([Angulartics2GoogleAnalytics]),
-
-    // Breeze
-    HttpModule,
-    BreezeBridgeAngularModule
+    BreezeBridgeHttpClientModule
   ],
   providers: [
     // Application initializer

@@ -7,7 +7,7 @@ import {
   ExecuteQuerySuccessCallback, FetchStrategy, MergeStrategySymbol, QueryResult, SaveChangesErrorCallback, SaveChangesSuccessCallback,
   SaveOptions, SaveResult
 } from "breeze-client";
-import { BreezeBridgeAngularModule } from "breeze-bridge-angular";
+import { BreezeBridgeHttpClientModule } from "breeze-bridge2-angular";
 import "datajs";
 
 import { AppSettings } from "../../app-settings/app-settings";
@@ -39,7 +39,7 @@ export class AppEntityManager extends EntityManager {
   metadata: Object = null;
   queryCache: string[] = [];
 
-  constructor(private breezeBridgeAngularModule: BreezeBridgeAngularModule, private notificationService: NotificationService, errorHandler: ErrorHandler) {
+  constructor(private breezeBridgeAngularModule: BreezeBridgeHttpClientModule, private notificationService: NotificationService, errorHandler: ErrorHandler) {
 
     super({
       serviceName: AppSettings.serviceODataUrl
