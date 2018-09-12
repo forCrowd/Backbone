@@ -27,7 +27,7 @@
     "@angular/platform-browser-dynamic": "6.1.7",
     "@angular/router": "6.1.7",
     "angular2-moment": "1.9.0",
-    "angulartics2": "6.2.0",
+    "angulartics2": "6.3.0",
     "breeze-bridge2-angular": "1.1.0",
     "breeze-client": "1.7.1",
     "core-js": "2.5.7",
