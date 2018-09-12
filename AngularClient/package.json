@@ -38,8 +38,8 @@
     "jquery": "3.3.1",
     "moment": "2.22.2",
     "respond.js": "1.4.2",
-    "rxjs": "6.2.1",
-    "rxjs-compat": "^6.0.0-rc.0",
+    "rxjs": "6.3.2",
+    "rxjs-compat": "6.3.2",
     "source-map": "0.7.3",
     "web-animations-js": "2.3.1",
     "zone.js": "0.8.26"
