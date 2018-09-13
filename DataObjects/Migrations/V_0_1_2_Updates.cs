@@ -15,36 +15,49 @@ namespace forCrowd.Backbone.DataObjects.Migrations
             // Create roles
             CreateRoles(context);
 
-            // Create admin user
-            CreateAdminUser(context);
+            // Create initial users
+            CreateUser(context, "admin", "admin.backbone@forcrowd.org", "Administrator");
+            CreateUser(context, "sample", "sample.backbone@forcrowd.org", "Regular");
 
-            // Create sample user
-            CreateSampleUser(context);
+            // Create related projects
+            CreateWealthEconomy(context);
         }
 
-        private static void CreateAdminUser(BackboneContext context)
+        private static void CreateWealthEconomy(BackboneContext context)
         {
-            // Manager & store
-            var userStore = new AppUserStore(context);
-            var userManager = new UserManager<User, int>(userStore);
+            // Create Wealth Economy Admin user
+            var wealthAdmin = CreateUser(context, "wealthAdmin", "admin.wealth@forcrowd.org", "Regular");
 
-            // Admin user
-            var adminUserName = "admin";
-            var adminEmail = "admin.backbone@forcrowd.org";
-            var adminUser = new User(adminUserName, adminEmail)
+            // Login as (required in order to save the rest of the items)
+            Security.LoginAs(wealthAdmin.Id, "Regular");
+
+            var projectStore = context.Set<Project>();
+
+            var project = new Project
             {
-                EmailConfirmed = true,
-                EmailConfirmationSentOn = DateTime.UtcNow,
-                HasPassword = true
+                User = wealthAdmin,
+                Name = "Wealth Economy",
+                Origin = AppSettings.DefaultClientOrigin
             };
-            var adminUserPassword = DateTime.Now.ToString("yyyyMMdd");
-            HandleResult(userManager.Create(adminUser, adminUserPassword));
-            context.SaveChanges();
 
-            // Add to "admin" role
-            HandleResult(userManager.AddToRole(adminUser.Id, "Administrator"));
+            // Sample projects
+            CreateBillionDollarQuestion2(project);
+            CreatePriorityIndexSample2(project);
+            CreateKnowledgeIndexSample2(project);
+            CreateKnowledgeIndexSoftwareLicenseSample2(project);
+            CreateAllInOneSample2(project);
+
+            // Set Id fields explicitly, since strangely EF doesn't save them in the order that they've been added to ProjectSet.
+            // And they're referred with these Ids on front-end samples
+            project.Id = 51;
+
+            // Only..
+            projectStore.Add(project);
+
+            // First save
             context.SaveChanges();
         }
+
 
         private static void CreateRoles(BackboneContext context)
         {
@@ -68,38 +81,28 @@ namespace forCrowd.Backbone.DataObjects.Migrations
             context.SaveChanges();
         }
 
-        private static void CreateSampleUser(BackboneContext context)
+        private static User CreateUser(BackboneContext context, string userName, string email, string role)
         {
             // Managers & stores & repositories
             var userStore = new AppUserStore(context);
             var userManager = new UserManager<User, int>(userStore);
 
-            // Sample user
-            var sampleUserName = "sample";
-            var sampleEmail = "sample.backbone@forcrowd.org";
-            var sampleUser = new User(sampleUserName, sampleEmail)
+            // Create user
+            var user = new User(userName, email)
             {
                 EmailConfirmed = true,
                 EmailConfirmationSentOn = DateTime.UtcNow,
                 HasPassword = true
             };
-            var sampleUserPassword = DateTime.Now.ToString("yyyyMMdd");
-
-            HandleResult(userManager.Create(sampleUser, sampleUserPassword));
+            var password = DateTime.Now.ToString("yyyyMMdd");
+            HandleResult(userManager.Create(user, password));
             context.SaveChanges();
 
             // Add to regular role
-            HandleResult(userManager.AddToRole(sampleUser.Id, "Regular"));
+            HandleResult(userManager.AddToRole(user.Id, role));
             context.SaveChanges();
 
-            // Login as (required in order to save the rest of the items)
-            Security.LoginAs(sampleUser.Id, "Regular");
-
-            // First save
-            context.SaveChanges();
-
-            // Create projects
-            CreateWealth(context, sampleUser);
+            return user;
         }
 
         private static void HandleResult(IdentityResult result)
@@ -111,34 +114,6 @@ namespace forCrowd.Backbone.DataObjects.Migrations
             }
         }
 
-        private static void CreateWealth(BackboneContext context, User sampleUser)
-        {
-            var projectStore = context.Set<Project>();
-
-            var project = new Project
-            {
-                User = sampleUser,
-                Name = "Wealth Economy",
-                Origin = "http://localhost:4200"
-            };
-
-            // Sample projects
-            CreateBillionDollarQuestion2(project);
-            CreatePriorityIndexSample2(project);
-            CreateKnowledgeIndexSample2(project);
-            CreateKnowledgeIndexSoftwareLicenseSample2(project);
-            CreateAllInOneSample2(project);
-
-            // Set Id fields explicitly, since strangely EF doesn't save them in the order that they've been added to ProjectSet.
-            // And they're referred with these Ids on front-end samples
-            project.Id = 51;
-
-            // Only..
-            projectStore.Add(project);
-
-            // First save
-            context.SaveChanges();
-        }
 
         private static void CreateBillionDollarQuestion2(Project project)
         {
