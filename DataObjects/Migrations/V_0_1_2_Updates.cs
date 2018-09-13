@@ -58,7 +58,6 @@ namespace forCrowd.Backbone.DataObjects.Migrations
             context.SaveChanges();
         }
 
-
         private static void CreateRoles(BackboneContext context)
         {
             // Manager & store
@@ -113,7 +112,6 @@ namespace forCrowd.Backbone.DataObjects.Migrations
                 throw new Exception(errorMessages);
             }
         }
-
 
         private static void CreateBillionDollarQuestion2(Project project)
         {
@@ -447,4 +445,3 @@ namespace forCrowd.Backbone.DataObjects.Migrations
         }
     }
 }
-
