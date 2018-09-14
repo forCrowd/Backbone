@@ -37,6 +37,12 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
 
         string stringValue;
 
+        public void SetValue(ElementItem value)
+        {
+            SetValueHelper(ElementFieldDataType.Element);
+            SelectedElementItem = value;
+        }
+
         public ElementCell SetValue(string value)
         {
             SetValueHelper(ElementFieldDataType.String);

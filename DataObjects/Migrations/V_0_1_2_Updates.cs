@@ -20,42 +20,17 @@ namespace forCrowd.Backbone.DataObjects.Migrations
             CreateUser(context, "sample", "sample.backbone@forcrowd.org", "Regular");
 
             // Create related projects
-            CreateWealthEconomy(context);
-        }
-
-        private static void CreateWealthEconomy(BackboneContext context)
-        {
             // Create Wealth Economy Admin user
             var wealthAdmin = CreateUser(context, "wealthAdmin", "admin.wealth@forcrowd.org", "Regular");
 
             // Login as (required in order to save the rest of the items)
             Security.LoginAs(wealthAdmin.Id, "Regular");
 
-            var projectStore = context.Set<Project>();
+            // New
+            CreateWealthEconomy(context, wealthAdmin);
 
-            var project = new Project
-            {
-                User = wealthAdmin,
-                Name = "Wealth Economy",
-                Origin = AppSettings.DefaultClientOrigin
-            };
-
-            // Sample projects
-            CreateBillionDollarQuestion2(project);
-            CreatePriorityIndexSample2(project);
-            CreateKnowledgeIndexSample2(project);
-            CreateKnowledgeIndexSoftwareLicenseSample2(project);
-            CreateAllInOneSample2(project);
-
-            // Set Id fields explicitly, since strangely EF doesn't save them in the order that they've been added to ProjectSet.
-            // And they're referred with these Ids on front-end samples
-            project.Id = 51;
-
-            // Only..
-            projectStore.Add(project);
-
-            // First save
-            context.SaveChanges();
+            // Old
+            V_0_80_0_Updates.Apply(context, wealthAdmin);
         }
 
         private static void CreateRoles(BackboneContext context)
@@ -111,6 +86,35 @@ namespace forCrowd.Backbone.DataObjects.Migrations
                 var errorMessages = string.Join(" - ", result.Errors);
                 throw new Exception(errorMessages);
             }
+        }
+
+        private static void CreateWealthEconomy(BackboneContext context, User wealthAdmin)
+        {
+            var projectStore = context.Set<Project>();
+
+            var project = new Project
+            {
+                User = wealthAdmin,
+                Name = "Wealth Economy",
+                Origin = AppSettings.DefaultClientOrigin
+            };
+
+            // Sample projects
+            CreateBillionDollarQuestion2(project);
+            CreatePriorityIndexSample2(project);
+            CreateKnowledgeIndexSample2(project);
+            CreateKnowledgeIndexSoftwareLicenseSample2(project);
+            CreateAllInOneSample2(project);
+
+            // Set Id fields explicitly, since strangely EF doesn't save them in the order that they've been added to ProjectSet.
+            // And they're referred with these Ids on front-end samples
+            project.Id = 51;
+
+            // Only..
+            projectStore.Add(project);
+
+            // First save
+            context.SaveChanges();
         }
 
         private static void CreateBillionDollarQuestion2(Project project)
