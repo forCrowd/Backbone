@@ -1,4 +1,6 @@
-﻿namespace forCrowd.Backbone.WebApi
+﻿using System.Collections.Generic;
+
+namespace forCrowd.Backbone.WebApi
 {
     using forCrowd.Backbone.BusinessObjects.Entities;
     using Microsoft.Owin;
@@ -15,27 +17,23 @@
             {
                 AllowAnyHeader = true,
                 AllowAnyMethod = true,
-                SupportsCredentials = true
+                SupportsCredentials = true,
+                AllowAnyOrigin = false
             };
 
-            // Allowed origins
-            policy.AllowAnyOrigin = false;
-
-            // Default client origin
-            policy.Origins.Add(Framework.AppSettings.DefaultClientOrigin);
+            // Allowed origins: Default client origin and projects' Origin field
+            var allowedOrigin = new List<string> { Framework.AppSettings.DefaultClientOrigin };
 
             using (var db = new BackboneContext())
             {
-                var allowedOrigins = db.Project
+                allowedOrigin.AddRange(db.Project
                     .Select(project => project.Origin)
                     .Distinct()
-                    .ToArray();
-
-                foreach (var allowedDomain in allowedOrigins)
-                {
-                    policy.Origins.Add(allowedDomain);
-                }
+                    .ToArray());
             }
+
+            foreach (var allowedDomain in allowedOrigin.Distinct())
+                policy.Origins.Add(allowedDomain);
 
             return Task.FromResult(policy);
         }
