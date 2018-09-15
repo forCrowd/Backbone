@@ -59,9 +59,9 @@ For more options, please visit [Angular CLI](https://github.com/angular/angular-
 
 ## Contribute
 
-We welcome all contributors and all kinds of contributions.  
+Our project is, without any discrimination, open to anyone who is willing to make a contribution!  
 
-For more about our community rules: [Code of Conduct](/CODE_OF_CONDUCT.md)
+To learn more about our community rules: [Code of Conduct](/CODE_OF_CONDUCT.md)
 
 ### First Mission: Contributors Page
 
@@ -75,6 +75,6 @@ To see the changes in our project: [Changelog](/CHANGELOG.md)
 
 ## License
 
-Backbone is licensed under MIT license.
+Our project is licensed under [MIT license](/LICENSE).
 
-You are free to use, modify and distribute it, even in commercial activities: [MIT license](/LICENSE)
+You are free to use, modify and distribute it, even in commercial activities.
