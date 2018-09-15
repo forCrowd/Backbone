@@ -33,5 +33,12 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
         string name;
         string origin;
         string description;
+
+        public Element AddElement(string name)
+        {
+            var element = new Element(this, name);
+            ElementSet.Add(element);
+            return element;
+        }
     }
 }

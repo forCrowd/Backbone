@@ -1,5 +1,3 @@
-import { Subject } from "rxjs";
-
 import { EntityBase } from "./entity-base";
 import { Element } from "./element";
 import { ElementCell } from "./element-cell";

@@ -1,5 +1,5 @@
-import { NgModule, Injector } from "@angular/core";
-import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule, HttpHandler } from "@angular/common/http";
+import { NgModule } from "@angular/core";
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from "@angular/common/http";
 
 // Interceptors
 import { AppHttpClient } from "./app-http-client.service";

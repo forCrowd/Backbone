@@ -6,11 +6,8 @@ import {
   config, Entity, EntityManager, EntityQuery, EntityState, EntityStateSymbol, EntityType, ExecuteQueryErrorCallback,
   ExecuteQuerySuccessCallback, FetchStrategy, MergeStrategySymbol, QueryResult, SaveChangesErrorCallback, SaveChangesSuccessCallback,
   SaveOptions, SaveResult
-} from "../../libraries/breeze-client";
-import { BreezeBridgeAngularModule } from "../../libraries/breeze-bridge-angular";
-import "../../libraries/breeze-client/breeze.dataService.odata";
-import "../../libraries/breeze-client/breeze.modelLibrary.backingStore";
-import "../../libraries/breeze-client/breeze.uriBuilder.odata";
+} from "breeze-client";
+import { BreezeBridgeHttpClientModule } from "breeze-bridge2-angular";
 import "datajs";
 
 import { AppSettings } from "../../app-settings/app-settings";
@@ -42,7 +39,7 @@ export class AppEntityManager extends EntityManager {
   metadata: Object = null;
   queryCache: string[] = [];
 
-  constructor(private breezeBridgeAngularModule: BreezeBridgeAngularModule, private notificationService: NotificationService, errorHandler: ErrorHandler) {
+  constructor(private breezeBridgeAngularModule: BreezeBridgeHttpClientModule, private notificationService: NotificationService, errorHandler: ErrorHandler) {
 
     super({
       serviceName: AppSettings.serviceODataUrl
@@ -162,7 +159,7 @@ export class AppEntityManager extends EntityManager {
         }
       }),
       catchError((error: any) => this.handleODataErrors(error)),
-      finalize(() => { this.isBusy = false; }),);
+      finalize(() => { this.isBusy = false; }));
   }
 
   getMetadata(): Observable<Object> {
@@ -178,7 +175,7 @@ export class AppEntityManager extends EntityManager {
         return metadata;
       }),
       catchError((error: any) => this.handleODataErrors(error)),
-      finalize(() => { this.isBusy = false; }),);
+      finalize(() => { this.isBusy = false; }));
   }
 
   saveChanges(entities?: Entity[],
@@ -217,7 +214,7 @@ export class AppEntityManager extends EntityManager {
         this.notificationService.notification.next(`Saved ${count} change(s)`);
       }),
       catchError((error: any) => this.handleODataErrors(error)),
-      finalize(() => { this.isBusy = false; }),);
+      finalize(() => { this.isBusy = false; }));
   }
 
   // When an entity gets updated through angular, unlike breeze updates, it doesn't sync RowVersion automatically

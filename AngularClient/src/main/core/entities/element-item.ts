@@ -1,7 +1,6 @@
 import { EntityBase } from "./entity-base";
 import { Element } from "./element";
 import { ElementCell } from "./element-cell";
-import { ElementFieldDataType } from "./element-field";
 
 export class ElementItem extends EntityBase {
 

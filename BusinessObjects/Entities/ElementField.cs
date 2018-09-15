@@ -66,5 +66,36 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
         public ICollection<UserElementField> UserElementFieldSet { get; set; }
 
         string name;
+
+        public void AddUserRating(decimal rating)
+        {
+            // TODO Validation?
+
+            var userRating = new UserElementField
+            {
+                ElementField = this,
+                Rating = rating
+            };
+            UserElementFieldSet.Add(userRating);
+        }
+
+        public ElementField EnableIndex()
+        {
+            if (DataType == (byte)ElementFieldDataType.String
+                || DataType == (byte)ElementFieldDataType.String
+                || DataType == (byte)ElementFieldDataType.String)
+            {
+                throw new System.InvalidOperationException($"Index cannot be enabled for this type: {DataType}");
+            }
+
+            RatingEnabled = true;
+
+            RatingTotal = 50; // Computed field
+            RatingCount = 1; // Computed field
+
+            AddUserRating(50);
+
+            return this;
+        }
     }
 }

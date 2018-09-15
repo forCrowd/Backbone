@@ -1,5 +1,13 @@
 ### Changelog
 
+**0.7.0**
+
+* Wealth Economy project fixes
+* Breeze fix moved to "breeze-client-odata-fix.ts" file
+* WebAPI CorsPolicy AllowedOrigins distinct update
+* AngularClient - Package updates
+* Refactoring and minor updates
+
 **0.6.9**
 
 * AngularClient - Profile - "Project list disappears on delete" fix

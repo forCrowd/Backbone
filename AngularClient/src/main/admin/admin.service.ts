@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { EntityQuery } from "../../libraries/breeze-client";
+import { EntityQuery } from "breeze-client";
 import { Observable } from "rxjs";
 import { finalize, mergeMap, map } from "rxjs/operators";
 

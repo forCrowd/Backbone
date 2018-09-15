@@ -36,5 +36,45 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
         public UserElementCell UserElementCell => UserElementCellSet.SingleOrDefault();
 
         string stringValue;
+
+        public void SetValue(ElementItem value)
+        {
+            SetValueHelper(ElementFieldDataType.Element);
+            SelectedElementItem = value;
+        }
+
+        public ElementCell SetValue(string value)
+        {
+            SetValueHelper(ElementFieldDataType.String);
+            StringValue = value;
+            return this;
+        }
+
+        private void SetValueHelper(ElementFieldDataType valueType)
+        {
+            // Validations
+
+            // a. Field and value types have to match
+            var fieldType = (ElementFieldDataType)ElementField.DataType;
+
+            if (fieldType != valueType)
+            {
+                throw new System.InvalidOperationException(
+                    $"Invalid value, field and value types don't match - Field type: {fieldType}, Value type: {valueType}");
+            }
+
+            // Clear, if FixedValue
+            if (ElementField.UseFixedValue)
+                ClearFixedValues();
+        }
+
+        private void ClearFixedValues()
+        {
+            //StringValue = null;
+            //DecimalValue = null;
+            // TODO Do we need to set both?
+            SelectedElementItemId = null;
+            SelectedElementItem = null;
+        }
     }
 }
