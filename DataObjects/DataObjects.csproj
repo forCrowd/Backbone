@@ -87,7 +87,6 @@
     <Compile Include="Migrations\201802131901573_V_0_4_0.Designer.cs">
       <DependentUpon>201802131901573_V_0_4_0.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\V_0_80_0_Updates.cs" />
     <Compile Include="Migrations\V_0_1_2_Updates.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AppRoleStore.cs" />

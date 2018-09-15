@@ -28,9 +28,6 @@ namespace forCrowd.Backbone.DataObjects.Migrations
 
             // New
             CreateWealthEconomy(context, wealthAdmin);
-
-            // Old
-            V_0_80_0_Updates.Apply(context, wealthAdmin);
         }
 
         private static void CreateRoles(BackboneContext context)
@@ -92,40 +89,45 @@ namespace forCrowd.Backbone.DataObjects.Migrations
         {
             var projectStore = context.Set<Project>();
 
-            var project = new Project
-            {
-                User = wealthAdmin,
-                Name = "Wealth Economy",
-                Origin = AppSettings.DefaultClientOrigin
-            };
-
             // Sample projects
-            CreateBillionDollarQuestion2(project);
-            CreatePriorityIndexSample2(project);
-            CreateKnowledgeIndexSample2(project);
-            CreateKnowledgeIndexSoftwareLicenseSample2(project);
-            CreateAllInOneSample2(project);
+            var billionDollarQuestion = CreateBillionDollarQuestion(wealthAdmin);
+            var priorityIndexSample = CreatePriorityIndexSample(wealthAdmin);
+            var knowledgeIndexSample = CreateKnowledgeIndexSample(wealthAdmin);
+            var knowledgeIndexSoftwareLicenseSample = CreateKnowledgeIndexSoftwareLicenseSample(wealthAdmin);
+            var allInOneSample = CreateAllInOneSample(wealthAdmin);
 
             // Set Id fields explicitly, since strangely EF doesn't save them in the order that they've been added to ProjectSet.
             // And they're referred with these Ids on front-end samples
-            project.Id = 51;
+            billionDollarQuestion.Id = 1;
+            priorityIndexSample.Id = 2;
+            knowledgeIndexSample.Id = 3;
+            knowledgeIndexSoftwareLicenseSample.Id = 4;
+            allInOneSample.Id = 5;
 
-            // Only..
-            projectStore.Add(project);
+            // Insert
+            projectStore.Add(billionDollarQuestion);
+            projectStore.Add(priorityIndexSample);
+            projectStore.Add(knowledgeIndexSample);
+            projectStore.Add(knowledgeIndexSoftwareLicenseSample);
+            projectStore.Add(allInOneSample);
 
             // First save
             context.SaveChanges();
         }
 
-        private static void CreateBillionDollarQuestion2(Project project)
+        private static Project CreateBillionDollarQuestion(User user)
         {
             const int numberOfItems = 5;
 
             // Project
-            var mainElement = CreateDefaultProject2(project: project,
+            var project = CreateDefaultProject(user: user,
+                projectName: "Billion Dollar Question",
                 mainElementName: "Issues",
                 addImportanceIndex: true,
                 numberOfItems: numberOfItems);
+
+            // Main element
+            var mainElement = project.ElementSet.First();
 
             // Fields
             mainElement.ElementFieldSet.Single(item => item.RatingEnabled).Name = "Rating";
@@ -136,14 +138,18 @@ namespace forCrowd.Backbone.DataObjects.Migrations
             mainElement.ElementItemSet.Skip(2).First().Name = "Entertainment: Enhancing video games";
             mainElement.ElementItemSet.Skip(3).First().Name = "Healthcare: Curing cancer";
             mainElement.ElementItemSet.Skip(4).First().Name = "Poverty: Clean water for everyone";
+
+            // Return
+            return project;
         }
 
-        private static void CreatePriorityIndexSample2(Project project)
+        private static Project CreatePriorityIndexSample(User user)
         {
             const int numberOfItems = 4;
 
             // Project
-            var mainElement = CreateDefaultProject2(project: project,
+            var project = CreateDefaultProject(user: user,
+                projectName: "Priority Index Sample",
                 mainElementName: "Organization",
                 addImportanceIndex: false,
                 numberOfItems: numberOfItems);
@@ -162,26 +168,31 @@ namespace forCrowd.Backbone.DataObjects.Migrations
             var healthcareItem = industryElement.AddItem("Healthcare").AddCell(importanceField).ElementItem;
 
             // Main element
+            var mainElement = project.ElementSet.First();
             var industryField = mainElement.AddField("Industry", ElementFieldDataType.Element);
             industryField.SelectedElement = industryElement;
 
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).First().Name = "Cosmetics Organization";
-            mainElement.ElementItemSet.Skip(0).First().AddCell(industryField).SelectedElementItem = cosmeticsItem;
+            mainElement.ElementItemSet.Skip(0).First().AddCell(industryField).SetValue(cosmeticsItem);
             mainElement.ElementItemSet.Skip(1).First().Name = "Education Organization";
-            mainElement.ElementItemSet.Skip(1).First().AddCell(industryField).SelectedElementItem = educationItem;
+            mainElement.ElementItemSet.Skip(1).First().AddCell(industryField).SetValue(educationItem);
             mainElement.ElementItemSet.Skip(2).First().Name = "Entertainment Organization";
-            mainElement.ElementItemSet.Skip(2).First().AddCell(industryField).SelectedElementItem = entertainmentItem;
+            mainElement.ElementItemSet.Skip(2).First().AddCell(industryField).SetValue(entertainmentItem);
             mainElement.ElementItemSet.Skip(3).First().Name = "Healthcare Organization";
-            mainElement.ElementItemSet.Skip(3).First().AddCell(industryField).SelectedElementItem = healthcareItem;
+            mainElement.ElementItemSet.Skip(3).First().AddCell(industryField).SetValue(healthcareItem);
+
+            // Return
+            return project;
         }
 
-        private static void CreateKnowledgeIndexSample2(Project project)
+        private static Project CreateKnowledgeIndexSample(User user)
         {
             const int numberOfItems = 2;
 
             // Project
-            var mainElement = CreateDefaultProject2(project: project,
+            var project = CreateDefaultProject(user: user,
+                projectName: "Knowledge Index Sample",
                 mainElementName: "Organization",
                 addImportanceIndex: false,
                 numberOfItems: numberOfItems);
@@ -213,26 +224,34 @@ namespace forCrowd.Backbone.DataObjects.Migrations
                 .AddCell(licenseRatingField).ElementItem;
 
             // Main element
+            var mainElement = project.ElementSet.First();
             var licenseField = mainElement.AddField("License", ElementFieldDataType.Element);
             licenseField.SelectedElement = licenseElement;
 
             // Items, cell, user cells
             // TODO How about ToList()[0]?
             mainElement.ElementItemSet.Skip(0).First().Name = "Hidden Knowledge";
-            mainElement.ElementItemSet.Skip(0).First().AddCell(licenseField).SelectedElementItem = restrictedLicense;
+            mainElement.ElementItemSet.Skip(0).First().AddCell(licenseField).SetValue(restrictedLicense);
             mainElement.ElementItemSet.Skip(1).First().Name = "True Source";
-            mainElement.ElementItemSet.Skip(1).First().AddCell(licenseField).SelectedElementItem = openSourceLicense;
+            mainElement.ElementItemSet.Skip(1).First().AddCell(licenseField).SetValue(openSourceLicense);
+
+            // Return
+            return project;
         }
 
-        private static void CreateKnowledgeIndexSoftwareLicenseSample2(Project project)
+        private static Project CreateKnowledgeIndexSoftwareLicenseSample(User user)
         {
             const int numberOfItems = 4;
 
             // Project
-            var mainElement = CreateDefaultProject2(project: project,
+            var project = CreateDefaultProject(user: user,
+                projectName: "Knowledge Index - Software Licenses",
                 mainElementName: "License",
                 addImportanceIndex: false,
                 numberOfItems: numberOfItems);
+
+            // Main element
+            var mainElement = project.ElementSet.First();
 
             // Fields
             var importanceField = mainElement.AddField("License Rating", ElementFieldDataType.Decimal, false);
@@ -250,14 +269,18 @@ namespace forCrowd.Backbone.DataObjects.Migrations
 
             mainElement.ElementItemSet.Skip(3).First().Name = "MIT";
             mainElement.ElementItemSet.Skip(3).First().AddCell(importanceField);
+
+            // Return
+            return project;
         }
 
-        private static void CreateAllInOneSample2(Project project)
+        private static Project CreateAllInOneSample(User user)
         {
             const int numberOfItems = 16;
 
             // Project
-            var mainElement = CreateDefaultProject2(project: project,
+            var project = CreateDefaultProject(user: user,
+                projectName: "All in One",
                 mainElementName: "Organization",
                 addImportanceIndex: false,
                 numberOfItems: numberOfItems);
@@ -301,6 +324,9 @@ namespace forCrowd.Backbone.DataObjects.Migrations
                 .AddCell(rightToSellField).SetValue("Yes").ElementItem
                 .AddCell(licenseRatingField).ElementItem;
 
+            // Main element
+            var mainElement = project.ElementSet.First();
+
             var industryField = mainElement.AddField("Industry", ElementFieldDataType.Element);
             industryField.SelectedElement = industryElement;
 
@@ -310,119 +336,98 @@ namespace forCrowd.Backbone.DataObjects.Migrations
             // Items, cell, user cells
             var itemIndex = 0;
             mainElement.ElementItemSet.Skip(itemIndex).First().Name = "Hidden Cosmetics 4Benefit";
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SelectedElementItem =
-                cosmeticsItem;
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SelectedElementItem =
-                restrictedLicense;
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(cosmeticsItem);
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SetValue(restrictedLicense);
 
             itemIndex = 1;
             mainElement.ElementItemSet.Skip(itemIndex).First().Name = "Hidden Cosmetics 4Profit";
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SelectedElementItem =
-                cosmeticsItem;
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SelectedElementItem =
-                restrictedLicense;
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(cosmeticsItem);
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SetValue(restrictedLicense);
 
             itemIndex = 2;
             mainElement.ElementItemSet.Skip(itemIndex).First().Name = "True Cosmetics 4Benefit";
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SelectedElementItem =
-                cosmeticsItem;
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SelectedElementItem =
-                openSourceLicense;
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(cosmeticsItem);
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SetValue(openSourceLicense);
 
             itemIndex = 3;
             mainElement.ElementItemSet.Skip(itemIndex).First().Name = "True Cosmetics 4Profit";
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SelectedElementItem =
-                cosmeticsItem;
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SelectedElementItem =
-                openSourceLicense;
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(cosmeticsItem);
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SetValue(openSourceLicense);
 
             itemIndex = 4;
             mainElement.ElementItemSet.Skip(itemIndex).First().Name = "Hidden Education 4Benefit";
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SelectedElementItem =
-                educationItem;
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SelectedElementItem =
-                restrictedLicense;
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(educationItem);
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SetValue(restrictedLicense);
 
             itemIndex = 5;
             mainElement.ElementItemSet.Skip(itemIndex).First().Name = "Hidden Education 4Profit";
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SelectedElementItem =
-                educationItem;
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SelectedElementItem =
-                restrictedLicense;
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(educationItem);
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SetValue(restrictedLicense);
 
             itemIndex = 6;
             mainElement.ElementItemSet.Skip(itemIndex).First().Name = "True Education 4Benefit";
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SelectedElementItem =
-                educationItem;
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SelectedElementItem =
-                openSourceLicense;
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(educationItem);
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SetValue(openSourceLicense);
 
             itemIndex = 7;
             mainElement.ElementItemSet.Skip(itemIndex).First().Name = "True Education 4Profit";
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SelectedElementItem =
-                educationItem;
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SelectedElementItem =
-                openSourceLicense;
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(educationItem);
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SetValue(openSourceLicense);
 
             itemIndex = 8;
             mainElement.ElementItemSet.Skip(itemIndex).First().Name = "Hidden Entertainment 4Benefit";
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SelectedElementItem =
-                entertainmentItem;
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SelectedElementItem =
-                restrictedLicense;
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(entertainmentItem);
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SetValue(restrictedLicense);
 
             itemIndex = 9;
             mainElement.ElementItemSet.Skip(itemIndex).First().Name = "Hidden Entertainment 4Profit";
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SelectedElementItem =
-                entertainmentItem;
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SelectedElementItem =
-                restrictedLicense;
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(entertainmentItem);
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SetValue(restrictedLicense);
 
             itemIndex = 10;
             mainElement.ElementItemSet.Skip(itemIndex).First().Name = "True Entertainment 4Benefit";
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SelectedElementItem =
-                entertainmentItem;
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SelectedElementItem =
-                openSourceLicense;
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(entertainmentItem);
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SetValue(openSourceLicense);
 
             itemIndex = 11;
             mainElement.ElementItemSet.Skip(itemIndex).First().Name = "True Entertainment 4Profit";
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SelectedElementItem =
-                entertainmentItem;
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SelectedElementItem =
-                openSourceLicense;
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(entertainmentItem);
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SetValue(openSourceLicense);
 
             itemIndex = 12;
             mainElement.ElementItemSet.Skip(itemIndex).First().Name = "Hidden Healthcare 4Benefit";
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SelectedElementItem =
-                healthcareItem;
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SelectedElementItem =
-                restrictedLicense;
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(healthcareItem);
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SetValue(restrictedLicense);
 
             itemIndex = 13;
             mainElement.ElementItemSet.Skip(itemIndex).First().Name = "Hidden Healthcare 4Profit";
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SelectedElementItem =
-                healthcareItem;
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SelectedElementItem =
-                restrictedLicense;
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(healthcareItem);
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SetValue(restrictedLicense);
 
             itemIndex = 14;
             mainElement.ElementItemSet.Skip(itemIndex).First().Name = "True Healthcare 4Benefit";
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SelectedElementItem =
-                healthcareItem;
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SelectedElementItem =
-                openSourceLicense;
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(healthcareItem);
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SetValue(openSourceLicense);
 
             itemIndex = 15;
             mainElement.ElementItemSet.Skip(itemIndex).First().Name = "True Healthcare 4Profit";
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SelectedElementItem =
-                healthcareItem;
-            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SelectedElementItem =
-                openSourceLicense;
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(healthcareItem);
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(licenseField).SetValue(openSourceLicense);
+
+            // Return
+            return project;
         }
 
-        private static Element CreateDefaultProject2(Project project, string mainElementName, bool addImportanceIndex, int numberOfItems)
+        private static Project CreateDefaultProject(User user, string projectName, string mainElementName, bool addImportanceIndex, int numberOfItems)
         {
+            // Project, main element, fields
+            var project = new Project
+            {
+                User = user,
+                Name = projectName,
+                Origin = AppSettings.DefaultClientOrigin
+            };
+
             // Main element
             var element = project.AddElement(mainElementName);
 
@@ -445,7 +450,8 @@ namespace forCrowd.Backbone.DataObjects.Migrations
                     item.AddCell(importanceField);
             }
 
-            return element;
+            // Return
+            return project;
         }
     }
 }
