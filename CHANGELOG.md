@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.7.1**
+
+* DataMigrator - Initial connectionStrings.config file fix
+
 **0.7.0**
 
 * Wealth Economy project fixes

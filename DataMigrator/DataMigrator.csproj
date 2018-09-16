@@ -85,4 +85,13 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="BeforeBuild">
+    <CreateItem Include="$(ProjectDir)Configs\*.config">
+      <Output TaskParameter="Include" ItemName="ExistingFiles" />
+    </CreateItem>
+    <CreateItem Include="$(ProjectDir)Configs\Setup\*.config" Exclude="@(ExistingFiles -> '$(ProjectDir)Configs\Setup\%(FileName)%(Extension)')">
+      <Output TaskParameter="Include" ItemName="NewFiles" />
+    </CreateItem>
+    <Copy SourceFiles="@(NewFiles)" DestinationFolder="$(ProjectDir)Configs" />
+  </Target>  
 </Project>
