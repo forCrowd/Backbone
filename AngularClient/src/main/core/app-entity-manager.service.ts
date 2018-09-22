@@ -39,7 +39,7 @@ export class AppEntityManager extends EntityManager {
   metadata: Object = null;
   queryCache: string[] = [];
 
-  constructor(private breezeBridgeAngularModule: BreezeBridgeHttpClientModule, private notificationService: NotificationService, errorHandler: ErrorHandler) {
+  constructor(private breezeBridgeHttpClientModule: BreezeBridgeHttpClientModule, private notificationService: NotificationService, errorHandler: ErrorHandler) {
 
     super({
       serviceName: AppSettings.serviceODataUrl
@@ -147,7 +147,7 @@ export class AppEntityManager extends EntityManager {
 
     // Execute
     return observableFrom(super.executeQuery(query)).pipe(
-      map((response) => {
+      map(response => {
 
         response.results.forEach((result: EntityBase) => {
           result.initialize();
