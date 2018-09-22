@@ -2,6 +2,7 @@
 
 **0.7.2**
 
+* WebAPI - In "Debug" mode, AllowAnyOrigin is true
 * Minor
 
 **0.7.1**
