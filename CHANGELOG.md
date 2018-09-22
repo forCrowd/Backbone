@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.7.2**
+
+* Minor
+
 **0.7.1**
 
 * DataMigrator - Initial connectionStrings.config file fix
