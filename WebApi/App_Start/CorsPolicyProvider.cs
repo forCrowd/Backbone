@@ -2,7 +2,7 @@
 
 namespace forCrowd.Backbone.WebApi
 {
-    using forCrowd.Backbone.BusinessObjects.Entities;
+    using BusinessObjects.Entities;
     using Microsoft.Owin;
     using Microsoft.Owin.Cors;
     using System.Linq;
@@ -20,6 +20,10 @@ namespace forCrowd.Backbone.WebApi
                 SupportsCredentials = true,
                 AllowAnyOrigin = false
             };
+
+#if DEBUG
+            policy.AllowAnyOrigin = true;
+#endif
 
             // Allowed origins: Default client origin and projects' Origin field
             var allowedOrigin = new List<string> { Framework.AppSettings.DefaultClientOrigin };
