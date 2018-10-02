@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.7.3**
+
+* AngularClient - Two Elements example
+
 **0.7.2**
 
 * WebAPI - In "Debug" mode, AllowAnyOrigin is true

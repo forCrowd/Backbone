@@ -50,3 +50,4 @@ DataMigrator/Configs/*.config
 WebApi/App_Data/
 WebApi/Configs/*.config
 WebApi/Configs/Production/*.config
+.DS_Store
