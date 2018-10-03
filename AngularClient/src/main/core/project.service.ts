@@ -74,7 +74,7 @@ export class ProjectService {
       const userElementFieldInitial = {
         User: this.authService.currentUser,
         ElementField: elementField,
-        Rating: 0
+        Rating: 50
       };
 
       this.appEntityManager.createEntity("UserElementField", userElementFieldInitial) as UserElementField;
