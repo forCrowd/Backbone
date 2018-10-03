@@ -16,6 +16,7 @@ import { UserElementField } from "./entities/user-element-field";
 import { AppEntityManager } from "./app-entity-manager.service";
 import { AuthService } from "./auth.service";
 import { getUniqueValue } from "../shared/utils";
+import { User } from "./entities/user";
 
 @Injectable()
 export class ProjectService {
@@ -60,7 +61,7 @@ export class ProjectService {
     return elementCell;
   }
 
-  createElementField(initialValues: Object) {
+  createElementField(initialValues: Object, rating: number = 50) {
 
     const elementField = this.appEntityManager.createEntity("ElementField", initialValues) as ElementField;
 
@@ -73,7 +74,7 @@ export class ProjectService {
       const userElementFieldInitial = {
         User: this.authService.currentUser,
         ElementField: elementField,
-        Rating: 0
+        Rating: rating
       };
 
       this.appEntityManager.createEntity("UserElementField", userElementFieldInitial) as UserElementField;
@@ -96,6 +97,217 @@ export class ProjectService {
     project.Origin = "http://";
     project.RatingCount = 1; // Computed field
 
+    return project;
+  }
+
+  createDefaultProject(currentUser: User, projectName: string, mainElementName: string, addImportanceIndex: boolean, numberOfItem: number ): Project {
+
+    // Project
+    const project = this.appEntityManager.createEntity("Project", {
+      User: currentUser,
+      Name: projectName,
+      Origin: "http://"
+    }) as Project;
+
+    // Main element
+    const element = this.createElement({
+      Project: project,
+      Name: mainElementName
+    }) as Element;
+
+    // Importance field
+    var importanceField: ElementField = null;
+
+    if (addImportanceIndex) {
+      importanceField = this.createElementField({
+        Element: element,
+        Name: "Importance Field",
+        DataType: ElementFieldDataType.Decimal,
+        UseFixedValue: false,
+        RatingEnabled: true,
+        SortOrder: 1
+      }) as ElementField;
+    }
+
+    // Items, cells
+    for (var i = 0; i < numberOfItem; i++) {
+
+      const item = this.createElementItem({
+        Element: element,
+        Name: `Item ${ i + 1 }`
+      }) as ElementItem;
+
+      if (addImportanceIndex) {
+        this.createElementCell({
+          ElementField: importanceField,
+          ElementItem: item
+        });
+      }
+    }
+
+    // Return
+    return project;
+  }
+
+  createTwoElemenstSample() {
+
+    const numberOfItems = 2;
+
+    const project = this.createDefaultProject(
+      this.authService.currentUser, // User
+      "Two Elements Sample", // Project Name
+      "Organization", // Main Element Name
+      false, // Add Importance Item
+      numberOfItems
+    );
+
+    // Lisance element
+    const lisanceElement = this.createElement({
+      Project: project,
+      Name: "License"
+    }) as Element;
+
+    // Fields
+    const rightToUseField = this.createElementField({
+      Element: lisanceElement,
+      Name: "Right to Use",
+      DataType: ElementFieldDataType.String,
+      UseFixedValue: false,
+      RatingEnabled: false
+    }) as ElementField;
+
+    const rightToCopyField = this.createElementField({
+      Element: lisanceElement,
+      Name: "Right to Copy",
+      DataType: ElementFieldDataType.String,
+      UseFixedValue: false,
+      RatingEnabled: false
+    }) as ElementField;
+
+    const rightToModifyField = this.createElementField({
+      Element: lisanceElement,
+      Name: "Right to Modify",
+      DataType: ElementFieldDataType.String,
+      UseFixedValue: false,
+      RatingEnabled: false
+    }) as ElementField;
+
+    const rightToSellField = this.createElementField({
+      Element: lisanceElement,
+      Name: "Right to Sell",
+      DataType: ElementFieldDataType.String,
+      UseFixedValue: false,
+      RatingEnabled: false
+    }) as ElementField;
+
+    const licenseRatingField = this.createElementField({
+      Element: lisanceElement,
+      Name: "License Rating",
+      DataType: ElementFieldDataType.Decimal,
+      UseFixedValue: false,
+      RatingEnabled: true,
+      SortOrder: 1
+    }) as ElementField;
+
+    // Restricted License Item
+    const restrictedLicense = this.createElementItem({
+      Element: lisanceElement,
+      Name: "Restricted License"
+    }) as ElementItem;
+
+    // Cells
+    this.createElementCell({
+      ElementField: rightToUseField,
+      ElementItem: restrictedLicense,
+      StringValue: "Yes"
+    });
+
+    this.createElementCell({
+      ElementField: rightToCopyField,
+      ElementItem: restrictedLicense,
+      StringValue: "No"
+    });
+
+    this.createElementCell({
+      ElementField: rightToModifyField,
+      ElementItem: restrictedLicense,
+      StringValue: "No"
+    });
+
+    this.createElementCell({
+      ElementField: rightToSellField,
+      ElementItem: restrictedLicense,
+      StringValue: "No"
+    });
+
+    this.createElementCell({
+      ElementField: licenseRatingField,
+      ElementItem: restrictedLicense,
+    });
+
+    // Open Source License Item
+    const openSourceLicense = this.createElementItem({
+      Element: lisanceElement,
+      Name: "Open Source License"
+    }) as ElementItem;
+
+    // Cells
+    this.createElementCell({
+      ElementField: rightToUseField,
+      ElementItem: openSourceLicense,
+      StringValue: "Yes"
+    });
+
+    this.createElementCell({
+      ElementField: rightToCopyField,
+      ElementItem: openSourceLicense,
+      StringValue: "Yes"
+    });
+
+    this.createElementCell({
+      ElementField: rightToModifyField,
+      ElementItem: openSourceLicense,
+      StringValue: "Yes"
+    });
+
+    this.createElementCell({
+      ElementField: rightToSellField,
+      ElementItem: openSourceLicense,
+      StringValue: "Yes"
+    });
+
+    this.createElementCell({
+      ElementField: licenseRatingField,
+      ElementItem: openSourceLicense,
+    });
+
+    // Main element
+    const mainElement = project.ElementSet[0]
+
+    const licenseField = this.createElementField({
+      Element: mainElement,
+      Name: "License",
+      DataType: ElementFieldDataType.Element,
+    }) as ElementField;
+
+    licenseField.SelectedElement = lisanceElement;
+
+    mainElement.ElementItemSet[0].Name = "Hidden Knowledge"
+
+    this.createElementCell({
+      ElementField: licenseField,
+      ElementItem: mainElement.ElementItemSet[0]
+    });
+    mainElement.ElementItemSet[0].ElementCellSet[0].SelectedElementItem = restrictedLicense;
+
+    mainElement.ElementItemSet[1].Name = "True Source"
+    this.createElementCell({
+      ElementField: licenseField,
+      ElementItem: mainElement.ElementItemSet[1]
+    });
+    mainElement.ElementItemSet[1].ElementCellSet[0].SelectedElementItem = openSourceLicense;
+
+    // Return
     return project;
   }
 

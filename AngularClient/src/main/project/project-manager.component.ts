@@ -68,6 +68,16 @@ export class ProjectManagerComponent implements OnInit {
       });
   }
 
+  createTwoElemenstSample(): void {
+    this.project = this.projectService.createTwoElemenstSample();
+
+    this.projectService.saveChanges()
+      .subscribe(() => {
+        const command = `/projects/${this.project.Id}/edit`;
+        this.router.navigate([command]);
+      });
+  }
+
   createProjectTodo(): void {
     this.project = this.projectService.createProjectTodo();
 
