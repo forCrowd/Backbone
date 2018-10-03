@@ -61,7 +61,7 @@ export class ProjectService {
     return elementCell;
   }
 
-  createElementField(initialValues: Object) {
+  createElementField(initialValues: Object, rating: number = 50) {
 
     const elementField = this.appEntityManager.createEntity("ElementField", initialValues) as ElementField;
 
@@ -74,7 +74,7 @@ export class ProjectService {
       const userElementFieldInitial = {
         User: this.authService.currentUser,
         ElementField: elementField,
-        Rating: 50
+        Rating: rating
       };
 
       this.appEntityManager.createEntity("UserElementField", userElementFieldInitial) as UserElementField;
