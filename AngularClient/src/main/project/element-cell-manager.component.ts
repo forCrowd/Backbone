@@ -6,6 +6,7 @@ import { Project } from "../core/entities/project";
 import { ElementCell } from "../core/entities/element-cell";
 import { ElementField, ElementFieldDataType } from "../core/entities/element-field";
 import { ElementItem } from "../core/entities/element-item";
+import { UserElementCell } from "../core/entities/user-element-cell";
 import { ProjectService } from "../core/core.module";
 
 @Component({
@@ -53,6 +54,25 @@ export class ElementCellManagerComponent implements OnInit {
 
       this.isEditingChanged.emit(value ? true : false);
     }
+  }
+
+  get selectedElementDecimalValue(): number | null {
+
+    if (!this.selectedElementCell || !this.selectedElementCell.UserElementCellSet[0])
+      return null;
+
+    return this.selectedElementCell.UserElementCellSet[0].DecimalValue;
+  }
+  set selectedElementDecimalValue(value) {
+
+    if (!this.selectedElementCell)
+      return;
+
+    // If there is no userElementCell, create it
+    if (!this.selectedElementCell.UserElementCellSet[0])
+      this.projectService.createUserElementCell(this.selectedElementCell, value);
+
+    this.selectedElementCell.UserElementCellSet[0].DecimalValue = value;
   }
 
   private fields: {

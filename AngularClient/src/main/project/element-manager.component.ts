@@ -17,7 +17,7 @@ export class ElementManagerComponent implements OnInit {
   @Output() isEditingChanged = new EventEmitter<boolean>();
 
   elementDataSource = new MatTableDataSource<Element>([]);
-  elementDisplayedColumns = ["name", "createdOn", "functions"];
+  elementDisplayedColumns = ["name", "sortOrder", "createdOn", "functions"];
 
   get selectedElement(): Element {
     return this.fields.selectedElement;
@@ -47,7 +47,8 @@ export class ElementManagerComponent implements OnInit {
   addElement(): void {
     this.selectedElement = this.projectService.createElement({
       Project: this.project,
-      Name: "New element"
+      Name: "New element",
+      SortOrder: this.project.ElementSet.length + 1,
     }) as Element;
   }
 

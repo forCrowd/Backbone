@@ -15,8 +15,7 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
             ParentFieldSet = new HashSet<ElementField>();
         }
 
-        public Element(Project project, string name)
-            : this()
+        public Element(Project project, string name) : this()
         {
             Validations.ArgumentNullOrDefault(project, nameof(project));
             Validations.ArgumentNullOrDefault(name, nameof(name));
@@ -32,6 +31,8 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
         [Required]
         [StringLength(50)]
         public string Name { get => name; set => name = value.Trim(); }
+
+        public byte SortOrder { get; set; }
 
         public Project Project { get; set; }
 

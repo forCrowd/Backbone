@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -36,7 +37,11 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
 
         public Element AddElement(string name)
         {
-            var element = new Element(this, name);
+            var sortOrder = Convert.ToByte(ElementSet.Count + 1);
+            var element = new Element(this, name)
+            {
+                SortOrder = sortOrder
+            };
             ElementSet.Add(element);
             return element;
         }

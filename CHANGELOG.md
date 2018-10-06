@@ -1,13 +1,19 @@
 ### Changelog
 
+**0.7.4**
+
+* AngularClient - Create project - User field rating and user element cell default values fix
+* DataObjects - Element - SortOrder field added
+* Minor updates
+
 **0.7.3**
 
-* AngularClient - Two Elements example
+* AngularClient - Create Project - "Parent - Child" template
 
 **0.7.2**
 
 * WebAPI - In "Debug" mode, AllowAnyOrigin is true
-* Minor
+* Minor updates
 
 **0.7.1**
 

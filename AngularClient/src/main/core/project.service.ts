@@ -12,11 +12,9 @@ import { ElementField, ElementFieldDataType } from "./entities/element-field";
 import { ElementItem } from "./entities/element-item";
 import { Project } from "./entities/project";
 import { UserElementCell } from "./entities/user-element-cell";
-import { UserElementField } from "./entities/user-element-field";
 import { AppEntityManager } from "./app-entity-manager.service";
 import { AuthService } from "./auth.service";
 import { getUniqueValue } from "../shared/utils";
-import { User } from "./entities/user";
 
 @Injectable()
 export class ProjectService {
@@ -35,280 +33,35 @@ export class ProjectService {
     this.appHttpClient = httpClient as AppHttpClient;
   }
 
-  createElement(initialValues: Object) {
+  createElement(initialValues: {}) {
     return this.appEntityManager.createEntity("Element", initialValues);
   }
 
-  createElementCell(initialValues: Object) {
-
-    const elementCell = this.appEntityManager.createEntity("ElementCell", initialValues) as ElementCell;
-
-    // If DataType is decimal, also create "User element cell"
-    if (elementCell.ElementField.DataType === ElementFieldDataType.Decimal) {
-
-      elementCell.DecimalValueTotal = 0; // Computed field
-      elementCell.DecimalValueCount = 1; // Computed field
-
-      const userElementCellInitial = {
-        User: this.authService.currentUser,
-        ElementCell: elementCell,
-        DecimalValue: 0,
-      } as any;
-
-      this.appEntityManager.createEntity("UserElementCell", userElementCellInitial) as UserElementCell;
-    }
-
-    return elementCell;
+  createElementCell(initialValues: {}) {
+    return this.appEntityManager.createEntity("ElementCell", initialValues) as ElementCell;
   }
 
-  createElementField(initialValues: Object, rating: number = 50) {
+  createUserElementCell(elementCell: ElementCell, decimalValue: number | null) {
 
-    const elementField = this.appEntityManager.createEntity("ElementField", initialValues) as ElementField;
-
-    // If RatingEnabled, also create "User element field"
-    if (elementField.RatingEnabled) {
-
-      elementField.RatingTotal = 0; // Computed field
-      elementField.RatingCount = 1; // Computed field
-
-      const userElementFieldInitial = {
-        User: this.authService.currentUser,
-        ElementField: elementField,
-        Rating: rating
-      };
-
-      this.appEntityManager.createEntity("UserElementField", userElementFieldInitial) as UserElementField;
+    if (elementCell.ElementField.DataType !== ElementFieldDataType.Decimal) {
+      throw new Error(`Invalid field type: ${elementCell.ElementField.DataType}`);
     }
 
-    return elementField;
+    const initialValues = {
+      User: this.authService.currentUser,
+      ElementCell: elementCell,
+      DecimalValue: decimalValue
+    };
+
+    return this.appEntityManager.createEntity("UserElementCell", initialValues) as UserElementCell;
   }
 
-  createElementItem(initialValues: Object): ElementItem {
+  createElementField(initialValues: {}) {
+    return this.appEntityManager.createEntity("ElementField", initialValues) as ElementField;
+  }
+
+  createElementItem(initialValues: {}): ElementItem {
     return this.appEntityManager.createEntity("ElementItem", initialValues) as ElementItem;
-  }
-
-  createProjectEmpty(): Project {
-
-    const project = this.appEntityManager.createEntity("Project", {
-      User: this.authService.currentUser
-    }) as Project;
-
-    project.Name = `New project ${getUniqueValue()}`;
-    project.Origin = "http://";
-    project.RatingCount = 1; // Computed field
-
-    return project;
-  }
-
-  createDefaultProject(currentUser: User, projectName: string, mainElementName: string, addImportanceIndex: boolean, numberOfItem: number ): Project {
-
-    // Project
-    const project = this.appEntityManager.createEntity("Project", {
-      User: currentUser,
-      Name: projectName,
-      Origin: "http://"
-    }) as Project;
-
-    // Main element
-    const element = this.createElement({
-      Project: project,
-      Name: mainElementName
-    }) as Element;
-
-    // Importance field
-    var importanceField: ElementField = null;
-
-    if (addImportanceIndex) {
-      importanceField = this.createElementField({
-        Element: element,
-        Name: "Importance Field",
-        DataType: ElementFieldDataType.Decimal,
-        UseFixedValue: false,
-        RatingEnabled: true,
-        SortOrder: 1
-      }) as ElementField;
-    }
-
-    // Items, cells
-    for (var i = 0; i < numberOfItem; i++) {
-
-      const item = this.createElementItem({
-        Element: element,
-        Name: `Item ${ i + 1 }`
-      }) as ElementItem;
-
-      if (addImportanceIndex) {
-        this.createElementCell({
-          ElementField: importanceField,
-          ElementItem: item
-        });
-      }
-    }
-
-    // Return
-    return project;
-  }
-
-  createTwoElemenstSample() {
-
-    const numberOfItems = 2;
-
-    const project = this.createDefaultProject(
-      this.authService.currentUser, // User
-      "Two Elements Sample", // Project Name
-      "Organization", // Main Element Name
-      false, // Add Importance Item
-      numberOfItems
-    );
-
-    // Lisance element
-    const lisanceElement = this.createElement({
-      Project: project,
-      Name: "License"
-    }) as Element;
-
-    // Fields
-    const rightToUseField = this.createElementField({
-      Element: lisanceElement,
-      Name: "Right to Use",
-      DataType: ElementFieldDataType.String,
-      UseFixedValue: false,
-      RatingEnabled: false
-    }) as ElementField;
-
-    const rightToCopyField = this.createElementField({
-      Element: lisanceElement,
-      Name: "Right to Copy",
-      DataType: ElementFieldDataType.String,
-      UseFixedValue: false,
-      RatingEnabled: false
-    }) as ElementField;
-
-    const rightToModifyField = this.createElementField({
-      Element: lisanceElement,
-      Name: "Right to Modify",
-      DataType: ElementFieldDataType.String,
-      UseFixedValue: false,
-      RatingEnabled: false
-    }) as ElementField;
-
-    const rightToSellField = this.createElementField({
-      Element: lisanceElement,
-      Name: "Right to Sell",
-      DataType: ElementFieldDataType.String,
-      UseFixedValue: false,
-      RatingEnabled: false
-    }) as ElementField;
-
-    const licenseRatingField = this.createElementField({
-      Element: lisanceElement,
-      Name: "License Rating",
-      DataType: ElementFieldDataType.Decimal,
-      UseFixedValue: false,
-      RatingEnabled: true,
-      SortOrder: 1
-    }) as ElementField;
-
-    // Restricted License Item
-    const restrictedLicense = this.createElementItem({
-      Element: lisanceElement,
-      Name: "Restricted License"
-    }) as ElementItem;
-
-    // Cells
-    this.createElementCell({
-      ElementField: rightToUseField,
-      ElementItem: restrictedLicense,
-      StringValue: "Yes"
-    });
-
-    this.createElementCell({
-      ElementField: rightToCopyField,
-      ElementItem: restrictedLicense,
-      StringValue: "No"
-    });
-
-    this.createElementCell({
-      ElementField: rightToModifyField,
-      ElementItem: restrictedLicense,
-      StringValue: "No"
-    });
-
-    this.createElementCell({
-      ElementField: rightToSellField,
-      ElementItem: restrictedLicense,
-      StringValue: "No"
-    });
-
-    this.createElementCell({
-      ElementField: licenseRatingField,
-      ElementItem: restrictedLicense,
-    });
-
-    // Open Source License Item
-    const openSourceLicense = this.createElementItem({
-      Element: lisanceElement,
-      Name: "Open Source License"
-    }) as ElementItem;
-
-    // Cells
-    this.createElementCell({
-      ElementField: rightToUseField,
-      ElementItem: openSourceLicense,
-      StringValue: "Yes"
-    });
-
-    this.createElementCell({
-      ElementField: rightToCopyField,
-      ElementItem: openSourceLicense,
-      StringValue: "Yes"
-    });
-
-    this.createElementCell({
-      ElementField: rightToModifyField,
-      ElementItem: openSourceLicense,
-      StringValue: "Yes"
-    });
-
-    this.createElementCell({
-      ElementField: rightToSellField,
-      ElementItem: openSourceLicense,
-      StringValue: "Yes"
-    });
-
-    this.createElementCell({
-      ElementField: licenseRatingField,
-      ElementItem: openSourceLicense,
-    });
-
-    // Main element
-    const mainElement = project.ElementSet[0]
-
-    const licenseField = this.createElementField({
-      Element: mainElement,
-      Name: "License",
-      DataType: ElementFieldDataType.Element,
-    }) as ElementField;
-
-    licenseField.SelectedElement = lisanceElement;
-
-    mainElement.ElementItemSet[0].Name = "Hidden Knowledge"
-
-    this.createElementCell({
-      ElementField: licenseField,
-      ElementItem: mainElement.ElementItemSet[0]
-    });
-    mainElement.ElementItemSet[0].ElementCellSet[0].SelectedElementItem = restrictedLicense;
-
-    mainElement.ElementItemSet[1].Name = "True Source"
-    this.createElementCell({
-      ElementField: licenseField,
-      ElementItem: mainElement.ElementItemSet[1]
-    });
-    mainElement.ElementItemSet[1].ElementCellSet[0].SelectedElementItem = openSourceLicense;
-
-    // Return
-    return project;
   }
 
   createProjectBasic() {
@@ -356,6 +109,110 @@ export class ProjectService {
       ElementItem: elementItem2
     });
 
+    return project;
+  }
+
+  createProjectEmpty(): Project {
+
+    const project = this.appEntityManager.createEntity("Project", {
+      User: this.authService.currentUser,
+      Name: `New project ${getUniqueValue()}`,
+      Origin: "http://",
+      RatingCount: 1 // Computed field
+    }) as Project;
+
+    return project;
+  }
+
+  createProjectParentChild() {
+
+    // Project
+    const project = this.createProjectEmpty();
+    project.Name = "Parent - Child";
+
+    // Child element
+    const childElement = this.createElement({
+      Project: project,
+      Name: "Child",
+      SortOrder: 1
+    }) as Element;
+
+    // Child element - Rating field
+    const childRatingField = this.createElementField({
+      Element: childElement,
+      Name: "Rating",
+      DataType: ElementFieldDataType.Decimal,
+      UseFixedValue: false,
+      RatingEnabled: true,
+      SortOrder: 1
+    }) as ElementField;
+
+    // Child element - Item 1
+    const childItem1 = this.createElementItem({
+      Element: childElement,
+      Name: "Child item 1"
+    }) as ElementItem;
+
+    // Child element - Cell 1
+    this.createElementCell({
+      ElementField: childRatingField,
+      ElementItem: childItem1,
+    });
+
+    // Child element - Item 2
+    const childItem2 = this.createElementItem({
+      Element: childElement,
+      Name: "Child item 2"
+    }) as ElementItem;
+
+    // Child element - Cell 2
+    this.createElementCell({
+      ElementField: childRatingField,
+      ElementItem: childItem2,
+    });
+
+    // Parent element
+    const parentElement = this.createElement({
+      Project: project,
+      Name: "Parent",
+      SortOrder: 0
+    }) as Element;
+
+    // Parent element - Child field
+    const parentChildField = this.createElementField({
+      Element: parentElement,
+      Name: "Child",
+      DataType: ElementFieldDataType.Element,
+      SelectedElement: childElement
+    }) as ElementField;
+
+    // Parent element - Item 1
+    const parentItem1 = this.createElementItem({
+      Element: parentElement,
+      Name: "Parent item 1"
+    }) as ElementItem;
+
+    // Parent element - Cell 1
+    this.createElementCell({
+      ElementField: parentChildField,
+      ElementItem: parentItem1,
+      SelectedElementItem: childItem1
+    });
+
+    // Parent element - Item 2
+    const parentItem2 = this.createElementItem({
+      Element: parentElement,
+      Name: "Parent item 2"
+    }) as ElementItem;
+
+    // Parent element - Child 2
+    this.createElementCell({
+      ElementField: parentChildField,
+      ElementItem: parentItem2,
+      SelectedElementItem: childItem2
+    });
+
+    // Return
     return project;
   }
 
@@ -602,10 +459,6 @@ export class ProjectService {
     }
 
     return this.saveChanges();
-  }
-
-  updateElementCellDecimalValue(elementCell: ElementCell, value: number) {
-    // Todo Implement!
   }
 
   private getUpdateComputedFieldsUrl(projectId: number) {
