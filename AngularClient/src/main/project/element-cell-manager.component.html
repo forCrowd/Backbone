@@ -81,9 +81,9 @@
             <input matInput placeholder="Value" id="StringValue" name="StringValue" [(ngModel)]="selectedElementCell.StringValue" />
           </mat-form-field>
         </div>
-        <div *ngIf="selectedElementCell.ElementField.DataType === elementFieldDataType.Decimal" [ngClass]="{ 'has-error': selectedElementCell.UserElementCellSet[0].entityAspect.getValidationErrors('DecimalValue').length > 0 }" class="g-mt-20">
+        <div *ngIf="selectedElementCell.ElementField.DataType === elementFieldDataType.Decimal" [ngClass]="{ 'has-error': selectedElementCell.UserElementCellSet[0] && selectedElementCell.UserElementCellSet[0].entityAspect.getValidationErrors('DecimalValue').length > 0 }" class="g-mt-20">
           <mat-form-field>
-            <input matInput placeholder="Value" id="DecimalValue" name="DecimalValue" [(ngModel)]="selectedElementCell.UserElementCellSet[0].DecimalValue" />
+            <input matInput placeholder="Value" id="DecimalValue" name="DecimalValue" [(ngModel)]="selectedElementDecimalValue" />
           </mat-form-field>
         </div>
         <div *ngIf="selectedElementCell.ElementField.DataType === elementFieldDataType.Element" [ngClass]="{ 'has-error': selectedElementCell.entityAspect.getValidationErrors('SelectedItem').length > 0 }" class="g-mt-20">

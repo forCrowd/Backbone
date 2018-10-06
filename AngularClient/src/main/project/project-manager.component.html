@@ -4,10 +4,10 @@
   <hr />
 
   <div class="templateContainer g-mt-20">
-    <button mat-raised-button (click)="createProjectEmpty()" [disabled]="isBusy">Blank</button>
+    <button mat-raised-button (click)="createProjectBlank()" [disabled]="isBusy">Blank</button>
     <button mat-raised-button (click)="createProjectBasic()" [disabled]="isBusy">Basic</button>
+    <button mat-raised-button (click)="createProjectParentChild()" [disabled]="isBusy">Parent - Child</button>
     <button mat-raised-button (click)="createProjectTodo()" [disabled]="isBusy">Todo App</button>
-    <button mat-raised-button (click)="createTwoElemenstSample()" [disabled]="isBusy">Two Elements</button>
   </div>
 
 </div>

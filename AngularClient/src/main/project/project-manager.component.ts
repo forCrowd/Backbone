@@ -68,8 +68,8 @@ export class ProjectManagerComponent implements OnInit {
       });
   }
 
-  createTwoElemenstSample(): void {
-    this.project = this.projectService.createTwoElemenstSample();
+  createProjectParentChild(): void {
+    this.project = this.projectService.createProjectParentChild();
 
     this.projectService.saveChanges()
       .subscribe(() => {
