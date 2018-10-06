@@ -130,16 +130,11 @@ export class ProjectService {
     const project = this.createProjectEmpty();
     project.Name = "Parent - Child";
 
-    // Parent element
-    const parentElement = this.createElement({
-      Project: project,
-      Name: "Parent"
-    }) as Element;
-
     // Child element
     const childElement = this.createElement({
       Project: project,
-      Name: "Child"
+      Name: "Child",
+      SortOrder: 1
     }) as Element;
 
     // Child element - Rating field
@@ -175,6 +170,13 @@ export class ProjectService {
       ElementField: childRatingField,
       ElementItem: childItem2,
     });
+
+    // Parent element
+    const parentElement = this.createElement({
+      Project: project,
+      Name: "Parent",
+      SortOrder: 0
+    }) as Element;
 
     // Parent element - Child field
     const parentChildField = this.createElementField({
