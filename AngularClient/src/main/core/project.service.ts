@@ -64,100 +64,6 @@ export class ProjectService {
     return this.appEntityManager.createEntity("ElementItem", initialValues) as ElementItem;
   }
 
-  createProjectEmpty(): Project {
-
-    const project = this.appEntityManager.createEntity("Project", {
-      User: this.authService.currentUser
-    }) as Project;
-
-    project.Name = `New project ${getUniqueValue()}`;
-    project.Origin = "http://";
-    project.RatingCount = 1; // Computed field
-
-    return project;
-  }
-
-  createProjectParentChild() {
-
-    // Project
-    const project = this.createDefaultProject(
-      "Parent - Child", // Project name
-      "Parent", // Main element name
-      2
-    );
-
-    // Child element
-    const childElement = this.createElement({
-      Project: project,
-      Name: "Child"
-    }) as Element;
-
-    // Child element - Rating field
-    const childRatingField = this.createElementField({
-      Element: childElement,
-      Name: "Rating",
-      DataType: ElementFieldDataType.Decimal,
-      UseFixedValue: false,
-      RatingEnabled: true,
-      SortOrder: 1
-    }) as ElementField;
-
-    // Child element - Item 1
-    const childItem1 = this.createElementItem({
-      Element: childElement,
-      Name: "Child item 1"
-    }) as ElementItem;
-
-    // Child element - Cell 1
-    this.createElementCell({
-      ElementField: childRatingField,
-      ElementItem: childItem1,
-    });
-
-    // Child element - Item 2
-    const childItem2 = this.createElementItem({
-      Element: childElement,
-      Name: "Child item 2"
-    }) as ElementItem;
-
-    // Child element - Cell 2
-    this.createElementCell({
-      ElementField: childRatingField,
-      ElementItem: childItem2,
-    });
-
-    // Parent element
-    const parentElement = project.ElementSet[0];
-
-    // Parent element - Child field
-    const childField = this.createElementField({
-      Element: parentElement,
-      Name: "Child",
-      DataType: ElementFieldDataType.Element,
-    }) as ElementField;
-    childField.SelectedElement = childElement;
-
-    // Parent element - Item 1
-    parentElement.ElementItemSet[0].Name = "Parent item 1";
-
-    // Parent element - Cell 1
-    this.createElementCell({
-      ElementField: childField,
-      ElementItem: parentElement.ElementItemSet[0]
-    });
-    parentElement.ElementItemSet[0].ElementCellSet[0].SelectedElementItem = childItem1;
-
-    parentElement.ElementItemSet[1].Name = "Parent item 2";
-    this.createElementCell({
-      ElementField: childField,
-      ElementItem: parentElement.ElementItemSet[1]
-    });
-    parentElement.ElementItemSet[1].ElementCellSet[0].SelectedElementItem = childItem2;
-
-    // Return
-    return project;
-  }
-
   createProjectBasic() {
 
     // Project
@@ -203,6 +109,108 @@ export class ProjectService {
       ElementItem: elementItem2
     });
 
+    return project;
+  }
+
+  createProjectEmpty(): Project {
+
+    const project = this.appEntityManager.createEntity("Project", {
+      User: this.authService.currentUser,
+      Name: `New project ${getUniqueValue()}`,
+      Origin: "http://",
+      RatingCount: 1 // Computed field
+    }) as Project;
+
+    return project;
+  }
+
+  createProjectParentChild() {
+
+    // Project
+    const project = this.createProjectEmpty();
+    project.Name = "Parent - Child";
+
+    // Parent element
+    const parentElement = this.createElement({
+      Project: project,
+      Name: "Parent"
+    }) as Element;
+
+    // Child element
+    const childElement = this.createElement({
+      Project: project,
+      Name: "Child"
+    }) as Element;
+
+    // Child element - Rating field
+    const childRatingField = this.createElementField({
+      Element: childElement,
+      Name: "Rating",
+      DataType: ElementFieldDataType.Decimal,
+      UseFixedValue: false,
+      RatingEnabled: true,
+      SortOrder: 1
+    }) as ElementField;
+
+    // Child element - Item 1
+    const childItem1 = this.createElementItem({
+      Element: childElement,
+      Name: "Child item 1"
+    }) as ElementItem;
+
+    // Child element - Cell 1
+    this.createElementCell({
+      ElementField: childRatingField,
+      ElementItem: childItem1,
+    });
+
+    // Child element - Item 2
+    const childItem2 = this.createElementItem({
+      Element: childElement,
+      Name: "Child item 2"
+    }) as ElementItem;
+
+    // Child element - Cell 2
+    this.createElementCell({
+      ElementField: childRatingField,
+      ElementItem: childItem2,
+    });
+
+    // Parent element - Child field
+    const parentChildField = this.createElementField({
+      Element: parentElement,
+      Name: "Child",
+      DataType: ElementFieldDataType.Element,
+      SelectedElement: childElement
+    }) as ElementField;
+
+    // Parent element - Item 1
+    const parentItem1 = this.createElementItem({
+      Element: parentElement,
+      Name: "Parent item 1"
+    }) as ElementItem;
+
+    // Parent element - Cell 1
+    this.createElementCell({
+      ElementField: parentChildField,
+      ElementItem: parentItem1,
+      SelectedElementItem: childItem1
+    });
+
+    // Parent element - Item 2
+    const parentItem2 = this.createElementItem({
+      Element: parentElement,
+      Name: "Parent item 2"
+    }) as ElementItem;
+
+    // Parent element - Child 2
+    this.createElementCell({
+      ElementField: parentChildField,
+      ElementItem: parentItem2,
+      SelectedElementItem: childItem2
+    });
+
+    // Return
     return project;
   }
 
@@ -449,39 +457,6 @@ export class ProjectService {
     }
 
     return this.saveChanges();
-  }
-
-  updateElementCellDecimalValue(elementCell: ElementCell, value: number) {
-    // Todo Implement!
-  }
-
-  // Creates a project with one element and x number of elements
-  private createDefaultProject(projectName: string, mainElementName: string, numberOfItems: number): Project {
-
-    // Project
-    const project = this.appEntityManager.createEntity("Project", {
-      User: this.authService.currentUser,
-      Name: projectName,
-      Origin: "http://"
-    }) as Project;
-
-    // Main element
-    const element = this.createElement({
-      Project: project,
-      Name: mainElementName
-    }) as Element;
-
-    // Items, cells
-    for (let i = 0; i < numberOfItems; i++) {
-
-      const item = this.createElementItem({
-        Element: element,
-        Name: `Item ${i + 1}`
-      }) as ElementItem;
-    }
-
-    // Return
-    return project;
   }
 
   private getUpdateComputedFieldsUrl(projectId: number) {

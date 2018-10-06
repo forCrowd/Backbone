@@ -2,7 +2,8 @@
 
 **0.7.4**
 
-* AngularClient - Create project, user element cell and field default values fix
+* AngularClient - Create project - User field rating and user element cell default values fix
+* Minor
 
 **0.7.3**
 
