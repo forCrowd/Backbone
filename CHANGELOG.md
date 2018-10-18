@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.7.5**
+
+* AngularClient - Contributors page - Augustpi
+
 **0.7.4**
 
 * AngularClient - Create project - User field rating and user element cell default values fix
