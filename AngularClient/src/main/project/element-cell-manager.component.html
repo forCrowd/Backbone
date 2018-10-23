@@ -48,7 +48,7 @@
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let cell">
           <div class="pull-right">
-            <button mat-raised-button (click)="editElementCell(cell)" type="button">
+            <button mat-raised-button (click)="editElementCell(cell)" type="button" color="primary" class="mat-m02">
               <i class="fa fa-pencil" aria-hidden="true"></i> Edit
             </button>
           </div>
@@ -94,10 +94,10 @@
           </mat-form-field>
         </div>
         <div class="g-mt-20">
-          <button mat-raised-button (click)="saveElementCell()" [disabled]="submitDisabled()" type="button" color="primary">
+          <button mat-raised-button (click)="saveElementCell()" [disabled]="submitDisabled()" type="button" color="primary" class="mat-m02">
             Save cell
           </button>
-          <button mat-raised-button (click)="cancelElementCell()" [disabled]="isBusy" type="button">
+          <button mat-raised-button (click)="cancelElementCell()" [disabled]="isBusy" type="button" class="mat-m02">
             Cancel
           </button>
         </div>

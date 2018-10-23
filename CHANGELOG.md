@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.8.0**
+
+* AngularClient - Upgrade to Angular 7.x
+  * "angular2moment" library replaced with "ngx-moment" library
+
 **0.7.5**
 
 * AngularClient - Contributors page - Augustpi

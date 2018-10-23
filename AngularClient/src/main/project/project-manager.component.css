@@ -18,6 +18,10 @@ form {
   width: 45%;
 }
 
+.mat-m02 {
+  margin: .2em;
+}
+
 .templateContainer button {
   height: 100px;
   margin-right: 20px;
