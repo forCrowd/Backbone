@@ -1,8 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { Project } from "../core/entities/project";
-import { User } from "../core/entities/user";
+import { User, Project } from "forcrowd-backbone";
 import { ProjectService } from "../core/core.module";
 
 @Component({

@@ -4,7 +4,7 @@ import { Subscription } from "rxjs";
 
 import { AppSettings } from "../../app-settings/app-settings";
 import { AuthService, NotificationService } from "../core/core.module";
-import { getUniqueEmail, getUniqueUserName, stripInvalidChars } from "../shared/utils";
+import { getUniqueEmail, getUniqueUserName, stripInvalidChars } from "forcrowd-backbone";
 
 @Component({
   selector: "register",

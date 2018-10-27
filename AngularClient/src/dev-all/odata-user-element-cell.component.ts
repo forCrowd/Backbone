@@ -4,10 +4,7 @@ import { Observable } from "rxjs";
 import { mergeMap, map } from "rxjs/operators";
 
 import { AppSettings } from "../app-settings/app-settings";
-import { ElementCell } from "../main/core/entities/element-cell";
-import { Project } from "../main/core/entities/project";
-import { User } from "../main/core/entities/user";
-
+import { ElementCell, Project, User } from "forcrowd-backbone";
 import { AuthService } from "../main/core/core.module";
 
 @Component({

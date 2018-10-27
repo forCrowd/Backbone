@@ -4,9 +4,7 @@ import { Observable } from "rxjs";
 import { mergeMap, map } from "rxjs/operators";
 
 import { AppSettings } from "../app-settings/app-settings";
-import { ElementField } from "../main/core/entities/element-field";
-import { Project } from "../main/core/entities/project";
-import { User } from "../main/core/entities/user";
+import { ElementField, Project, User } from "forcrowd-backbone";
 
 import { AuthService } from "../main/core/core.module";
 

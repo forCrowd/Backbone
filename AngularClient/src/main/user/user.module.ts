@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
-import { SharedModule } from "../shared/shared.module";
+import { SharedModule } from "forcrowd-backbone";
 
 import { ProfileComponent } from "./profile.component";
 import { ProfileRemoveProjectComponent } from "./profile-remove-project.component";

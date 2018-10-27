@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 import { AppSettings } from "../../app-settings/app-settings";
 import { ProjectService } from "../core/core.module";
-import { Project } from "../core/entities/project";
+import { Project } from "forcrowd-backbone";
 
 @Component({
   selector: "project-viewer",

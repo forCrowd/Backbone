@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 
-import { Project } from "../entities/project";
-import { AuthService } from "../auth.service";
+import { Project, AuthService } from "forcrowd-backbone";
 import { ProjectService } from "../project.service";
 
 @Component({

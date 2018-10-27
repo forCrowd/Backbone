@@ -4,7 +4,7 @@ import { MatTableDataSource } from "@angular/material";
 import { Observable } from "rxjs";
 import { map, mergeMap } from "rxjs/operators";
 
-import { Project } from "../core/entities/project";
+import { Project } from "forcrowd-backbone";
 import { AdminService } from "./admin.service";
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 
 import { AuthService } from "../main/core/core.module";
-import { User } from "../main/core/entities/user";
+import { User } from "forcrowd-backbone";
 
 @Component({
   selector: "odata",

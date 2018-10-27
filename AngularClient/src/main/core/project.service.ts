@@ -5,16 +5,7 @@ import { Observable } from "rxjs";
 import { mergeMap, finalize, map } from "rxjs/operators";
 
 import { AppSettings } from "../../app-settings/app-settings";
-import { AppHttpClient } from "./app-http-client/app-http-client.module";
-import { Element } from "./entities/element";
-import { ElementCell } from "./entities/element-cell";
-import { ElementField, ElementFieldDataType } from "./entities/element-field";
-import { ElementItem } from "./entities/element-item";
-import { Project } from "./entities/project";
-import { UserElementCell } from "./entities/user-element-cell";
-import { AppEntityManager } from "./app-entity-manager.service";
-import { AuthService } from "./auth.service";
-import { getUniqueValue } from "../shared/utils";
+import { Element, ElementCell, ElementField, ElementFieldDataType, ElementItem, Project, UserElementCell, AppEntityManager, AuthService, AppHttpClient, getUniqueValue } from "forcrowd-backbone";
 
 @Injectable()
 export class ProjectService {
