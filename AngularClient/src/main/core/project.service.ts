@@ -241,7 +241,7 @@ export class ProjectService {
       ElementField: elementField,
       ElementItem: elementItem1
     });
-    cell1.UserElementCellSet[0].DecimalValue = 1;
+    //cell1.UserElementCellSet[0].DecimalValue = 1;
 
     // Item 2
     const elementItem2 = this.createElementItem({
