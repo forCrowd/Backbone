@@ -4,10 +4,10 @@
   <hr />
 
   <div class="templateContainer g-mt-20">
-    <button mat-raised-button (click)="createProjectEmpty()" [disabled]="isBusy">Blank</button>
-    <button mat-raised-button (click)="createProjectBasic()" [disabled]="isBusy">Basic</button>
-    <button mat-raised-button (click)="createProjectParentChild()" [disabled]="isBusy">Parent - Child</button>
-    <button mat-raised-button (click)="createProjectTodo()" [disabled]="isBusy">Todo App</button>
+    <button mat-raised-button (click)="createProjectEmpty()" [disabled]="isBusy" class="mat-m02">Blank</button>
+    <button mat-raised-button (click)="createProjectBasic()" [disabled]="isBusy" class="mat-m02">Basic</button>
+    <button mat-raised-button (click)="createProjectParentChild()" [disabled]="isBusy" class="mat-m02">Parent - Child</button>
+    <button mat-raised-button (click)="createProjectTodo()" [disabled]="isBusy" class="mat-m02">Todo App</button>
   </div>
 
 </div>
@@ -44,10 +44,10 @@
           </div>
 
           <div class="g-mt-20">
-            <button mat-raised-button (click)="saveProject()" [disabled]="submitDisabled()" type="submit" color="primary">
+            <button mat-raised-button (click)="saveProject()" [disabled]="submitDisabled()" type="submit" color="primary" class="mat-m02">
               Save project
             </button>
-            <button mat-raised-button (click)="cancelProject()" [disabled]="isBusy" type="button">
+            <button mat-raised-button (click)="cancelProject()" [disabled]="isBusy" type="button" class="mat-m02">
               {{ project.entityAspect.entityState.isModified() ? "Cancel" : "Close" }}
             </button>
           </div>

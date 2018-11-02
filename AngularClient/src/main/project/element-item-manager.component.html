@@ -39,10 +39,10 @@
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let item">
           <div class="pull-right">
-            <button mat-raised-button (click)="editElementItem(item)" type="button">
+            <button mat-raised-button (click)="editElementItem(item)" type="button" color="primary" class="mat-m02">
               <i class="fa fa-pencil" aria-hidden="true"></i> Edit
             </button>
-            <button mat-raised-button (click)="removeElementItem(item)" [disabled]="isBusy" type="button">
+            <button mat-raised-button (click)="removeElementItem(item)" [disabled]="isBusy" type="button" color="warn" class="mat-m02">
               <i class="fa fa-times" aria-hidden="true"></i> Remove
             </button>
           </div>
@@ -75,10 +75,10 @@
           </mat-form-field>
         </div>
         <div class="g-mt-20">
-          <button mat-raised-button (click)="saveElementItem()" [disabled]="submitDisabled()" type="button" color="primary">
+          <button mat-raised-button (click)="saveElementItem()" [disabled]="submitDisabled()" type="button" color="primary" class="mat-m02">
             Save item
           </button>
-          <button mat-raised-button (click)="cancelElementItem()" [disabled]="isBusy" type="button">
+          <button mat-raised-button (click)="cancelElementItem()" [disabled]="isBusy" type="button" class="mat-m02">
             Cancel
           </button>
         </div>

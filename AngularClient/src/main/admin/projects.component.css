@@ -6,6 +6,10 @@
   padding-left: 24px;
 }
 
+.mat-m02 {
+  margin: .2em;
+}
+
 .noResults {
   display: flex;
   justify-content: center;

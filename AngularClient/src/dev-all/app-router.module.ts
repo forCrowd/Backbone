@@ -37,7 +37,7 @@ export function appInitializer(googleAnalyticsService: GoogleAnalyticsService) {
   ],
   imports: [
     RouterModule.forRoot(routes),
-    Angulartics2Module.forRoot([Angulartics2GoogleAnalytics])
+    Angulartics2Module.forRoot()
   ],
   providers: [
     // Application initializer

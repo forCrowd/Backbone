@@ -79,7 +79,7 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
     BrowserAnimationsModule,
     AppHttpClientModule,
     RouterModule.forRoot(coreRoutes),
-    Angulartics2Module.forRoot([Angulartics2GoogleAnalytics]),
+    Angulartics2Module.forRoot(),
     BreezeBridgeHttpClientModule
   ],
   providers: [
