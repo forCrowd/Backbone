@@ -1,4 +1,3 @@
-
 app._init = function () {
 
   // Globals
@@ -29,7 +28,7 @@ app._init = function () {
 
   // Get current user
   app.executeHttpRequest("GET", app.urls.currentUserUrl, null, app.loadCurrentUser);
-}
+};
 
 app.addTodoItem = function (elementItem) {
 
@@ -68,7 +67,7 @@ app.addTodoItem = function (elementItem) {
 
   // Append
   document.getElementById("todo-list").innerHTML += app.elements.todoItem.outerHTML;
-}
+};
 
 app.createItem = function (event) {
 
@@ -124,7 +123,7 @@ app.createItem = function (event) {
       });
     });
   });
-}
+};
 
 app.executeHttpRequest = function (method, url, requestData, callback) {
   requestData = requestData ? JSON.stringify(requestData) : null;
@@ -149,13 +148,13 @@ app.executeHttpRequest = function (method, url, requestData, callback) {
       // Update UI
       app.updateStatus(false);
     }
-  }
+  };
 
   request.open(method, url, true); // true for asynchronous
   request.setRequestHeader("Authorization", `Bearer ${app.currentUserToken}`);
   request.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
   request.send(requestData);
-}
+};
 
 app.loadCurrentUser = function (currentUser) {
 
@@ -171,7 +170,7 @@ app.loadCurrentUser = function (currentUser) {
     app.urls.projectUrl,
     null,
     app.loadProject);
-}
+};
 
 app.loadProject = function (projects) {
 
@@ -199,7 +198,7 @@ app.loadProject = function (projects) {
     // Add todo item
     app.addTodoItem(elementItem);
   }
-}
+};
 
 app.updateItem = function (elementItemId) {
 
@@ -240,14 +239,14 @@ app.updateItem = function (elementItemId) {
   var userElementCellData = {
     DecimalValue: completed ? "0.00" : "1.00",
     RowVersion: userCell.RowVersion,
-  }
+  };
 
   // Execute request
   app.executeHttpRequest("PATCH", updateUserElementCellUrl, userElementCellData, function (updatedUserCell) {
     userCell.DecimalValue = updatedUserCell.DecimalValue;
     userCell.RowVersion = updatedUserCell.RowVersion;
   });
-}
+};
 
 app.removeItem = function (elementItemId) {
 
@@ -273,29 +272,22 @@ app.removeItem = function (elementItemId) {
 
   // Execute request
   app.executeHttpRequest("DELETE", deleteElementItemUrl);
-}
+};
 
 app.updateStatus = function (requesting) {
 
-  if (requesting) {
+  var list = document.getElementById("status").classList;
+  if (requesting)
+    list.remove("hide");
+  else
+    list.add("hide");
 
-    document.getElementById("status").classList.remove("hide");
-
-    var items = document.getElementsByTagName("input");
-    for (var i = 0; i < items.length; i++) {
-      items[i].disabled = true;
-    }
-
-  } else {
-
-    document.getElementById("status").classList.add("hide");
-
-    var items = document.getElementsByTagName("input");
-    for (var i = 0; i < items.length; i++) {
-      items[i].disabled = false;
-    }
+  var items = document.getElementsByTagName("input");
+  for (var i = 0; i < items.length; i++) {
+    items[i].disabled = requesting;
   }
-}
+
+};
 
 // Run the application
 app._init();
