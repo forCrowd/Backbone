@@ -250,31 +250,39 @@ export class ProjectService {
       ElementField: elementField,
       ElementItem: elementItem1
     });
-    cell1.UserElementCellSet[0].DecimalValue = 1;
+
+    // User cell 1
+    this.createUserElementCell(cell1, 1);
 
     // Item 2
     const elementItem2 = this.createElementItem({
       Element: element,
-      Name: "Read 'The Little Prince'"
+      Name: "Read 'The Little Prince' book"
     });
 
     // Cell 2
-    this.createElementCell({
+    const cell2 = this.createElementCell({
       ElementField: elementField,
       ElementItem: elementItem2
     });
 
+    // User cell 2
+    this.createUserElementCell(cell2, 0);
+
     // Item 3
     const elementItem3 = this.createElementItem({
       Element: element,
-      Name: "Watch 'Shawshank Redemption'"
+      Name: "Watch 'Shawshank Redemption' movie"
     });
 
     // Cell 3
-    this.createElementCell({
+    const cell3 = this.createElementCell({
       ElementField: elementField,
       ElementItem: elementItem3
     });
+
+    // User cell 3
+    this.createUserElementCell(cell3, 0);
 
     // Item 4
     const elementItem4 = this.createElementItem({
@@ -283,10 +291,13 @@ export class ProjectService {
     });
 
     // Cell 4
-    this.createElementCell({
+    const cell4 = this.createElementCell({
       ElementField: elementField,
       ElementItem: elementItem4
     });
+
+    // User cell 4
+    this.createUserElementCell(cell4, 0);
 
     return project;
   }

@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.8.1**
+
+* AngularClient - 'Todo App' template fix
+
 **0.8.0**
 
 * AngularClient - Upgrade to Angular 7.x
