@@ -4,14 +4,11 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
 import { Angulartics2Module } from "angulartics2";
 import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
+import { ForcrowdBackboneModule, SharedModule, AppHttpClient, AppHttpClientModule } from "forcrowd-backbone";
 
 // Breeze
 import "./breeze-client-odata-fix";
 import { BreezeBridgeHttpClientModule } from "breeze-bridge2-angular";
-
-// Internal modules
-import { AppHttpClient, AppHttpClientModule } from "./app-http-client/app-http-client.module";
-import { SharedModule } from "../shared/shared.module";
 
 // Components
 import { ContributorsComponent } from "./components/contributors.component";
@@ -22,14 +19,11 @@ import { NotFoundComponent } from "./components/not-found.component";
 import { SearchComponent } from "./components/search.component";
 
 // Services
-import { AppEntityManager } from "./app-entity-manager.service";
-import { AppErrorHandler } from "./app-error-handler.service";
+import { AppEntityManager, AuthService, AppErrorHandler, NotificationService } from "forcrowd-backbone";
 import { AuthGuard } from "./auth-guard.service";
-import { AuthService } from "./auth.service";
 import { CanDeactivateGuard } from "./can-deactivate-guard.service";
 import { DynamicTitleResolve } from "./dynamic-title-resolve.service";
 import { GoogleAnalyticsService } from "./google-analytics.service";
-import { NotificationService } from "./notification.service";
 import { ProjectService } from "./project.service";
 
 export { AppEntityManager, AppHttpClient, AuthGuard, AuthService, CanDeactivateGuard, DynamicTitleResolve, NotificationService, ProjectService }
@@ -80,7 +74,8 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
     AppHttpClientModule,
     RouterModule.forRoot(coreRoutes),
     Angulartics2Module.forRoot(),
-    BreezeBridgeHttpClientModule
+    BreezeBridgeHttpClientModule,
+    ForcrowdBackboneModule,
   ],
   providers: [
     // Application initializer

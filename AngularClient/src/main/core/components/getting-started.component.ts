@@ -1,8 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 
-import { Project } from "../entities/project";
-import { AuthService } from "../auth.service";
 import { ProjectService } from "../project.service";
+import { AuthService, Project } from "forcrowd-backbone";
 
 @Component({
   templateUrl: "getting-started.component.html",

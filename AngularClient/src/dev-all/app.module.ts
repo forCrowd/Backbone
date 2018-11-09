@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 
 import { AdminModule } from "../main/admin/admin.module";
 import { CoreModule } from "../main/core/core.module";
-import { SharedModule } from "../main/shared/shared.module";
+import { SharedModule } from "forcrowd-backbone";
 
 import { AppRouterModule } from "./app-router.module";
 import { AppComponent } from "./app.component";

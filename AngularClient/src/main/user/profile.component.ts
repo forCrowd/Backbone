@@ -3,8 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { MatDialog, MatTableDataSource } from "@angular/material";
 import { finalize } from "rxjs/operators";
 
-import { Project } from "../core/entities/project";
-import { User } from "../core/entities/user";
+import { Project, User } from "forcrowd-backbone";
 import { ProjectService } from "../core/core.module";
 import { ProfileRemoveProjectComponent } from "./profile-remove-project.component";
 import { UserService } from "./user.service";

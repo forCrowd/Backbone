@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.9.0**
+
+ * Angular library has been added "forcrowd-backbone" for many service
+
 **0.8.1**
 
 * AngularClient - 'Todo App' template fix

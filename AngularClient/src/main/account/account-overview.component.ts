@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 
-import { User } from "../core/entities/user";
+import { User } from "forcrowd-backbone";
 import { AuthService } from "../core/core.module";
 
 @Component({

@@ -2,8 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { MatTableDataSource } from "@angular/material";
 import { finalize } from "rxjs/operators";
 
-import { Element } from "../core/entities/element";
-import { Project } from "../core/entities/project";
+import { Project, Element } from "forcrowd-backbone";
 import { ProjectService } from "../core/core.module";
 
 @Component({

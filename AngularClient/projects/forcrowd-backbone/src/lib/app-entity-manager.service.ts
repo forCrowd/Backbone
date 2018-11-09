@@ -10,7 +10,7 @@ import {
 import { BreezeBridgeHttpClientModule } from "breeze-bridge2-angular";
 import "datajs";
 
-import { AppSettings } from "../../app-settings/app-settings";
+import { AppSettings } from "./app-settings/app-settings";
 import { Element } from "./entities/element";
 import { EntityBase } from "./entities/entity-base";
 import { ElementCell } from "./entities/element-cell";
@@ -281,7 +281,7 @@ export class AppEntityManager extends EntityManager {
 
             errorMessage = error.body.error ? error.body.error.message.value : "";
 
-            // Not sure whether this case is possible but, 
+            // Not sure whether this case is possible but,
             // for the moment log "Bad requests with no error message" (so, handled only if there is error message)
             // TODO: Try to log these on the server itself
             // coni2k - 13 May '17
@@ -368,7 +368,7 @@ export class AppEntityManager extends EntityManager {
       entity.RowVersion = rowVersion;
     });
 
-    /* Aaargh! 
+    /* Aaargh!
     * Web API OData doesn't calculate the proper save order
     * which means, if we aren't careful on the client,
     * we could save a new TodoItem before we saved its parent new TodoList

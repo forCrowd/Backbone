@@ -7,9 +7,7 @@ import { Subscription } from "rxjs";
 import { mergeMap, map, filter } from "rxjs/operators";
 
 import { AppSettings } from "../../../app-settings/app-settings";
-import { User } from "../entities/user";
-import { AuthService } from "../auth.service";
-import { NotificationService } from "../notification.service";
+import { User, AuthService, NotificationService } from "forcrowd-backbone";
 
 @Component({
   selector: "core",

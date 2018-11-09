@@ -6,7 +6,7 @@ import { UserElementField } from "./user-element-field";
 import { UserLogin } from "./user-login";
 import { UserRole } from "./user-role";
 import { Token } from "../token";
-import { stripInvalidChars } from "../../shared/utils";
+import { stripInvalidChars } from "../shared/utils";
 
 export class User extends EntityBase {
 
