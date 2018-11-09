@@ -15,7 +15,7 @@ export class ElementCellManagerComponent implements OnInit {
   @Output() isEditingChanged = new EventEmitter<boolean>();
 
   elementCellDataSource = new MatTableDataSource<ElementCell>([]);
-  elementCellDisplayedColumns = ["elementItem", "value", "createdOn", "functions"];
+  elementCellDisplayedColumns = ["elementItem", "value", "createdOn"];
   elementFieldDataType = ElementFieldDataType;
 
   get elementFilter(): Element {

@@ -3,6 +3,8 @@
 **0.9.0**
 
  * Angular library has been added "forcrowd-backbone" for many service
+ * AngularClient - Backbone new UI has been added
+  * Minor update
 
 **0.8.1**
 

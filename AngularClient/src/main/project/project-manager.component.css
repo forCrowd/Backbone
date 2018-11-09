@@ -15,15 +15,128 @@ form {
 }
 
 .mat-form-field {
-  width: 45%;
+  width: 90%;
 }
 
 .mat-m02 {
-  margin: .2em;
+  margin: .6em;
+}
+
+.mat-tab-nav-bar, .mat-tab-header {
+  border-bottom: 0px solid rgba(0, 0, 0, 1) !important;
+}
+
+.templateContainer {
+  text-align: center;
 }
 
 .templateContainer button {
-  height: 100px;
+  height: 200px;
   margin-right: 20px;
-  width: 200px;
+  width: 274px;
+}
+
+.fs-28 {
+  font-size: 28px;
+}
+
+.fs-24 {
+  font-size: 24px;
+}
+
+.fs-12 {
+  font-size: 12px !important;
+}
+
+.mat-card {
+  margin-top: 28px;
+  height: 340px !important;
+  background-image: url("/assets/images/diamondreflection.png");
+  background-size: cover;
+}
+
+.mat-card-std {
+  padding-top: 24px;
+  border-radius: 4px;
+  border: solid 1px #dbdbdd;
+  background-color: #ffffff;
+  box-shadow: none !important;
+  background-image: none !important;
+}
+
+.board {
+  width: 24%;
+  float: left;
+  height: 140px;
+  border-right: 1px solid;
+  border-right-color: #e2e2e4;
+  padding: 16px;
+}
+
+.board-no-border {
+  width: 26%;
+  float: left;
+  height: 140px;
+  border-right-color: #e2e2e4;
+  padding: 42px 10px 10px 5px;
+}
+
+textarea.mat-input-element {
+  padding: 10px 2px 0;
+  margin: -2px 0;
+  padding: 10px 10px 0px 14px;
+  height: 30px;
+}
+
+.mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
+  width: 211.5px;
+  height: 60px;
+  background-color: #58b287;
+  font-family: Arial;
+  font-size: 26px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+}
+
+.no-shadow {
+  box-shadow: none !important;
+}
+
+.start-text {
+  font-family: Arial;
+  font-size: 36px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.56;
+  letter-spacing: normal;
+  color: #4a4a4a;
+  padding: 10px;
+}
+
+h2 {
+  color: #4a4a4a;
+  font-size: 18px;
+  font-family: Arial;
+  font-weight: bold;
+  font-style: normal;
+  letter-spacing: normal;
+  margin: 16px 0 6px !important;
+}
+
+.template-card {
+  width: 283.5px;
+  height: 200px;
+  border-radius: 4px;
+  border: solid 1px #dbdbdd;
+  background-color: #ffffff;
+}
+
+.ws-n {
+  white-space: normal;
 }

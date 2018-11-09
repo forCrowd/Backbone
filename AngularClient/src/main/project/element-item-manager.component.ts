@@ -1,9 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { MatTableDataSource } from "@angular/material";
+import { MatTableDataSource, MatDialog } from "@angular/material";
 import { finalize } from "rxjs/operators";
 
 import { Element, Project, ElementItem } from "forcrowd-backbone";
 import { ProjectService } from "../core/core.module";
+import { SelectionModel } from "@angular/cdk/collections";
+import { RemoveConfirmComponent } from "./remove-confirm.component";
 
 @Component({
   selector: "element-item-manager",
@@ -16,7 +18,8 @@ export class ElementItemManagerComponent implements OnInit {
   @Output() isEditingChanged = new EventEmitter<boolean>();
 
   elementItemDataSource = new MatTableDataSource<ElementItem>([]);
-  elementItemDisplayedColumns = ["element", "name", "createdOn", "functions"];
+  selection = new SelectionModel<ElementItem>(true, []);
+  elementItemDisplayedColumns = ["select", "element", "name", "createdOn"];
 
   get selectedElementItem(): ElementItem {
     return this.fields.selectedElementItem;
@@ -52,7 +55,8 @@ export class ElementItemManagerComponent implements OnInit {
     return this.projectService.isBusy;
   }
 
-  constructor(private projectService: ProjectService) { }
+  constructor(private projectService: ProjectService,
+    private dialog: MatDialog) { }
 
   addElementItem() {
     this.selectedElementItem = this.projectService.createElementItem({
@@ -75,13 +79,24 @@ export class ElementItemManagerComponent implements OnInit {
     this.elementFilter = this.project.ElementSet[0];
   }
 
-  removeElementItem(elementItem: ElementItem) {
-    this.elementItemDataSource.data = null;
-    this.projectService.removeElementItem(elementItem);
-    this.projectService.saveChanges().pipe(
-      finalize(() => {
-        this.elementItemDataSource.data = this.elementFilter.ElementItemSet;
-      })).subscribe();
+  removeElementItem() {
+    const dialogRef = this.dialog.open(RemoveConfirmComponent);
+    dialogRef.afterClosed().subscribe(confirmed => {
+
+      if (!confirmed) return;
+
+      if (this.selection.selected.length > 0) {
+        this.elementItemDataSource.data = null;
+        this.selection.selected.forEach(elementItem => {
+          this.projectService.removeElementItem(elementItem);
+        });
+
+        this.projectService.saveChanges().pipe(
+          finalize(() => {
+            this.elementItemDataSource.data = this.elementFilter.ElementItemSet;
+          })).subscribe();
+      }
+    });
   }
 
   saveElementItem() {
@@ -93,6 +108,18 @@ export class ElementItemManagerComponent implements OnInit {
 
   submitDisabled(): boolean {
     return this.isBusy || this.selectedElementItem.entityAspect.getValidationErrors().length > 0;
+  }
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.elementItemDataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.elementItemDataSource.data.forEach(row => this.selection.select(row));
   }
 
   trackBy(index: number, elementItem: ElementItem) {

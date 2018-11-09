@@ -1,0 +1,109 @@
+.btn {
+  margin: 0 auto;
+  text-align: left;
+}
+
+.button {
+  width: 214px;
+  height: 57px;
+  font-family: Arial;
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  border-radius: 4px;
+  background-color: #58b287;
+  text-align: center;
+  color: #eeeeee;
+  margin-left: 30px !important;
+}
+
+.bg {
+  background-color: #2e3640;
+}
+
+.container {
+  max-width: 1140px;
+  background-color: #2e3640;
+  height: 580px;
+  margin: 0 auto;
+}
+
+.landing {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.landing-content {
+  padding: 50px;
+  height: 700px;
+}
+
+.p-50 {
+  float: left;
+  width: 50%;
+  height: 200px;
+  font-family: Arial;
+  font-size: 26px;
+  font-weight: bold;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #5a5a5a;
+  padding-top: 40px;
+}
+
+.p-50 div {
+  font-family: Arial;
+  font-size: 18px;
+  font-weight: normal;
+  line-height: 1.57;
+  letter-spacing: normal;
+  color: #4a4a4a;
+  padding: 16px 56px 10px 10px;
+  padding-left: 56px;
+  padding-right: 41px;
+}
+
+.p-50 img {
+  padding-right: 20px;
+  float: left;
+}
+
+.content {
+  width: 50%;
+  height: 582px;
+  float: left;
+}
+
+.subtitle {
+  height: 142px;
+  font-family: Arial;
+  font-size: 20px;
+  line-height: 1.63;
+  letter-spacing: normal;
+  color: #e5e5e5;
+  padding-top: 70px;
+  padding-left: 30px;
+  padding-right: 20px;
+  text-align: left;
+}
+
+.title {
+  height: 108px;
+  font-family: Arial;
+  font-size: 28px;
+  line-height: 1.49;
+  padding-top: 136px;
+  padding-right: 20px;
+  padding-left: 30px;
+  letter-spacing: normal;
+  color: #ffffff;
+  text-align: left;
+}
+
+.img {
+  float: left;
+  margin-top:140px;
+  width: 50%;
+  height: 400px;
+  background-image: url("/assets/images/backbone-for-ci.gif");
+}

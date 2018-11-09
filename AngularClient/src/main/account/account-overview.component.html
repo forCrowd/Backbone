@@ -1,29 +1,52 @@
-<h2>Account Overview</h2>
-<hr />
+<h1>Account Overview</h1>
 
-<div *ngIf="currentUser">
+<mat-card *ngIf="currentUser">
+
   <div class="g-mt-20">
-    <label class="mat-body-2">Email</label>
-    <div>
+
+    <label class="mat-body-2">Email</label><br>
+    <div class="content">
       {{ currentUser.Email }}
-      <span [hidden]="!displayConfirmEmail">
-        | (Unconfirmed) <a routerLink="/app/account/confirm-email">Confirm</a>
-      </span>
-      | <a routerLink="/app/account/change-email">Update</a>
     </div>
+
+    <button mat-icon-button routerLink="/app/account/change-email">
+      <mat-icon aria-label="Update">edit</mat-icon>
+    </button>
+
+    <span [hidden]="!displayConfirmEmail">
+      (Unconfirmed) <a routerLink="/app/account/confirm-email">Confirm</a>
+    </span>
+
   </div>
+
   <div class="g-mt-20">
-    <label class="mat-body-2">Username</label>
-    <div>
+
+    <label class="mat-body-2">Username</label><br>
+    <div class="content">
       {{ currentUser.UserName }}
-      | <a routerLink="/app/account/change-username">Update</a>
     </div>
+
+    <button mat-icon-button routerLink="/app/account/change-username">
+      <mat-icon aria-label="Update">edit</mat-icon>
+    </button>
+
   </div>
+
   <div class="g-mt-20">
-    <label class="mat-body-2">Password</label>
-    <div>
-      <a [hidden]="!currentUser.HasPassword" routerLink="/app/account/change-password">Change password</a>
-      <a [hidden]="currentUser.HasPassword" routerLink="/app/account/add-password">Add password</a>
+
+    <label class="mat-body-2">Password</label><br>
+    <div class="content">
+      ************
     </div>
+
+    <button mat-icon-button [hidden]="!currentUser.HasPassword" routerLink="/app/account/change-password">
+      <mat-icon aria-label="Change password">edit</mat-icon>
+    </button>
+
+    <button mat-icon-button [hidden]="currentUser.HasPassword" routerLink="/app/account/add-password">
+      <mat-icon aria-label="Add password">edit</mat-icon>
+    </button>
+
   </div>
-</div>
+
+</mat-card>

@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 import { SharedModule } from "forcrowd-backbone";
 
@@ -25,6 +26,7 @@ const userRoutes: Routes = [
   ],
   imports: [
     SharedModule,
+    FlexLayoutModule,
     RouterModule.forChild(userRoutes),
   ],
   providers: [

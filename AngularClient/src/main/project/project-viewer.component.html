@@ -1,61 +1,68 @@
 <div *ngIf="project">
 
-  <h2>{{ project.Name }}</h2>
-  <hr />
+    <h2>
+      <button mat-icon-button (click)="cancelProject()">
+        <mat-icon aria-label="Back">keyboard_arrow_left</mat-icon>
+      </button>
+      {{ project.Name }}
+    </h2>
 
-  <div class="g-mt-20">
-    <div class="g-mt-20">
-      <label class="mat-body-2">Created by</label>
-      <div>
-        <a routerLink="/users/{{ project.User.UserName }}">{{ project.User.UserName }}</a>
+    <mat-card>
+      <h2>Project Overview</h2>
+      <div class="g-mt-20">
+        <label class="mat-body-2">Created by</label>
+        <div>
+          <a routerLink="/users/{{ project.User.UserName }}">{{ project.User.UserName }}</a>
+        </div>
       </div>
-    </div>
-    <div class="g-mt-20">
-      <label class="mat-body-2">Description</label>
-      <div>
-        {{ project.Description || "N/A" }}
+      <div class="g-mt-20">
+        <label class="mat-body-2">Description</label>
+        <div>
+          {{ project.Description || "N/A" }}
+        </div>
       </div>
-    </div>
-    <div class="g-mt-20">
-      <label class="mat-body-2">Origin (Domain/Host)</label>
-      <div>
-        <a href="{{ project.Origin }}" target="_blank">{{ project.Origin }}</a>
+      <div class="g-mt-20">
+        <label class="mat-body-2">Origin (Domain/Host)</label>
+        <div>
+          <a href="{{ project.Origin }}" target="_blank">{{ project.Origin }}</a>
+        </div>
       </div>
-    </div>
-    <div class="g-mt-20">
-      <label class="mat-body-2">Created - Last modified on</label>
-      <div>
-        {{ project.CreatedOn | date: 'medium' }} - {{ project.ModifiedOn | date: 'medium' }}
+      <div class="g-mt-20">
+        <label class="mat-body-2">Created - Last modified on</label>
+        <div>
+          {{ project.CreatedOn | date: 'medium' }} - {{ project.ModifiedOn | date: 'medium' }}
+        </div>
       </div>
-    </div>
+    </mat-card>
+
+    <h2>Backbone API</h2>
+
+    <mat-card>
+      <div class="g-mt-20">
+        <label class="mat-body-2">
+          Project - Basic
+        </label>
+        <div>
+          <a href="{{ projectBasicApiUrl }}" target="_blank">{{ projectBasicApiUrl }}</a><br />
+        </div>
+      </div>
+      <div class="g-mt-20">
+        <label class="mat-body-2">Project - Expanded for guest access</label>
+        <div>
+          <a href="{{ projectGuestExpandedApiUrl }}" target="_blank">{{ projectGuestExpandedApiUrl }}</a><br />
+        </div>
+      </div>
+      <div class="g-mt-20">
+        <label class="mat-body-2">Project - Expanded for project owners (Authorization required):</label>
+        <div>
+          <a href="{{ projectOwnerExpandedApiUrl }}" target="_blank">{{ projectOwnerExpandedApiUrl }}</a><br />
+        </div>
+      </div>
+      <div class="g-mt-20">
+        <label class="mat-body-2">API Metadata:</label>
+        <div>
+          <a href="{{ metadataUrl }}" target="_blank">{{ metadataUrl }}</a><br />
+        </div>
+      </div>
+    </mat-card>
   </div>
-  <div class="g-mt-20">
-    <h4>Backbone API</h4>
-    <div class="g-mt-20">
-      <label class="mat-body-2">
-        Project - Basic
-      </label>
-      <div>
-        <a href="{{ projectBasicApiUrl }}" target="_blank">{{ projectBasicApiUrl }}</a><br />
-      </div>
-    </div>
-    <div class="g-mt-20">
-      <label class="mat-body-2">Project - Expanded for guest access</label>
-      <div>
-        <a href="{{ projectGuestExpandedApiUrl }}" target="_blank">{{ projectGuestExpandedApiUrl }}</a><br />
-      </div>
-    </div>
-    <div class="g-mt-20">
-      <label class="mat-body-2">Project - Expanded for project owners (Authorization required):</label>
-      <div>
-        <a href="{{ projectOwnerExpandedApiUrl }}" target="_blank">{{ projectOwnerExpandedApiUrl }}</a><br />
-      </div>
-    </div>
-    <div class="g-mt-20">
-      <label class="mat-body-2">API Metadata:</label>
-      <div>
-        <a href="{{ metadataUrl }}" target="_blank">{{ metadataUrl }}</a><br />
-      </div>
-    </div>
-  </div>
-</div>

@@ -1,14 +1,188 @@
-.footer {
+.link {
+  font-family: Arial;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.8;
+  letter-spacing: normal;
+  color: #6f6f6f;
+  text-decoration: none;
+  padding-right: 16px;
+}
+
+.space {
+  height: 100px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #f8f9fb;
+}
+
+mat-sidenav {
+  width: 250px;
+}
+
+.content {
+  margin-left: 16px !important;
+  margin-right: 16px !important;
+}
+
+.logo-white {
+  color: #ffffff;
+  font-size: 1.5em !important;
+  font-weight: 500;
+}
+
+.logo-black {
+  color: #000000;
+  padding-top: 14px !important;
+  padding-bottom: 14px !important;
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.logo-sidenav {
+  height: 60px !important;
+  border-bottom: 1px solid #7d7676;
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.with-bg {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  max-height: 130px;
+}
+
+.no-shadow {
+  box-shadow: none !important;
+}
+
+::ng-deep .mat-expansion-panel-body {
+  padding: 0px !important;
+  padding-left: 10px !important;
+}
+
+.header-bb {
+  background-color: #ffffff;
+  border-bottom: 1px solid #dadada;
+}
+
+.bottom-to-top {
+  border: 0px;
+  border-right: 1px;
+  border-style: solid;
+  background-color: #2e3640;
+  border-image: linear-gradient(to top, #c1c1c1, rgba(0, 0, 0, 0)) 1 100%
+}
+
+.new-btn {
+  width: 145.9px;
+  height: 47.4px;
+  border-radius: 4px;
+  background-color: #58b287;
+  font-family: Arial;
+  font-size: 18px;
+  font-weight: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+}
+
+.other-btn {
+  width: 145.9px;
+  height: 47.4px;
+  font-family: Arial;
+  font-size: 18px;
+  font-weight: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left !important;
+  color: #ffffff;
+}
+
+.sidenav-link {
+  font-family: Arial;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #e8e8e8;
+}
+
+.list {
+  height: 46px !important;
+}
+
+
+.pt-20 {
+  margin-top: 20px;
+  margin-bottom: 14px;
+}
+
+.w-160 {
+  width: 160px;
+}
+
+/*  ---  */
+
+.backbone-icon {
+  width: 19px;
+  height: 26px;
+  padding-right: 8px;
+}
+
+.footer-landing {
   position: fixed;
-  bottom: 6px;
-  left: 6px;
-  right: 6px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
   width: initial;
+  background-color: #f8f9fb;
+  z-index: 1;
+}
+
+.footer {
+  left: 250px !important;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  width: initial;
+  background-color: #f8f9fb;
+  z-index: 1;
 }
 
   .footer a {
-    display: flex;
     justify-content: center;
+    font-family: Arial;
+    font-size: 16px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.5px;
+    color: #354052;
   }
 
   .footer .footer-left {
@@ -20,21 +194,22 @@
   }
 
 .header {
-  left: 6px;
+  left: 0px;
   position: fixed;
-  right: 6px;
-  top: 6px;
+  right: 0px;
+  top: 0px;
   width: initial;
+  z-index: 100;
 }
-
   .header a {
-    padding: 5px;
+    left: 200px;
+    padding: 0px;
     line-height: initial;
   }
 
   .header h1 {
     display: inline-block;
-    margin-left: 5px;
+    margin-left: 0px;
   }
 
 .sidenav {
@@ -42,15 +217,16 @@
   -ms-align-items: center;
   -o-align-items: center;
   -webkit-align-items: center;
-  background-color: #f5f5f5;
+  background-color: #2e3640;
   display: flex;
   flex-direction: column;
-  width: 50px;
+  width: 200px;
 }
 
   .sidenav a, .sidenav button {
-    min-width: 50px;
-    padding: 5px 0;
+    min-width: 200px;
+    padding: 0px;
+    color: #ffffff;
   }
 
 .rotate {
@@ -59,10 +235,10 @@
 
 .sidenav-container {
   position: absolute;
-  top: 78px;
-  bottom: 78px;
-  left: 5px;
-  right: 5px;
+  top: 0px;
+  bottom: 64px;
+  left: 0px;
+  right: 0px;
 }
 
 .sidenav-content {

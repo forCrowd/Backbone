@@ -5,7 +5,8 @@ import { AuthService } from "../core/core.module";
 
 @Component({
   selector: "account-overview",
-  templateUrl: "account-overview.component.html"
+  templateUrl: "account-overview.component.html",
+  styleUrls: ["account-overview.component.css"]
 })
 export class AccountOverviewComponent {
 

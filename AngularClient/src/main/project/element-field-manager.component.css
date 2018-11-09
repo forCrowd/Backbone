@@ -9,3 +9,32 @@ form {
 .mat-m02 {
   margin: .2em;
 }
+
+.ml-4 {
+  margin-left: 4px;
+}
+
+.ml4-mt-4 {
+  margin-left: 4px;
+  margin-top: -4px
+}
+
+mat-card a {
+  font-weight: normal;
+  color: #0019ff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+label {
+  font-family: Arial;
+  font-size: 16px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4a4a4a;
+  padding-top: 10px;
+  height: 30px !important;
+}

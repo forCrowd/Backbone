@@ -14,3 +14,9 @@ form {
   margin: .2em;
 }
 
+mat-card a {
+  font-weight: normal;
+  color: #0019ff;
+  text-decoration: underline;
+  cursor: pointer;
+}

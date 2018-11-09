@@ -5,6 +5,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { Angulartics2Module } from "angulartics2";
 import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
 import { ForcrowdBackboneModule, SharedModule, AppHttpClient, AppHttpClientModule } from "forcrowd-backbone";
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 // Breeze
 import "./breeze-client-odata-fix";
@@ -65,9 +66,11 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
   ],
   exports: [
     RouterModule,
-    CoreComponent
+    CoreComponent,
+    FlexLayoutModule
   ],
   imports: [
+    FlexLayoutModule,
     SharedModule,
     BrowserModule,
     BrowserAnimationsModule,
@@ -97,7 +100,8 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
     DynamicTitleResolve,
     NotificationService,
     GoogleAnalyticsService,
-    ProjectService
+    ProjectService,
+    FlexLayoutModule,
   ]
 })
 export class CoreModule { }
