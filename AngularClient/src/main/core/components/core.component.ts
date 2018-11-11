@@ -5,11 +5,10 @@ import { Title } from "@angular/platform-browser";
 import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
 import { Subscription } from "rxjs";
 import { mergeMap, map, filter } from "rxjs/operators";
+import { ObservableMedia, MediaChange } from "@angular/flex-layout";
 
 import { AppSettings } from "../../../app-settings/app-settings";
-import { User } from "../entities/user";
-import { AuthService } from "../auth.service";
-import { NotificationService } from "../notification.service";
+import { User, AuthService, NotificationService } from "forcrowd-backbone";
 
 @Component({
   selector: "core",
@@ -17,6 +16,15 @@ import { NotificationService } from "../notification.service";
   styleUrls: ["core.component.css"]
 })
 export class CoreComponent implements OnDestroy, OnInit {
+
+  opened = true;
+  over = "side";
+  expandHeight = "42px";
+  collapseHeight = "42px";
+  displayMode = "flat";
+  // overlap = false;
+  activeMediaQuery = "";
+  watcher: Subscription;
 
   appVersion = AppSettings.version;
   currentUser: User = null;
@@ -29,8 +37,34 @@ export class CoreComponent implements OnDestroy, OnInit {
     private matSnackBar: MatSnackBar,
     private notificationService: NotificationService,
     private titleService: Title,
-    private router: Router) {
+    private router: Router,
+    private media: ObservableMedia) {
     this.currentUser = this.authService.currentUser;
+    this.watcher = media.subscribe((change: MediaChange) => {
+      this.activeMediaQuery = change.mqAlias;
+      if (change.mqAlias === "sm" || change.mqAlias === "xs") {
+        this.opened = false;
+        this.over = "over";
+      } else {
+        this.opened = true;
+        this.over = "side";
+      }
+    });
+  }
+
+  pathChecker(): void {
+    if (this.router.url === "/") {
+      this.opened = false;
+      this.over = "over";
+    } else {
+      if (this.activeMediaQuery === "sm" || this.activeMediaQuery === "xs") {
+        this.opened = false;
+        this.over = "over";
+      } else {
+        this.opened = true;
+        this.over = "side";
+      }
+    }
   }
 
   closeGuestAccountInfoBox(): void {
@@ -59,6 +93,7 @@ export class CoreComponent implements OnDestroy, OnInit {
       filter(event => event instanceof NavigationEnd),
       map(() => this.activatedRoute),
       map(route => {
+        this.pathChecker(); // for home and mobile
         while (route.firstChild) { route = route.firstChild; }
         return route;
       }),

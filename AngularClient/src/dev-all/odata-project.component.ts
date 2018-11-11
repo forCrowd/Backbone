@@ -4,11 +4,8 @@ import { Observable } from "rxjs";
 import { mergeMap, map } from "rxjs/operators";
 
 import { AppSettings } from "../app-settings/app-settings";
-import { Project } from "../main/core/entities/project";
-import { User } from "../main/core/entities/user";
 
-import { AuthService } from "../main/core/core.module";
-import { getUniqueValue } from "../main/shared/utils";
+import { Project, User, AuthService, getUniqueValue } from "forcrowd-backbone";
 
 @Component({
   selector: "odata-project",

@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { MatTableDataSource } from "@angular/material";
 import { finalize } from "rxjs/operators";
 
-import { Project } from "../entities/project";
+import { Project } from "forcrowd-backbone";
 import { ProjectService } from "../project.service";
 
 @Component({

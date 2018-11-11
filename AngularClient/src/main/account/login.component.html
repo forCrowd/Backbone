@@ -1,26 +1,29 @@
-<h2>Login</h2>
-<hr />
+<h1>Login</h1>
 
-<form #loginForm="ngForm" autocomplete="off">
-  <div class="g-mt-20" [ngClass]="{'has-error': UserName.dirty && UserName.invalid}">
-    <mat-form-field>
-      <input matInput id="UserName" name="UserName" type="text" placeholder="Username or email" [(ngModel)]="username" #UserName="ngModel" class="form-control" required />
-    </mat-form-field>
-  </div>
-  <div class="g-mt-20" [ngClass]="{'has-error': Password.dirty && Password.invalid}">
-    <mat-form-field>
-      <input matInput id="Password" name="Password" type="password" placeholder="Password" [(ngModel)]="password" #Password="ngModel" class="form-control" required />
-    </mat-form-field>
-  </div>
-  <div class="g-mt-20">
-    <mat-checkbox id="RememberMe" name="RememberMe" [(ngModel)]="rememberMe">Remember me</mat-checkbox>
-  </div>
-  <div class="g-mt-20">
-    <button mat-raised-button (click)="login()" [disabled]="loginForm.form.invalid || isBusy" type="button" color="primary">
-      Login
-    </button>
-  </div>
-  <div class="g-mt-20">
-    <a routerLink="/app/account/reset-password">Forgot your password?</a>
-  </div>
-</form>
+<mat-card>
+  <form #loginForm="ngForm" autocomplete="off">
+    <div class="g-mt-20" [ngClass]="{'has-error': UserName.dirty && UserName.invalid}">
+      <mat-form-field>
+        <input matInput id="UserName" name="UserName" type="text" placeholder="Username or email" [(ngModel)]="username"
+          #UserName="ngModel" class="form-control" required />
+      </mat-form-field>
+    </div>
+    <div class="g-mt-20" [ngClass]="{'has-error': Password.dirty && Password.invalid}">
+      <mat-form-field>
+        <input matInput id="Password" name="Password" type="password" placeholder="Password" [(ngModel)]="password"
+          #Password="ngModel" class="form-control" required />
+      </mat-form-field>
+    </div>
+    <div class="g-mt-20">
+      <mat-checkbox id="RememberMe" name="RememberMe" [(ngModel)]="rememberMe">Remember me</mat-checkbox>
+    </div>
+    <div class="g-mt-20">
+      <button mat-flat-button (click)="login()" [disabled]="loginForm.form.invalid || isBusy">
+        Login
+      </button>
+    </div>
+    <div class="g-mt-20">
+      <a routerLink="/app/account/reset-password">Forgot your password?</a>
+    </div>
+  </form>
+</mat-card>

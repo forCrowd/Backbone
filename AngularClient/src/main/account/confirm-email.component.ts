@@ -7,7 +7,8 @@ import { NotificationService } from "../core/core.module";
 
 @Component({
   selector: "confirm-email",
-  templateUrl: "confirm-email.component.html"
+  templateUrl: "confirm-email.component.html",
+  styleUrls: ["confirm-email.component.css"]
 })
 export class ConfirmEmailComponent implements OnInit {
 

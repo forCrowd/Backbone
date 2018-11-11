@@ -1,3 +1,25 @@
 .userName {
   font-style: italic;
 }
+
+mat-card {
+  border-radius: 4px;
+  border: solid 1px #dbdbdd;
+  background-color: #ffffff;
+  box-shadow: none !important;
+}
+
+  mat-card div {
+    font-size: 16px;
+    margin: 30px 28px 30px !important;
+    font-family: Arial;
+    font-weight: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #4a4a4a;
+  }
+
+  mat-card a {
+    font-weight: bold;
+    color: #4a4a4a;
+  }

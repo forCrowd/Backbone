@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { MatTableDataSource } from "@angular/material";
+import { SelectionModel } from "@angular/cdk/collections";
+import { MatTableDataSource, MatDialog } from "@angular/material";
 import { finalize } from "rxjs/operators";
 
-import { Element } from "../core/entities/element";
-import { Project } from "../core/entities/project";
+import { Element, Project } from "forcrowd-backbone";
 import { ProjectService } from "../core/core.module";
+import { RemoveConfirmComponent } from "./remove-confirm.component";
 
 @Component({
   selector: "element-manager",
@@ -17,7 +18,8 @@ export class ElementManagerComponent implements OnInit {
   @Output() isEditingChanged = new EventEmitter<boolean>();
 
   elementDataSource = new MatTableDataSource<Element>([]);
-  elementDisplayedColumns = ["name", "sortOrder", "createdOn", "functions"];
+  selection = new SelectionModel<Element>(true, []);
+  elementDisplayedColumns = ["select", "name", "sortOrder", "createdOn"];
 
   get selectedElement(): Element {
     return this.fields.selectedElement;
@@ -42,7 +44,8 @@ export class ElementManagerComponent implements OnInit {
     return this.projectService.isBusy;
   }
 
-  constructor(private projectService: ProjectService) { }
+  constructor(private projectService: ProjectService,
+    private dialog: MatDialog) { }
 
   addElement(): void {
     this.selectedElement = this.projectService.createElement({
@@ -65,15 +68,26 @@ export class ElementManagerComponent implements OnInit {
     this.elementDataSource.data = this.project.ElementSet;
   }
 
-  removeElement(element: Element): void {
+  removeElement(): void {
+    const dialogRef = this.dialog.open(RemoveConfirmComponent);
 
-    this.elementDataSource.data = null;
-    this.projectService.removeElement(element);
+    dialogRef.afterClosed().subscribe(confirmed => {
 
-    this.projectService.saveChanges().pipe(
-      finalize(() => {
-        this.elementDataSource.data = this.project.ElementSet;
-      })).subscribe();
+      if (!confirmed) return;
+
+      if (this.selection.selected.length > 0) {
+
+        this.elementDataSource.data = null;
+        this.selection.selected.forEach(element => {
+          this.projectService.removeElement(element);
+        });
+
+        this.projectService.saveChanges().pipe(
+          finalize(() => {
+            this.elementDataSource.data = this.project.ElementSet;
+          })).subscribe();
+      }
+    });
   }
 
   saveElement(): void {
@@ -84,6 +98,18 @@ export class ElementManagerComponent implements OnInit {
 
   submitDisabled(): boolean {
     return this.isBusy || this.selectedElement.entityAspect.getValidationErrors().length > 0;
+  }
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.elementDataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.elementDataSource.data.forEach(row => this.selection.select(row));
   }
 
   trackBy(index: number, element: Element) {

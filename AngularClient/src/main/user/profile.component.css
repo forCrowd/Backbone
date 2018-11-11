@@ -1,3 +1,37 @@
+h1 {
+  color: #4a4a4a;
+  font-size: 24px;
+  font-family: Arial;
+  font-weight: bold;
+  font-style: normal;
+  letter-spacing: normal;
+  margin: 16px 0 6px !important;
+}
+
+h2 {
+  color: #4a4a4a;
+  font-size: 18px;
+  font-family: Arial;
+  font-weight: bold;
+  font-style: normal;
+  letter-spacing: normal;
+  margin: 16px 0 6px !important;
+}
+
+.edit-row button {
+  margin: 16px 8px 16px 8px;
+  font-family: Arial;
+  color: #4a4a4a;
+}
+
+.mat-button[disabled] {
+  color: rgba(0, 0, 0, 0.26) !important;
+}
+
+.edit-row i {
+  font-size: 20px;
+}
+
 .mat-cell {
   padding: 4px 0;
 }
@@ -12,4 +46,22 @@
 
 i {
   padding-bottom: 2px;
+}
+
+mat-card a {
+  font-weight: normal;
+  color: #0019ff;
+}
+
+mat-card .board {
+  width: 33%;
+  float: left;
+  height: 140px;
+  border-right: 1px solid;
+  border-right-color: #e2e2e4;
+}
+
+.no-padding {
+  height: 140px;
+  padding: 0px !important;
 }

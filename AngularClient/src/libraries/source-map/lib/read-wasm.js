@@ -17,6 +17,7 @@ if (typeof fetch === "function") {
   module.exports.initialize = url => mappingsWasmUrl = url;
 } else {
   // Node version of reading a wasm file into an array buffer.
+/*
   const fs = require("fs");
   const path = require("path");
 
@@ -33,7 +34,7 @@ if (typeof fetch === "function") {
       });
     });
   };
-
+ */
   module.exports.initialize = _ => {
     console.debug("SourceMapConsumer.initialize is a no-op when running in node.js");
   };

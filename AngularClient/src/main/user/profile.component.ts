@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
+import { SelectionModel } from "@angular/cdk/collections";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatDialog, MatTableDataSource } from "@angular/material";
 import { finalize } from "rxjs/operators";
 
-import { Project } from "../core/entities/project";
-import { User } from "../core/entities/user";
+import { Project, User } from "forcrowd-backbone";
 import { ProjectService } from "../core/core.module";
 import { ProfileRemoveProjectComponent } from "./profile-remove-project.component";
 import { UserService } from "./user.service";
@@ -16,8 +16,9 @@ import { UserService } from "./user.service";
 })
 export class ProfileComponent implements OnInit {
 
-  displayedColumns = ["name", "ratingCount", "createdOn", "functions"];
+  displayedColumns = ["select", "name", "ratingCount", "createdOn", "functions"];
   dataSource = new MatTableDataSource<Project>([]);
+  selection = new SelectionModel<Project>(true, []);
   user: User = null;
 
   get isBusy(): boolean {
@@ -31,7 +32,7 @@ export class ProfileComponent implements OnInit {
     private userService: UserService) {
   }
 
-  confirmRemove(project: Project) {
+  confirmRemove() {
 
     const dialogRef = this.dialog.open(ProfileRemoveProjectComponent);
 
@@ -39,12 +40,32 @@ export class ProfileComponent implements OnInit {
 
       if (!confirmed) return;
 
-      this.projectService.removeProject(project);
-      this.userService.saveChanges().pipe(
-        finalize(() => {
-          this.dataSource.data = this.user.ProjectSet;
-        })).subscribe();
+      if (this.selection.selected.length > 0) {
+
+        this.selection.selected.forEach(project => {
+          this.projectService.removeProject(project);
+        });
+
+        this.userService.saveChanges().pipe(
+          finalize(() => {
+            this.dataSource.data = this.user.ProjectSet;
+          })).subscribe();
+      }
     });
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
   ngOnInit(): void {

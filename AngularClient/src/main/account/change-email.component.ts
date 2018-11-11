@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 
 import { AppSettings } from "../../app-settings/app-settings";
 import { AccountService } from "./account.service";
-import { getUniqueEmail } from "../shared/utils";
+import { getUniqueEmail } from "forcrowd-backbone";
 
 @Component({
   selector: "change-email",

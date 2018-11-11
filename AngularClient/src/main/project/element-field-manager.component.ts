@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { MatTableDataSource } from "@angular/material";
+import { MatTableDataSource, MatDialog } from "@angular/material";
 import { finalize } from "rxjs/operators";
 
-import { Element } from "../core/entities/element";
-import { Project } from "../core/entities/project";
-import { ElementField, ElementFieldDataType } from "../core/entities/element-field";
+import { Element, Project, ElementField, ElementFieldDataType } from "forcrowd-backbone";
 import { ProjectService } from "../core/core.module";
+import { SelectionModel } from "@angular/cdk/collections";
+import { RemoveConfirmComponent } from "./remove-confirm.component";
 
 @Component({
   selector: "element-field-manager",
@@ -18,7 +18,8 @@ export class ElementFieldManagerComponent implements OnInit {
   @Output() isEditingChanged = new EventEmitter<boolean>();
 
   elementFieldDataSource = new MatTableDataSource<ElementField>([]);
-  elementFieldDisplayedColumns = ["element", "name", "dataType", "createdOn", "functions"];
+  selection = new SelectionModel<ElementField>(true, []);
+  elementFieldDisplayedColumns = ["select", "element", "name", "dataType", "createdOn"];
   elementFieldDataType = ElementFieldDataType;
   selectedElementList: Element[] = [];
 
@@ -63,7 +64,8 @@ export class ElementFieldManagerComponent implements OnInit {
     return this.projectService.isBusy;
   }
 
-  constructor(private projectService: ProjectService) { }
+  constructor(private projectService: ProjectService,
+    private dialog: MatDialog) { }
 
   addElementField(): void {
     this.selectedElementField = this.projectService.createElementField({
@@ -88,14 +90,23 @@ export class ElementFieldManagerComponent implements OnInit {
     this.elementFilter = this.project.ElementSet[0];
   }
 
-  removeElementField(elementField: ElementField): void {
+  removeElementField(): void {
+    const dialogRef = this.dialog.open(RemoveConfirmComponent);
+    dialogRef.afterClosed().subscribe(confirmed => {
 
-    this.elementFieldDataSource.data = null;
-    this.projectService.removeElementField(elementField);
-    this.projectService.saveChanges().pipe(
-      finalize(() => {
-        this.elementFieldDataSource.data = this.elementFilter.ElementFieldSet;
-      })).subscribe();
+      if (!confirmed) return;
+
+      if (this.selection.selected.length > 0) {
+        this.elementFieldDataSource.data = null;
+        this.selection.selected.forEach(elementField => {
+          this.projectService.removeElementField(elementField);
+        });
+        this.projectService.saveChanges().pipe(
+          finalize(() => {
+            this.elementFieldDataSource.data = this.elementFilter.ElementFieldSet;
+          })).subscribe();
+      }
+    });
   }
 
   saveElementField(): void {
@@ -111,6 +122,18 @@ export class ElementFieldManagerComponent implements OnInit {
       || (this.selectedElementField.DataType === ElementFieldDataType.Element && !this.selectedElementField.SelectedElement);
 
     return this.isBusy || hasValidationErrors;
+  }
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.elementFieldDataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.elementFieldDataSource.data.forEach(row => this.selection.select(row));
   }
 
   trackBy(index: number, elementField: ElementField) {

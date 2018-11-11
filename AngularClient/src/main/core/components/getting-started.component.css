@@ -1,15 +1,27 @@
-p {
-  font-size: 16px;
-  margin-top: 20px;
+#code-block::-webkit-scrollbar-track {
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #55b386;
+}
+#code-block::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #55b386;
+}
+
+button {
+  border: solid 2px #58b287;
+  margin-left: 30px;
 }
 
 .code-example-block {
   border: .5px solid #dbdbdb;
   border-radius: 5px;
+  margin: 30px 28px 30px !important;
 }
 
   .code-example-block header {
-    background-color: #3f647f;
+    background-color: #55b386;
     border-radius: 5px 5px 0 0;
     color: #fafafa;
     font-size: 16px;
@@ -17,7 +29,7 @@ p {
   }
 
   .code-example-block .content {
-    padding: 16px 32px;
+    padding: 16px 10px 10px 10px;
   }
 
   .code-example-block pre {
@@ -33,13 +45,16 @@ p {
       line-height: 24px;
       overflow: hidden;
       word-wrap: break-word;
+      height: 440px;
+      overflow-y: scroll;
     }
 
   .code-example-block button {
     position: absolute;
-    top: -8px;
-    right: -32px;
-    color: rgba(63, 100, 127, 1);
+    font-size: 34px;
+    top: -4px;
+    right: 0px;
+    color: #55b386;
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -47,5 +62,31 @@ p {
 
     .code-example-block button:hover,
     .code-example-block button:focus {
-      color: rgba(63, 100, 127, 0.5);
+      color:  #0F7E49;
     }
+
+
+h1 {
+  color: #4a4a4a;
+  font-size: 24px;
+  font-family: Arial;
+  font-weight: bold;
+  font-style: normal;
+  letter-spacing: normal;
+  margin: 16px 0 6px !important;
+}
+
+p {
+  font-size: 16px;
+  margin: 30px 28px 30px !important;
+  font-family: Arial;
+  font-weight: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4a4a4a;
+}
+
+p a {
+  font-weight: bold;
+  color: #4a4a4a;
+}

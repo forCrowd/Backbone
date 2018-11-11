@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 
 import { AdminService } from "./admin.service";
-import { User } from "../core/entities/user";
+import { User } from "forcrowd-backbone";
 
 @Component({
   selector: "admin-overview",

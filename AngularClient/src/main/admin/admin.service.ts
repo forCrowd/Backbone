@@ -5,8 +5,7 @@ import { Observable } from "rxjs";
 import { finalize, mergeMap, map } from "rxjs/operators";
 
 import { AppSettings } from "../../app-settings/app-settings";
-import { Project } from "../core/entities/project";
-import { User } from "../core/entities/user";
+import { User, Project } from "forcrowd-backbone";
 import { AppEntityManager, AppHttpClient, AuthService } from "../core/core.module";
 
 @Injectable()

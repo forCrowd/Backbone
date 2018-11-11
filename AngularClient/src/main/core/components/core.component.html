@@ -1,69 +1,143 @@
-<mat-toolbar class="header mat-elevation-z6">
-  <a mat-button routerLink="/">
-    <img alt="Logo" src="/assets/images/Logo_30x30.jpg?v=0.1.0">
-    <h1>
-      Backbone
-    </h1>
-  </a>
-</mat-toolbar>
+<mat-sidenav-container class="container">
+  <mat-sidenav #sidenav [(mode)]="over" [(opened)]="opened" class="bottom-to-top">
+    <mat-nav-list class="ml-0" dense>
+      <mat-list-item class="logo-sidenav" fxLayoutAlign="center center" mat-button routerLink="/" class="ml-0 logo-white logo-sidenav">
+        <img alt="Logo" src="/assets/images/backbone.png?v=0.1.0" class="backbone-icon">
+        <span>Backbone</span>
+      </mat-list-item>
+    </mat-nav-list>
 
-<mat-sidenav-container class="sidenav-container mat-elevation-z6">
-  <mat-sidenav #sidenav mode="side" opened="true" class="sidenav mat-elevation-z9">
-    <a mat-button matTooltip="New project" routerLink="/projects/new">
-      <i class="material-icons">create</i>
-    </a>
-    <a mat-button matTooltip="Search" routerLink="/app/search">
-      <i class="material-icons">search</i>
-    </a>
-    <a mat-button matTooltip="Register" routerLink="/app/account/register" [hidden]="currentUser.isAuthenticated()">
-      <i class="material-icons">person_add</i>
-    </a>
-    <a mat-button matTooltip="Login" routerLink="/app/account/login" [hidden]="currentUser.isAuthenticated()">
-      <i class="material-icons rotate">exit_to_app</i>
-    </a>
-    <!--<a [hidden]="true">
-      <button (click)="showGuestAccountInfoBox()" type="button" class="btn-link">
-        <span class="fa fa-info-circle fa-lg" aria-hidden="true"></span>
-      </button>
-    </a>-->
-    <a mat-button matTooltip="Profile" routerLink="/users/{{ currentUser.UserName }}" [hidden]="!currentUser.isAuthenticated()">
-      <i class="material-icons">face</i>
-    </a>
-    <a mat-button matTooltip="Account" routerLink="/app/account" [hidden]="!currentUser.isAuthenticated()">
-      <i class="material-icons">settings</i>
-    </a>
-    <a mat-button matTooltip="Admin" routerLink="/app/admin" [hidden]="!currentUser.isAdmin()">
-      <i class="material-icons">settings_applications</i>
-    </a>
-    <button mat-button matTooltip="Logout" (click)="logout()" [hidden]="!currentUser.isAuthenticated()">
-      <i class="material-icons">exit_to_app</i>
-    </button>
+    <mat-list role="list">
+
+      <mat-list-item class="list pt-20" role="listitem" fxLayoutAlign="center center">
+        <button mat-flat-button class="new-btn w-160" routerLink="/projects/new">
+          <i class="material-icons">add</i>
+          New Project
+        </button>
+      </mat-list-item>
+
+    </mat-list>
+
+    <mat-list role="list" fxLayout="column" fxLayoutAlign="start start">
+
+      <mat-list-item class="list" role="listitem" [hidden]="!currentUser.isAuthenticated()" fxLayoutAlign="center center">
+        <button mat-button class="other-btn ta-l" routerLink="/users/{{ currentUser.UserName }}">Dashboard</button>
+      </mat-list-item>
+
+      <mat-list-item class="list" role="listitem" [hidden]="currentUser.isAuthenticated()" fxLayoutAlign="center center">
+        <button mat-button class="other-btn ta-l" routerLink="/app/account/login">Login</button>
+      </mat-list-item>
+
+      <mat-list-item class="list" role="listitem" [hidden]="currentUser.isAuthenticated()" fxLayoutAlign="center center">
+        <button mat-button class="other-btn ta-l" routerLink="/app/account/register">Add person</button>
+      </mat-list-item>
+
+      <mat-list-item class="list" role="listitem" [hidden]="!currentUser.isAuthenticated()" fxLayoutAlign="center center">
+        <button mat-button class="other-btn ta-l" routerLink="/app/account">Account</button>
+      </mat-list-item>
+
+      <mat-list-item class="list" role="listitem" [hidden]="!currentUser.isAdmin()" fxLayoutAlign="center center">
+        <button mat-button class="other-btn ta-l" routerLink="/app/admin">Settings App</button>
+      </mat-list-item>
+
+      <mat-list-item class="list" role="listitem" fxLayoutAlign="center center">
+        <button mat-button class="other-btn ta-l" routerLink="/app/search">Search</button>
+      </mat-list-item>
+
+    </mat-list>
+
   </mat-sidenav>
+
   <mat-sidenav-content>
-    <div class="sidenav-content">
+
+    <mat-toolbar class="header-bb">
+      <button mat-icon-button (click)="sidenav.toggle()" fxShow.sm="true" fxShow.gt-sm="false">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <button mat-button *ngIf="!opened" routerLink="/" class="logo-black">
+        <img alt="Backbone" src="/assets/images/backbone-black.png?v=0.1.0" class="backbone-icon">
+        Backbone
+      </button>
+
+      <span class="spacer"></span>
+
+      <a class="link" href="https://forcrowd.org" target="_blank">
+        <span class="ml-1">forCrowd Foundation</span>
+      </a>
+
+      <a *ngIf="!opened" class="link" fxShow.lt-md="false" fxShow.gt-sm="true" href="https://github.com/forCrowd/Backbone/wiki/Getting-Started"
+        target="_blank">
+        <span class="ml-1">Getting Started</span>
+      </a>
+
+      <a class="link" fxShow.lt-md="false" fxShow.gt-sm="true" href="https://github.com/forCrowd/Backbone/wiki/Getting-Started"
+        target="_blank">
+        <span class="ml-1">Contact</span>
+      </a>
+
+      <button mat-button [matMenuTriggerFor]="menu" fxShow.lt-md="false" fxShow.gt-sm="true">
+        <mat-icon>account_circle</mat-icon>
+        <span class="ml-2" *ngIf="!currentUser">Account</span>
+        <span class="ml-2" *ngIf="currentUser">{{ currentUser.UserName }}</span>
+      </button>
+
+      <button mat-icon-button [matMenuTriggerFor]="menu" fxShow.lt-md="true" fxShow.gt-sm="false">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu" overlapTrigger="false">
+        <button mat-menu-item routerLink="/users/{{ currentUser.UserName }}" [hidden]="!currentUser.isAuthenticated()">
+          <mat-icon>developer_board</mat-icon>
+          <span>Dashboard</span>
+        </button>
+        <button mat-menu-item routerLink="/app/account" [hidden]="!currentUser.isAuthenticated()">
+          <mat-icon>account_circle</mat-icon>
+          <span>Account</span>
+        </button>
+        <button mat-menu-item (click)="logout()" [hidden]="!currentUser.isAuthenticated()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Exit</span>
+        </button>
+        <button mat-menu-item routerLink="/app/account" [hidden]="currentUser.isAuthenticated()">
+          <mat-icon>account_box</mat-icon>
+          <span>Login</span>
+        </button>
+        <button mat-menu-item routerLink="/app/account/register" [hidden]="currentUser.isAuthenticated()">
+          <mat-icon>person_add</mat-icon>
+          <span>Add Person</span>
+        </button>
+      </mat-menu>
+      <mat-icon class="ml-3" (click)="logout()" [hidden]="!currentUser.isAuthenticated()" title="Logout">exit_to_app</mat-icon>
+    </mat-toolbar>
+
+    <!-- forCrowd Backbone content -->
+    <mat-sidenav-content class="content">
       <router-outlet></router-outlet>
-    </div>
+
+      <div mat-sidenav-content [ngClass]="{'footer-landing': !opened, 'footer': opened}" class="sidenav-content"
+        fxLayout="row">
+        <a href="https://forcrowd.org" target="_blank" class="footer-left">
+          <img alt="Logo" src="/assets/images/Logo+Text_142x30.png?v=0.1.2">
+        </a>
+        <a mat-icon-button href="https://twitter.com/forCrowd" target="_blank" class="footer-left">
+          <i class="fa fa-twitter fa-lg" aria-hidden="true"></i>
+        </a>
+        <a mat-icon-button href="https://github.com/forCrowd/Backbone" target="_blank" class="footer-left">
+          <i class="fa fa-github fa-lg" aria-hidden="true"></i>
+        </a>
+        <a mat-icon-button href="mailto:contact.backbone@forCrowd.org" class="footer-left">
+          <i class="fa fa-envelope fa-lg" aria-hidden="true"></i>
+        </a>
+        <span style="margin: auto;">&nbsp;</span>
+        <a mat-button routerLink="/app/contributors" class="footer-right">
+          Contributors
+        </a>
+        <a mat-button href="https://github.com/forCrowd/Backbone/blob/master/CHANGELOG.md" target="_blank" class="footer-right">
+          Version {{ appVersion }}
+        </a>
+      </div>
+    </mat-sidenav-content>
+    <!-- ./ forCrowd Backbone content -->
+
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-<mat-toolbar class="footer mat-elevation-z6">
-  <a href="https://forcrowd.org" target="_blank" class="footer-left">
-    <img alt="Logo" src="/assets/images/Logo+Text_142x30.png?v=0.1.2">
-  </a>
-  <a mat-icon-button href="https://twitter.com/forCrowd" target="_blank" class="footer-left">
-    <i class="fa fa-twitter fa-lg" aria-hidden="true"></i>
-  </a>
-  <a mat-icon-button href="https://github.com/forCrowd/Backbone" target="_blank" class="footer-left">
-    <i class="fa fa-github fa-lg" aria-hidden="true"></i>
-  </a>
-  <a mat-icon-button href="mailto:contact.backbone@forCrowd.org" class="footer-left">
-    <i class="fa fa-envelope fa-lg" aria-hidden="true"></i>
-  </a>
-  <span style="margin: auto;">&nbsp;</span>
-  <a mat-button routerLink="/app/contributors" class="footer-right">
-    Contributors
-  </a>
-  <a mat-button href="https://github.com/forCrowd/Backbone/blob/master/CHANGELOG.md" target="_blank" class="footer-right">
-    Version {{ appVersion }}
-  </a>
-</mat-toolbar>

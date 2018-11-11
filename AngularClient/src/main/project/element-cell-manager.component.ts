@@ -1,12 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { MatTableDataSource } from "@angular/material";
 
-import { Element } from "../core/entities/element";
-import { Project } from "../core/entities/project";
-import { ElementCell } from "../core/entities/element-cell";
-import { ElementField, ElementFieldDataType } from "../core/entities/element-field";
-import { ElementItem } from "../core/entities/element-item";
-import { UserElementCell } from "../core/entities/user-element-cell";
+import { Element, Project, ElementCell, ElementField, ElementFieldDataType, ElementItem, UserElementCell } from "forcrowd-backbone";
 import { ProjectService } from "../core/core.module";
 
 @Component({
@@ -20,7 +15,7 @@ export class ElementCellManagerComponent implements OnInit {
   @Output() isEditingChanged = new EventEmitter<boolean>();
 
   elementCellDataSource = new MatTableDataSource<ElementCell>([]);
-  elementCellDisplayedColumns = ["elementItem", "value", "createdOn", "functions"];
+  elementCellDisplayedColumns = ["elementItem", "value", "createdOn"];
   elementFieldDataType = ElementFieldDataType;
 
   get elementFilter(): Element {
