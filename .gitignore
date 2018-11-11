@@ -43,6 +43,10 @@ AngularClient/src/app-settings/environments/*
 !AngularClient/src/app-settings/environments/environment-settings.ts
 !AngularClient/src/app-settings/environments/Readme.md
 
+AngularClient/projects/forcrowd-backbone/src/lib/app-settings/environments/*
+!AngularClient/projects/forcrowd-backbone/src/lib/app-settings/environments/environment-settings.ts
+!AngularClient/projects/forcrowd-backbone/src/lib/app-settings/environments/Readme.md
+
 # DataMigrator
 DataMigrator/Configs/*.config
 
