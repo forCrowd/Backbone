@@ -19,6 +19,10 @@
   flex: 1 1 auto;
 }
 
+.landing {
+  background-color: #f8f9fb;
+}
+
 .container {
   position: absolute;
   top: 0;
@@ -28,13 +32,32 @@
   background-color: #f8f9fb;
 }
 
+.mat-icon {
+  color: #767676 !important;
+}
+
 mat-sidenav {
   width: 250px;
 }
 
+::ng-deep .mat-toolbar{
+  z-index: 2;
+  top:0;
+  position: fixed
+}
+
 .content {
+  top: 64px;
   margin-left: 16px !important;
   margin-right: 16px !important;
+}
+
+.no-margin {
+  z-index: 1;
+  width: 100vw;
+  position: fixed !important;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
 }
 
 .logo-white {
@@ -81,6 +104,7 @@ mat-sidenav {
 }
 
 .header-bb {
+  right: 0px;
   background-color: #ffffff;
   border-bottom: 1px solid #dadada;
 }
@@ -152,13 +176,17 @@ mat-sidenav {
   padding-right: 8px;
 }
 
+.pt-4 {
+  padding-top: 3px !important;
+  float: left;
+}
+
 .footer-landing {
-  position: fixed;
-  bottom: 0px;
+  position: unset;
   left: 0px;
   right: 0px;
   width: initial;
-  background-color: #f8f9fb;
+  background-color: #ffffff;
   z-index: 1;
 }
 
@@ -243,4 +271,8 @@ mat-sidenav {
 
 .sidenav-content {
   padding: 30px 30px 25px 40px;
+}
+
+.sidenav-content-lp {
+  padding: 30px 30px 78px 40px;
 }

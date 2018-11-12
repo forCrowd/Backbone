@@ -1,4 +1,4 @@
-<mat-sidenav-container class="container">
+<mat-sidenav-container [ngClass]="{'container': currentUrl !== '/', 'landing': currentUrl === '/'}">
   <mat-sidenav #sidenav [(mode)]="over" [(opened)]="opened" class="bottom-to-top">
     <mat-nav-list class="ml-0" dense>
       <mat-list-item class="logo-sidenav" fxLayoutAlign="center center" mat-button routerLink="/" class="ml-0 logo-white logo-sidenav">
@@ -29,7 +29,7 @@
       </mat-list-item>
 
       <mat-list-item class="list" role="listitem" [hidden]="currentUser.isAuthenticated()" fxLayoutAlign="center center">
-        <button mat-button class="other-btn ta-l" routerLink="/app/account/register">Add person</button>
+        <button mat-button class="other-btn ta-l" routerLink="/app/account/register">Register</button>
       </mat-list-item>
 
       <mat-list-item class="list" role="listitem" [hidden]="!currentUser.isAuthenticated()" fxLayoutAlign="center center">
@@ -37,7 +37,7 @@
       </mat-list-item>
 
       <mat-list-item class="list" role="listitem" [hidden]="!currentUser.isAdmin()" fxLayoutAlign="center center">
-        <button mat-button class="other-btn ta-l" routerLink="/app/admin">Settings App</button>
+        <button mat-button class="other-btn ta-l" routerLink="/app/admin">Admin</button>
       </mat-list-item>
 
       <mat-list-item class="list" role="listitem" fxLayoutAlign="center center">
@@ -50,11 +50,17 @@
 
   <mat-sidenav-content>
 
-    <mat-toolbar class="header-bb">
+    <mat-toolbar class="header-bb" >
       <button mat-icon-button (click)="sidenav.toggle()" fxShow.sm="true" fxShow.gt-sm="false">
         <mat-icon>menu</mat-icon>
       </button>
-      <button mat-button *ngIf="!opened" routerLink="/" class="logo-black">
+
+      <div *ngIf="!opened && currentUrl === '/'" class="logo-black">
+        <img alt="Backbone" src="/assets/images/backbone-black.png?v=0.1.0" class="backbone-icon pt-4">
+        Backbone
+      </div>
+
+      <button mat-button *ngIf="!opened && currentUrl !== '/'" routerLink="/" class="logo-black">
         <img alt="Backbone" src="/assets/images/backbone-black.png?v=0.1.0" class="backbone-icon">
         Backbone
       </button>
@@ -65,20 +71,15 @@
         <span class="ml-1">forCrowd Foundation</span>
       </a>
 
-      <a *ngIf="!opened" class="link" fxShow.lt-md="false" fxShow.gt-sm="true" href="https://github.com/forCrowd/Backbone/wiki/Getting-Started"
-        target="_blank">
-        <span class="ml-1">Getting Started</span>
-      </a>
-
       <a class="link" fxShow.lt-md="false" fxShow.gt-sm="true" href="https://github.com/forCrowd/Backbone/wiki/Getting-Started"
         target="_blank">
         <span class="ml-1">Contact</span>
       </a>
 
       <button mat-button [matMenuTriggerFor]="menu" fxShow.lt-md="false" fxShow.gt-sm="true">
-        <mat-icon>account_circle</mat-icon>
-        <span class="ml-2" *ngIf="!currentUser">Account</span>
-        <span class="ml-2" *ngIf="currentUser">{{ currentUser.UserName }}</span>
+        <mat-icon *ngIf="currentUser.isAuthenticated()">account_circle</mat-icon>
+        <span class="ml-2" *ngIf="!currentUser.isAuthenticated()">Login</span>
+        <span class="ml-2" *ngIf="currentUser.isAuthenticated()">{{ currentUser.UserName }}</span>
       </button>
 
       <button mat-icon-button [matMenuTriggerFor]="menu" fxShow.lt-md="true" fxShow.gt-sm="false">
@@ -87,34 +88,28 @@
 
       <mat-menu #menu="matMenu" overlapTrigger="false">
         <button mat-menu-item routerLink="/users/{{ currentUser.UserName }}" [hidden]="!currentUser.isAuthenticated()">
-          <mat-icon>developer_board</mat-icon>
           <span>Dashboard</span>
         </button>
         <button mat-menu-item routerLink="/app/account" [hidden]="!currentUser.isAuthenticated()">
-          <mat-icon>account_circle</mat-icon>
           <span>Account</span>
         </button>
         <button mat-menu-item (click)="logout()" [hidden]="!currentUser.isAuthenticated()">
-          <mat-icon>exit_to_app</mat-icon>
           <span>Exit</span>
         </button>
         <button mat-menu-item routerLink="/app/account" [hidden]="currentUser.isAuthenticated()">
-          <mat-icon>account_box</mat-icon>
           <span>Login</span>
         </button>
         <button mat-menu-item routerLink="/app/account/register" [hidden]="currentUser.isAuthenticated()">
-          <mat-icon>person_add</mat-icon>
-          <span>Add Person</span>
+          <span>Register</span>
         </button>
       </mat-menu>
-      <mat-icon class="ml-3" (click)="logout()" [hidden]="!currentUser.isAuthenticated()" title="Logout">exit_to_app</mat-icon>
     </mat-toolbar>
 
     <!-- forCrowd Backbone content -->
-    <mat-sidenav-content class="content">
+    <mat-sidenav-content class="content" [ngClass]="{'no-margin': currentUrl === '/'}">
       <router-outlet></router-outlet>
 
-      <div mat-sidenav-content [ngClass]="{'footer-landing': !opened, 'footer': opened}" class="sidenav-content"
+      <div mat-sidenav-content [ngClass]="{'footer-landing': !opened, 'footer': opened, 'sidenav-content-lp': !opened}" class="sidenav-content"
         fxLayout="row">
         <a href="https://forcrowd.org" target="_blank" class="footer-left">
           <img alt="Logo" src="/assets/images/Logo+Text_142x30.png?v=0.1.2">
