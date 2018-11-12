@@ -109,7 +109,7 @@
     <mat-sidenav-content class="content" [ngClass]="{'no-margin': currentUrl === '/'}">
       <router-outlet></router-outlet>
 
-      <div mat-sidenav-content [ngClass]="{'footer-landing': !opened, 'footer': opened}" class="sidenav-content"
+      <div mat-sidenav-content [ngClass]="{'footer-landing': !opened, 'footer': opened, 'sidenav-content-lp': !opened}" class="sidenav-content"
         fxLayout="row">
         <a href="https://forcrowd.org" target="_blank" class="footer-left">
           <img alt="Logo" src="/assets/images/Logo+Text_142x30.png?v=0.1.2">

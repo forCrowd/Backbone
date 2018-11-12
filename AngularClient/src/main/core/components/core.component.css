@@ -182,12 +182,11 @@ mat-sidenav {
 }
 
 .footer-landing {
-  position: fixed;
-  bottom: 0px;
+  position: unset;
   left: 0px;
   right: 0px;
   width: initial;
-  background-color: #f8f9fb;
+  background-color: #ffffff;
   z-index: 1;
 }
 
@@ -272,4 +271,8 @@ mat-sidenav {
 
 .sidenav-content {
   padding: 30px 30px 25px 40px;
+}
+
+.sidenav-content-lp {
+  padding: 30px 30px 78px 40px;
 }
