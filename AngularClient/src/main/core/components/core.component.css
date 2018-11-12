@@ -19,6 +19,10 @@
   flex: 1 1 auto;
 }
 
+.landing {
+  background-color: #f8f9fb;
+}
+
 .container {
   position: absolute;
   top: 0;
@@ -28,13 +32,32 @@
   background-color: #f8f9fb;
 }
 
+.mat-icon {
+  color: #767676 !important;
+}
+
 mat-sidenav {
   width: 250px;
 }
 
+::ng-deep .mat-toolbar{
+  z-index: 1000;
+  top:0;
+  position: fixed
+}
+
 .content {
+  top: 64px;
   margin-left: 16px !important;
   margin-right: 16px !important;
+}
+
+.no-margin {
+  z-index: 999;
+  width: 100vw;
+  position: fixed !important;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
 }
 
 .logo-white {
@@ -81,6 +104,7 @@ mat-sidenav {
 }
 
 .header-bb {
+  right: 0px;
   background-color: #ffffff;
   border-bottom: 1px solid #dadada;
 }

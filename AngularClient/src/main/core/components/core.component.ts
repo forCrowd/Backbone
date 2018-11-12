@@ -25,6 +25,7 @@ export class CoreComponent implements OnDestroy, OnInit {
   // overlap = false;
   activeMediaQuery = "";
   watcher: Subscription;
+  currentUrl: string = "";
 
   appVersion = AppSettings.version;
   currentUser: User = null;
@@ -53,7 +54,9 @@ export class CoreComponent implements OnDestroy, OnInit {
   }
 
   pathChecker(): void {
-    if (this.router.url === "/") {
+    console.log(this.currentUrl === "/");
+    this.currentUrl = this.router.url;
+    if (this.currentUrl === "/") {
       this.opened = false;
       this.over = "over";
     } else {

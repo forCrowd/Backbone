@@ -1,5 +1,12 @@
 ### Changelog
 
+**0.9.1**
+  
+  * AngularClient - Landing page UI Minor Fix/Update
+    * Two scrollbars problems have been fixed and landing page is made responsive
+    * Now, if the user is not logged in, username is hidden
+    * Now, landing page video is as design prototype
+
 **0.9.0**
 
  * Angular library has been added "forcrowd-backbone" for many service
