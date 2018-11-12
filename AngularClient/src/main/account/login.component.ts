@@ -33,7 +33,9 @@ export class LoginComponent implements OnInit {
           this.notificationService.notification.next("You have been logged in!");
 
           // Get return url, reset loginReturnUrl and navigate
-          const returnUrl = this.authService.loginReturnUrl || "/app/home";
+          //const returnUrl = this.authService.loginReturnUrl || "/app/home";
+          //TODO: Check this?
+          const returnUrl = `/users/${this.username}`;
           this.authService.loginReturnUrl = "";
           this.router.navigate([returnUrl]);
         });

@@ -41,7 +41,6 @@
 
 }
 
-
 @media only screen and (min-width: 425px) and (max-width: 768px) {
   .wrapper div {
     min-height: 50px !important;
@@ -204,7 +203,7 @@
  }
 
 .img {
-  width: 828px !important;
+  width: 780px !important;
   height: 552px !important;
   margin-top:140px !important;
   background-image: url(/assets/images/backbone-for-ci.gif);

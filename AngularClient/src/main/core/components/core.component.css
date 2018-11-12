@@ -41,7 +41,7 @@ mat-sidenav {
 }
 
 ::ng-deep .mat-toolbar{
-  z-index: 1000;
+  z-index: 2;
   top:0;
   position: fixed
 }
@@ -53,7 +53,7 @@ mat-sidenav {
 }
 
 .no-margin {
-  z-index: 999;
+  z-index: 1;
   width: 100vw;
   position: fixed !important;
   margin-left: 0px !important;
@@ -174,6 +174,11 @@ mat-sidenav {
   width: 19px;
   height: 26px;
   padding-right: 8px;
+}
+
+.pt-4 {
+  padding-top: 3px !important;
+  float: left;
 }
 
 .footer-landing {

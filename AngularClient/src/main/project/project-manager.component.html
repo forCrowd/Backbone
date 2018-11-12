@@ -13,7 +13,7 @@
           <div fxFlex style="padding-top: 140px;" fxLayoutAlign="center center" [ngStyle.xs]="{'padding-top.px': 90}"
             [ngStyle.sm]="{'padding-top.px': 150}" [ngStyle.md]="{'padding-top.px': 160}" [ngStyle.lg]="{'padding-top.px': 100}">
 
-            <button mat-flat-button class="mat-primary" (click)="createProjectTodo()" [disabled]="isBusy" [ngStyle.xs]="{'font-size.px': 16, 'height.px': 56}"
+            <button mat-flat-button class="mat-primary" routerLink="/app/getting-started" [disabled]="isBusy" [ngStyle.xs]="{'font-size.px': 16, 'height.px': 56}"
               [ngStyle.sm]="{'font-size.px': 20, width: 200, 'height.px': 56}" [ngStyle.md]="{'font-size.px': 20, 'height.px': 56}"
               [ngStyle.lg]="{'font-size.px': 20, 'height.px': 46}">
               Create App
