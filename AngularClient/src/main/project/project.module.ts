@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { FlexLayoutModule } from "@angular/flex-layout";
 
-import { SharedModule } from "forcrowd-backbone";
+import { SharedModule } from "../shared/shared.module";
 
 import { AuthGuard, CanDeactivateGuard, DynamicTitleResolve } from "../core/core.module";
 import { ElementManagerComponent } from "./element-manager.component";

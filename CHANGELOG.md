@@ -1,5 +1,11 @@
 ### Changelog
 
+**0.9.2**
+
+  * Some fixes in the "forcrowd-backbone" library
+  * AngularClient Landing page minor update and fix
+    * UI minor update/fix
+
 **0.9.1**
   
   * AngularClient - Minor Fix/Update for Landing page and UI

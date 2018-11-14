@@ -4,9 +4,7 @@ import { Observable } from "rxjs";
 import { mergeMap, map } from "rxjs/operators";
 
 import { AppSettings } from "../app-settings/app-settings";
-import { ElementField, Project, User } from "forcrowd-backbone";
-
-import { AuthService } from "../main/core/core.module";
+import { AuthService, ElementField, Project, User } from "forcrowd-backbone";
 
 @Component({
   selector: "odata-user-element-field",

@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
-import { SharedModule } from "forcrowd-backbone";
+import { SharedModule } from "../shared/shared.module";
 
 // Components
 import { AdminOverviewComponent } from "./admin-overview.component";

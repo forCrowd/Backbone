@@ -9,7 +9,7 @@ import { ODataComponent } from "./odata.component";
 import { ProjectTesterComponent } from "./project-tester.component";
 import { WebApiComponent } from "./web-api.component";
 
-import { GoogleAnalyticsService } from "../main/core/google-analytics.service";
+import { GoogleAnalyticsService } from "forcrowd-backbone";
 
 export { Angulartics2GoogleAnalytics, GoogleAnalyticsService }
 

@@ -6,6 +6,7 @@ import { ElementItem } from "./element-item";
 import { ElementCell } from "./element-cell";
 import { UserElementCell } from "./user-element-cell";
 
+// @dynamic
 export class TestHelpers {
 
   static createElement(project?: Project): Element {

@@ -3,9 +3,9 @@ import { throwError as observableThrowError,  forkJoin, Observable, of as observ
 import { ErrorHandler, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { map, mergeMap, share } from "rxjs/operators";
-import { SourceMapConsumer } from "../../../../src/libraries/source-map"
+//import { SourceMapConsumer } from "../../../../src/libraries/source-map"
 
-import { AppSettings } from "./app-settings/app-settings";
+//import { AppSettings } from "./app-settings/app-settings";
 
 @Injectable()
 export class AppErrorHandler implements ErrorHandler {

@@ -2,8 +2,7 @@ import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { AppSettings } from "../app-settings/app-settings";
-import { User } from "forcrowd-backbone";
-import { AuthService } from "../main/core/core.module";
+import { User, AuthService } from "forcrowd-backbone";
 
 @Component({
   selector: "odata-user",
