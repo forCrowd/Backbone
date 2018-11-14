@@ -1,13 +1,15 @@
 import { Injectable } from "@angular/core";
 
-import { AppSettings } from "../../app-settings/app-settings";
+import { AppSettings } from "./app-settings/app-settings";
 
 @Injectable()
 export class GoogleAnalyticsService {
 
+  constructor(private appSettings: AppSettings) { }
+
   configureTrackingCode() {
 
-    if (AppSettings.analyticsTrackingCode === "" || AppSettings.analyticsDomainName === "") {
+    if (this.appSettings.analyticsTrackingCode === "" || this.appSettings.analyticsDomainName === "") {
       return;
     }
 
@@ -21,7 +23,7 @@ export class GoogleAnalyticsService {
     const firstElement = document.getElementsByTagName("script")[0];
     firstElement.parentNode.insertBefore(script, firstElement);
 
-    this.ga("create", AppSettings.analyticsTrackingCode, AppSettings.analyticsDomainName);
+    this.ga("create", this.appSettings.analyticsTrackingCode, this.appSettings.analyticsDomainName);
   }
 
   private ga(...args: string[]): void {

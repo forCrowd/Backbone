@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { timer as observableTimer } from "rxjs";
 
 import { AccountService } from "./account.service";
-import { NotificationService } from "../core/core.module";
+import { NotificationService } from "forcrowd-backbone";
 
 @Component({
   selector: "confirm-email",

@@ -71,18 +71,25 @@
         <span class="ml-1">forCrowd Foundation</span>
       </a>
 
-      <a class="link" fxShow.lt-md="false" fxShow.gt-sm="true" href="https://github.com/forCrowd/Backbone/wiki/Getting-Started"
+      <a class="link" fxShow.lt-md="true" fxShow.gt-sm="true" href="https://github.com/forCrowd/Backbone/wiki/Getting-Started"
         target="_blank">
         <span class="ml-1">Contact</span>
       </a>
 
-      <button mat-button [matMenuTriggerFor]="menu" fxShow.lt-md="false" fxShow.gt-sm="true">
-        <mat-icon *ngIf="currentUser.isAuthenticated()">account_circle</mat-icon>
-        <span class="ml-2" *ngIf="!currentUser.isAuthenticated()">Login</span>
-        <span class="ml-2" *ngIf="currentUser.isAuthenticated()">{{ currentUser.UserName }}</span>
-      </button>
+      <a class="link" fxShow.lt-md="true" fxShow.gt-sm="true" routerLink="/app/account/register" [hidden]="currentUser.isAuthenticated()">
+        <span class="ml-1">Register</span>
+      </a>
 
-      <button mat-icon-button [matMenuTriggerFor]="menu" fxShow.lt-md="true" fxShow.gt-sm="false">
+      <a *ngIf="!currentUser.isAuthenticated()" class="link" routerLink="/app/account" fxShow.lt-md="true" fxShow.gt-sm="true" >
+        <span class="ml-2" *ngIf="!currentUser.isAuthenticated()">Login</span>
+      </a>
+
+      <a mat-button [matMenuTriggerFor]="menu" fxShow.lt-md="false" fxShow.gt-sm="true">
+        <mat-icon *ngIf="currentUser.isAuthenticated()">account_circle</mat-icon>
+        <span class="ml-2" *ngIf="currentUser.isAuthenticated()">{{ currentUser.UserName }}</span>
+      </a>
+
+      <button mat-icon-button *ngIf="currentUser.isAuthenticated()" [matMenuTriggerFor]="menu" fxShow.lt-md="true" fxShow.gt-sm="false">
         <mat-icon>account_circle</mat-icon>
       </button>
 
@@ -99,9 +106,6 @@
         <button mat-menu-item routerLink="/app/account" [hidden]="currentUser.isAuthenticated()">
           <span>Login</span>
         </button>
-        <button mat-menu-item routerLink="/app/account/register" [hidden]="currentUser.isAuthenticated()">
-          <span>Register</span>
-        </button>
       </mat-menu>
     </mat-toolbar>
 
@@ -112,22 +116,26 @@
       <div mat-sidenav-content [ngClass]="{'footer-landing': !opened, 'footer': opened, 'sidenav-content-lp': !opened}" class="sidenav-content"
         fxLayout="row">
         <a href="https://forcrowd.org" target="_blank" class="footer-left">
-          <img alt="Logo" src="/assets/images/Logo+Text_142x30.png?v=0.1.2">
+          <img alt="Logo" src="/assets/images/Logo+Text_142x30.png?v=0.1.2"
+            [ngStyle.xs]="{'padding-top.px': 10, 'width.px': 78}">
         </a>
-        <a mat-icon-button href="https://twitter.com/forCrowd" target="_blank" class="footer-left">
-          <i class="fa fa-twitter fa-lg" aria-hidden="true"></i>
+        <a mat-icon-button href="https://twitter.com/forCrowd" target="_blank" class="footer-left"
+          [ngStyle.xs]="{'padding-left.px': 10, 'width.px': 24}">
+          <i class="fa fa-twitter fa-lg" aria-hidden="true" [ngStyle.xs]="{'font-size.px': 12}"></i>
         </a>
-        <a mat-icon-button href="https://github.com/forCrowd/Backbone" target="_blank" class="footer-left">
-          <i class="fa fa-github fa-lg" aria-hidden="true"></i>
+        <a mat-icon-button href="https://github.com/forCrowd/Backbone" target="_blank" class="footer-left" [ngStyle.xs]="{'width.px': 24}">
+          <i class="fa fa-github fa-lg" aria-hidden="true" [ngStyle.xs]="{'font-size.px': 12}"></i>
         </a>
-        <a mat-icon-button href="mailto:contact.backbone@forCrowd.org" class="footer-left">
-          <i class="fa fa-envelope fa-lg" aria-hidden="true"></i>
+        <a mat-icon-button href="mailto:contact.backbone@forCrowd.org" class="footer-left" [ngStyle.xs]="{'width.px': 24}">
+          <i class="fa fa-envelope fa-lg" aria-hidden="true" [ngStyle.xs]="{'font-size.px': 12}"></i>
         </a>
         <span style="margin: auto;">&nbsp;</span>
-        <a mat-button routerLink="/app/contributors" class="footer-right">
+        <a mat-button routerLink="/app/contributors" class="footer-right"
+          [ngStyle.xs]="{'font-size.px': 12, 'padding-top.px': 4, 'min-width.px': 80, 'padding-left.px': 4}">
           Contributors
         </a>
-        <a mat-button href="https://github.com/forCrowd/Backbone/blob/master/CHANGELOG.md" target="_blank" class="footer-right">
+        <a mat-button href="https://github.com/forCrowd/Backbone/blob/master/CHANGELOG.md" target="_blank" class="footer-right"
+          [ngStyle.xs]="{'font-size.px': 12, 'padding-top.px': 4, 'min-width.px': 80, 'padding-left.px': 4}">
           Version {{ appVersion }}
         </a>
       </div>

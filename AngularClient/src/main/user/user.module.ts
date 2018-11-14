@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { FlexLayoutModule } from "@angular/flex-layout";
 
-import { SharedModule } from "forcrowd-backbone";
+import { SharedModule } from "../shared/shared.module";
 
 import { ProfileComponent } from "./profile.component";
 import { ProfileRemoveProjectComponent } from "./profile-remove-project.component";

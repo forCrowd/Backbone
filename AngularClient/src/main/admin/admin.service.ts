@@ -6,7 +6,7 @@ import { finalize, mergeMap, map } from "rxjs/operators";
 
 import { AppSettings } from "../../app-settings/app-settings";
 import { User, Project } from "forcrowd-backbone";
-import { AppEntityManager, AppHttpClient, AuthService } from "../core/core.module";
+import { AppEntityManager, AppHttpClient, AuthService } from "forcrowd-backbone";
 
 @Injectable()
 export class AdminService {

@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 
-import { User } from "forcrowd-backbone";
-import { AuthService } from "../core/core.module";
+import { AuthService, User } from "forcrowd-backbone";
 
 @Component({
   selector: "account-overview",

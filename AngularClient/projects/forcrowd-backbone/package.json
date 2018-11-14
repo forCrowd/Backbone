@@ -5,7 +5,10 @@
   "license": "MIT",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "^7.0.0",
-    "@angular/core": "^7.0.0"
+    "@angular/common": "7.0.1",
+    "@angular/core": "7.0.1",
+    "breeze-client": "1.7.1",
+    "rxjs": "6.3.3",
+    "datajs": "1.0.3"
   }
 }

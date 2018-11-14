@@ -54,7 +54,6 @@ export class CoreComponent implements OnDestroy, OnInit {
   }
 
   pathChecker(): void {
-    console.log(this.currentUrl === "/");
     this.currentUrl = this.router.url;
     if (this.currentUrl === "/") {
       this.opened = false;

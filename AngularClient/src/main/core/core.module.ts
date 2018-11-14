@@ -4,12 +4,9 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
 import { Angulartics2Module } from "angulartics2";
 import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
-import { ForcrowdBackboneModule, SharedModule, AppHttpClient, AppHttpClientModule } from "forcrowd-backbone";
+import { ForcrowdBackboneModule, AuthService, GoogleAnalyticsService } from "forcrowd-backbone";
 import { FlexLayoutModule } from "@angular/flex-layout";
-
-// Breeze
-import "./breeze-client-odata-fix";
-import { BreezeBridgeHttpClientModule } from "breeze-bridge2-angular";
+import { SharedModule } from "../shared/shared.module";
 
 // Components
 import { ContributorsComponent } from "./components/contributors.component";
@@ -20,14 +17,12 @@ import { NotFoundComponent } from "./components/not-found.component";
 import { SearchComponent } from "./components/search.component";
 
 // Services
-import { AppEntityManager, AuthService, AppErrorHandler, NotificationService } from "forcrowd-backbone";
 import { AuthGuard } from "./auth-guard.service";
 import { CanDeactivateGuard } from "./can-deactivate-guard.service";
 import { DynamicTitleResolve } from "./dynamic-title-resolve.service";
-import { GoogleAnalyticsService } from "./google-analytics.service";
 import { ProjectService } from "./project.service";
 
-export { AppEntityManager, AppHttpClient, AuthGuard, AuthService, CanDeactivateGuard, DynamicTitleResolve, NotificationService, ProjectService }
+export { AuthGuard, CanDeactivateGuard, DynamicTitleResolve, ProjectService }
 
 const coreRoutes: Routes = [
   { path: "", component: HomeComponent, data: { title: "Home" } },
@@ -41,19 +36,6 @@ const coreRoutes: Routes = [
   { path: "app.html", redirectTo: "", pathMatch: "full" },
   { path: "app-aot.html", redirectTo: "", pathMatch: "full" },
 ];
-
-export function appInitializer(authService: AuthService, googleAnalyticsService: GoogleAnalyticsService) {
-
-  // Do initing of services that is required before app loads
-  // NOTE: this factory needs to return a function (that then returns a promise)
-  // https://github.com/angular/angular/issues/9047
-
-  return () => {
-    googleAnalyticsService.configureTrackingCode(); // Setup google analytics
-
-    return authService.init().toPromise();
-  };
-}
 
 @NgModule({
   declarations: [
@@ -74,32 +56,16 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
     SharedModule,
     BrowserModule,
     BrowserAnimationsModule,
-    AppHttpClientModule,
     RouterModule.forRoot(coreRoutes),
     Angulartics2Module.forRoot(),
-    BreezeBridgeHttpClientModule,
     ForcrowdBackboneModule,
   ],
   providers: [
-    // Application initializer
-    {
-      deps: [AuthService, GoogleAnalyticsService],
-      multi: true,
-      provide: APP_INITIALIZER,
-      useFactory: appInitializer,
-    },
-    // Error handler
-    {
-      provide: ErrorHandler,
-      useClass: AppErrorHandler
-    },
-    AppEntityManager,
-    AuthGuard,
     AuthService,
+    GoogleAnalyticsService,
+    AuthGuard,
     CanDeactivateGuard,
     DynamicTitleResolve,
-    NotificationService,
-    GoogleAnalyticsService,
     ProjectService,
     FlexLayoutModule,
   ]

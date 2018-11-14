@@ -2,8 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { mergeMap, finalize } from "rxjs/operators";
 
-import { User } from "forcrowd-backbone";
-import { AuthService, AppEntityManager } from "../core/core.module";
+import { AuthService, AppEntityManager, User } from "forcrowd-backbone";
 
 @Injectable()
 export class UserService {

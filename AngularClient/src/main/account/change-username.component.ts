@@ -3,8 +3,7 @@ import { Router } from "@angular/router";
 
 import { AppSettings } from "../../app-settings/app-settings";
 import { AccountService } from "./account.service";
-import { AuthService, NotificationService } from "../core/core.module";
-import { getUniqueUserName, stripInvalidChars } from "forcrowd-backbone";
+import { AuthService, NotificationService, getUniqueUserName, stripInvalidChars } from "forcrowd-backbone";
 
 @Component({
   selector: "change-username",
