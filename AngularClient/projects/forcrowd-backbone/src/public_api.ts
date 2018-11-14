@@ -2,7 +2,6 @@
  * Public API Surface of forcrowd-backbone
  */
 
-export * from "./lib/forcrowd-backbone.component";
 export * from "./lib/forcrowd-backbone.module";
 
 export * from "./lib/app-http-client/app-http-client.module";
