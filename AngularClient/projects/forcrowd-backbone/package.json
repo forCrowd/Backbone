@@ -8,6 +8,7 @@
     "@angular/common": "7.0.1",
     "@angular/core": "7.0.1",
     "breeze-client": "1.7.1",
+    "breeze-bridge2-angular": "1.1.0",
     "datajs": "1.0.3",
     "rxjs": "6.3.3"
   }
