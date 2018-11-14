@@ -1,24 +1,28 @@
 ### Changelog
 
+**0.9.3**
+
+* AngularClient - Minor fixes and updates
+
 **0.9.2**
 
-  * Some fixes in the "forcrowd-backbone" library
-  * AngularClient Landing page minor update and fix
-    * UI minor update/fix
+* AngularClient - Library project fixes
+* AngularClient - Landing page minor update and fix
+  * UI minor update/fix
 
 **0.9.1**
   
-  * AngularClient - Minor Fix/Update for Landing page and UI
-    * Two scrollbars problems have been fixed and landing page is made responsive
-    * Now, if the user is not logged in, username is hidden
-    * Now, landing page video is as design prototype
-    * When user logged in then page return to project dashboard
+* AngularClient - Minor fix & updates
+  * Two scrollbars problems have been fixed and landing page is made responsive
+  * If the user is not logged in, username is now hidden
+  * After user logged in, it navigates to project dashboard
+  * Landing page video is fixed as in design prototype
 
 **0.9.0**
 
- * Angular library has been added "forcrowd-backbone" for many service
- * AngularClient - Backbone new UI has been added
-  * Minor update
+* AngularClient - New UI
+* AngularClient - Library project
+* Minor updates
 
 **0.8.1**
 
