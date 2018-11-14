@@ -2,7 +2,7 @@
 
 **0.9.3**
 
-* Minor updates
+* AngularClient - Minor fixes and updates
 
 **0.9.2**
 
