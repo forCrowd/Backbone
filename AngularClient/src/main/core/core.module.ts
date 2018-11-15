@@ -78,7 +78,7 @@ export function appInitializer(settingsService: SettingsService) {
     BrowserAnimationsModule,
     RouterModule.forRoot(coreRoutes),
     Angulartics2Module.forRoot(),
-    ForcrowdBackboneModule,
+    ForcrowdBackboneModule.init(AppSettings.serviceODataUrl),
   ],
   providers: [
     // Application initializer

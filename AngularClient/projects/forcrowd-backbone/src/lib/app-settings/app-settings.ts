@@ -5,6 +5,8 @@ import { environment } from "./environments/environment-settings";
 // @dynamic
 export class AppSettings {
 
+  // static get x() { return "x"; }
+
   /*
    * Google Analytics domain name
    * Leave blank to disable analytics
