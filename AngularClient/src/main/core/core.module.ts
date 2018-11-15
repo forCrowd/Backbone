@@ -1,12 +1,11 @@
-import { APP_INITIALIZER, ErrorHandler, NgModule } from "@angular/core";
+import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
 import { Angulartics2Module } from "angulartics2";
-import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
 import { FlexLayoutModule } from "@angular/flex-layout";
 
-import { ForcrowdBackboneModule, SettingsService } from "forcrowd-backbone";
+import { ForcrowdBackboneModule } from "forcrowd-backbone";
 import { SharedModule } from "../shared/shared.module";
 
 import { AppSettings } from "../../app-settings/app-settings";
@@ -40,23 +39,6 @@ const coreRoutes: Routes = [
   { path: "app-aot.html", redirectTo: "", pathMatch: "full" },
 ];
 
-export function appInitializer(settingsService: SettingsService) {
-
-  // Do initing of services that is required before app loads
-  // NOTE: this factory needs to return a function (that then returns a promise)
-  // https://github.com/angular/angular/issues/9047
-
-  return () => {
-
-    console.log("1", AppSettings);
-    settingsService.init(AppSettings.analyticsDomainName, AppSettings.analyticsTrackingCode, AppSettings.serviceAppUrl);
-    console.log("2");
-
-    // googleAnalyticsService.configureTrackingCode(); // Setup google analytics
-    // return authService.init().toPromise();
-  }
-}
-
 @NgModule({
   declarations: [
     ContributorsComponent,
@@ -78,16 +60,9 @@ export function appInitializer(settingsService: SettingsService) {
     BrowserAnimationsModule,
     RouterModule.forRoot(coreRoutes),
     Angulartics2Module.forRoot(),
-    ForcrowdBackboneModule.init(AppSettings.serviceODataUrl),
+    ForcrowdBackboneModule.init(AppSettings.analyticsDomainName, AppSettings.analyticsTrackingCode, AppSettings.serviceApiUrl, AppSettings.serviceODataUrl),
   ],
   providers: [
-    // Application initializer
-    {
-      deps: [SettingsService],
-      multi: true,
-      provide: APP_INITIALIZER,
-      useFactory: appInitializer
-    },
     AuthGuard,
     CanDeactivateGuard,
     DynamicTitleResolve,

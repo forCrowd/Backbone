@@ -18,10 +18,7 @@
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-http-client\auth-interceptor.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-http-client\busy-interceptor.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-http-client\error-interceptor.ts" />
-    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\settings.service.ts" />
-    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-settings\app-settings.ts" />
-    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-settings\environments\environment-settings.ts" />
-    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-settings\environments\production-settings.ts" />
+    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\settings.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\auth.service.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\breeze-client-odata-fix.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\entities\element-cell.spec.ts" />
@@ -165,7 +162,6 @@
     <None Include="package.json" />
     <None Include="projects\forcrowd-backbone\ng-package.json" />
     <None Include="projects\forcrowd-backbone\package.json" />
-    <None Include="projects\forcrowd-backbone\src\lib\app-settings\environments\Readme.md" />
     <None Include="projects\forcrowd-backbone\tsconfig.lib.json" />
     <None Include="projects\forcrowd-backbone\tsconfig.spec.json" />
     <None Include="projects\forcrowd-backbone\tslint.json" />

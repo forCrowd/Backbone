@@ -3,7 +3,7 @@ import { Resolve, ActivatedRouteSnapshot } from "@angular/router";
 import { map } from "rxjs/operators";
 import { of as observableOf, Observable } from "rxjs";
 
-import { AuthService, SettingsService } from "forcrowd-backbone";
+import { AuthService } from "forcrowd-backbone";
 import { ProjectService } from "./project.service";
 
 @Injectable()
@@ -12,8 +12,6 @@ export class DynamicTitleResolve implements Resolve<string> {
   constructor(private authService: AuthService, private projectService: ProjectService) { }
 
   resolve(route: ActivatedRouteSnapshot): Observable<string> {
-
-    // console.log("sett", this.settingsService);
 
     const username = route.params["username"];
     const projectId = route.params["project-id"];

@@ -1,11 +1,6 @@
-import { SettingsService } from "forcrowd-backbone";
 import { environment } from "./environments/environment-settings";
 
 export class AppSettings {
-
-  constructor(private readonly settingsService: SettingsService) {
-    console.log("s2", settingsService);
-  }
 
   /*
    * Name of the current environment
@@ -23,8 +18,6 @@ export class AppSettings {
    * Leave blank to disable analytics
    */
   static get analyticsTrackingCode(): string { return environment.analyticsTrackingCode; }
-
-  static get serviceAppUrl() { return environment.serviceAppUrl; }
 
   /*
    * Service application API url

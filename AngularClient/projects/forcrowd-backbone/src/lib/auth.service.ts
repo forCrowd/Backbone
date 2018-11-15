@@ -4,8 +4,7 @@ import { EntityQuery, EntityState, MergeStrategy } from "breeze-client";
 import { throwError as observableThrowError, of as observableOf, Observable, Subject } from "rxjs";
 import { catchError, mergeMap, map } from "rxjs/operators";
 
-import { AppSettings } from "./app-settings/app-settings";
-import { SettingsService } from "./settings.service";
+import { Settings } from "./settings";
 import { Role } from "./entities/role";
 import { User } from "./entities/user";
 import { UserRole } from "./entities/user-role";
@@ -53,15 +52,14 @@ export class AuthService {
 
   constructor(private appEntityManager: AppEntityManager,
     private httpClient: HttpClient,
-    private notificationService: NotificationService,
-    private appSettings: SettingsService) {
+    private notificationService: NotificationService) {
 
     this.appHttpClient = httpClient as AppHttpClient;
 
     // Service urls
-    this.currentUserUrl = appSettings.getServiceApiUrl() + "/Account/CurrentUser";
-    this.registerUrl = appSettings.getServiceApiUrl() + "/Account/Register";
-    this.tokenUrl = appSettings.getServiceApiUrl() + "/Token";
+    this.currentUserUrl = Settings.serviceApiUrl + "/Account/CurrentUser";
+    this.registerUrl = Settings.serviceApiUrl + "/Account/Register";
+    this.tokenUrl = Settings.serviceApiUrl + "/Token";
   }
 
   ensureAuthenticatedUser() {

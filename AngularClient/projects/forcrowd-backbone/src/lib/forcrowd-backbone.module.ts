@@ -1,4 +1,7 @@
-import { APP_INITIALIZER, ErrorHandler, NgModule, ModuleWithProviders } from "@angular/core";
+import { APP_INITIALIZER, ErrorHandler, NgModule } from "@angular/core";
+
+// Settings
+import { Settings } from "./settings";
 
 // Services
 import { AppHttpClientModule } from "./app-http-client/app-http-client.module";
@@ -11,9 +14,8 @@ import { NotificationService } from "./notification.service";
 // Breeze
 import "./breeze-client-odata-fix";
 import { BreezeBridgeHttpClientModule } from "breeze-bridge2-angular";
-import { AppSettings } from "./app-settings/app-settings";
-import { SettingsService, SettingsService2 } from "./settings.service";
 
+// Todo!
 export { AuthService, AppEntityManager, NotificationService, GoogleAnalyticsService }
 
 export function appInitializer(authService: AuthService, googleAnalyticsService: GoogleAnalyticsService) {
@@ -47,18 +49,17 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
       provide: ErrorHandler,
       useClass: AppErrorHandler
     },
-    AppSettings,
     AppEntityManager,
     AuthService,
     GoogleAnalyticsService,
     NotificationService,
-    SettingsService,
   ]
 })
 export class ForcrowdBackboneModule {
-  static init(setting1: string) {
-    console.log("setting1", setting1);
-    //SettingsService2.init2(setting1);
+  static init(analyticsDomainName: string, analyticsTrackingCode: string, serviceApiUrl: string, serviceODataUrl: string) {
+
+    Settings.init(analyticsDomainName, analyticsTrackingCode, serviceApiUrl, serviceODataUrl);
+
     return this;
   }
 }
