@@ -1,11 +1,10 @@
-
-import { throwError as observableThrowError,  forkJoin, Observable, of as observableOf, Subscription, timer } from "rxjs";
 import { ErrorHandler, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { throwError as observableThrowError, forkJoin, Observable, of as observableOf, Subscription, timer } from "rxjs";
 import { map, mergeMap, share } from "rxjs/operators";
 //import { SourceMapConsumer } from "../../../../src/libraries/source-map"
 
-//import { AppSettings } from "./app-settings/app-settings";
+import { Settings } from "./settings";
 
 @Injectable()
 export class AppErrorHandler implements ErrorHandler {
@@ -20,7 +19,7 @@ export class AppErrorHandler implements ErrorHandler {
 
   handleError(error: Error): void {
 
-    //if (AppSettings.environment === "Development") {
+    //if (Settings.environment === "Development") {
 
       console.error(error);
 
@@ -46,7 +45,7 @@ export class AppErrorHandler implements ErrorHandler {
   //        Stack: stack || ""
   //      };
 
-  //      const errorHandlerUrl = AppSettings.serviceApiUrl + "/Exception/Record";
+  //      const errorHandlerUrl = Settings.serviceApiUrl + "/Exception/Record";
 
   //      this.httpClient.post(errorHandlerUrl, model).subscribe();
   //    });

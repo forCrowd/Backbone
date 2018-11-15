@@ -15,9 +15,6 @@ import { NotificationService } from "./notification.service";
 import "./breeze-client-odata-fix";
 import { BreezeBridgeHttpClientModule } from "breeze-bridge2-angular";
 
-// Todo!
-export { AuthService, AppEntityManager, NotificationService, GoogleAnalyticsService }
-
 export function appInitializer(authService: AuthService, googleAnalyticsService: GoogleAnalyticsService) {
 
   // Do initing of services that is required before app loads
