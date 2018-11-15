@@ -31,6 +31,8 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
 }
 
 // @dynamic
+// Fixes "Error encountered in metadata generated for exported symbol" error during 'build' operation
+// More info: https://github.com/angular/angular/issues/18867
 @NgModule({
   imports: [
     AppHttpClientModule,

@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.9.4**
+
+* AngularClient - Client + librarry separation
+
 **0.9.3**
 
 * AngularClient - Minor fixes and updates

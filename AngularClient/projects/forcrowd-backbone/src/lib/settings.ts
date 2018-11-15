@@ -1,8 +1,7 @@
 // @dynamic
+// Fixes "Error encountered in metadata generated for exported symbol" error during 'build' operation
+// More info: https://github.com/angular/angular/issues/18867
 export class Settings {
-
-  // @dynamic fixes "Error encountered in metadata generated for exported symbol..." error during 'build' operation
-  // More info: https://github.com/angular/angular/issues/18867
 
   static get analyticsDomainName() {
     return this._analyticsDomainName;
