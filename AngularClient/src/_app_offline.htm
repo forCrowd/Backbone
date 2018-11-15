@@ -34,20 +34,30 @@
 
   <script>
 
-        // Reload after 10 seconds
-        setTimeout(function () {
-            location.reload();
-        }, 10000);
+    // Reload after 10 seconds
+    setTimeout(function () {
+      console.log("Retrying...");
+      location.reload();
+    }, 10850);
 
-        // Meanwhile... ;)
-        wink();
+    // Meanwhile... ;)
+    var count = 10;
+    wink();
 
-        function wink() {
-            var emoticon = document.getElementById("emoticon");
-            var text = emoticon.textContent;
-            emoticon.textContent = text === ":)" ? ";)" : ":)";
-            setTimeout(wink, 1000);
-        }
+    function wink() {
+
+      // Set 'wink'
+      var emoticon = document.getElementById("emoticon");
+      var text = emoticon.textContent;
+      emoticon.textContent = text === ":)" ? ";)" : ":)";
+
+      // Count
+      console.log(`${count}..`);
+      count--;
+
+      // Repeat
+      setTimeout(wink, 1000);
+    }
 
   </script>
 </body>

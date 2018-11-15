@@ -2,7 +2,9 @@
 
 **0.9.4**
 
-* AngularClient - Client + librarry separation
+* AngularClient
+  * Client + library settings fix
+  * _app_offline.html minor updates
 
 **0.9.3**
 
