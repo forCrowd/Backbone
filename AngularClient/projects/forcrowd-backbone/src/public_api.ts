@@ -11,6 +11,8 @@ export * from "./lib/app-http-client/auth-interceptor";
 export * from "./lib/app-http-client/busy-interceptor";
 export * from "./lib/app-http-client/error-interceptor";
 
+export * from "./lib/settings.service";
+
 export * from "./lib/entities/user";
 export * from "./lib/entities/user-login";
 export * from "./lib/entities/user-element-field";

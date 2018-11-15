@@ -18,6 +18,7 @@
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-http-client\auth-interceptor.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-http-client\busy-interceptor.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-http-client\error-interceptor.ts" />
+    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\settings.service.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-settings\app-settings.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-settings\environments\environment-settings.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-settings\environments\production-settings.ts" />

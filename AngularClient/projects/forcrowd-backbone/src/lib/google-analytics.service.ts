@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
 
 import { AppSettings } from "./app-settings/app-settings";
+import { SettingsService } from "./settings.service";
 
 @Injectable()
 export class GoogleAnalyticsService {
 
-  constructor(private appSettings: AppSettings) { }
+  constructor(private appSettings: SettingsService) { }
 
   configureTrackingCode() {
 
