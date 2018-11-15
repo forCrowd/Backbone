@@ -5,6 +5,7 @@ import { throwError as observableThrowError, of as observableOf, Observable, Sub
 import { catchError, mergeMap, map } from "rxjs/operators";
 
 import { AppSettings } from "./app-settings/app-settings";
+import { SettingsService } from "./settings.service";
 import { Role } from "./entities/role";
 import { User } from "./entities/user";
 import { UserRole } from "./entities/user-role";
@@ -53,14 +54,14 @@ export class AuthService {
   constructor(private appEntityManager: AppEntityManager,
     private httpClient: HttpClient,
     private notificationService: NotificationService,
-    private appSettings: AppSettings) {
+    private appSettings: SettingsService) {
 
     this.appHttpClient = httpClient as AppHttpClient;
 
     // Service urls
-    this.currentUserUrl = appSettings.serviceApiUrl + "/Account/CurrentUser";
-    this.registerUrl = appSettings.serviceApiUrl + "/Account/Register";
-    this.tokenUrl = appSettings.serviceApiUrl + "/Token";
+    this.currentUserUrl = appSettings.getServiceApiUrl() + "/Account/CurrentUser";
+    this.registerUrl = appSettings.getServiceApiUrl() + "/Account/Register";
+    this.tokenUrl = appSettings.getServiceApiUrl() + "/Token";
   }
 
   ensureAuthenticatedUser() {

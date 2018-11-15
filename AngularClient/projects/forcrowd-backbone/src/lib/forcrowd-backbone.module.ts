@@ -12,8 +12,9 @@ import { NotificationService } from "./notification.service";
 import "./breeze-client-odata-fix";
 import { BreezeBridgeHttpClientModule } from "breeze-bridge2-angular";
 import { AppSettings } from "./app-settings/app-settings";
+import { SettingsService } from "./settings.service";
 
-export { AuthService, AppEntityManager, NotificationService, GoogleAnalyticsService}
+export { AuthService, AppEntityManager, NotificationService, GoogleAnalyticsService }
 
 export function appInitializer(authService: AuthService, googleAnalyticsService: GoogleAnalyticsService) {
 
@@ -48,8 +49,10 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
     },
     AppSettings,
     AppEntityManager,
-    NotificationService,
+    AuthService,
     GoogleAnalyticsService,
+    NotificationService,
+    SettingsService,
   ]
 })
 export class ForcrowdBackboneModule { }

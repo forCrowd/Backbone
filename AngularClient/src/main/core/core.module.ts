@@ -4,9 +4,12 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
 import { Angulartics2Module } from "angulartics2";
 import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
-import { ForcrowdBackboneModule, AuthService, GoogleAnalyticsService } from "forcrowd-backbone";
 import { FlexLayoutModule } from "@angular/flex-layout";
+
+import { ForcrowdBackboneModule, SettingsService } from "forcrowd-backbone";
 import { SharedModule } from "../shared/shared.module";
+
+import { AppSettings } from "../../app-settings/app-settings";
 
 // Components
 import { ContributorsComponent } from "./components/contributors.component";
@@ -37,6 +40,23 @@ const coreRoutes: Routes = [
   { path: "app-aot.html", redirectTo: "", pathMatch: "full" },
 ];
 
+export function appInitializer(settingsService: SettingsService) {
+
+  // Do initing of services that is required before app loads
+  // NOTE: this factory needs to return a function (that then returns a promise)
+  // https://github.com/angular/angular/issues/9047
+
+  return () => {
+
+    console.log("1", AppSettings);
+    settingsService.init(AppSettings.analyticsDomainName, AppSettings.analyticsTrackingCode, AppSettings.serviceAppUrl);
+    console.log("2");
+
+    // googleAnalyticsService.configureTrackingCode(); // Setup google analytics
+    // return authService.init().toPromise();
+  }
+}
+
 @NgModule({
   declarations: [
     ContributorsComponent,
@@ -61,8 +81,13 @@ const coreRoutes: Routes = [
     ForcrowdBackboneModule,
   ],
   providers: [
-    AuthService,
-    GoogleAnalyticsService,
+    // Application initializer
+    {
+      deps: [SettingsService],
+      multi: true,
+      provide: APP_INITIALIZER,
+      useFactory: appInitializer
+    },
     AuthGuard,
     CanDeactivateGuard,
     DynamicTitleResolve,
