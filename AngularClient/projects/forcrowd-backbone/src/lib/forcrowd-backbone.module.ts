@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, ErrorHandler, NgModule } from "@angular/core";
+import { APP_INITIALIZER, ErrorHandler, ModuleWithProviders, NgModule } from "@angular/core";
 
 // Settings
 import { Settings } from "./settings";
@@ -55,8 +55,11 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
   ]
 })
 export class ForcrowdBackboneModule {
+
   static init(analyticsDomainName: string, analyticsTrackingCode: string, serviceApiUrl: string, serviceODataUrl: string) {
+
     Settings.init(analyticsDomainName, analyticsTrackingCode, serviceApiUrl, serviceODataUrl);
+
     return this;
   }
 }

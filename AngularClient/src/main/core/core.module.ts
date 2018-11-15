@@ -5,7 +5,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { Angulartics2Module } from "angulartics2";
 import { FlexLayoutModule } from "@angular/flex-layout";
 
-import { ForcrowdBackboneModule } from "forcrowd-backbone";
+import { ForcrowdBackboneModule, ForcrowdBackboneModule2 } from "forcrowd-backbone";
 import { SharedModule } from "../shared/shared.module";
 
 import { AppSettings } from "../../app-settings/app-settings";
@@ -39,35 +39,88 @@ const coreRoutes: Routes = [
   { path: "app-aot.html", redirectTo: "", pathMatch: "full" },
 ];
 
-@NgModule({
-  declarations: [
-    ContributorsComponent,
-    CoreComponent,
-    GettingStartedComponent,
-    HomeComponent,
-    NotFoundComponent,
-    SearchComponent,
-  ],
-  exports: [
-    RouterModule,
-    CoreComponent,
-    FlexLayoutModule
-  ],
-  imports: [
-    FlexLayoutModule,
-    SharedModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    RouterModule.forRoot(coreRoutes),
-    Angulartics2Module.forRoot(),
-    ForcrowdBackboneModule.init(AppSettings.analyticsDomainName, AppSettings.analyticsTrackingCode, AppSettings.serviceApiUrl, AppSettings.serviceODataUrl),
-  ],
-  providers: [
-    AuthGuard,
-    CanDeactivateGuard,
-    DynamicTitleResolve,
-    ProjectService,
-    FlexLayoutModule,
-  ]
-})
-export class CoreModule { }
+//@NgModule({
+//  declarations: [
+//    ContributorsComponent,
+//    CoreComponent,
+//    GettingStartedComponent,
+//    HomeComponent,
+//    NotFoundComponent,
+//    SearchComponent,
+//  ],
+//  exports: [
+//    RouterModule,
+//    CoreComponent,
+//    FlexLayoutModule
+//  ],
+//  imports: [
+//    FlexLayoutModule,
+//    SharedModule,
+//    BrowserModule,
+//    BrowserAnimationsModule,
+//    RouterModule.forRoot(coreRoutes),
+//    Angulartics2Module.forRoot(),
+//    ForcrowdBackboneModule2.init(AppSettings.analyticsDomainName, AppSettings.analyticsTrackingCode, AppSettings.serviceApiUrl, AppSettings.serviceODataUrl),
+//  ],
+//  providers: [
+//    AuthGuard,
+//    CanDeactivateGuard,
+//    DynamicTitleResolve,
+//    ProjectService,
+//    FlexLayoutModule,
+//  ]
+//})
+//export class CoreModule { }
+
+// @dynamic
+//export class CoreModule {
+
+//  static init() {
+//    return {
+//      ngModule: CoreModule,
+//      ,
+//    };
+//  }
+//}
+
+@NgModule()
+export class CoreModule {
+
+}
+
+(CoreModule as any).decorators = [
+  {
+    type: NgModule,
+    args: [{
+      declarations: [
+        ContributorsComponent,
+        CoreComponent,
+        GettingStartedComponent,
+        HomeComponent,
+        NotFoundComponent,
+        SearchComponent,
+      ],
+      exports: [
+        RouterModule,
+        CoreComponent,
+        FlexLayoutModule
+      ],
+      imports: [
+        FlexLayoutModule,
+        SharedModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        RouterModule.forRoot(coreRoutes),
+        Angulartics2Module.forRoot(),
+        ForcrowdBackboneModule2.init(AppSettings.analyticsDomainName, AppSettings.analyticsTrackingCode, AppSettings.serviceApiUrl, AppSettings.serviceODataUrl),
+      ],
+      providers: [
+        AuthGuard,
+        CanDeactivateGuard,
+        DynamicTitleResolve,
+        ProjectService,
+        FlexLayoutModule,
+      ]
+    }]
+  }
+];
