@@ -1,52 +1,54 @@
-<h1>Account Overview</h1>
+<div class="m-16">
+  <h1>Account Overview</h1>
 
-<mat-card *ngIf="currentUser">
+  <mat-card *ngIf="currentUser">
 
-  <div class="g-mt-20">
+    <div class="g-mt-20">
 
-    <label class="mat-body-2">Email</label><br>
-    <div class="content">
-      {{ currentUser.Email }}
+      <label class="mat-body-2">Email</label><br>
+      <div class="content">
+        {{ currentUser.Email }}
+      </div>
+
+      <button mat-icon-button routerLink="/app/account/change-email">
+        <mat-icon aria-label="Update">edit</mat-icon>
+      </button>
+
+      <span [hidden]="!displayConfirmEmail">
+        (Unconfirmed) <a routerLink="/app/account/confirm-email">Confirm</a>
+      </span>
+
     </div>
 
-    <button mat-icon-button routerLink="/app/account/change-email">
-      <mat-icon aria-label="Update">edit</mat-icon>
-    </button>
+    <div class="g-mt-20">
 
-    <span [hidden]="!displayConfirmEmail">
-      (Unconfirmed) <a routerLink="/app/account/confirm-email">Confirm</a>
-    </span>
+      <label class="mat-body-2">Username</label><br>
+      <div class="content">
+        {{ currentUser.UserName }}
+      </div>
 
-  </div>
+      <button mat-icon-button routerLink="/app/account/change-username">
+        <mat-icon aria-label="Update">edit</mat-icon>
+      </button>
 
-  <div class="g-mt-20">
-
-    <label class="mat-body-2">Username</label><br>
-    <div class="content">
-      {{ currentUser.UserName }}
     </div>
 
-    <button mat-icon-button routerLink="/app/account/change-username">
-      <mat-icon aria-label="Update">edit</mat-icon>
-    </button>
+    <div class="g-mt-20">
 
-  </div>
+      <label class="mat-body-2">Password</label><br>
+      <div class="content">
+        ************
+      </div>
 
-  <div class="g-mt-20">
+      <button mat-icon-button [hidden]="!currentUser.HasPassword" routerLink="/app/account/change-password">
+        <mat-icon aria-label="Change password">edit</mat-icon>
+      </button>
 
-    <label class="mat-body-2">Password</label><br>
-    <div class="content">
-      ************
+      <button mat-icon-button [hidden]="currentUser.HasPassword" routerLink="/app/account/add-password">
+        <mat-icon aria-label="Add password">edit</mat-icon>
+      </button>
+
     </div>
 
-    <button mat-icon-button [hidden]="!currentUser.HasPassword" routerLink="/app/account/change-password">
-      <mat-icon aria-label="Change password">edit</mat-icon>
-    </button>
-
-    <button mat-icon-button [hidden]="currentUser.HasPassword" routerLink="/app/account/add-password">
-      <mat-icon aria-label="Add password">edit</mat-icon>
-    </button>
-
-  </div>
-
-</mat-card>
+  </mat-card>
+</div>

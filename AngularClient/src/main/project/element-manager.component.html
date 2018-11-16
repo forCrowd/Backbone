@@ -1,4 +1,4 @@
-<div *ngIf="project">
+<div *ngIf="project" class="m-16">
 
   <!-- Element list -->
   <div *ngIf="!selectedElement">
@@ -55,7 +55,7 @@
 
     <mat-card>
       <form #elementForm="ngForm" autocomplete="off">
-        <div class="g-mt-40">
+        <div class="g-mt-40 m-16">
           <div [ngClass]="{ 'has-error': selectedElement.entityAspect.getValidationErrors('Name').length > 0 }">
             <mat-form-field>
               <input matInput id="Name" name="Name" type="text" [(ngModel)]="selectedElement.Name" placeholder="Name" />

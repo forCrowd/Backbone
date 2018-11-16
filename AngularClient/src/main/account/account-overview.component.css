@@ -12,6 +12,7 @@ h1 {
 mat-card {
   padding-top: 24px;
   border-radius: 4px;
+  padding: 16px !important;
   border: solid 1px #dbdbdd;
   background-color: #ffffff;
   box-shadow: none !important;

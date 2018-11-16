@@ -1,3 +1,20 @@
+@media only screen and (min-width: 300px) and (max-width: 1024px) {
+  .board {
+    font-size: 11px !important;
+  }
+
+  .board-no-border {
+    font-size: 11px !important;
+  }
+}
+
+.link {
+  font-weight: normal;
+  color: #0019ff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 form {
   padding-bottom: 10px;
 }
@@ -24,6 +41,10 @@ form {
 
 .mat-tab-nav-bar, .mat-tab-header {
   border-bottom: 0px solid rgba(0, 0, 0, 1) !important;
+}
+
+.mat-stroked-button {
+  border: solid 1px #58b287 !important;
 }
 
 .templateContainer {
@@ -64,6 +85,10 @@ form {
   background-image: none !important;
 }
 
+.mat-card-title {
+  margin: 16px !important;
+}
+
 .board {
   width: 24%;
   float: left;
@@ -78,7 +103,44 @@ form {
   float: left;
   height: 140px;
   border-right-color: #e2e2e4;
-  padding: 42px 10px 10px 5px;
+  padding: 42px 10px 10px 10px;
+}
+
+.w-30p {
+  width: 30% !important;
+}
+
+.w-35p {
+  width: 35% !important;
+}
+
+.wp-30 {
+  width: 30%; float: left;
+}
+
+.wp-40 {
+  width: 40%; float: left;
+}
+
+.wp-60 {
+  width: 60%; float: left;
+}
+
+.wp-70 {
+  width: 70%; float: left;
+}
+
+.h-40 {
+  height: 40px;
+}
+
+.h-60 {
+  height: 60px;
+  padding-top: 20px;
+}
+
+.p-16 {
+  padding: 16px !important;
 }
 
 textarea.mat-input-element {

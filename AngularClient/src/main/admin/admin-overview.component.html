@@ -1,19 +1,21 @@
-<h2>Admin Overview</h2>
-<hr />
+<div class="m-16">
+  <h2>Admin Overview</h2>
 
-<div>
-  <div class="g-mt-20">
-    <label class="mat-body-2">
-      <a routerLink="/app/admin/projects">Projects</a>
-    </label>
-    <div>
-      {{ projectCount }}
+  <div class="m-16">
+    <div class="g-mt-20">
+      <label class="mat-body-2">
+        <a routerLink="/app/admin/projects">Projects</a>
+      </label>
+      <div>
+        {{ projectCount }}
+      </div>
+    </div>
+    <div class="g-mt-20">
+      <label class="mat-body-2">Users</label>
+      <div>
+        {{ userCount }}
+      </div>
     </div>
   </div>
-  <div class="g-mt-20">
-    <label class="mat-body-2">Users</label>
-    <div>
-      {{ userCount }}
-    </div>
-  </div>
+
 </div>

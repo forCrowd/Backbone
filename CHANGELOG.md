@@ -1,10 +1,12 @@
 ### Changelog
 
-**0.9.4**
-
+**0.9.5**
 * AngularClient
   * Client + library settings fix
   * app_offline.html minor updates
+
+**0.9.4**
+* AngularClient - UI minor fix/update
 
 **0.9.3**
 

@@ -1,20 +1,22 @@
-<h1>Confirm Email</h1>
+<div class="m-16">
+  <h1>Confirm Email</h1>
 
-<div class="g-mt-20">
-  <mat-card>
-    <p>
-      A confirmation email has been sent to your email address.
-    </p>
-    <p>
-      Please use the link in the email to confirm your email address.
-    </p>
-    <p>
-      If you didn't receive a confirmation email, please send it again.<br />
-    </p>
-  </mat-card>
-</div>
-<div class="g-mt-20">
-  <button mat-flat-button (click)="resendConfirmationEmail()" [disabled]="isBusy">
-    Resend Confirmation Email
-  </button>
+  <div class="g-mt-20 m-16">
+    <mat-card>
+      <p>
+        A confirmation email has been sent to your email address.
+      </p>
+      <p>
+        Please use the link in the email to confirm your email address.
+      </p>
+      <p>
+        If you didn't receive a confirmation email, please send it again.<br />
+      </p>
+    </mat-card>
+  </div>
+  <div class="g-mt-20 m-16">
+    <button mat-flat-button (click)="resendConfirmationEmail()" [disabled]="isBusy">
+      Resend Confirmation Email
+    </button>
+  </div>
 </div>
