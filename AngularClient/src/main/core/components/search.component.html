@@ -1,9 +1,9 @@
-<h1>Search</h1>
+<h1 class="m-16">Search</h1>
 
-<div class="container g-mt-20">
+<div class="container g-mt-20 m-16">
   <mat-card>
     <form #searchForm="ngForm" autocomplete="off">
-      <div class="searchInput">
+      <div class="searchInput m-16">
         <mat-form-field>
           <input matInput id="searchKey" name="searchKey" placeholder="Enter a project or user name" [(ngModel)]="searchKey">
         </mat-form-field>
@@ -15,7 +15,7 @@
   </mat-card>
 
   <mat-progress-bar mode="indeterminate" [hidden]="!isBusy"></mat-progress-bar>
-  <div class="g-mt-20">
+  <div class="g-mt-20 g-mb-250">
     <h2 [hidden]="!hasResult">{{dataSource.data.length === 1 ? "Result" : "Results"}}</h2>
 
     <mat-card [hidden]="!hasResult || dataSource.data.length > 0">

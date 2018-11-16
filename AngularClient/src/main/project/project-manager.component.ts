@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 import { Project, User } from "forcrowd-backbone";
 import { ProjectService } from "../core/core.module";
+import { AppSettings } from "../../app-settings/app-settings";
 
 @Component({
   selector: "project-manager",
@@ -16,6 +17,22 @@ export class ProjectManagerComponent implements OnInit {
   selectedTabIndex = 0;
   user: User;
   viewMode = "new"; // new | existing
+
+  get metadataUrl(): string {
+    return `${AppSettings.serviceODataUrl}/$metadata`;
+  }
+
+  get projectBasicApiUrl(): string {
+    return `${AppSettings.serviceODataUrl}/Project(${this.project.Id})`;
+  }
+
+  get projectGuestExpandedApiUrl(): string {
+    return `${AppSettings.serviceODataUrl}/Project(${this.project.Id})?$expand=User,ElementSet/ElementFieldSet,ElementSet/ElementItemSet/ElementCellSet`;
+  }
+
+  get projectOwnerExpandedApiUrl(): string {
+    return `${AppSettings.serviceODataUrl}/Project(${this.project.Id})?$expand=User,ElementSet/ElementFieldSet/UserElementFieldSet,ElementSet/ElementItemSet/ElementCellSet/UserElementCellSet`;
+  }
 
   get isBusy(): boolean {
     return this.projectService.isBusy;
@@ -87,18 +104,23 @@ export class ProjectManagerComponent implements OnInit {
       });
   }
 
+  manageProject(): void {
+    this.project.entityAspect.rejectChanges();
+
+    const command = `/projects/${this.project.Id}/edit`;
+    this.router.navigate([command]);
+  }
+
   isEditingChanged(isEditing: boolean): void {
     this.isEditing = isEditing;
   }
 
   ngOnInit(): void {
+    this.viewMode = this.activatedRoute.snapshot.url[this.activatedRoute.snapshot.url.length - 1].path;
 
-    this.viewMode = this.activatedRoute.snapshot.url[this.activatedRoute.snapshot.url.length - 1].path === "new"
-      ? "new"
-      : "existing";
+    if (this.viewMode === "edit") this.viewMode = "existing";
 
-    if (this.viewMode === "existing") {
-
+    if (this.viewMode !== "new") {
       const projectId: number = this.activatedRoute.snapshot.params["project-id"];
 
       this.projectService.getProjectExpanded(projectId)

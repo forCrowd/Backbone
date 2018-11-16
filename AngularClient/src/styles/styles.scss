@@ -54,7 +54,8 @@ h2 {
 }
 
 mat-card {
-  padding-top: 24px;
+  border-radius: 6px !important;
+  padding: 0px 6px 0px !important;
   border-radius: 4px;
   border: solid 1px #dbdbdd;
   background-color: #ffffff;
@@ -65,6 +66,10 @@ mat-card {
     font-weight: bold;
     color: #4a4a4a;
   }
+
+mat-card-title {
+  margin: 16px;
+}
 
 mat-form-field {
   .mat-form-field-ripple {
@@ -174,6 +179,10 @@ table {
 }
 
 /* Margin Spaces */
+.m-16 {
+  margin: 16px !important;
+}
+
 .g-mt-10 {
   margin-top: 5px;
 }

@@ -1,45 +1,47 @@
-<h1>Register</h1>
+<div class="m-16">
+  <h1>Register</h1>
 
-<mat-card>
-  <form #registerForm="ngForm" autocomplete="off">
-    <div class="g-mt-20" [ngClass]="{'has-error': UserName.dirty && UserName.invalid}">
-      <mat-form-field>
-        <input matInput id="UserName" name="UserName" type="text" placeholder="Username" [(ngModel)]="bindingModel.UserName"
-          #UserName="ngModel" class="form-control" aria-describedby="UserNameHelp" required />
-        <mat-hint id="UserNameHelp">
-          No special characters allowed, except dash "-" and underscore "_".
-        </mat-hint>
-      </mat-form-field>
-    </div>
-    <div class="g-mt-20" [ngClass]="{'has-error': Email.dirty && Email.invalid}">
-      <mat-form-field>
-        <input matInput id="Email" name="Email" type="text" placeholder="Email" [(ngModel)]="bindingModel.Email" #Email="ngModel"
-          class="form-control" required />
-      </mat-form-field>
-    </div>
-    <div class="g-mt-20" [ngClass]="{'has-error': Password.dirty && Password.invalid}">
-      <mat-form-field>
-        <input matInput id="Password" name="Password" type="password" placeholder="Password" [(ngModel)]="bindingModel.Password"
-          #Password="ngModel" class="form-control" required aria-describedby="PasswordHelp" />
-        <mat-hint id="PasswordHelp">
-          Password must be at least 6 characters long, must have at least one lowercase ('a'-'z') and one digit
-          ('0'-'9')
-        </mat-hint>
-      </mat-form-field>
-    </div>
-    <div class="g-mt-20" [ngClass]="{'has-error': ConfirmPassword.dirty && ConfirmPassword.invalid}">
-      <mat-form-field>
-        <input matInput id="ConfirmPassword" name="ConfirmPassword" type="password" placeholder="Confirm password"
-          [(ngModel)]="bindingModel.ConfirmPassword" #ConfirmPassword="ngModel" class="form-control" required />
-      </mat-form-field>
-    </div>
-    <div class="g-mt-20">
-      <mat-checkbox id="RememberMe" name="RememberMe" [(ngModel)]="rememberMe">Remember me</mat-checkbox>
-    </div>
-    <div class="g-mt-20">
-      <button mat-flat-button (click)="register()" [disabled]="registerForm.form.invalid || isBusy">
-        Register
-      </button>
-    </div>
-  </form>
-</mat-card>
+  <mat-card>
+    <form #registerForm="ngForm" autocomplete="off">
+      <div class="g-mt-20 m-16" [ngClass]="{'has-error': UserName.dirty && UserName.invalid}">
+        <mat-form-field>
+          <input matInput id="UserName" name="UserName" type="text" placeholder="Username" [(ngModel)]="bindingModel.UserName"
+            #UserName="ngModel" class="form-control" aria-describedby="UserNameHelp" required />
+          <mat-hint id="UserNameHelp">
+            No special characters allowed, except dash "-" and underscore "_".
+          </mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="g-mt-20 m-16" [ngClass]="{'has-error': Email.dirty && Email.invalid}">
+        <mat-form-field>
+          <input matInput id="Email" name="Email" type="text" placeholder="Email" [(ngModel)]="bindingModel.Email" #Email="ngModel"
+            class="form-control" required />
+        </mat-form-field>
+      </div>
+      <div class="g-mt-20 m-16" [ngClass]="{'has-error': Password.dirty && Password.invalid}">
+        <mat-form-field>
+          <input matInput id="Password" name="Password" type="password" placeholder="Password" [(ngModel)]="bindingModel.Password"
+            #Password="ngModel" class="form-control" required aria-describedby="PasswordHelp" />
+          <mat-hint id="PasswordHelp">
+            Password must be at least 6 characters long, must have at least one lowercase ('a'-'z') and one digit
+            ('0'-'9')
+          </mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="g-mt-20 m-16" [ngClass]="{'has-error': ConfirmPassword.dirty && ConfirmPassword.invalid}">
+        <mat-form-field>
+          <input matInput id="ConfirmPassword" name="ConfirmPassword" type="password" placeholder="Confirm password"
+            [(ngModel)]="bindingModel.ConfirmPassword" #ConfirmPassword="ngModel" class="form-control" required />
+        </mat-form-field>
+      </div>
+      <div class="g-mt-20 m-16">
+        <mat-checkbox id="RememberMe" name="RememberMe" [(ngModel)]="rememberMe">Remember me</mat-checkbox>
+      </div>
+      <div class="g-mt-20 m-16">
+        <button mat-flat-button (click)="register()" [disabled]="registerForm.form.invalid || isBusy">
+          Register
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>
