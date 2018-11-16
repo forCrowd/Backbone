@@ -18,7 +18,6 @@
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-http-client\auth-interceptor.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-http-client\busy-interceptor.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-http-client\error-interceptor.ts" />
-    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\forcrowd-backbone-2.module.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\settings.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\auth.service.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\breeze-client-odata-fix.ts" />

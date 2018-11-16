@@ -1,14 +1,14 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
+import { FlexLayoutModule } from "@angular/flex-layout";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
 import { Angulartics2Module } from "angulartics2";
-import { FlexLayoutModule } from "@angular/flex-layout";
 
-import { ForcrowdBackboneModule, ForcrowdBackboneModule2 } from "forcrowd-backbone";
+import { ForcrowdBackboneModule, ISettings } from "forcrowd-backbone";
 import { SharedModule } from "../shared/shared.module";
 
-import { AppSettings } from "../../app-settings/app-settings";
+import { environment } from "../../app-settings/environments/environment-settings";
 
 // Components
 import { ContributorsComponent } from "./components/contributors.component";
@@ -39,88 +39,42 @@ const coreRoutes: Routes = [
   { path: "app-aot.html", redirectTo: "", pathMatch: "full" },
 ];
 
-//@NgModule({
-//  declarations: [
-//    ContributorsComponent,
-//    CoreComponent,
-//    GettingStartedComponent,
-//    HomeComponent,
-//    NotFoundComponent,
-//    SearchComponent,
-//  ],
-//  exports: [
-//    RouterModule,
-//    CoreComponent,
-//    FlexLayoutModule
-//  ],
-//  imports: [
-//    FlexLayoutModule,
-//    SharedModule,
-//    BrowserModule,
-//    BrowserAnimationsModule,
-//    RouterModule.forRoot(coreRoutes),
-//    Angulartics2Module.forRoot(),
-//    ForcrowdBackboneModule2.init(AppSettings.analyticsDomainName, AppSettings.analyticsTrackingCode, AppSettings.serviceApiUrl, AppSettings.serviceODataUrl),
-//  ],
-//  providers: [
-//    AuthGuard,
-//    CanDeactivateGuard,
-//    DynamicTitleResolve,
-//    ProjectService,
-//    FlexLayoutModule,
-//  ]
-//})
-//export class CoreModule { }
-
-// @dynamic
-//export class CoreModule {
-
-//  static init() {
-//    return {
-//      ngModule: CoreModule,
-//      ,
-//    };
-//  }
-//}
-
-@NgModule()
-export class CoreModule {
-
+const settings: ISettings = {
+  analyticsDomainName: environment.analyticsDomainName,
+  analyticsTrackingCode: environment.analyticsTrackingCode,
+  serviceApiUrl: environment.serviceApiUrl,
+  serviceODataUrl: environment.serviceODataUrl
 }
 
-(CoreModule as any).decorators = [
-  {
-    type: NgModule,
-    args: [{
-      declarations: [
-        ContributorsComponent,
-        CoreComponent,
-        GettingStartedComponent,
-        HomeComponent,
-        NotFoundComponent,
-        SearchComponent,
-      ],
-      exports: [
-        RouterModule,
-        CoreComponent,
-        FlexLayoutModule
-      ],
-      imports: [
-        FlexLayoutModule,
-        SharedModule,
-        BrowserModule,
-        BrowserAnimationsModule,
-        RouterModule.forRoot(coreRoutes),
-        Angulartics2Module.forRoot(),
-        ForcrowdBackboneModule2.init(AppSettings.analyticsDomainName, AppSettings.analyticsTrackingCode, AppSettings.serviceApiUrl, AppSettings.serviceODataUrl),
-      ],
-      providers: [
-        AuthGuard,
-        CanDeactivateGuard,
-        DynamicTitleResolve,
-        ProjectService,
-        FlexLayoutModule,
-      ]
-    }]
-  }
-];
+@NgModule({
+  declarations: [
+    ContributorsComponent,
+    CoreComponent,
+    GettingStartedComponent,
+    HomeComponent,
+    NotFoundComponent,
+    SearchComponent,
+  ],
+  exports: [
+    RouterModule,
+    CoreComponent,
+    FlexLayoutModule
+  ],
+  imports: [
+    FlexLayoutModule,
+    SharedModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    RouterModule.forRoot(coreRoutes),
+    Angulartics2Module.forRoot(),
+    ForcrowdBackboneModule.configure(settings)
+  ],
+  providers: [
+    AuthGuard,
+    CanDeactivateGuard,
+    DynamicTitleResolve,
+    ProjectService,
+    FlexLayoutModule,
+  ]
+})
+export class CoreModule { }

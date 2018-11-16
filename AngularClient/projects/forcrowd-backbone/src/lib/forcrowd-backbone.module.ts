@@ -1,8 +1,5 @@
 import { APP_INITIALIZER, ErrorHandler, ModuleWithProviders, NgModule } from "@angular/core";
 
-// Settings
-import { Settings } from "./settings";
-
 // Services
 import { AppHttpClientModule } from "./app-http-client/app-http-client.module";
 import { AppErrorHandler } from "./app-error-handler.service";
@@ -10,6 +7,7 @@ import { AuthService } from "./auth.service";
 import { AppEntityManager } from "./app-entity-manager.service";
 import { GoogleAnalyticsService } from "./google-analytics.service";
 import { NotificationService } from "./notification.service";
+import { ISettings, Settings } from "./settings";
 
 // Breeze
 import "./breeze-client-odata-fix";
@@ -34,32 +32,37 @@ export function appInitializer(authService: AuthService, googleAnalyticsService:
   imports: [
     AppHttpClientModule,
     BreezeBridgeHttpClientModule,
-  ],
-  providers: [
-    // Application initializer
-    {
-      deps: [AuthService, GoogleAnalyticsService],
-      multi: true,
-      provide: APP_INITIALIZER,
-      useFactory: appInitializer
-    },
-    // Error handler
-    {
-      provide: ErrorHandler,
-      useClass: AppErrorHandler
-    },
-    AppEntityManager,
-    AuthService,
-    GoogleAnalyticsService,
-    NotificationService,
   ]
 })
 export class ForcrowdBackboneModule {
 
-  static init(analyticsDomainName: string, analyticsTrackingCode: string, serviceApiUrl: string, serviceODataUrl: string) {
+  static configure(settings: ISettings): ModuleWithProviders {
 
-    Settings.init(analyticsDomainName, analyticsTrackingCode, serviceApiUrl, serviceODataUrl);
-
-    return this;
+    return {
+      ngModule: ForcrowdBackboneModule,
+      providers: [
+        // Application initializer
+        {
+          deps: [AuthService, GoogleAnalyticsService],
+          multi: true,
+          provide: APP_INITIALIZER,
+          useFactory: appInitializer
+        },
+        // Error handler
+        {
+          provide: ErrorHandler,
+          useClass: AppErrorHandler
+        },
+        AppEntityManager,
+        AuthService,
+        GoogleAnalyticsService,
+        NotificationService,
+        // Settings
+        {
+          provide: Settings,
+          useValue: settings
+        }
+      ]
+    };
   }
 }

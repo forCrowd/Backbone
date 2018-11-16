@@ -14,12 +14,12 @@ export class AppErrorHandler implements ErrorHandler {
   errorLimitResetTimer: Subscription = null;
   get errorLimitReached(): boolean { return this.errorCounter > 10 };
 
-  constructor(private readonly httpClient: HttpClient) {
+  constructor(private readonly httpClient: HttpClient, private readonly settings: Settings) {
   }
 
   handleError(error: Error): void {
 
-    //if (Settings.environment === "Development") {
+    //if (settings.environment === "Development") {
 
       console.error(error);
 
@@ -45,7 +45,7 @@ export class AppErrorHandler implements ErrorHandler {
   //        Stack: stack || ""
   //      };
 
-  //      const errorHandlerUrl = Settings.serviceApiUrl + "/Exception/Record";
+  //      const errorHandlerUrl = settings.serviceApiUrl + "/Exception/Record";
 
   //      this.httpClient.post(errorHandlerUrl, model).subscribe();
   //    });

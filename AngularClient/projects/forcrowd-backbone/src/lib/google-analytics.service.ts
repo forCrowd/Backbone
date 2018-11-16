@@ -5,9 +5,11 @@ import { Settings } from "./settings";
 @Injectable()
 export class GoogleAnalyticsService {
 
+  constructor(private readonly settings: Settings) { }
+
   configureTrackingCode() {
 
-    if (Settings.analyticsTrackingCode === "" || Settings.analyticsDomainName === "") {
+    if (this.settings.analyticsTrackingCode === "" || this.settings.analyticsDomainName === "") {
       return;
     }
 
@@ -21,7 +23,7 @@ export class GoogleAnalyticsService {
     const firstElement = document.getElementsByTagName("script")[0];
     firstElement.parentNode.insertBefore(script, firstElement);
 
-    this.ga("create", Settings.analyticsTrackingCode, Settings.analyticsDomainName);
+    this.ga("create", this.settings.analyticsTrackingCode, this.settings.analyticsDomainName);
   }
 
   private ga(...args: string[]): void {

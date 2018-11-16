@@ -10,7 +10,6 @@ import {
 import { BreezeBridgeHttpClientModule } from "breeze-bridge2-angular";
 import "datajs";
 
-import { Settings } from "./settings";
 import { Element } from "./entities/element";
 import { EntityBase } from "./entities/entity-base";
 import { ElementCell } from "./entities/element-cell";
@@ -24,6 +23,7 @@ import { UserElementField } from "./entities/user-element-field";
 import { UserRole } from "./entities/user-role";
 import { AppErrorHandler } from "./app-error-handler.service";
 import { NotificationService } from "./notification.service";
+import { Settings } from "./settings";
 import { Token } from "./token";
 
 export interface IQueryResult<T> {
@@ -41,11 +41,14 @@ export class AppEntityManager extends EntityManager {
 
   constructor(private breezeBridgeHttpClientModule: BreezeBridgeHttpClientModule,
     private notificationService: NotificationService,
-    errorHandler: ErrorHandler) {
+    errorHandler: ErrorHandler,
+    private settings: Settings) {
 
     super({
-      serviceName: Settings.serviceODataUrl
+      serviceName: settings.serviceODataUrl
     });
+
+    console.log("settings", settings);
 
     this.appErrorHandler = errorHandler as AppErrorHandler;
 

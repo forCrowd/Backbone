@@ -6,9 +6,9 @@ export * from "./lib/app-http-client/app-http-client.module";
 export * from "./lib/auth.service"
 export * from "./lib/app-entity-manager.service";
 export * from "./lib/forcrowd-backbone.module";
-export * from "./lib/forcrowd-backbone-2.module";
 export * from "./lib/google-analytics.service";
 export * from "./lib/notification.service";
+export * from "./lib/settings";
 
 export * from "./lib/entities/user";
 export * from "./lib/entities/user-login";
