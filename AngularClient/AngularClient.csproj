@@ -142,7 +142,6 @@
     <Content Include="src\main\project\element-manager.component.css" />
     <TypeScriptCompile Include="src\main\project\element-manager.component.ts" />
     <TypeScriptCompile Include="src\main\project\project-manager.component.ts" />
-    <TypeScriptCompile Include="src\main\project\project-viewer.component.ts" />
     <TypeScriptCompile Include="src\main\project\project.module.ts" />
     <TypeScriptCompile Include="src\main\project\symbolic.pipe.ts" />
     <TypeScriptCompile Include="src\main\shared\shared.module.ts" />
@@ -225,7 +224,6 @@
     <Content Include="src\main\core\components\search.component.html" />
     <Content Include="src\main\project\element-manager.component.html" />
     <Content Include="src\main\project\project-manager.component.html" />
-    <Content Include="src\main\project\project-viewer.component.html" />
     <Content Include="src\main\user\profile.component.html" />
     <Content Include="src\styles\styles-old.css" />
   </ItemGroup>
