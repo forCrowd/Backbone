@@ -5,7 +5,6 @@ import { AppHttpClientModule } from "./app-http-client/app-http-client.module";
 import { AppErrorHandler } from "./app-error-handler.service";
 import { AuthService } from "./auth.service";
 import { AppEntityManager } from "./app-entity-manager.service";
-import { GoogleAnalyticsService } from "./google-analytics.service";
 import { NotificationService } from "./notification.service";
 import { ISettings, Settings } from "./settings";
 
@@ -13,14 +12,13 @@ import { ISettings, Settings } from "./settings";
 import "./breeze-client-odata-fix";
 import { BreezeBridgeHttpClientModule } from "breeze-bridge2-angular";
 
-export function appInitializer(authService: AuthService, googleAnalyticsService: GoogleAnalyticsService) {
+export function appInitializer(authService: AuthService) {
 
   // Do initing of services that is required before app loads
   // NOTE: this factory needs to return a function (that then returns a promise)
   // https://github.com/angular/angular/issues/9047
 
   return () => {
-    googleAnalyticsService.configureTrackingCode(); // Setup google analytics
     return authService.init().toPromise();
   }
 }
@@ -43,7 +41,7 @@ export class ForcrowdBackboneModule {
       providers: [
         // Application initializer
         {
-          deps: [AuthService, GoogleAnalyticsService],
+          deps: [AuthService],
           multi: true,
           provide: APP_INITIALIZER,
           useFactory: appInitializer
@@ -55,7 +53,6 @@ export class ForcrowdBackboneModule {
         },
         AppEntityManager,
         AuthService,
-        GoogleAnalyticsService,
         NotificationService,
         // Settings
         {

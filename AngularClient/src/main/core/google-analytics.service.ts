@@ -1,17 +1,19 @@
 import { Injectable } from "@angular/core";
 
-import { Settings } from "./settings";
+import { environment } from "../../app-settings/environments/environment-settings";
 
 @Injectable()
 export class GoogleAnalyticsService {
 
-  constructor(private readonly settings: Settings) { }
-
   configureTrackingCode() {
 
-    if (this.settings.analyticsTrackingCode === "" || this.settings.analyticsDomainName === "") {
+    console.log("analytics", environment.analyticsTrackingCode, environment.analyticsDomainName);
+
+    if (environment.analyticsTrackingCode === "" || environment.analyticsDomainName === "") {
       return;
     }
+
+    console.log("analytics - configuring..");
 
     window["GoogleAnalyticsObject"] = "ga";
     window["ga"] = window["ga"] || this.ga;
@@ -23,10 +25,11 @@ export class GoogleAnalyticsService {
     const firstElement = document.getElementsByTagName("script")[0];
     firstElement.parentNode.insertBefore(script, firstElement);
 
-    this.ga("create", this.settings.analyticsTrackingCode, this.settings.analyticsDomainName);
+    this.ga("create", environment.analyticsTrackingCode, environment.analyticsDomainName);
   }
 
   private ga(...args: string[]): void {
+    console.log("z arg", ...args);
     (window["ga"].q = window["ga"].q || []).push(args);
   }
 }

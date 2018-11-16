@@ -41,7 +41,7 @@
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\entities\user-role.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\entities\user.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\forcrowd-backbone.module.ts" />
-    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\google-analytics.service.ts" />
+    <TypeScriptCompile Include="src\main\core\google-analytics.service.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\notification.service.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\token.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\utils.ts" />

@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { APP_INITIALIZER, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -22,6 +22,7 @@ import { SearchComponent } from "./components/search.component";
 import { AuthGuard } from "./auth-guard.service";
 import { CanDeactivateGuard } from "./can-deactivate-guard.service";
 import { DynamicTitleResolve } from "./dynamic-title-resolve.service";
+import { GoogleAnalyticsService } from "./google-analytics.service";
 import { ProjectService } from "./project.service";
 
 export { AuthGuard, CanDeactivateGuard, DynamicTitleResolve, ProjectService }
@@ -44,6 +45,12 @@ const settings: ISettings = {
   analyticsTrackingCode: environment.analyticsTrackingCode,
   serviceApiUrl: environment.serviceApiUrl,
   serviceODataUrl: environment.serviceODataUrl
+}
+
+export function appInitializer(googleAnalyticsService: GoogleAnalyticsService) {
+  return () => {
+    googleAnalyticsService.configureTrackingCode();
+  };
 }
 
 @NgModule({
@@ -70,9 +77,17 @@ const settings: ISettings = {
     ForcrowdBackboneModule.configure(settings)
   ],
   providers: [
+    // Application initializer
+    {
+      deps: [GoogleAnalyticsService],
+      multi: true,
+      provide: APP_INITIALIZER,
+      useFactory: appInitializer
+    },
     AuthGuard,
     CanDeactivateGuard,
     DynamicTitleResolve,
+    GoogleAnalyticsService,
     ProjectService,
     FlexLayoutModule,
   ]
