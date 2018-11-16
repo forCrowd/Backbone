@@ -22,12 +22,12 @@ export class AppSettings {
   /*
    * Service application API url
    */
-  static get serviceApiUrl(): string { return `${environment.serviceAppUrl}/api/v1` };
+  static get serviceApiUrl(): string { return environment.serviceApiUrl; }
 
   /*
    * Service application OData url
    */
-  static get serviceODataUrl(): string { return `${environment.serviceAppUrl}/odata/v1`; }
+  static get serviceODataUrl(): string { return environment.serviceODataUrl; }
 
   /*
    * Origin field for the example project that 'Getting started' page creates
@@ -37,5 +37,5 @@ export class AppSettings {
   /*
    * Application version number
    */
-  static get version(): string { return "0.9.4"; }
+  static get version(): string { return "0.9.5"; }
 }

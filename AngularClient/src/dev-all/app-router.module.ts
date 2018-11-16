@@ -9,7 +9,7 @@ import { ODataComponent } from "./odata.component";
 import { ProjectTesterComponent } from "./project-tester.component";
 import { WebApiComponent } from "./web-api.component";
 
-import { GoogleAnalyticsService } from "forcrowd-backbone";
+import { GoogleAnalyticsService } from "../main/core/google-analytics.service";
 
 export { Angulartics2GoogleAnalytics, GoogleAnalyticsService }
 
@@ -27,7 +27,7 @@ const routes: Routes = [
 
 export function appInitializer(googleAnalyticsService: GoogleAnalyticsService) {
   return () => {
-    googleAnalyticsService.configureTrackingCode(); // Setup google analytics
+    googleAnalyticsService.configureTrackingCode();
   };
 }
 
@@ -42,10 +42,10 @@ export function appInitializer(googleAnalyticsService: GoogleAnalyticsService) {
   providers: [
     // Application initializer
     {
-      "provide": APP_INITIALIZER,
-      "useFactory": appInitializer,
-      "deps": [GoogleAnalyticsService],
-      "multi": true,
+      deps: [GoogleAnalyticsService],
+      multi: true,
+      provide: APP_INITIALIZER,
+      useFactory: appInitializer,
     },
     GoogleAnalyticsService
   ]

@@ -7,6 +7,8 @@ import { ElementCell } from "./element-cell";
 import { UserElementCell } from "./user-element-cell";
 
 // @dynamic
+// Fixes "Error encountered in metadata generated for exported symbol" error during 'build' operation
+// More info: https://github.com/angular/angular/issues/18867
 export class TestHelpers {
 
   static createElement(project?: Project): Element {

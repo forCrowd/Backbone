@@ -18,9 +18,14 @@ export const environment = {
   analyticsTrackingCode: "",
 
   /*
-   * Service application (WebApi) url
+   * Service application API url
    */
-  serviceAppUrl: "http://localhost:15001",
+  serviceApiUrl: "http://localhost:15001/api/v1",
+
+  /*
+   * Service application OData url
+   */
+  serviceODataUrl: "http://localhost:15001/odata/v1",
 
   /*
    * Origin field for the example project that 'Getting started' page creates

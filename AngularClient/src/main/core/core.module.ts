@@ -1,12 +1,14 @@
-import { APP_INITIALIZER, ErrorHandler, NgModule } from "@angular/core";
+import { APP_INITIALIZER, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
+import { FlexLayoutModule } from "@angular/flex-layout";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
 import { Angulartics2Module } from "angulartics2";
-import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
-import { ForcrowdBackboneModule, AuthService, GoogleAnalyticsService } from "forcrowd-backbone";
-import { FlexLayoutModule } from "@angular/flex-layout";
+
+import { ForcrowdBackboneModule, ISettings } from "forcrowd-backbone";
 import { SharedModule } from "../shared/shared.module";
+
+import { environment } from "../../app-settings/environments/environment-settings";
 
 // Components
 import { ContributorsComponent } from "./components/contributors.component";
@@ -20,6 +22,7 @@ import { SearchComponent } from "./components/search.component";
 import { AuthGuard } from "./auth-guard.service";
 import { CanDeactivateGuard } from "./can-deactivate-guard.service";
 import { DynamicTitleResolve } from "./dynamic-title-resolve.service";
+import { GoogleAnalyticsService } from "./google-analytics.service";
 import { ProjectService } from "./project.service";
 
 export { AuthGuard, CanDeactivateGuard, DynamicTitleResolve, ProjectService }
@@ -36,6 +39,17 @@ const coreRoutes: Routes = [
   { path: "app.html", redirectTo: "", pathMatch: "full" },
   { path: "app-aot.html", redirectTo: "", pathMatch: "full" },
 ];
+
+const settings: ISettings = {
+  serviceApiUrl: environment.serviceApiUrl,
+  serviceODataUrl: environment.serviceODataUrl
+}
+
+export function appInitializer(googleAnalyticsService: GoogleAnalyticsService) {
+  return () => {
+    googleAnalyticsService.configureTrackingCode();
+  };
+}
 
 @NgModule({
   declarations: [
@@ -58,14 +72,20 @@ const coreRoutes: Routes = [
     BrowserAnimationsModule,
     RouterModule.forRoot(coreRoutes),
     Angulartics2Module.forRoot(),
-    ForcrowdBackboneModule,
+    ForcrowdBackboneModule.configure(settings)
   ],
   providers: [
-    AuthService,
-    GoogleAnalyticsService,
+    // Application initializer
+    {
+      deps: [GoogleAnalyticsService],
+      multi: true,
+      provide: APP_INITIALIZER,
+      useFactory: appInitializer
+    },
     AuthGuard,
     CanDeactivateGuard,
     DynamicTitleResolve,
+    GoogleAnalyticsService,
     ProjectService,
     FlexLayoutModule,
   ]
