@@ -18,11 +18,6 @@ export const environment = {
   analyticsTrackingCode: "",
 
   /*
-   * Service application (WebApi) url
-   */
-  serviceAppUrl: "http://localhost:15001",
-
-  /*
    * Service application API url
    */
   serviceApiUrl: "http://localhost:15001/api/v1",
