@@ -41,8 +41,6 @@ const coreRoutes: Routes = [
 ];
 
 const settings: ISettings = {
-  analyticsDomainName: environment.analyticsDomainName,
-  analyticsTrackingCode: environment.analyticsTrackingCode,
   serviceApiUrl: environment.serviceApiUrl,
   serviceODataUrl: environment.serviceODataUrl
 }
