@@ -1,20 +1,22 @@
-<h1>Change Email</h1>
+<div class="m-16">
+  <h1>Change Email</h1>
 
-<mat-card>
-  <form #changeEmailForm="ngForm" autocomplete="off">
-    <div class="g-mt-20" [ngClass]="{'has-error': Email.dirty && Email.invalid}" class="g-mt-20">
-      <mat-form-field>
-        <input matInput id="Email" name="Email" type="email" [(ngModel)]="bindingModel.Email"
-          #Email="ngModel" placeholder="Email" required />
-      </mat-form-field>
-    </div>
-    <div class="g-mt-20">
-      <button mat-flat-button (click)="changeEmail()" [disabled]="changeEmailForm.form.invalid || isBusy" class="mat-m02">
-        Save
-      </button>
-      <button mat-flat-button (click)="cancel()" [disabled]="isBusy" color="primary" class="mat-m02">
-        Cancel
-      </button>
-    </div>
-  </form>
-</mat-card>
+  <mat-card>
+    <form #changeEmailForm="ngForm" autocomplete="off">
+      <div class="g-mt-20 m-16" [ngClass]="{'has-error': Email.dirty && Email.invalid}">
+        <mat-form-field>
+          <input matInput id="Email" name="Email" type="email" [(ngModel)]="bindingModel.Email"
+            #Email="ngModel" placeholder="Email" required />
+        </mat-form-field>
+      </div>
+      <div class="g-mt-20 m-16">
+        <button mat-flat-button (click)="changeEmail()" [disabled]="changeEmailForm.form.invalid || isBusy" class="mat-m02">
+          Save
+        </button>
+        <button mat-flat-button (click)="cancel()" [disabled]="isBusy" color="primary" class="mat-m02">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>

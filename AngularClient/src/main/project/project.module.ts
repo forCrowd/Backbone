@@ -10,14 +10,14 @@ import { ElementCellManagerComponent } from "./element-cell-manager.component";
 import { ElementFieldManagerComponent } from "./element-field-manager.component";
 import { ElementItemManagerComponent } from "./element-item-manager.component";
 import { ProjectManagerComponent } from "./project-manager.component";
-import { ProjectViewerComponent } from "./project-viewer.component";
 import { SymbolicPipe } from "./symbolic.pipe";
 import { RemoveConfirmComponent } from "./remove-confirm.component";
 
 const projectRoutes: Routes = [
   { path: "projects/new", component: ProjectManagerComponent, canDeactivate: [CanDeactivateGuard], resolve: { title: DynamicTitleResolve } },
   { path: "projects/:project-id/edit", component: ProjectManagerComponent, canActivate: [AuthGuard], canDeactivate: [CanDeactivateGuard], resolve: { title: DynamicTitleResolve } },
-  { path: "projects/:project-id", component: ProjectViewerComponent, resolve: { title: DynamicTitleResolve } },
+  { path: "projects/:project-id/view", component: ProjectManagerComponent, canActivate: [AuthGuard], canDeactivate: [CanDeactivateGuard], resolve: { title: DynamicTitleResolve } },
+  { path: "projects/:project-id", redirectTo: "projects/:project-id/view", pathMatch: "full" },
 ];
 
 @NgModule({
@@ -27,7 +27,6 @@ const projectRoutes: Routes = [
     ElementFieldManagerComponent,
     ElementItemManagerComponent,
     ProjectManagerComponent,
-    ProjectViewerComponent,
     SymbolicPipe,
     RemoveConfirmComponent
   ],

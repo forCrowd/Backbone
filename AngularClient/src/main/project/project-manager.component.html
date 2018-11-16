@@ -1,4 +1,4 @@
-<div [hidden]="viewMode !== 'new'">
+<div [hidden]="viewMode !== 'new'" class="m-16">
 
   <mat-card class="no-shadow">
     <div fxLayout="row" fxLayoutAlign="center center" style=" height: 100%;">
@@ -13,9 +13,9 @@
           <div fxFlex style="padding-top: 140px;" fxLayoutAlign="center center" [ngStyle.xs]="{'padding-top.px': 90}"
             [ngStyle.sm]="{'padding-top.px': 150}" [ngStyle.md]="{'padding-top.px': 160}" [ngStyle.lg]="{'padding-top.px': 100}">
 
-            <button mat-flat-button class="mat-primary" routerLink="/app/getting-started" [disabled]="isBusy" [ngStyle.xs]="{'font-size.px': 16, 'height.px': 56}"
-              [ngStyle.sm]="{'font-size.px': 20, width: 200, 'height.px': 56}" [ngStyle.md]="{'font-size.px': 20, 'height.px': 56}"
-              [ngStyle.lg]="{'font-size.px': 20, 'height.px': 46}">
+            <button mat-flat-button class="mat-primary" routerLink="/app/getting-started" [disabled]="isBusy"
+              [ngStyle.xs]="{'font-size.px': 16, 'height.px': 56}" [ngStyle.sm]="{'font-size.px': 20, width: 200, 'height.px': 56}"
+              [ngStyle.md]="{'font-size.px': 20, 'height.px': 56}" [ngStyle.lg]="{'font-size.px': 20, 'height.px': 46}">
               Create App
             </button>
           </div>
@@ -28,7 +28,7 @@
   <h2>Choose your template</h2>
   <mat-divider></mat-divider>
 
-  <div class="templateContainer g-mt-20" [ngStyle.lg]="{'text-align': 'left'}">
+  <div class="templateContainer g-mt-20 g-mb-250" [ngStyle.lg]="{'text-align': 'left'}">
     <button mat-raised-button (click)="createProjectEmpty()" [disabled]="isBusy" [ngStyle.lg]="{'width.px': 260}" class="mat-m01 mat-m02">
       Blank
       <h5 class="ws-n">Jump start your document by creating a basic accessible template</h5>
@@ -49,7 +49,7 @@
   </div>
 
 </div>
-<div [hidden]="viewMode !== 'existing'">
+<div [hidden]="viewMode === 'new'" class="m-16">
   <div *ngIf="project">
 
     <h2>
@@ -59,9 +59,13 @@
       {{ project.Name }}
     </h2>
 
-    <mat-card class="mat-card-std" style="height: 228px !important;">
+    <div class="m-16" [hidden]="viewMode !== 'existing'">
+      Step 1 - enter the projects information
+    </div>
+
+    <mat-card class="mat-card-std m-16" style="height: 240px !important;">
       <mat-card-title>Project Overview</mat-card-title>
-      <form #projectForm="ngForm" autocomplete="off">
+      <form *ngIf="viewMode === 'existing'" #projectForm="ngForm" autocomplete="off">
         <div fxLayout="row" fxLayoutAlign="start start">
           <div class="board">
             <div [ngClass]="{ 'has-error': project.entityAspect.getValidationErrors('Name').length > 0 }" class="g-mt-20">
@@ -97,28 +101,102 @@
           </div>
         </div>
       </form>
+
+      <div *ngIf="viewMode === 'view'">
+        <div fxLayout="row" fxLayoutAlign="start start">
+
+          <div class="board w-35p">
+            <div class="h-40">
+              <div class="wp-40">Created by</div>
+              <div class="wp-60">
+                <a class="link" routerLink="/users/{{ project.User.UserName }}">{{ project.User.UserName }}</a>
+              </div>
+            </div>
+            <div class="h-40">
+              <div class="wp-40">Origin (Domain)</div>
+              <div class="wp-60">
+                <a class="link" href="{{ project.Origin }}" target="_blank">{{ project.Origin }}</a>
+              </div>
+            </div>
+            <div class="h-40">
+                <div class="wp-40">Description</div>
+                <div class="wp-60">
+                  {{ project.Description || "N/A" }}
+                </div>
+              </div>
+            <div>
+              <div class="wp-40">Date Created</div>
+              <div class="wp-60">
+                {{ project.CreatedOn | date: 'medium' }}
+                <div [hidden]="project.CreatedOn.getTime() === project.ModifiedOn.getTime()">
+                  {{ project.ModifiedOn | date: 'medium' }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="board w-30p">
+            <div class="h-60">
+              <div class="wp-70">Basic view</div>
+              <div class="wp-30">
+                <a mat-stroked-button href="{{ projectBasicApiUrl }}" target="_blank">View</a>
+              </div>
+            </div>
+            <div>
+              <div class="wp-70">Expanded view for guest access</div>
+              <div class="wp-30">
+                <a mat-stroked-button href="{{ projectGuestExpandedApiUrl }}" target="_blank">View</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="board-no-border p-16 w-30p">
+            <div class="h-60">
+              <div class="wp-70">Expanded view for project owners</div>
+              <div class="wp-30">
+                <a mat-stroked-button href="{{ projectOwnerExpandedApiUrl }}" target="_blank">View</a>
+              </div>
+            </div>
+            <div>
+              <div class="wp-70">API Metadata</div>
+              <div class="wp-30">
+                <a mat-stroked-button href="{{ metadataUrl }}" target="_blank">View</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
     </mat-card>
 
-    <h2>Manage Project</h2>
+  <div class="m-16">
+    <div [hidden]="viewMode !== 'existing'">
+      Step 2 - add elements, fields and project specifications
+    </div>
 
-    <mat-tab-group (selectedTabChange)="selectedTabChanged($event)">
-      <mat-tab label="Elements" [disabled]="isEditing">
-        <element-manager *ngIf="selectedTabIndex === 0" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-manager>
-      </mat-tab>
-
-      <mat-tab label="Fields" [disabled]="isEditing">
-        <element-field-manager *ngIf="selectedTabIndex === 1" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-field-manager>
-      </mat-tab>
-
-      <mat-tab label="Items" [disabled]="isEditing">
-        <element-item-manager *ngIf="selectedTabIndex === 2" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-item-manager>
-      </mat-tab>
-
-      <mat-tab label="Cells" [disabled]="isEditing">
-        <element-cell-manager *ngIf="selectedTabIndex === 3" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-cell-manager>
-      </mat-tab>
-    </mat-tab-group>
-
+    <h2 [hidden]="viewMode === 'existing'"><button mat-stroked-button (click)="manageProject()">Manage Project</button></h2>
+    <h2 [hidden]="viewMode !== 'existing'">Manage Project</h2>
   </div>
+
+  <mat-tab-group (selectedTabChange)="selectedTabChanged($event)">
+    <mat-tab label="Elements" [disabled]="isEditing">
+      <element-manager *ngIf="selectedTabIndex === 0" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-manager>
+    </mat-tab>
+
+    <mat-tab label="Fields" [disabled]="isEditing">
+      <element-field-manager *ngIf="selectedTabIndex === 1" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-field-manager>
+    </mat-tab>
+
+    <mat-tab label="Items" [disabled]="isEditing">
+      <element-item-manager *ngIf="selectedTabIndex === 2" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-item-manager>
+    </mat-tab>
+
+    <mat-tab label="Cells" [disabled]="isEditing">
+      <element-cell-manager *ngIf="selectedTabIndex === 3" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-cell-manager>
+    </mat-tab>
+  </mat-tab-group>
+
+</div>
 
 </div>
