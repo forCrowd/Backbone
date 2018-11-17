@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 
-import { AppSettings } from "../../app-settings/app-settings";
+import { environment } from "../../environments/environment";
 import { AuthService, NotificationService, getUniqueEmail, getUniqueUserName, stripInvalidChars } from "forcrowd-backbone";
 
 @Component({
@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     // Generate test data if localhost
-    if (AppSettings.environment === "Development") {
+    if (environment.name === "Development") {
       this.bindingModel.UserName = getUniqueUserName();
       this.bindingModel.Email = getUniqueEmail();
       this.bindingModel.Password = "123qwe";

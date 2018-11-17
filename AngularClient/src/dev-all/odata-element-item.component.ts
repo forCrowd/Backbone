@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { mergeMap, map } from "rxjs/operators";
 
-import { AppSettings } from "../app-settings/app-settings";
+import { environment } from "../environments/environment";
 import { Element, Project, User, AuthService, getUniqueValue } from "forcrowd-backbone";
 
 @Component({
@@ -70,7 +70,7 @@ export class ODataElementItemComponent {
         Name: `New item ${getUniqueValue()}`
       };
 
-      const url = `${AppSettings.serviceODataUrl}/ElementItem`;
+      const url = `${environment.serviceODataUrl}/ElementItem`;
 
       return this.httpClient.post(url, elementItem);
     }));
@@ -89,12 +89,12 @@ export class ODataElementItemComponent {
   }
 
   private getODataUrl(elementItemId: number) {
-    return `${AppSettings.serviceODataUrl}/ElementItem(${elementItemId})`;
+    return `${environment.serviceODataUrl}/ElementItem(${elementItemId})`;
   }
 
   private getElement(userId: number, checkHasElementItem: boolean = false): Observable<Element> {
 
-    const url = `${AppSettings.serviceODataUrl}/Project?$expand=ElementSet/ElementItemSet&$filter=UserId eq ${userId}`;
+    const url = `${environment.serviceODataUrl}/Project?$expand=ElementSet/ElementItemSet&$filter=UserId eq ${userId}`;
 
     return this.httpClient.get(url).pipe(
       map((response) => {

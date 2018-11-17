@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 import { Project, User } from "forcrowd-backbone";
 import { ProjectService } from "../core/core.module";
-import { AppSettings } from "../../app-settings/app-settings";
+import { environment } from "../../environments/environment";
 
 @Component({
   selector: "project-manager",
@@ -19,19 +19,19 @@ export class ProjectManagerComponent implements OnInit {
   viewMode = "new"; // new | existing
 
   get metadataUrl(): string {
-    return `${AppSettings.serviceODataUrl}/$metadata`;
+    return `${environment.serviceODataUrl}/$metadata`;
   }
 
   get projectBasicApiUrl(): string {
-    return `${AppSettings.serviceODataUrl}/Project(${this.project.Id})`;
+    return `${environment.serviceODataUrl}/Project(${this.project.Id})`;
   }
 
   get projectGuestExpandedApiUrl(): string {
-    return `${AppSettings.serviceODataUrl}/Project(${this.project.Id})?$expand=User,ElementSet/ElementFieldSet,ElementSet/ElementItemSet/ElementCellSet`;
+    return `${environment.serviceODataUrl}/Project(${this.project.Id})?$expand=User,ElementSet/ElementFieldSet,ElementSet/ElementItemSet/ElementCellSet`;
   }
 
   get projectOwnerExpandedApiUrl(): string {
-    return `${AppSettings.serviceODataUrl}/Project(${this.project.Id})?$expand=User,ElementSet/ElementFieldSet/UserElementFieldSet,ElementSet/ElementItemSet/ElementCellSet/UserElementCellSet`;
+    return `${environment.serviceODataUrl}/Project(${this.project.Id})?$expand=User,ElementSet/ElementFieldSet/UserElementFieldSet,ElementSet/ElementItemSet/ElementCellSet/UserElementCellSet`;
   }
 
   get isBusy(): boolean {

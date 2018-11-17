@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 
-import { AppSettings } from "../../app-settings/app-settings";
+import { environment } from "../../environments/environment";
 import { AccountService } from "./account.service";
 import { AuthService, NotificationService, getUniqueUserName, stripInvalidChars } from "forcrowd-backbone";
 
@@ -71,7 +71,7 @@ export class ChangeUserNameComponent implements OnInit {
     this.bindingModel.UserName = this.authService.currentUser.UserName;
 
     // Generate test data if localhost
-    if (AppSettings.environment === "Development") {
+    if (environment.name === "Development") {
       this.bindingModel.UserName = getUniqueUserName();
     }
   }

@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { mergeMap, map } from "rxjs/operators";
 
-import { AppSettings } from "../app-settings/app-settings";
+import { environment } from "../environments/environment";
 import { AuthService, ElementField, Project, User } from "forcrowd-backbone";
 
 @Component({
@@ -78,7 +78,7 @@ export class ODataUserElementFieldComponent {
         Rating: new Date().getMilliseconds().toString()
       };
 
-      var url = `${AppSettings.serviceODataUrl}/UserElementField`;
+      var url = `${environment.serviceODataUrl}/UserElementField`;
 
       return this.httpClient.post(url, userElementField);
     }));
@@ -95,12 +95,12 @@ export class ODataUserElementFieldComponent {
   }
 
   private getODataUrl(userId: number, elementFieldId: number) {
-    return `${AppSettings.serviceODataUrl}/UserElementField(userId=${userId},elementFieldId=${elementFieldId})`;
+    return `${environment.serviceODataUrl}/UserElementField(userId=${userId},elementFieldId=${elementFieldId})`;
   }
 
   private getElementField(userId: number, checkHasUserElementField: boolean = false): Observable<ElementField> {
 
-    const url = `${AppSettings.serviceODataUrl}/Project?$expand=ElementSet/ElementFieldSet/UserElementFieldSet&$filter=UserId eq ${userId}`;
+    const url = `${environment.serviceODataUrl}/Project?$expand=ElementSet/ElementFieldSet/UserElementFieldSet&$filter=UserId eq ${userId}`;
 
     return this.httpClient.get(url).pipe(
       map((response) => {

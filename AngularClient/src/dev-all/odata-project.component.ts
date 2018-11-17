@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { mergeMap, map } from "rxjs/operators";
 
-import { AppSettings } from "../app-settings/app-settings";
+import { environment } from "../environments/environment";
 
 import { Project, User, AuthService, getUniqueValue } from "forcrowd-backbone";
 
@@ -82,7 +82,7 @@ export class ODataProjectComponent {
       Description: "Description of the project",
     };
 
-    const url = `${AppSettings.serviceODataUrl}/Project`;
+    const url = `${environment.serviceODataUrl}/Project`;
 
     return this.httpClient.post(url, project);
   }
@@ -99,7 +99,7 @@ export class ODataProjectComponent {
 
   private get(userId: number): Observable<Project> {
 
-    const url = `${AppSettings.serviceODataUrl}/Project?$filter=UserId eq ${userId}`;
+    const url = `${environment.serviceODataUrl}/Project?$filter=UserId eq ${userId}`;
 
     return this.httpClient.get(url).pipe(
       map((response) => {
@@ -117,7 +117,7 @@ export class ODataProjectComponent {
   }
 
   private getODataUrl(projectId: number) {
-    return `${AppSettings.serviceODataUrl}/Project(${projectId})`;
+    return `${environment.serviceODataUrl}/Project(${projectId})`;
   }
 
   private handleResponse(response) {

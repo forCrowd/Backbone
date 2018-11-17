@@ -5,9 +5,9 @@ import { AppModule } from "./main/app.module";
 //import { AppModule } from "./dev-all/app.module";
 //import { AppModule } from "./dev-basic/app.module";
 
-import { AppSettings } from "./app-settings/app-settings";
+import { environment } from "./environments/environment";
 
-if (AppSettings.environment !== "Development") {
+if (environment.name !== "Development") {
   enableProdMode();
 }
 

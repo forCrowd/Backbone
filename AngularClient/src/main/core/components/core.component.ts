@@ -7,7 +7,7 @@ import { Angulartics2GoogleGlobalSiteTag } from "angulartics2/gst";
 import { Subscription } from "rxjs";
 import { mergeMap, map, filter } from "rxjs/operators";
 
-import { AppSettings } from "../../../app-settings/app-settings";
+import { environment } from "../../../environments/environment";
 import { User, AuthService, NotificationService } from "forcrowd-backbone";
 
 @Component({
