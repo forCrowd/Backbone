@@ -2,9 +2,9 @@ import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { mergeMap, map } from "rxjs/operators";
+import { AuthService, ElementField, Project, User } from "backbone-client-core";
 
-import { environment } from "../environments/environment";
-import { AuthService, ElementField, Project, User } from "forcrowd-backbone";
+import { settings } from "../settings/settings";
 
 @Component({
   selector: "odata-user-element-field",
@@ -78,7 +78,7 @@ export class ODataUserElementFieldComponent {
         Rating: new Date().getMilliseconds().toString()
       };
 
-      var url = `${environment.serviceODataUrl}/UserElementField`;
+      var url = `${settings.serviceODataUrl}/UserElementField`;
 
       return this.httpClient.post(url, userElementField);
     }));
@@ -95,12 +95,12 @@ export class ODataUserElementFieldComponent {
   }
 
   private getODataUrl(userId: number, elementFieldId: number) {
-    return `${environment.serviceODataUrl}/UserElementField(userId=${userId},elementFieldId=${elementFieldId})`;
+    return `${settings.serviceODataUrl}/UserElementField(userId=${userId},elementFieldId=${elementFieldId})`;
   }
 
   private getElementField(userId: number, checkHasUserElementField: boolean = false): Observable<ElementField> {
 
-    const url = `${environment.serviceODataUrl}/Project?$expand=ElementSet/ElementFieldSet/UserElementFieldSet&$filter=UserId eq ${userId}`;
+    const url = `${settings.serviceODataUrl}/Project?$expand=ElementSet/ElementFieldSet/UserElementFieldSet&$filter=UserId eq ${userId}`;
 
     return this.httpClient.get(url).pipe(
       map((response) => {

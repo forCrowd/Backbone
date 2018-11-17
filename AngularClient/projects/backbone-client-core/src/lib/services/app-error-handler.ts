@@ -4,7 +4,7 @@ import { throwError as observableThrowError, forkJoin, Observable, of as observa
 import { map, mergeMap, share } from "rxjs/operators";
 //import { SourceMapConsumer } from "../../../../src/libraries/source-map"
 
-import { Settings } from "./settings";
+import { Settings } from "../settings";
 
 @Injectable()
 export class AppErrorHandler implements ErrorHandler {

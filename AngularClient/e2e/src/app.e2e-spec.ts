@@ -1,6 +1,6 @@
 import { AppPage } from "./app.po";
 
-describe("angular-client App", () => {
+describe("backbone-client App", () => {
   let page: AppPage;
 
   beforeEach(() => {

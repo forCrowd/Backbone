@@ -4,11 +4,11 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
 import { Angulartics2Module } from "angulartics2";
+import { BackboneClientCoreModule, ISettings } from "backbone-client-core";
 
-import { ForcrowdBackboneModule, ISettings } from "forcrowd-backbone";
 import { SharedModule } from "../shared/shared.module";
 
-import { environment } from "../../environments/environment";
+import { settings } from "../../settings/settings";
 
 // Components
 import { ContributorsComponent } from "./components/contributors.component";
@@ -39,9 +39,9 @@ const coreRoutes: Routes = [
   { path: "app-aot.html", redirectTo: "", pathMatch: "full" },
 ];
 
-const settings: ISettings = {
-  serviceApiUrl: environment.serviceApiUrl,
-  serviceODataUrl: environment.serviceODataUrl
+const coreSettings: ISettings = {
+  serviceApiUrl: settings.serviceApiUrl,
+  serviceODataUrl: settings.serviceODataUrl
 }
 
 @NgModule({
@@ -65,7 +65,7 @@ const settings: ISettings = {
     BrowserAnimationsModule,
     RouterModule.forRoot(coreRoutes),
     Angulartics2Module.forRoot(),
-    ForcrowdBackboneModule.configure(settings)
+    BackboneClientCoreModule.configure(coreSettings)
   ],
   providers: [
     AuthGuard,

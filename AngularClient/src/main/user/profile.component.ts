@@ -2,9 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { SelectionModel } from "@angular/cdk/collections";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatDialog, MatTableDataSource } from "@angular/material";
+import { Project, User } from "backbone-client-core";
 import { finalize } from "rxjs/operators";
 
-import { Project, User } from "forcrowd-backbone";
 import { ProjectService } from "../core/core.module";
 import { ProfileRemoveProjectComponent } from "./profile-remove-project.component";
 import { UserService } from "./user.service";

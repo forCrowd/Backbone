@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-client": {
+    "backbone-client": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-client",
+            "outputPath": "dist/backbone-client",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -37,12 +37,12 @@
             "test": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.test.ts"
+                  "replace": "src/settings/settings.ts",
+                  "with": "src/settings/settings-test.ts"
                 },
                 {
                   "replace": "src/index.html",
-                  "with": "src/index.test.html"
+                  "with": "src/index-test.html"
                 }
               ],
               "optimization": true,
@@ -58,12 +58,12 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "src/settings/settings.ts",
+                  "with": "src/settings/settings-prod.ts"
                 },
                 {
                   "replace": "src/index.html",
-                  "with": "src/index.prod.html"
+                  "with": "src/index-prod.html"
                 }
               ],
               "optimization": true,
@@ -81,21 +81,21 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular-client:build"
+            "browserTarget": "backbone-client:build"
           },
           "configurations": {
             "test": {
-              "browserTarget": "angular-client:build:test"
+              "browserTarget": "backbone-client:build:test"
             },
             "production": {
-              "browserTarget": "angular-client:build:production"
+              "browserTarget": "backbone-client:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-client:build"
+            "browserTarget": "backbone-client:build"
           }
         },
         "test": {
@@ -135,7 +135,7 @@
         }
       }
     },
-    "angular-client-e2e": {
+    "backbone-client-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -143,7 +143,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angular-client:serve"
+            "devServerTarget": "backbone-client:serve"
           },
           "configurations": {
             "production": {
@@ -162,33 +162,33 @@
         }
       }
     },
-    "forcrowd-backbone": {
-      "root": "projects/forcrowd-backbone",
-      "sourceRoot": "projects/forcrowd-backbone/src",
+    "backbone-client-core": {
+      "root": "projects/backbone-client-core",
+      "sourceRoot": "projects/backbone-client-core/src",
       "projectType": "library",
       "prefix": "fcb",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/forcrowd-backbone/tsconfig.lib.json",
-            "project": "projects/forcrowd-backbone/ng-package.json"
+            "tsConfig": "projects/backbone-client-core/tsconfig.lib.json",
+            "project": "projects/backbone-client-core/ng-package.json"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/forcrowd-backbone/src/test.ts",
-            "tsConfig": "projects/forcrowd-backbone/tsconfig.spec.json",
-            "karmaConfig": "projects/forcrowd-backbone/karma.conf.js"
+            "main": "projects/backbone-client-core/src/test.ts",
+            "tsConfig": "projects/backbone-client-core/tsconfig.spec.json",
+            "karmaConfig": "projects/backbone-client-core/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/forcrowd-backbone/tsconfig.lib.json",
-              "projects/forcrowd-backbone/tsconfig.spec.json"
+              "projects/backbone-client-core/tsconfig.lib.json",
+              "projects/backbone-client-core/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -198,5 +198,5 @@
       }
     }
   },
-  "defaultProject": "angular-client"
+  "defaultProject": "backbone-client"
 }

@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { MatTableDataSource } from "@angular/material";
+import { Project } from "backbone-client-core";
 import { Observable } from "rxjs";
 import { map, mergeMap } from "rxjs/operators";
 
-import { Project } from "forcrowd-backbone";
 import { AdminService } from "./admin.service";
 
 @Component({

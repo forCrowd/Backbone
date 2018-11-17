@@ -2,9 +2,9 @@ import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { mergeMap, map } from "rxjs/operators";
+import { Element, Project, User, AuthService, getUniqueValue } from "backbone-client-core";
 
-import { environment } from "../environments/environment";
-import { Element, Project, User, AuthService, getUniqueValue } from "forcrowd-backbone";
+import { settings } from "../settings/settings";
 
 @Component({
   selector: "odata-element-cell",
@@ -71,7 +71,7 @@ export class ODataElementCellComponent {
         StringValue: `New cell ${getUniqueValue()}`
       };
 
-      const url = `${environment.serviceODataUrl}/ElementCell`;
+      const url = `${settings.serviceODataUrl}/ElementCell`;
 
       return this.httpClient.post(url, elementCell);
     }));
@@ -90,12 +90,12 @@ export class ODataElementCellComponent {
   }
 
   private getODataUrl(elementCellId: number) {
-    return `${environment.serviceODataUrl}/ElementCell(${elementCellId})`;
+    return `${settings.serviceODataUrl}/ElementCell(${elementCellId})`;
   }
 
   private getElement(userId: number, checkHasElementCell = false): Observable<Element> {
 
-    const url = `${environment.serviceODataUrl}/Project?$expand=ElementSet/ElementFieldSet/ElementCellSet,ElementSet/ElementItemSet&$filter=UserId eq ${userId}`;
+    const url = `${settings.serviceODataUrl}/Project?$expand=ElementSet/ElementFieldSet/ElementCellSet,ElementSet/ElementItemSet&$filter=UserId eq ${userId}`;
 
     return this.httpClient.get(url).pipe(
       map((response) => {

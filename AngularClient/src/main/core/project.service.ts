@@ -1,14 +1,12 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { AppEntityManager, AuthService, AppHttpClient, Element, ElementCell, ElementField, ElementFieldDataType,
+  ElementItem, Project, UserElementCell, getUniqueValue } from "backbone-client-core";
 import { EntityQuery, Predicate } from "breeze-client";
 import { Observable } from "rxjs";
 import { mergeMap, finalize, map } from "rxjs/operators";
 
-import { environment } from "../../environments/environment";
-import { AppHttpClient, Element, ElementCell, ElementField, ElementFieldDataType, ElementItem, Project, UserElementCell, getUniqueValue } from "forcrowd-backbone";
-
-// Services
-import { AppEntityManager, AuthService } from "forcrowd-backbone";
+import { settings } from "../../settings/settings";
 
 @Injectable()
 export class ProjectService {
@@ -215,7 +213,7 @@ export class ProjectService {
     // Project
     const project = this.createProjectEmpty();
     project.Name = "Todo App";
-    project.Origin = environment.todoAppOrigin;
+    project.Origin = settings.todoAppOrigin;
 
     // Element
     const element = this.createElement({
@@ -467,7 +465,7 @@ export class ProjectService {
   }
 
   private getUpdateComputedFieldsUrl(projectId: number) {
-    return `${environment.serviceApiUrl}/ProjectApi/${projectId}/UpdateComputedFields`;
+    return `${settings.serviceApiUrl}/ProjectApi/${projectId}/UpdateComputedFields`;
   }
 
   private removeElementCell(elementCell: ElementCell): void {

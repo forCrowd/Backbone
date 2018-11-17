@@ -1,12 +1,11 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { AppEntityManager, AppHttpClient, AuthService, User, Project } from "backbone-client-core";
 import { EntityQuery } from "breeze-client";
 import { Observable } from "rxjs";
 import { finalize, mergeMap, map } from "rxjs/operators";
 
-import { environment } from "../../environments/environment";
-import { User, Project } from "forcrowd-backbone";
-import { AppEntityManager, AppHttpClient, AuthService } from "forcrowd-backbone";
+import { settings } from "../../settings/settings";
 
 @Injectable()
 export class AdminService {
@@ -69,7 +68,7 @@ export class AdminService {
 
   updateComputedFields(project: Project): Observable<void> {
 
-    const url = `${environment.serviceApiUrl}/ProjectApi/${project.Id}/UpdateComputedFields`;
+    const url = `${settings.serviceApiUrl}/ProjectApi/${project.Id}/UpdateComputedFields`;
 
     return this.httpClient.post<void>(url, null);
   }

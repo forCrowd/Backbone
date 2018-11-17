@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { AppHttpClient, AuthService, User } from "backbone-client-core";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
-import { environment } from "../../environments/environment";
-import { AppHttpClient, AuthService, User } from "forcrowd-backbone";
+import { settings } from "../../settings/settings";
 
 @Injectable()
 export class AccountService {
@@ -31,14 +31,14 @@ export class AccountService {
     this.appHttpClient = httpClient as AppHttpClient;
 
     // Service urls
-    this.addPasswordUrl = environment.serviceApiUrl + "/Account/AddPassword";
-    this.changeEmailUrl = environment.serviceApiUrl + "/Account/ChangeEmail";
-    this.changePasswordUrl = environment.serviceApiUrl + "/Account/ChangePassword";
-    this.changeUserNameUrl = environment.serviceApiUrl + "/Account/ChangeUserName";
-    this.confirmEmailUrl = environment.serviceApiUrl + "/Account/ConfirmEmail";
-    this.resendConfirmationEmailUrl = environment.serviceApiUrl + "/Account/ResendConfirmationEmail";
-    this.resetPasswordUrl = environment.serviceApiUrl + "/Account/ResetPassword";
-    this.resetPasswordRequestUrl = environment.serviceApiUrl + "/Account/ResetPasswordRequest";
+    this.addPasswordUrl = settings.serviceApiUrl + "/Account/AddPassword";
+    this.changeEmailUrl = settings.serviceApiUrl + "/Account/ChangeEmail";
+    this.changePasswordUrl = settings.serviceApiUrl + "/Account/ChangePassword";
+    this.changeUserNameUrl = settings.serviceApiUrl + "/Account/ChangeUserName";
+    this.confirmEmailUrl = settings.serviceApiUrl + "/Account/ConfirmEmail";
+    this.resendConfirmationEmailUrl = settings.serviceApiUrl + "/Account/ResendConfirmationEmail";
+    this.resetPasswordUrl = settings.serviceApiUrl + "/Account/ResetPassword";
+    this.resetPasswordRequestUrl = settings.serviceApiUrl + "/Account/ResetPasswordRequest";
   }
 
   addPassword(addPasswordBindingModel: any) {

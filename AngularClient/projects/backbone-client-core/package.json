@@ -1,9 +1,9 @@
 {
-  "name": "forcrowd-backbone",
-  "description": "An API service for rapid app prototyping",
-  "author": "Stichting forCrowd",
+  "name": "backbone-client-core",
+  "description": "Core library of Backbone",
+  "author": "forCrowd Foundation",
   "license": "MIT",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "peerDependencies": {
     "@angular/common": "7.0.1",
     "@angular/core": "7.0.1",
