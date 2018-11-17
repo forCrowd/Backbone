@@ -17,7 +17,7 @@ export class AppHttpClient extends HttpClient {
     super(handler);
 
     // Get busy interceptor
-    var interceptors = injector.get(HTTP_INTERCEPTORS);
+    const interceptors = injector.get(HTTP_INTERCEPTORS);
     this.busyInterceptor = interceptors.find(i => i instanceof BusyInterceptor) as BusyInterceptor;
   }
 }

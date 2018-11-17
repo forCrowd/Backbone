@@ -1,11 +1,11 @@
 import { APP_INITIALIZER, ErrorHandler, ModuleWithProviders, NgModule } from "@angular/core";
 
 // Services
-import { AppHttpClientModule } from "./app-http-client/app-http-client.module";
-import { AppErrorHandler } from "./app-error-handler.service";
-import { AuthService } from "./auth.service";
-import { AppEntityManager } from "./app-entity-manager.service";
-import { NotificationService } from "./notification.service";
+import { AppHttpClientModule } from "./services/app-http-client/app-http-client.module";
+import { AppErrorHandler } from "./services/app-error-handler.service";
+import { AuthService } from "./services/auth.service";
+import { AppEntityManager } from "./services/app-entity-manager.service";
+import { NotificationService } from "./services/notification.service";
 import { ISettings, Settings } from "./settings";
 
 // Breeze

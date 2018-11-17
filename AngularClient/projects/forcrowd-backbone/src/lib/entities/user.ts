@@ -5,7 +5,7 @@ import { UserElementCell } from "./user-element-cell";
 import { UserElementField } from "./user-element-field";
 import { UserLogin } from "./user-login";
 import { UserRole } from "./user-role";
-import { Token } from "../token";
+import { Token } from "./token";
 import { stripInvalidChars } from "../utils";
 
 export class User extends EntityBase {

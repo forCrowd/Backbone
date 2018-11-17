@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.9.7**
+* AngularClient
+  * Library updates
+
 **0.9.6**
 * AngularClient
   * Google Analytics fix
