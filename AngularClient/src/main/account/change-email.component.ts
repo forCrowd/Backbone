@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 
-import { AppSettings } from "../../app-settings/app-settings";
+import { environment } from "../../environments/environment";
 import { AccountService } from "./account.service";
 import { getUniqueEmail } from "forcrowd-backbone";
 
@@ -49,7 +49,7 @@ export class ChangeEmailComponent implements OnInit {
   ngOnInit(): void {
 
     // Generate test data if localhost
-    if (AppSettings.environment === "Development") {
+    if (environment.name === "Development") {
       this.bindingModel.Email = getUniqueEmail();
     }
   }

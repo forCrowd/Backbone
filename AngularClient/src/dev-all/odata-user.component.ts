@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
-import { AppSettings } from "../app-settings/app-settings";
+import { environment } from "../environments/environment";
 import { User, AuthService } from "forcrowd-backbone";
 
 @Component({
@@ -29,7 +29,7 @@ export class ODataUserComponent {
 
   private getUser(username: string): void {
 
-    const url = `${AppSettings.serviceODataUrl}/Users?$filter=UserName eq '${username}'&$expand=ProjectSet`;
+    const url = `${environment.serviceODataUrl}/Users?$filter=UserName eq '${username}'&$expand=ProjectSet`;
 
     this.httpClient.get(url)
       .subscribe((response) => {

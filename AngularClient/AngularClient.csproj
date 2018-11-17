@@ -41,16 +41,15 @@
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\entities\user-role.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\entities\user.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\forcrowd-backbone.module.ts" />
-    <TypeScriptCompile Include="src\main\core\google-analytics.service.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\notification.service.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\token.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\utils.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\public_api.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\test.ts" />
     <TypeScriptCompile Include="src\app-settings\app-settings.ts" />
-    <TypeScriptCompile Include="src\app-settings\environments\environment-settings.ts" />
-    <TypeScriptCompile Include="src\app-settings\environments\production-settings.ts" />
-    <TypeScriptCompile Include="src\app-settings\environments\test-settings.ts" />
+    <TypeScriptCompile Include="src\environments\environment.ts" />
+    <TypeScriptCompile Include="src\environments\environment.prod.ts" />
+    <TypeScriptCompile Include="src\environments\environment.test.ts" />
     <TypeScriptCompile Include="src\dev-all\project-tester.component.ts" />
     <TypeScriptCompile Include="src\dev-all\odata-element-cell.component.ts" />
     <TypeScriptCompile Include="src\dev-all\odata-element-item.component.ts" />
@@ -116,6 +115,7 @@
     <Content Include="src\assets\images\Logo_30x30.jpg" />
     <Content Include="src\assets\images\open-source.png" />
     <Content Include="src\assets\images\template.png" />
+    <Content Include="src\index.prod.html" />
     <Content Include="src\karma.conf.js" />
     <Content Include="src\main\account\account-overview.component.css" />
     <Content Include="src\main\account\confirm-email.component.css" />
@@ -164,7 +164,7 @@
     <None Include="projects\forcrowd-backbone\tsconfig.lib.json" />
     <None Include="projects\forcrowd-backbone\tsconfig.spec.json" />
     <None Include="projects\forcrowd-backbone\tslint.json" />
-    <None Include="src\app-settings\environments\Readme.md" />
+    <None Include="src\environments\Readme.md" />
     <Content Include="src\dev-all\project-tester.component.css" />
     <Content Include="src\dev-all\project-tester.component.html" />
     <Content Include="src\dev-all\odata-element-cell.component.html" />

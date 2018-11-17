@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
+import { ObservableMedia, MediaChange } from "@angular/flex-layout";
 import { MatSnackBar } from "@angular/material";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
-import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
+import { Angulartics2GoogleGlobalSiteTag } from "angulartics2/gst";
 import { Subscription } from "rxjs";
 import { mergeMap, map, filter } from "rxjs/operators";
-import { ObservableMedia, MediaChange } from "@angular/flex-layout";
 
-import { AppSettings } from "../../../app-settings/app-settings";
+import { environment } from "../../../environments/environment";
 import { User, AuthService, NotificationService } from "forcrowd-backbone";
 
 @Component({
@@ -27,19 +27,21 @@ export class CoreComponent implements OnDestroy, OnInit {
   watcher: Subscription;
   currentUrl: string = "";
 
-  appVersion = AppSettings.version;
   currentUser: User = null;
   hideGuestAccountInfoBox: boolean = true;
   subscriptions: Subscription[] = [];
 
   constructor(private activatedRoute: ActivatedRoute,
-    angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics,
+    private angulartics: Angulartics2GoogleGlobalSiteTag,
     private authService: AuthService,
     private matSnackBar: MatSnackBar,
     private notificationService: NotificationService,
     private titleService: Title,
     private router: Router,
     private media: ObservableMedia) {
+
+    angulartics.startTracking();
+
     this.currentUser = this.authService.currentUser;
     this.watcher = media.subscribe((change: MediaChange) => {
       this.activeMediaQuery = change.mqAlias;

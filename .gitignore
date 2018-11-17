@@ -39,13 +39,11 @@ AngularClient/out-tsc
 #AngularClient/e2e/*.js
 #AngularClient/e2e/*.map
 
-AngularClient/src/app-settings/environments/*
-!AngularClient/src/app-settings/environments/environment-settings.ts
-!AngularClient/src/app-settings/environments/Readme.md
+AngularClient/src/index.prod.html
 
-AngularClient/projects/forcrowd-backbone/src/lib/app-settings/environments/*
-!AngularClient/projects/forcrowd-backbone/src/lib/app-settings/environments/environment-settings.ts
-!AngularClient/projects/forcrowd-backbone/src/lib/app-settings/environments/Readme.md
+AngularClient/src/environments/*
+!AngularClient/src/environments/environment.ts
+!AngularClient/src/environments/Readme.md
 
 # DataMigrator
 DataMigrator/Configs/*.config

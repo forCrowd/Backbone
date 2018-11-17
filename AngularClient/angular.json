@@ -37,8 +37,12 @@
             "test": {
               "fileReplacements": [
                 {
-                  "replace": "src/app-settings/environments/environment-settings.ts",
-                  "with": "src/app-settings/environments/test-settings.ts"
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.test.ts"
+                },
+                {
+                  "replace": "src/index.html",
+                  "with": "src/index.test.html"
                 }
               ],
               "optimization": true,
@@ -54,8 +58,12 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/app-settings/environments/environment-settings.ts",
-                  "with": "src/app-settings/environments/production-settings.ts"
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "src/index.html",
+                  "with": "src/index.prod.html"
                 }
               ],
               "optimization": true,

@@ -4,7 +4,7 @@ import { EntityQuery, Predicate } from "breeze-client";
 import { Observable } from "rxjs";
 import { mergeMap, finalize, map } from "rxjs/operators";
 
-import { AppSettings } from "../../app-settings/app-settings";
+import { environment } from "../../environments/environment";
 import { AppHttpClient, Element, ElementCell, ElementField, ElementFieldDataType, ElementItem, Project, UserElementCell, getUniqueValue } from "forcrowd-backbone";
 
 // Services
@@ -215,7 +215,7 @@ export class ProjectService {
     // Project
     const project = this.createProjectEmpty();
     project.Name = "Todo App";
-    project.Origin = AppSettings.todoAppOrigin;
+    project.Origin = environment.todoAppOrigin;
 
     // Element
     const element = this.createElement({
@@ -467,7 +467,7 @@ export class ProjectService {
   }
 
   private getUpdateComputedFieldsUrl(projectId: number) {
-    return `${AppSettings.serviceApiUrl}/ProjectApi/${projectId}/UpdateComputedFields`;
+    return `${environment.serviceApiUrl}/ProjectApi/${projectId}/UpdateComputedFields`;
   }
 
   private removeElementCell(elementCell: ElementCell): void {

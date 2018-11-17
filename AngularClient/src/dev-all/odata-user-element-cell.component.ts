@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { mergeMap, map } from "rxjs/operators";
 
-import { AppSettings } from "../app-settings/app-settings";
+import { environment } from "../environments/environment";
 import { AuthService, ElementCell, Project, User } from "forcrowd-backbone";
 
 @Component({
@@ -78,7 +78,7 @@ export class ODataUserElementCellComponent {
         DecimalValue: new Date().getMilliseconds().toString()
       };
 
-      var url = `${AppSettings.serviceODataUrl}/UserElementCell`;
+      var url = `${environment.serviceODataUrl}/UserElementCell`;
 
       return this.httpClient.post(url, userElementCell);
     }));
@@ -95,12 +95,12 @@ export class ODataUserElementCellComponent {
   }
 
   private getODataUrl(userId: number, elementCellId: number) {
-    return `${AppSettings.serviceODataUrl}/UserElementCell(userId=${userId},elementCellId=${elementCellId})`;
+    return `${environment.serviceODataUrl}/UserElementCell(userId=${userId},elementCellId=${elementCellId})`;
   }
 
   private getElementCell(userId: number, checkHasUserElementCell: boolean = false): Observable<ElementCell> {
 
-    const url = `${AppSettings.serviceODataUrl}/Project?$expand=ElementSet/ElementFieldSet/ElementCellSet/UserElementCellSet&$filter=UserId eq ${userId}`;
+    const url = `${environment.serviceODataUrl}/Project?$expand=ElementSet/ElementFieldSet/ElementCellSet/UserElementCellSet&$filter=UserId eq ${userId}`;
 
     return this.httpClient.get(url).pipe(
       map((response) => {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 
-import { AppSettings } from "../../app-settings/app-settings";
+import { environment } from "../../environments/environment";
 import { AccountService } from "./account.service";
 import { NotificationService } from "forcrowd-backbone";
 
@@ -52,7 +52,7 @@ export class ChangePasswordComponent implements OnInit {
   ngOnInit(): void {
 
     // Generate test data if localhost (only works for the first time :o))
-    if (AppSettings.environment === "Development") {
+    if (environment.name === "Development") {
       this.bindingModel.CurrentPassword = "123qwe";
       this.bindingModel.NewPassword = "qwe123";
       this.bindingModel.ConfirmPassword = "qwe123";

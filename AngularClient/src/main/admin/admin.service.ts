@@ -4,7 +4,7 @@ import { EntityQuery } from "breeze-client";
 import { Observable } from "rxjs";
 import { finalize, mergeMap, map } from "rxjs/operators";
 
-import { AppSettings } from "../../app-settings/app-settings";
+import { environment } from "../../environments/environment";
 import { User, Project } from "forcrowd-backbone";
 import { AppEntityManager, AppHttpClient, AuthService } from "forcrowd-backbone";
 
@@ -69,7 +69,7 @@ export class AdminService {
 
   updateComputedFields(project: Project): Observable<void> {
 
-    const url = `${AppSettings.serviceApiUrl}/ProjectApi/${project.Id}/UpdateComputedFields`;
+    const url = `${environment.serviceApiUrl}/ProjectApi/${project.Id}/UpdateComputedFields`;
 
     return this.httpClient.post<void>(url, null);
   }
