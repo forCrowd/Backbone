@@ -1,10 +1,10 @@
 import { APP_INITIALIZER, ErrorHandler, ModuleWithProviders, NgModule } from "@angular/core";
 
 // Services
-import { AppHttpClientModule } from "./services/app-http-client/app-http-client.module";
-import { AppErrorHandler } from "./services/app-error-handler.service";
+import { AppEntityManagerModule } from "./app-entity-manager/app-entity-manager.module";
+import { AppHttpClientModule } from "./app-http-client/app-http-client.module";
+import { AppErrorHandler } from "./services/app-error-handler";
 import { AuthService } from "./services/auth.service";
-import { AppEntityManager } from "./services/app-entity-manager.service";
 import { NotificationService } from "./services/notification.service";
 import { ISettings, Settings } from "./settings";
 
@@ -28,6 +28,7 @@ export function appInitializer(authService: AuthService) {
 // More info: https://github.com/angular/angular/issues/18867
 @NgModule({
   imports: [
+    AppEntityManagerModule,
     AppHttpClientModule,
     BreezeBridgeHttpClientModule,
   ]
@@ -51,7 +52,6 @@ export class ForcrowdBackboneModule {
           provide: ErrorHandler,
           useClass: AppErrorHandler
         },
-        AppEntityManager,
         AuthService,
         NotificationService,
         // Settings

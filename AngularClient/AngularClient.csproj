@@ -11,13 +11,14 @@
   <ItemGroup>
     <TypeScriptCompile Include="e2e\src\app.e2e-spec.ts" />
     <TypeScriptCompile Include="e2e\src\app.po.ts" />
-    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\services\app-entity-manager.service.ts" />
-    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\services\app-error-handler.service.ts" />
-    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\services\app-http-client\app-http-client.module.ts" />
-    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\services\app-http-client\app-http-client.service.ts" />
-    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\services\app-http-client\auth-interceptor.ts" />
-    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\services\app-http-client\busy-interceptor.ts" />
-    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\services\app-http-client\error-interceptor.ts" />
+    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-entity-manager\app-entity-manager.ts" />
+    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-entity-manager\app-entity-manager.module.ts" />
+    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\services\app-error-handler.ts" />
+    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-http-client\app-http-client.module.ts" />
+    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-http-client\app-http-client.ts" />
+    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-http-client\auth-interceptor.ts" />
+    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-http-client\busy-interceptor.ts" />
+    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-http-client\error-interceptor.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\settings.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\services\auth.service.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\breeze-client-odata-fix.ts" />

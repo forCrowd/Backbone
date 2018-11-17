@@ -4,12 +4,12 @@ import { EntityQuery, EntityState, MergeStrategy } from "breeze-client";
 import { throwError as observableThrowError, of as observableOf, Observable, Subject } from "rxjs";
 import { catchError, mergeMap, map } from "rxjs/operators";
 
+import { AppEntityManager } from "../app-entity-manager/app-entity-manager";
+import { AppHttpClient } from "../app-http-client/app-http-client";
 import { Role } from "../entities/role";
 import { Token } from "../entities/token";
 import { User } from "../entities/user";
 import { UserRole } from "../entities/user-role";
-import { AppHttpClient } from "./app-http-client/app-http-client.module";
-import { AppEntityManager } from "./app-entity-manager.service";
 import { NotificationService } from "./notification.service";
 import { Settings } from "../settings";
 import { getUniqueUserName } from "../utils";
