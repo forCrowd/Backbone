@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
 import { Angulartics2Module } from "angulartics2";
 
-import { ForcrowdBackboneModule, ISettings } from "forcrowd-backbone";
+import { BackboneClientCoreModule, ISettings } from "forcrowd-backbone";
 import { SharedModule } from "../shared/shared.module";
 
 import { environment } from "../../environments/environment";
@@ -65,7 +65,7 @@ const settings: ISettings = {
     BrowserAnimationsModule,
     RouterModule.forRoot(coreRoutes),
     Angulartics2Module.forRoot(),
-    ForcrowdBackboneModule.configure(settings)
+    BackboneClientCoreModule.configure(settings)
   ],
   providers: [
     AuthGuard,

@@ -17,12 +17,12 @@ import { ISettings, Settings } from "./settings";
     AuthModule.init()
   ]
 })
-export class ForcrowdBackboneModule {
+export class MainModule {
 
   static configure(settings: ISettings): ModuleWithProviders {
 
     return {
-      ngModule: ForcrowdBackboneModule,
+      ngModule: MainModule,
       providers: [
         // Error handler
         {

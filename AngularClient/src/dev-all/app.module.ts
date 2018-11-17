@@ -3,7 +3,7 @@ import { NgModule } from "@angular/core";
 import { AdminModule } from "../main/admin/admin.module";
 import { CoreModule } from "../main/core/core.module";
 import { SharedModule } from "../main/shared/shared.module";
-import { ForcrowdBackboneModule } from "forcrowd-backbone"
+import { BackboneClientCoreModule } from "forcrowd-backbone";
 
 import { AppRouterModule } from "./app-router.module";
 import { AppComponent } from "./app.component";
@@ -49,7 +49,7 @@ import { WebApiComponent } from "./web-api.component";
     CoreModule,
 
     AdminModule,
-    ForcrowdBackboneModule
+    BackboneClientCoreModule
   ]
 })
 export class AppModule { }

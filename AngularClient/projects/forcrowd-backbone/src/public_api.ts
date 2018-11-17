@@ -1,5 +1,5 @@
 /*
- * Public API Surface of forcrowd-backbone
+ * Public API Surface of Backbone Client Core
  */
 
 // Entities
@@ -12,6 +12,6 @@ export * from "./lib/auth/auth-service";
 export * from "./lib/services/notification-service";
 
 // Module
-export * from "./lib/module";
+export { MainModule as BackboneClientCoreModule } from "./lib/main-module";
 export * from "./lib/settings";
 export * from "./lib/utils"
