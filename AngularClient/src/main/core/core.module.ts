@@ -39,7 +39,7 @@ const coreRoutes: Routes = [
   { path: "app-aot.html", redirectTo: "", pathMatch: "full" },
 ];
 
-const settings: ISettings = {
+const coreSettings: ISettings = {
   serviceApiUrl: settings.serviceApiUrl,
   serviceODataUrl: settings.serviceODataUrl
 }
@@ -65,7 +65,7 @@ const settings: ISettings = {
     BrowserAnimationsModule,
     RouterModule.forRoot(coreRoutes),
     Angulartics2Module.forRoot(),
-    BackboneClientCoreModule.configure(settings)
+    BackboneClientCoreModule.configure(coreSettings)
   ],
   providers: [
     AuthGuard,
