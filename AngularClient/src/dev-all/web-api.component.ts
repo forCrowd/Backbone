@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { AppHttpClient } from "backbone-client-core";
 
 import { environment } from "../environments/environment";
-import { AppHttpClient } from "backbone-client-core";
 
 @Component({
   selector: "web-api",

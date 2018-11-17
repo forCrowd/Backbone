@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { AuthService, NotificationService, getUniqueEmail, getUniqueUserName, stripInvalidChars } from "backbone-client-core";
 import { Subscription } from "rxjs";
 
 import { environment } from "../../environments/environment";
-import { AuthService, NotificationService, getUniqueEmail, getUniqueUserName, stripInvalidChars } from "backbone-client-core";
 
 @Component({
   selector: "register",

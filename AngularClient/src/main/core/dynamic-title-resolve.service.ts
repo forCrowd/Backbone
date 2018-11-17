@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Resolve, ActivatedRouteSnapshot } from "@angular/router";
+import { AuthService } from "backbone-client-core";
 import { map } from "rxjs/operators";
 import { of as observableOf, Observable } from "rxjs";
 
-import { AuthService } from "backbone-client-core";
 import { ProjectService } from "./project.service";
 
 @Injectable()

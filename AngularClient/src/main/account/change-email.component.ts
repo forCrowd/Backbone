@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { getUniqueEmail } from "backbone-client-core";
 
 import { environment } from "../../environments/environment";
 import { AccountService } from "./account.service";
-import { getUniqueEmail } from "backbone-client-core";
 
 @Component({
   selector: "change-email",

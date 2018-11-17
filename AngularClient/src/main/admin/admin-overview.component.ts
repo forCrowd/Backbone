@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
+import { User } from "backbone-client-core";
 
 import { AdminService } from "./admin.service";
-import { User } from "backbone-client-core";
 
 @Component({
   selector: "admin-overview",

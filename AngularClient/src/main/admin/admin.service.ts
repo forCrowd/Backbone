@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { AppEntityManager, AppHttpClient, AuthService, User, Project } from "backbone-client-core";
 import { EntityQuery } from "breeze-client";
 import { Observable } from "rxjs";
 import { finalize, mergeMap, map } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
-import { AppEntityManager, AppHttpClient, AuthService, User, Project } from "backbone-client-core";
 
 @Injectable()
 export class AdminService {

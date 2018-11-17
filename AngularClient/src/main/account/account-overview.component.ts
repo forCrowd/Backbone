@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-
 import { AuthService, User } from "backbone-client-core";
 
 @Component({

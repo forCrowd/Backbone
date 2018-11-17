@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
+import { AuthService, Project } from "backbone-client-core";
 
 import { ProjectService } from "../project.service";
-import { AuthService, Project } from "backbone-client-core";
 
 @Component({
   templateUrl: "getting-started.component.html",

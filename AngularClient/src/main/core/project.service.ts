@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { AppEntityManager, AuthService, AppHttpClient, Element, ElementCell, ElementField, ElementFieldDataType,
+  ElementItem, Project, UserElementCell, getUniqueValue } from "backbone-client-core";
 import { EntityQuery, Predicate } from "breeze-client";
 import { Observable } from "rxjs";
 import { mergeMap, finalize, map } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
-import { AppEntityManager, AuthService, AppHttpClient, Element, ElementCell, ElementField, ElementFieldDataType,
-  ElementItem, Project, UserElementCell, getUniqueValue } from "backbone-client-core";
 
 @Injectable()
 export class ProjectService {

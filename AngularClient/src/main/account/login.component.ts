@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { AuthService, NotificationService } from "backbone-client-core";
 import { timer as observableTimer } from "rxjs";
 
-import { AuthService, NotificationService } from "backbone-client-core";
 
 @Component({
   selector: "login",

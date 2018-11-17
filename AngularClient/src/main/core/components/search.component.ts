@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { MatTableDataSource } from "@angular/material";
+import { Project } from "backbone-client-core";
 import { finalize } from "rxjs/operators";
 
-import { Project } from "backbone-client-core";
 import { ProjectService } from "../project.service";
 
 @Component({
