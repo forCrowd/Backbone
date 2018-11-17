@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-client": {
+    "backbone-client": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-client",
+            "outputPath": "dist/backbone-client",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -81,21 +81,21 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular-client:build"
+            "browserTarget": "backbone-client:build"
           },
           "configurations": {
             "test": {
-              "browserTarget": "angular-client:build:test"
+              "browserTarget": "backbone-client:build:test"
             },
             "production": {
-              "browserTarget": "angular-client:build:production"
+              "browserTarget": "backbone-client:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-client:build"
+            "browserTarget": "backbone-client:build"
           }
         },
         "test": {
@@ -135,7 +135,7 @@
         }
       }
     },
-    "angular-client-e2e": {
+    "backbone-client-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -143,7 +143,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angular-client:serve"
+            "devServerTarget": "backbone-client:serve"
           },
           "configurations": {
             "production": {
@@ -198,5 +198,5 @@
       }
     }
   },
-  "defaultProject": "angular-client"
+  "defaultProject": "backbone-client"
 }
