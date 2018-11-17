@@ -48,8 +48,6 @@ export class AppEntityManager extends EntityManager {
       serviceName: settings.serviceODataUrl
     });
 
-    console.log("settings", settings);
-
     this.appErrorHandler = errorHandler as AppErrorHandler;
 
     config.initializeAdapterInstance("uriBuilder", "odata");
