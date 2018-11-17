@@ -14,6 +14,7 @@
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-entity-manager\app-entity-manager.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-entity-manager\app-entity-manager-module.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\auth\auth-module.ts" />
+    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\entities\index.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\services\app-error-handler.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-http-client\app-http-client-module.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-http-client\app-http-client.ts" />
