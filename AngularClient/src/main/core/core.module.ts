@@ -4,12 +4,11 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
 import { Angulartics2Module } from "angulartics2";
-import { Angulartics2GoogleGlobalSiteTag } from "angulartics2/gst";
 
 import { ForcrowdBackboneModule, ISettings } from "forcrowd-backbone";
 import { SharedModule } from "../shared/shared.module";
 
-import { environment } from "../../app-settings/environments/environment-settings";
+import { environment } from "../../environments/environment";
 
 // Components
 import { ContributorsComponent } from "./components/contributors.component";

@@ -1,7 +1,9 @@
 ### Changelog
 
 **0.9.6**
-* AngularClient - Google Analytics fix
+* AngularClient
+  * Google Analytics fix
+  * AppSettings was replaced environment
 
 **0.9.5**
 * AngularClient

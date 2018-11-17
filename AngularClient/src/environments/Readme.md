@@ -1,6 +1,6 @@
-﻿## AngularClient - Environment Settings
+## AngularClient - Environment Settings
 
-`environment-settings.ts` file that is located in this folder is the initial configuration file for development.
+`environment.ts` file that is located in this folder is the initial configuration file for development.
 
 You can create your own `test` & `production` settings by copying this file.
 

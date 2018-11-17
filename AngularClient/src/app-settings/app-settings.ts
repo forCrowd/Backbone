@@ -1,4 +1,4 @@
-import { environment } from "./environments/environment-settings";
+import { environment } from "../environments/environment";
 
 export class AppSettings {
 
@@ -21,9 +21,4 @@ export class AppSettings {
    * Origin field for the example project that 'Getting started' page creates
    */
   static get todoAppOrigin(): string { return environment.todoAppOrigin; }
-
-  /*
-   * Application version number
-   */
-  static get version(): string { return "0.9.5"; }
 }

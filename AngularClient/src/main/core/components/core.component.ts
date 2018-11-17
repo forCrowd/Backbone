@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ObservableMedia, MediaChange } from "@angular/flex-layout";
 import { MatSnackBar } from "@angular/material";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
@@ -15,7 +15,7 @@ import { User, AuthService, NotificationService } from "forcrowd-backbone";
   templateUrl: "core.component.html",
   styleUrls: ["core.component.css"]
 })
-export class CoreComponent implements AfterViewInit, OnDestroy, OnInit {
+export class CoreComponent implements OnDestroy, OnInit {
 
   opened = true;
   over = "side";
@@ -27,7 +27,6 @@ export class CoreComponent implements AfterViewInit, OnDestroy, OnInit {
   watcher: Subscription;
   currentUrl: string = "";
 
-  appVersion = AppSettings.version;
   currentUser: User = null;
   hideGuestAccountInfoBox: boolean = true;
   subscriptions: Subscription[] = [];
