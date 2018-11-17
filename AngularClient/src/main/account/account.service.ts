@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
-import { AppHttpClient, AuthService, User } from "forcrowd-backbone";
+import { AppHttpClient, AuthService, User } from "backbone-client-core";
 
 @Injectable()
 export class AccountService {

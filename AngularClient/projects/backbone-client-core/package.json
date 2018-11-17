@@ -1,6 +1,6 @@
 {
-  "name": "forcrowd-backbone",
-  "description": "An API service for rapid app prototyping",
+  "name": "backbone-client-core",
+  "description": "Core library of Backbone",
   "author": "forCrowd Foundation",
   "license": "MIT",
   "version": "0.1.0",

@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { User, AuthService } from "backbone-client-core";
 
 import { environment } from "../environments/environment";
-import { User, AuthService } from "forcrowd-backbone";
 
 @Component({
   selector: "odata-user",

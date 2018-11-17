@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 
 import { AdminService } from "../main/admin/admin.service";
-import { Project } from "forcrowd-backbone";
+import { Project } from "backbone-client-core";
 import { ProjectService } from "../main/core/core.module";
 
 @Component({

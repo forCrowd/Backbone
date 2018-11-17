@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { MatDialog, MatTableDataSource } from "@angular/material";
 import { finalize } from "rxjs/operators";
 
-import { Project, User } from "forcrowd-backbone";
+import { Project, User } from "backbone-client-core";
 import { ProjectService } from "../core/core.module";
 import { ProfileRemoveProjectComponent } from "./profile-remove-project.component";
 import { UserService } from "./user.service";

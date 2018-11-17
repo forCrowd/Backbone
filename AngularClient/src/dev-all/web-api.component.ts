@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { environment } from "../environments/environment";
-import { AppHttpClient } from "forcrowd-backbone";
+import { AppHttpClient } from "backbone-client-core";
 
 @Component({
   selector: "web-api",

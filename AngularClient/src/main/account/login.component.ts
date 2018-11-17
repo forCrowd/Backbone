@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { timer as observableTimer } from "rxjs";
 
-import { AuthService, NotificationService } from "forcrowd-backbone";
+import { AuthService, NotificationService } from "backbone-client-core";
 
 @Component({
   selector: "login",

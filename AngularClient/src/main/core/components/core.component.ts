@@ -8,7 +8,7 @@ import { Subscription } from "rxjs";
 import { mergeMap, map, filter } from "rxjs/operators";
 
 import { environment } from "../../../environments/environment";
-import { User, AuthService, NotificationService } from "forcrowd-backbone";
+import { User, AuthService, NotificationService } from "backbone-client-core";
 
 @Component({
   selector: "core",

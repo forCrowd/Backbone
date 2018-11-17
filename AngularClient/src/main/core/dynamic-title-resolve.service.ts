@@ -3,7 +3,7 @@ import { Resolve, ActivatedRouteSnapshot } from "@angular/router";
 import { map } from "rxjs/operators";
 import { of as observableOf, Observable } from "rxjs";
 
-import { AuthService } from "forcrowd-backbone";
+import { AuthService } from "backbone-client-core";
 import { ProjectService } from "./project.service";
 
 @Injectable()

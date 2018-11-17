@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 
 import { AccountService } from "./account.service";
-import { NotificationService } from "forcrowd-backbone";
+import { NotificationService } from "backbone-client-core";
 
 @Component({
   selector: "add-password",

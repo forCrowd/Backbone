@@ -2,9 +2,9 @@ import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { mergeMap, map } from "rxjs/operators";
+import { AuthService, ElementField, Project, User } from "backbone-client-core";
 
 import { environment } from "../environments/environment";
-import { AuthService, ElementField, Project, User } from "forcrowd-backbone";
 
 @Component({
   selector: "odata-user-element-field",

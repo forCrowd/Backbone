@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { MatTableDataSource } from "@angular/material";
 
-import { Element, Project, ElementCell, ElementField, ElementFieldDataType, ElementItem, UserElementCell } from "forcrowd-backbone";
+import { Element, Project, ElementCell, ElementField, ElementFieldDataType, ElementItem, UserElementCell } from "backbone-client-core";
 import { ProjectService } from "../core/core.module";
 
 @Component({

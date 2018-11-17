@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 
 import { environment } from "../../environments/environment";
 import { AccountService } from "./account.service";
-import { NotificationService } from "forcrowd-backbone";
+import { NotificationService } from "backbone-client-core";
 
 @Component({
   selector: "change-password",

@@ -162,33 +162,33 @@
         }
       }
     },
-    "forcrowd-backbone": {
-      "root": "projects/forcrowd-backbone",
-      "sourceRoot": "projects/forcrowd-backbone/src",
+    "backbone-client-core": {
+      "root": "projects/backbone-client-core",
+      "sourceRoot": "projects/backbone-client-core/src",
       "projectType": "library",
       "prefix": "fcb",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/forcrowd-backbone/tsconfig.lib.json",
-            "project": "projects/forcrowd-backbone/ng-package.json"
+            "tsConfig": "projects/backbone-client-core/tsconfig.lib.json",
+            "project": "projects/backbone-client-core/ng-package.json"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/forcrowd-backbone/src/test.ts",
-            "tsConfig": "projects/forcrowd-backbone/tsconfig.spec.json",
-            "karmaConfig": "projects/forcrowd-backbone/karma.conf.js"
+            "main": "projects/backbone-client-core/src/test.ts",
+            "tsConfig": "projects/backbone-client-core/tsconfig.spec.json",
+            "karmaConfig": "projects/backbone-client-core/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/forcrowd-backbone/tsconfig.lib.json",
-              "projects/forcrowd-backbone/tsconfig.spec.json"
+              "projects/backbone-client-core/tsconfig.lib.json",
+              "projects/backbone-client-core/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

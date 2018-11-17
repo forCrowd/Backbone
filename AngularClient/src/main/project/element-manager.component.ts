@@ -3,7 +3,7 @@ import { SelectionModel } from "@angular/cdk/collections";
 import { MatTableDataSource, MatDialog } from "@angular/material";
 import { finalize } from "rxjs/operators";
 
-import { Element, Project } from "forcrowd-backbone";
+import { Element, Project } from "backbone-client-core";
 import { ProjectService } from "../core/core.module";
 import { RemoveConfirmComponent } from "./remove-confirm.component";
 

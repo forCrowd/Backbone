@@ -5,8 +5,7 @@ import { Observable } from "rxjs";
 import { finalize, mergeMap, map } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
-import { User, Project } from "forcrowd-backbone";
-import { AppEntityManager, AppHttpClient, AuthService } from "forcrowd-backbone";
+import { AppEntityManager, AppHttpClient, AuthService, User, Project } from "backbone-client-core";
 
 @Injectable()
 export class AdminService {

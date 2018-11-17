@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 
 import { environment } from "../../environments/environment";
 import { AccountService } from "./account.service";
-import { getUniqueEmail } from "forcrowd-backbone";
+import { getUniqueEmail } from "backbone-client-core";
 
 @Component({
   selector: "change-email",

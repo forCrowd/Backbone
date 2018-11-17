@@ -5,10 +5,8 @@ import { Observable } from "rxjs";
 import { mergeMap, finalize, map } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
-import { AppHttpClient, Element, ElementCell, ElementField, ElementFieldDataType, ElementItem, Project, UserElementCell, getUniqueValue } from "forcrowd-backbone";
-
-// Services
-import { AppEntityManager, AuthService } from "forcrowd-backbone";
+import { AppEntityManager, AuthService, AppHttpClient, Element, ElementCell, ElementField, ElementFieldDataType,
+  ElementItem, Project, UserElementCell, getUniqueValue } from "backbone-client-core";
 
 @Injectable()
 export class ProjectService {

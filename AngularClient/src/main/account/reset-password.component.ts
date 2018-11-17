@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { AccountService } from "./account.service";
-import { NotificationService } from "forcrowd-backbone";
+import { NotificationService } from "backbone-client-core";
 
 @Component({
   selector: "reset-password",
