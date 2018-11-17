@@ -8,10 +8,6 @@ import { AuthService } from "./services/auth.service";
 import { NotificationService } from "./services/notification.service";
 import { ISettings, Settings } from "./settings";
 
-// Breeze
-import "./breeze-client-odata-fix";
-import { BreezeBridgeHttpClientModule } from "breeze-bridge2-angular";
-
 export function appInitializer(authService: AuthService) {
 
   // Do initing of services that is required before app loads
@@ -29,8 +25,7 @@ export function appInitializer(authService: AuthService) {
 @NgModule({
   imports: [
     AppEntityManagerModule,
-    AppHttpClientModule,
-    BreezeBridgeHttpClientModule,
+    AppHttpClientModule
   ]
 })
 export class ForcrowdBackboneModule {

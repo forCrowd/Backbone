@@ -21,7 +21,7 @@
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-http-client\error-interceptor.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\settings.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\services\auth.service.ts" />
-    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\breeze-client-odata-fix.ts" />
+    <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\app-entity-manager\breeze-client-odata-fix.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\entities\element-cell.spec.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\entities\element-cell.ts" />
     <TypeScriptCompile Include="projects\forcrowd-backbone\src\lib\entities\element-field.spec.ts" />
