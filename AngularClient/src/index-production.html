@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+  <base href="/" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico?v=0.1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    // https://github.com/aws/aws-amplify/issues/678 fix
+    if (global === undefined) {
+      var global = window;
+    }
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-62498767-8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-62498767-8');
+  </script>
+  <title>Backbone</title>
+</head>
+<body class="mat-typography">
+  <app>
+    <div style="align-items: center; background-color: #fafafa; display: flex; font-family: Roboto, Arial, sans-serif; height: 100vh; justify-content: center;">
+      <div style="text-align: center;">
+        <div style="font-size: 1.3em;">
+          Hello
+        </div>
+        <div id="dots" style="font-size: 2em;"></div>
+      </div>
+    </div>
+    <script>
+
+      var direction = true;
+
+      hello();
+
+      function hello() {
+
+        var dots = document.getElementById("dots");
+
+        // After "app" content has loaded, no need to continue
+        if (!dots) {
+          return;
+        }
+
+        dots.innerHTML = direction ? `${dots.innerHTML}.` : dots.innerHTML.slice(0, -1);
+
+        // Change direction
+        var len = dots.innerHTML.length;
+        if (len === 6) {
+          direction = false;
+        } else if (len === 1) {
+          direction = true;
+        }
+
+        setTimeout(hello, 400);
+      }
+
+    </script>
+  </app>
+</body>
+</html>

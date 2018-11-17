@@ -39,6 +39,10 @@
                 {
                   "replace": "src/app-settings/environments/environment-settings.ts",
                   "with": "src/app-settings/environments/test-settings.ts"
+                },
+                {
+                  "replace": "src/index.html",
+                  "with": "src/index-test.html"
                 }
               ],
               "optimization": true,
@@ -56,6 +60,10 @@
                 {
                   "replace": "src/app-settings/environments/environment-settings.ts",
                   "with": "src/app-settings/environments/production-settings.ts"
+                },
+                {
+                  "replace": "src/index.html",
+                  "with": "src/index-production.html"
                 }
               ],
               "optimization": true,

@@ -8,18 +8,6 @@ export class AppSettings {
   static get environment(): string { return environment.name; }
 
   /*
-   * Google Analytics domain name
-   * Leave blank to disable analytics
-   */
-  static get analyticsDomainName(): string { return environment.analyticsDomainName; }
-
-  /*
-   * Google Analytics tracking code (e.g. UA-XXXXXXXX-X)
-   * Leave blank to disable analytics
-   */
-  static get analyticsTrackingCode(): string { return environment.analyticsTrackingCode; }
-
-  /*
    * Service application API url
    */
   static get serviceApiUrl(): string { return environment.serviceApiUrl; }

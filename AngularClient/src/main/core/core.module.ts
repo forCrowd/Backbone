@@ -1,9 +1,10 @@
-import { APP_INITIALIZER, NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
 import { Angulartics2Module } from "angulartics2";
+import { Angulartics2GoogleGlobalSiteTag } from "angulartics2/gst";
 
 import { ForcrowdBackboneModule, ISettings } from "forcrowd-backbone";
 import { SharedModule } from "../shared/shared.module";
@@ -22,7 +23,6 @@ import { SearchComponent } from "./components/search.component";
 import { AuthGuard } from "./auth-guard.service";
 import { CanDeactivateGuard } from "./can-deactivate-guard.service";
 import { DynamicTitleResolve } from "./dynamic-title-resolve.service";
-import { GoogleAnalyticsService } from "./google-analytics.service";
 import { ProjectService } from "./project.service";
 
 export { AuthGuard, CanDeactivateGuard, DynamicTitleResolve, ProjectService }
@@ -43,12 +43,6 @@ const coreRoutes: Routes = [
 const settings: ISettings = {
   serviceApiUrl: environment.serviceApiUrl,
   serviceODataUrl: environment.serviceODataUrl
-}
-
-export function appInitializer(googleAnalyticsService: GoogleAnalyticsService) {
-  return () => {
-    googleAnalyticsService.configureTrackingCode();
-  };
 }
 
 @NgModule({
@@ -75,17 +69,9 @@ export function appInitializer(googleAnalyticsService: GoogleAnalyticsService) {
     ForcrowdBackboneModule.configure(settings)
   ],
   providers: [
-    // Application initializer
-    {
-      deps: [GoogleAnalyticsService],
-      multi: true,
-      provide: APP_INITIALIZER,
-      useFactory: appInitializer
-    },
     AuthGuard,
     CanDeactivateGuard,
     DynamicTitleResolve,
-    GoogleAnalyticsService,
     ProjectService,
     FlexLayoutModule,
   ]
