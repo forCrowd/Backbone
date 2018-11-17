@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Project, User } from "backbone-client-core";
 
 import { ProjectService } from "../core/core.module";
-import { environment } from "../../environments/environment";
+import { settings } from "../../settings/settings";
 
 @Component({
   selector: "project-manager",
@@ -19,19 +19,19 @@ export class ProjectManagerComponent implements OnInit {
   viewMode = "new"; // new | existing
 
   get metadataUrl(): string {
-    return `${environment.serviceODataUrl}/$metadata`;
+    return `${settings.serviceODataUrl}/$metadata`;
   }
 
   get projectBasicApiUrl(): string {
-    return `${environment.serviceODataUrl}/Project(${this.project.Id})`;
+    return `${settings.serviceODataUrl}/Project(${this.project.Id})`;
   }
 
   get projectGuestExpandedApiUrl(): string {
-    return `${environment.serviceODataUrl}/Project(${this.project.Id})?$expand=User,ElementSet/ElementFieldSet,ElementSet/ElementItemSet/ElementCellSet`;
+    return `${settings.serviceODataUrl}/Project(${this.project.Id})?$expand=User,ElementSet/ElementFieldSet,ElementSet/ElementItemSet/ElementCellSet`;
   }
 
   get projectOwnerExpandedApiUrl(): string {
-    return `${environment.serviceODataUrl}/Project(${this.project.Id})?$expand=User,ElementSet/ElementFieldSet/UserElementFieldSet,ElementSet/ElementItemSet/ElementCellSet/UserElementCellSet`;
+    return `${settings.serviceODataUrl}/Project(${this.project.Id})?$expand=User,ElementSet/ElementFieldSet/UserElementFieldSet,ElementSet/ElementItemSet/ElementCellSet/UserElementCellSet`;
   }
 
   get isBusy(): boolean {

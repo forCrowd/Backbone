@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { getUniqueEmail } from "backbone-client-core";
 
-import { environment } from "../../environments/environment";
+import { settings } from "../../settings/settings";
 import { AccountService } from "./account.service";
 
 @Component({
@@ -49,7 +49,7 @@ export class ChangeEmailComponent implements OnInit {
   ngOnInit(): void {
 
     // Generate test data if localhost
-    if (environment.name === "Development") {
+    if (settings.environment === "Development") {
       this.bindingModel.Email = getUniqueEmail();
     }
   }

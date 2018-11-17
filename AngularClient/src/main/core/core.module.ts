@@ -8,7 +8,7 @@ import { BackboneClientCoreModule, ISettings } from "backbone-client-core";
 
 import { SharedModule } from "../shared/shared.module";
 
-import { environment } from "../../environments/environment";
+import { settings } from "../../settings/settings";
 
 // Components
 import { ContributorsComponent } from "./components/contributors.component";
@@ -40,8 +40,8 @@ const coreRoutes: Routes = [
 ];
 
 const settings: ISettings = {
-  serviceApiUrl: environment.serviceApiUrl,
-  serviceODataUrl: environment.serviceODataUrl
+  serviceApiUrl: settings.serviceApiUrl,
+  serviceODataUrl: settings.serviceODataUrl
 }
 
 @NgModule({

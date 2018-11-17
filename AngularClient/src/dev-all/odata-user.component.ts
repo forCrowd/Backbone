@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { User, AuthService } from "backbone-client-core";
 
-import { environment } from "../environments/environment";
+import { settings } from "../settings/settings";
 
 @Component({
   selector: "odata-user",
@@ -29,7 +29,7 @@ export class ODataUserComponent {
 
   private getUser(username: string): void {
 
-    const url = `${environment.serviceODataUrl}/Users?$filter=UserName eq '${username}'&$expand=ProjectSet`;
+    const url = `${settings.serviceODataUrl}/Users?$filter=UserName eq '${username}'&$expand=ProjectSet`;
 
     this.httpClient.get(url)
       .subscribe((response) => {

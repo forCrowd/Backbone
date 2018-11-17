@@ -40,7 +40,7 @@ To make the application offline during the deployment, you can use `_app_offline
 
 ### Client (AngularClient)
 
-AngularClient is a **Angular CLI** project and you can use its commands.
+AngularClient is a **Angular CLI** project.
 
 For deployment, there are three environments defined in `angular.json` file:
 * dev
@@ -49,7 +49,7 @@ For deployment, there are three environments defined in `angular.json` file:
 
 You can use **dev** configuration as a base file to create your own **test** and **prod** configuration files:
 
-    AngularClient\src\app-settings\environments\environment-settings.ts
+    AngularClient\src\settings\settings-dev.ts
 
 To prepare a production bundle by generating sourcemap files, run the following on your command console:
 

@@ -1,9 +1,9 @@
-export const environment = {
+export const settings = {
 
   /*
    * Name of the current environment
    */
-  name: "Development",
+  environment: "Development",
 
   /*
    * Service application API url

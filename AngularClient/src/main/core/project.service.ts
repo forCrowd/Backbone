@@ -6,7 +6,7 @@ import { EntityQuery, Predicate } from "breeze-client";
 import { Observable } from "rxjs";
 import { mergeMap, finalize, map } from "rxjs/operators";
 
-import { environment } from "../../environments/environment";
+import { settings } from "../../settings/settings";
 
 @Injectable()
 export class ProjectService {
@@ -213,7 +213,7 @@ export class ProjectService {
     // Project
     const project = this.createProjectEmpty();
     project.Name = "Todo App";
-    project.Origin = environment.todoAppOrigin;
+    project.Origin = settings.todoAppOrigin;
 
     // Element
     const element = this.createElement({
@@ -465,7 +465,7 @@ export class ProjectService {
   }
 
   private getUpdateComputedFieldsUrl(projectId: number) {
-    return `${environment.serviceApiUrl}/ProjectApi/${projectId}/UpdateComputedFields`;
+    return `${settings.serviceApiUrl}/ProjectApi/${projectId}/UpdateComputedFields`;
   }
 
   private removeElementCell(elementCell: ElementCell): void {

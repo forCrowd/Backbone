@@ -49,9 +49,8 @@
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\utils.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\public_api.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\test.ts" />
-    <TypeScriptCompile Include="src\environments\environment.ts" />
-    <TypeScriptCompile Include="src\environments\environment.prod.ts" />
-    <TypeScriptCompile Include="src\environments\environment.test.ts" />
+    <TypeScriptCompile Include="src\settings\settings.ts" />
+    <TypeScriptCompile Include="src\settings\settings-prod.ts" />
     <TypeScriptCompile Include="src\dev-all\project-tester.component.ts" />
     <TypeScriptCompile Include="src\dev-all\odata-element-cell.component.ts" />
     <TypeScriptCompile Include="src\dev-all\odata-element-item.component.ts" />
@@ -153,6 +152,7 @@
     <TypeScriptCompile Include="src\main\user\user.module.ts" />
     <TypeScriptCompile Include="src\polyfills.ts" />
     <TypeScriptCompile Include="src\sanity.spec.ts" />
+    <TypeScriptCompile Include="src\settings\settings-test.ts" />
     <TypeScriptCompile Include="src\test.ts" />
     <TypeScriptCompile Include="src\typings.d.ts" />
   </ItemGroup>
@@ -166,7 +166,7 @@
     <None Include="projects\backbone-client-core\tsconfig.lib.json" />
     <None Include="projects\backbone-client-core\tsconfig.spec.json" />
     <None Include="projects\backbone-client-core\tslint.json" />
-    <None Include="src\environments\Readme.md" />
+    <None Include="src\settings\Readme.md" />
     <Content Include="src\dev-all\project-tester.component.css" />
     <Content Include="src\dev-all\project-tester.component.html" />
     <Content Include="src\dev-all\odata-element-cell.component.html" />

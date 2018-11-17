@@ -41,9 +41,9 @@ AngularClient/out-tsc
 
 AngularClient/src/index.prod.html
 
-AngularClient/src/environments/*
-!AngularClient/src/environments/environment.ts
-!AngularClient/src/environments/Readme.md
+AngularClient/src/settings/*
+!AngularClient/src/settings/settings.ts
+!AngularClient/src/settings/Readme.md
 
 # DataMigrator
 DataMigrator/Configs/*.config

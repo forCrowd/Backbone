@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { mergeMap, map } from "rxjs/operators";
 import { AuthService, ElementCell, Project, User } from "backbone-client-core";
 
-import { environment } from "../environments/environment";
+import { settings } from "../settings/settings";
 
 @Component({
   selector: "odata-user-element-cell",
@@ -78,7 +78,7 @@ export class ODataUserElementCellComponent {
         DecimalValue: new Date().getMilliseconds().toString()
       };
 
-      var url = `${environment.serviceODataUrl}/UserElementCell`;
+      var url = `${settings.serviceODataUrl}/UserElementCell`;
 
       return this.httpClient.post(url, userElementCell);
     }));
@@ -95,12 +95,12 @@ export class ODataUserElementCellComponent {
   }
 
   private getODataUrl(userId: number, elementCellId: number) {
-    return `${environment.serviceODataUrl}/UserElementCell(userId=${userId},elementCellId=${elementCellId})`;
+    return `${settings.serviceODataUrl}/UserElementCell(userId=${userId},elementCellId=${elementCellId})`;
   }
 
   private getElementCell(userId: number, checkHasUserElementCell: boolean = false): Observable<ElementCell> {
 
-    const url = `${environment.serviceODataUrl}/Project?$expand=ElementSet/ElementFieldSet/ElementCellSet/UserElementCellSet&$filter=UserId eq ${userId}`;
+    const url = `${settings.serviceODataUrl}/Project?$expand=ElementSet/ElementFieldSet/ElementCellSet/UserElementCellSet&$filter=UserId eq ${userId}`;
 
     return this.httpClient.get(url).pipe(
       map((response) => {

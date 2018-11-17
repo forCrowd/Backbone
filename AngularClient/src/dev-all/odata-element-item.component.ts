@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { mergeMap, map } from "rxjs/operators";
 import { Element, Project, User, AuthService, getUniqueValue } from "backbone-client-core";
 
-import { environment } from "../environments/environment";
+import { settings } from "../settings/settings";
 
 @Component({
   selector: "odata-element-item",
@@ -70,7 +70,7 @@ export class ODataElementItemComponent {
         Name: `New item ${getUniqueValue()}`
       };
 
-      const url = `${environment.serviceODataUrl}/ElementItem`;
+      const url = `${settings.serviceODataUrl}/ElementItem`;
 
       return this.httpClient.post(url, elementItem);
     }));
@@ -89,12 +89,12 @@ export class ODataElementItemComponent {
   }
 
   private getODataUrl(elementItemId: number) {
-    return `${environment.serviceODataUrl}/ElementItem(${elementItemId})`;
+    return `${settings.serviceODataUrl}/ElementItem(${elementItemId})`;
   }
 
   private getElement(userId: number, checkHasElementItem: boolean = false): Observable<Element> {
 
-    const url = `${environment.serviceODataUrl}/Project?$expand=ElementSet/ElementItemSet&$filter=UserId eq ${userId}`;
+    const url = `${settings.serviceODataUrl}/Project?$expand=ElementSet/ElementItemSet&$filter=UserId eq ${userId}`;
 
     return this.httpClient.get(url).pipe(
       map((response) => {
