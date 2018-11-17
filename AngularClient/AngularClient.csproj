@@ -116,7 +116,7 @@
     <Content Include="src\assets\images\Logo_30x30.jpg" />
     <Content Include="src\assets\images\open-source.png" />
     <Content Include="src\assets\images\template.png" />
-    <Content Include="src\index.prod.html" />
+    <Content Include="src\index-prod.html" />
     <Content Include="src\karma.conf.js" />
     <Content Include="src\main\account\account-overview.component.css" />
     <Content Include="src\main\account\confirm-email.component.css" />

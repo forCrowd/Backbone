@@ -39,7 +39,7 @@ AngularClient/out-tsc
 #AngularClient/e2e/*.js
 #AngularClient/e2e/*.map
 
-AngularClient/src/index.prod.html
+AngularClient/src/index-prod.html
 
 AngularClient/src/settings/*
 !AngularClient/src/settings/settings.ts

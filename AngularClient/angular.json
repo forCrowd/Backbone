@@ -42,7 +42,7 @@
                 },
                 {
                   "replace": "src/index.html",
-                  "with": "src/index.test.html"
+                  "with": "src/index-test.html"
                 }
               ],
               "optimization": true,
@@ -63,7 +63,7 @@
                 },
                 {
                   "replace": "src/index.html",
-                  "with": "src/index.prod.html"
+                  "with": "src/index-prod.html"
                 }
               ],
               "optimization": true,
