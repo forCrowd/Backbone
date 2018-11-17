@@ -4,7 +4,7 @@ import { AppEntityManagerModule } from "./app-entity-manager/app-entity-manager-
 import { AppHttpClientModule } from "./app-http-client/app-http-client-module";
 import { AuthModule } from "./auth/auth-module";
 import { AppErrorHandler } from "./services/app-error-handler";
-import { NotificationService } from "./services/notification.service";
+import { NotificationService } from "./services/notification-service";
 import { ISettings, Settings } from "./settings";
 
 // @dynamic

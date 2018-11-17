@@ -10,7 +10,7 @@ import { Role } from "../entities/role";
 import { Token } from "../entities/token";
 import { User } from "../entities/user";
 import { UserRole } from "../entities/user-role";
-import { NotificationService } from "../services/notification.service";
+import { NotificationService } from "../services/notification-service";
 import { Settings } from "../settings";
 import { getUniqueUserName } from "../utils";
 

@@ -22,9 +22,9 @@ import { User } from "../entities/user";
 import { UserElementCell } from "../entities/user-element-cell";
 import { UserElementField } from "../entities/user-element-field";
 import { UserRole } from "../entities/user-role";
-import { Settings } from "../settings";
 import { AppErrorHandler } from "../services/app-error-handler";
-import { NotificationService } from "../services/notification.service";
+import { NotificationService } from "../services/notification-service";
+import { Settings } from "../settings";
 
 export interface IQueryResult<T> {
   count: number;
