@@ -6,10 +6,7 @@ import { catchError, mergeMap, map } from "rxjs/operators";
 
 import { AppEntityManager } from "../app-entity-manager/app-entity-manager";
 import { AppHttpClient } from "../app-http-client/app-http-client";
-import { Role } from "../entities/role";
-import { Token } from "../entities/token";
-import { User } from "../entities/user";
-import { UserRole } from "../entities/user-role";
+import { Role, Token, User, UserRole } from "../entities";
 import { NotificationService } from "../services/notification-service";
 import { Settings } from "../settings";
 import { getUniqueUserName } from "../utils";

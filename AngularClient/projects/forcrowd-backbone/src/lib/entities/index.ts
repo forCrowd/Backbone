@@ -2,6 +2,7 @@ export * from "./element-field";
 export * from "./element-cell";
 export * from "./element-item";
 export * from "./element";
+export * from "./entity-base";
 export * from "./project";
 export * from "./role";
 export * from "./token";
