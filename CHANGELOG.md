@@ -2,6 +2,7 @@
 
 **0.9.8**
 * AngularClient - Library Karma tests fix
+* General - Run-Backbone-WebAPI script
 
 **0.9.7**
 * AngularClient - Library updates
