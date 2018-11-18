@@ -1,7 +1,7 @@
 import { ErrorHandler, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { throwError as observableThrowError, forkJoin, Observable, of as observableOf, Subscription, timer } from "rxjs";
-import { map, mergeMap, share } from "rxjs/operators";
+import { catchError, map, mergeMap, share } from "rxjs/operators";
 //import { SourceMapConsumer } from "../../../../src/libraries/source-map";
 import { SourceMapConsumer } from "source-map";
 
@@ -15,18 +15,17 @@ export class AppErrorHandler implements ErrorHandler {
   errorLimitResetTimer: Subscription = null;
   get errorLimitReached(): boolean { return this.errorCounter > 10 };
 
-  constructor(private readonly httpClient: HttpClient, private readonly settings: Settings) {
-  }
+  constructor(private readonly httpClient: HttpClient, private readonly settings: Settings) { }
 
   handleError(error: Error): void {
 
     //if (settings.environment === "Development") {
 
-      console.error(error);
+    console.error(error);
 
     //} else {
 
-      //this.reportError(error);
+    this.reportError(error);
 
     //}
   }
@@ -46,15 +45,18 @@ export class AppErrorHandler implements ErrorHandler {
           Stack: stack || ""
         };
 
+        console.log("model", model);
+
         const errorHandlerUrl = this.settings.serviceApiUrl + "/Exception/Record";
 
-        this.httpClient.post(errorHandlerUrl, model).subscribe();
+        // Todo!
+        //this.httpClient.post(errorHandlerUrl, model).subscribe();
       });
     }
   }
 
   // Retrieve a SourceMap object for a minified script URL
-  private getMapForScript(url: any) {
+  private getMapForScript(url: string) {
 
     if (this.sourceMapCache[url]) {
 
@@ -90,49 +92,51 @@ export class AppErrorHandler implements ErrorHandler {
    */
   private getSourceMappedStackTrace(error: Error): Observable<any> {
 
-    if (error.stack) { // not all browsers support stack traces
-
-      return forkJoin(
-        error.stack.split(/\n/).map((stackLine: any) => {
-
-          var match = stackLine.match(/^(.+)(http.+):(\d+):(\d+)/);
-
-          if (match) {
-            var prefix = match[1];
-            const url = match[2];
-            var line = match[3],
-              col = match[4];
-
-            return this.getMapForScript(url).map((map: any) => {
-
-              var pos = map.originalPositionFor({
-                line: parseInt(line, 10),
-                column: parseInt(col, 10)
-              });
-
-              // Experimental fixes for source
-              pos.source = pos.source.substring(0, 3) === "../"
-                ? pos.source.substring(2)
-                : pos.source.charAt(0) !== "/"
-                  ? `/${pos.source}`
-                  : pos.source;
-
-              var mangledName = prefix.match(/\s*(at)?\s*(.*?)\s*(\(|@)/);
-              mangledName = (mangledName && mangledName[2]) || "";
-
-              return `    at ${pos.name ? pos.name : mangledName} ${window.location.origin}${pos.source}:${pos.line}:${pos.column}`;
-
-            }).catch(() => {
-              return stackLine;
-            });
-          } else {
-            return observableOf(stackLine);
-          }
-        })
-      ).pipe(map((lines: any) => lines.join("\r\n")));
-    } else {
+    if (!error.stack) { // not all browsers support stack traces
       return observableOf("");
     }
+
+    const stackLines = error.stack.split(/\n/);
+
+    const stackLineObservables = stackLines.map(stackLine => {
+
+      const match = stackLine.match(/^(.+)(http.+):(\d+):(\d+)/);
+
+      if (!match) {
+        return observableOf(stackLine);
+      }
+
+      const prefix = match[1], url = match[2], line = match[3], col = match[4];
+
+      return this.getMapForScript(url).pipe(
+        map((map: any) => {
+
+          var pos = map.originalPositionFor({
+            line: parseInt(line, 10),
+            column: parseInt(col, 10)
+          });
+
+          // Experimental fixes for source
+          pos.source = pos.source.substring(0, 3) === "../"
+            ? pos.source.substring(2)
+            : pos.source.charAt(0) !== "/"
+              ? `/${pos.source}`
+              : pos.source;
+
+          var mangledName = prefix.match(/\s*(at)?\s*(.*?)\s*(\(|@)/);
+          var mangledNameValue = (mangledName && mangledName[2]) || "";
+
+          return `    at ${pos.name ? pos.name : mangledNameValue} ${window.location.origin}${pos.source}:${pos.line}:${pos.column}`;
+
+        }))
+        .pipe(catchError(() => {
+          return stackLine;
+        }));
+
+    });
+
+    return forkJoin(stackLineObservables)
+      .pipe(map((lines: any) => lines.join("\r\n")));
   }
 
   /**
