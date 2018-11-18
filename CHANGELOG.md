@@ -1,8 +1,10 @@
 ### Changelog
 
+**0.9.8**
+* AngularClient - Library Karma tests fix
+
 **0.9.7**
-* AngularClient
-  * Library updates
+* AngularClient - Library updates
 
 **0.9.6**
 * AngularClient
