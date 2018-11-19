@@ -1,3 +1,10 @@
+@media only screen and (min-width: 300px) and (max-width: 425px) {
+  .link {
+    font-size: 12px !important;
+  }
+
+}
+
 .link {
   font-family: Arial;
   font-size: 16px;
