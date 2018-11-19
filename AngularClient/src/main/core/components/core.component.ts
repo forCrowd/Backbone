@@ -42,13 +42,19 @@ export class CoreComponent implements OnDestroy, OnInit {
 
     this.currentUser = this.authService.currentUser;
     this.watcher = media.subscribe((change: MediaChange) => {
+      this.currentUrl = this.router.url;
       this.activeMediaQuery = change.mqAlias;
       if (change.mqAlias === "sm" || change.mqAlias === "xs") {
         this.opened = false;
         this.over = "over";
       } else {
-        this.opened = true;
-        this.over = "side";
+        if (this.currentUrl === "/") {
+          this.opened = false;
+          this.over = "over";
+        } else {
+          this.opened = true;
+          this.over = "side";
+        }
       }
     });
   }
