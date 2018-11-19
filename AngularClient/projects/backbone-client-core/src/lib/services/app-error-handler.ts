@@ -98,6 +98,8 @@ export class AppErrorHandler implements ErrorHandler {
 
     const stackLines = error.stack.split(/\n/);
 
+    console.log("stackLines", stackLines);
+
     const stackLineObservables = stackLines.map(stackLine => {
 
       const match = stackLine.match(/^(.+)(http.+):(\d+):(\d+)/);
