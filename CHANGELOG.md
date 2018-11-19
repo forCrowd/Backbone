@@ -4,6 +4,10 @@
 * AngularClient - Library Karma tests fix
 * General - Run-Backbone-WebAPI script
 
+**0.9.8**
+
+* AngularClient - UI minor fix
+
 **0.9.7**
 * AngularClient - Library updates
 
@@ -18,6 +22,7 @@
   * app_offline.html minor updates
 
 **0.9.4**
+
 * AngularClient - UI minor fix/update
 
 **0.9.3**

@@ -1,5 +1,5 @@
 <mat-sidenav-container [ngClass]="{'container': currentUrl !== '/', 'landing': currentUrl === '/'}">
-  <mat-sidenav #sidenav [(mode)]="over" [(opened)]="opened" class="bottom-to-top">
+  <mat-sidenav #sidenav [hidden]="currentUrl === '/'" [(mode)]="over" [(opened)]="opened" class="bottom-to-top">
     <mat-nav-list class="ml-0" dense>
       <mat-list-item class="logo-sidenav" fxLayoutAlign="center center" mat-button routerLink="/" class="ml-0 logo-white logo-sidenav">
         <img alt="Logo" src="/assets/images/backbone.png?v=0.1.0" class="backbone-icon">
@@ -51,16 +51,13 @@
   <mat-sidenav-content>
 
     <mat-toolbar class="header-bb" >
-      <button mat-icon-button (click)="sidenav.toggle()" fxShow.sm="true" fxShow.gt-sm="false">
-        <mat-icon>menu</mat-icon>
-      </button>
 
-      <div *ngIf="!opened && currentUrl === '/'" class="logo-black">
+      <div *ngIf="currentUrl === '/'" class="logo-black">
         <img alt="Backbone" src="/assets/images/backbone-black.png?v=0.1.0" class="backbone-icon pt-4">
         Backbone
       </div>
 
-      <button mat-button *ngIf="!opened && currentUrl !== '/'" routerLink="/" class="logo-black">
+      <button mat-button *ngIf="currentUrl !== '/'" routerLink="/" class="logo-black">
         <img alt="Backbone" src="/assets/images/backbone-black.png?v=0.1.0" class="backbone-icon">
         Backbone
       </button>
@@ -71,7 +68,7 @@
         <span class="ml-1">forCrowd Foundation</span>
       </a>
 
-      <a class="link" fxShow.lt-md="true" fxShow.gt-sm="true" href="mailto:contact.backbone@forCrowd.org"
+      <a class="link" fxShow.lt-md="false" fxShow.gt-sm="true" href="mailto:contact.backbone@forCrowd.org"
         target="_blank">
         <span class="ml-1">Contact</span>
       </a>
@@ -113,7 +110,7 @@
     <mat-sidenav-content class="content" [ngClass]="{'no-margin': currentUrl === '/'}">
       <router-outlet></router-outlet>
 
-      <div mat-sidenav-content [ngClass]="{'footer-landing': !opened, 'footer': opened, 'sidenav-content-lp': !opened}" class="sidenav-content"
+      <div mat-sidenav-content [ngClass]="{'footer-landing': currentUrl === '/', 'footer': currentUrl !== '/', 'sidenav-content-lp': currentUrl === '/', 'footer-l-0': !opened}" class="sidenav-content"
         fxLayout="row">
         <a href="https://forcrowd.org" target="_blank" class="footer-left">
           <img alt="Logo" src="/assets/images/Logo+Text_142x30.png?v=0.1.2"
