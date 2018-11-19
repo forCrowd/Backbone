@@ -1,6 +1,6 @@
 ### Changelog
 
-**0.9.8**
+**0.9.9**
 * AngularClient - Library Karma tests fix
 * General - Run-Backbone-WebAPI script
 
