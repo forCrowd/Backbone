@@ -1,12 +1,21 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TestBed, getTestBed } from "@angular/core/testing";
 
 import { AppErrorHandler } from "./app-error-handler";
 
-class MockHttpClient extends HttpClient {
-
-}
-
 describe("app-error-handler", () => {
+
+  let injector: TestBed;
+  let httpClient: HttpClient;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientModule],
+      providers: [HttpClient]
+    });
+    injector = getTestBed();
+    httpClient = injector.get(HttpClient);
+  });
 
   it("sanity", () => {
     expect(true).toBe(true);
@@ -20,8 +29,6 @@ describe("app-error-handler", () => {
   });
 
   it("handleError", () => {
-
-    var httpClient = new MockHttpClient(null);
 
     var errorHandler = new AppErrorHandler(httpClient, { serviceApiUrl: "", serviceODataUrl: "" });
     var error = new Error("error");
