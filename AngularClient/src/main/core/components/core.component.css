@@ -229,6 +229,10 @@ mat-sidenav {
     margin-left: 20px;
   }
 
+.footer-l-0 {
+  left: 0px !important;
+}
+
 .header {
   left: 0px;
   position: fixed;
