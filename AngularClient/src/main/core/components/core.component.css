@@ -47,6 +47,7 @@ mat-sidenav {
 }
 
 .content {
+  display: initial;
   top: 64px !important;
   margin: 0 !important;
   padding-bottom: 100px;
