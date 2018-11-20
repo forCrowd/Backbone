@@ -43,6 +43,10 @@
   color: #767676 !important;
 }
 
+.ml-250 {
+  margin-left: 250px !important;
+}
+
 mat-sidenav {
   width: 250px;
 }

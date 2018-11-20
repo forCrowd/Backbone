@@ -139,13 +139,13 @@
             <div class="h-60">
               <div class="wp-70">Basic view</div>
               <div class="wp-30">
-                <a mat-stroked-button href="{{ projectBasicApiUrl }}" target="_blank">View</a>
+                <a mat-stroked-button (click)="copyApiLink(projectBasicApiUrl)" target="_blank">Copy</a>
               </div>
             </div>
             <div>
               <div class="wp-70">Expanded view for guest access</div>
               <div class="wp-30">
-                <a mat-stroked-button href="{{ projectGuestExpandedApiUrl }}" target="_blank">View</a>
+                <a mat-stroked-button (click)="copyApiLink(projectGuestExpandedApiUrl)" target="_blank">Copy</a>
               </div>
             </div>
           </div>
@@ -154,13 +154,13 @@
             <div class="h-60">
               <div class="wp-70">Expanded view for project owners</div>
               <div class="wp-30">
-                <a mat-stroked-button href="{{ projectOwnerExpandedApiUrl }}" target="_blank">View</a>
+                <a mat-stroked-button (click)="copyApiLink(projectOwnerExpandedApiUrl)" target="_blank">Copy</a>
               </div>
             </div>
             <div>
               <div class="wp-70">API Metadata</div>
               <div class="wp-30">
-                <a mat-stroked-button href="{{ metadataUrl }}" target="_blank">View</a>
+                <a mat-stroked-button (click)="copyApiLink(metadataUrl)" target="_blank">Copy</a>
               </div>
             </div>
           </div>

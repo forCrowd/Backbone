@@ -37,19 +37,17 @@ export class CoreComponent implements OnDestroy, OnInit {
     private titleService: Title,
     private router: Router,
     private media: ObservableMedia) {
-
     angulartics.startTracking();
-
     this.currentUser = this.authService.currentUser;
     this.watcher = media.subscribe((change: MediaChange) => {
       this.currentUrl = this.router.url;
       this.activeMediaQuery = change.mqAlias;
       if (change.mqAlias === "sm" || change.mqAlias === "xs") {
         this.opened = false;
-        this.over = "over";
+        this.over = "side";
       } else {
         if (this.currentUrl === "/") {
-          this.opened = false;
+          this.opened = true;
           this.over = "over";
         } else {
           this.opened = true;
@@ -62,8 +60,8 @@ export class CoreComponent implements OnDestroy, OnInit {
   pathChecker(): void {
     this.currentUrl = this.router.url;
     if (this.currentUrl === "/") {
-      this.opened = false;
-      this.over = "over";
+      this.opened = true;
+      this.over = "side";
     } else {
       if (this.activeMediaQuery === "sm" || this.activeMediaQuery === "xs") {
         this.opened = false;
@@ -73,6 +71,12 @@ export class CoreComponent implements OnDestroy, OnInit {
         this.over = "side";
       }
     }
+  }
+
+  isLandingPage(): boolean {
+    return this.currentUrl === "/" ?
+      this.currentUser.isAuthenticated() ? false : true
+      : false
   }
 
   closeGuestAccountInfoBox(): void {

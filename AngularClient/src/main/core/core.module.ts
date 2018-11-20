@@ -23,11 +23,14 @@ import { AuthGuard } from "./auth-guard.service";
 import { CanDeactivateGuard } from "./can-deactivate-guard.service";
 import { DynamicTitleResolve } from "./dynamic-title-resolve.service";
 import { ProjectService } from "./project.service";
+import { LandingPageComponent } from './components/landing-page.component';
+import { ProfileComponent } from '../user/profile.component';
+import { UserModule } from '../user/user.module';
 
 export { AuthGuard, CanDeactivateGuard, DynamicTitleResolve, ProjectService }
 
 const coreRoutes: Routes = [
-  { path: "", component: HomeComponent, data: { title: "Home" } },
+  { path: "", component: LandingPageComponent, data: { title: "Home" } },
   { path: "app/contributors", component: ContributorsComponent, data: { title: "Contributors" } },
   { path: "app/getting-started", component: GettingStartedComponent, data: { title: "Getting Started" } },
   { path: "app/not-found", component: NotFoundComponent, data: { title: "Not Found" } },
@@ -50,6 +53,7 @@ const coreSettings: ISettings = {
     CoreComponent,
     GettingStartedComponent,
     HomeComponent,
+    LandingPageComponent,
     NotFoundComponent,
     SearchComponent,
   ],
@@ -61,6 +65,7 @@ const coreSettings: ISettings = {
   imports: [
     FlexLayoutModule,
     SharedModule,
+    UserModule,
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(coreRoutes),
