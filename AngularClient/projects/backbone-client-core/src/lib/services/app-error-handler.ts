@@ -1,33 +1,34 @@
 import { ErrorHandler, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { throwError as observableThrowError, forkJoin, Observable, of as observableOf, Subscription, timer } from "rxjs";
-import { catchError, map, mergeMap, share } from "rxjs/operators";
-//import { SourceMapConsumer } from "../../../../src/libraries/source-map";
-import { SourceMapConsumer } from "source-map";
+import { throwError, forkJoin, from, Observable, of as observableOf, Subscription, timer } from "rxjs";
+import { catchError, flatMap, map, mergeMap, share } from "rxjs/operators";
+import { BasicSourceMapConsumer, IndexedSourceMapConsumer, SourceMapConsumer } from "source-map";
 
 import { Settings } from "../settings";
 
 @Injectable()
 export class AppErrorHandler implements ErrorHandler {
 
-  sourceMapCache = {};
+  sourceMapCache: Observable<BasicSourceMapConsumer | IndexedSourceMapConsumer>[] = [];
   errorCounter = 0;
   errorLimitResetTimer: Subscription = null;
   get errorLimitReached(): boolean { return this.errorCounter > 10 };
 
-  constructor(private readonly httpClient: HttpClient, private readonly settings: Settings) { }
+  constructor(private readonly httpClient: HttpClient, private readonly settings: Settings) {
+    (SourceMapConsumer as any).initialize({ "lib/mappings.wasm": settings.sourceMapMappingsUrl });
+  }
 
   handleError(error: Error): void {
 
-    //if (settings.environment === "Development") {
+    if (this.settings.environment === "Development") {
 
     console.error(error);
 
-    //} else {
+    } else {
 
     this.reportError(error);
 
-    //}
+    }
   }
 
   private reportError(error: Error): void {
@@ -45,18 +46,15 @@ export class AppErrorHandler implements ErrorHandler {
           Stack: stack || ""
         };
 
-        console.log("model", model);
-
         const errorHandlerUrl = this.settings.serviceApiUrl + "/Exception/Record";
 
-        // Todo!
-        //this.httpClient.post(errorHandlerUrl, model).subscribe();
+        this.httpClient.post(errorHandlerUrl, model).subscribe();
       });
     }
   }
 
   // Retrieve a SourceMap object for a minified script URL
-  private getMapForScript(url: string) {
+  private getMapForScript(url: string): Observable<BasicSourceMapConsumer | IndexedSourceMapConsumer> {
 
     if (this.sourceMapCache[url]) {
 
@@ -71,11 +69,13 @@ export class AppErrorHandler implements ErrorHandler {
         if (match) {
           const sourceMapUrl = match[1];
           return this.httpClient.get(sourceMapUrl, { responseType: "text" })
-            .pipe(map((response: any) => {
-              return new SourceMapConsumer(response);
+            .pipe(flatMap(response => {
+              return from(SourceMapConsumer.with(response, null, consumer => {
+                return consumer;
+              }));
             }));
         } else {
-          return observableThrowError("no 'sourceMappingURL' regex match");
+          return throwError("no 'sourceMappingURL' regex match");
         }
       })).pipe(share());
 
@@ -90,15 +90,13 @@ export class AppErrorHandler implements ErrorHandler {
    * Original solutions: http://stackoverflow.com/questions/19420604/angularjs-stack-trace-ignoring-source-map
    * @param exception
    */
-  private getSourceMappedStackTrace(error: Error): Observable<any> {
+  private getSourceMappedStackTrace(error: Error) {
 
     if (!error.stack) { // not all browsers support stack traces
       return observableOf("");
     }
 
     const stackLines = error.stack.split(/\n/);
-
-    console.log("stackLines", stackLines);
 
     const stackLineObservables = stackLines.map(stackLine => {
 
@@ -111,9 +109,9 @@ export class AppErrorHandler implements ErrorHandler {
       const prefix = match[1], url = match[2], line = match[3], col = match[4];
 
       return this.getMapForScript(url).pipe(
-        map((map: any) => {
+        map(consumer => {
 
-          var pos = map.originalPositionFor({
+          var pos = consumer.originalPositionFor({
             line: parseInt(line, 10),
             column: parseInt(col, 10)
           });
@@ -138,7 +136,7 @@ export class AppErrorHandler implements ErrorHandler {
     });
 
     return forkJoin(stackLineObservables)
-      .pipe(map((lines: any) => lines.join("\r\n")));
+      .pipe(map(lines => lines.join("\r\n")));
   }
 
   /**

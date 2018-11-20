@@ -1,5 +1,8 @@
 import { Component, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
+import { BackboneClientCoreModule, ISettings } from "backbone-client-core";
+
+import { settings } from "../settings/settings";
 
 @Component({
   selector: "app",
@@ -36,9 +39,17 @@ export class AppComponent {
   }
 }
 
+const coreSettings: ISettings = {
+  environment: settings.environment,
+  serviceApiUrl: settings.serviceApiUrl,
+  serviceODataUrl: settings.serviceODataUrl,
+  sourceMapMappingsUrl: settings.sourceMapMappingsUrl
+}
+
 @NgModule({
   imports: [
-    BrowserModule
+    BrowserModule,
+    BackboneClientCoreModule.configure(coreSettings)
   ],
   declarations: [
     AppComponent
