@@ -15,6 +15,7 @@
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\app-entity-manager\app-entity-manager-module.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\auth\auth-module.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\entities\index.ts" />
+    <TypeScriptCompile Include="projects\backbone-client-core\src\lib\services\app-error-handler.spec.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\services\app-error-handler.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\app-http-client\app-http-client-module.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\app-http-client\app-http-client.ts" />

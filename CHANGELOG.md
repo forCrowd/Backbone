@@ -1,5 +1,11 @@
 ### Changelog
 
+**0.9.10**
+
+* AngularClient - Library - AppErrorHandler fix
+* AngularClient - Library - Karma tests fix
+* General - Run-Backbone-WebAPI script
+
 **0.9.9**
 
 * AngularClient - LandingPageComponent added (Selects landing page component according to user login state)
@@ -10,10 +16,11 @@
 * AngularClient - UI minor fix
 
 **0.9.7**
-* AngularClient
-  * Library updates
+
+* AngularClient - Library updates
 
 **0.9.6**
+
 * AngularClient
   * Google Analytics fix
   * AppSettings was replaced environment

@@ -61,9 +61,6 @@
     <None Include="..\README.md">
       <Link>Documents\README.md</Link>
     </None>
-    <None Include="Scripts\Build\MSBuild.bat" />
-    <None Include="Scripts\Build\RunIISExpress.ps1" />
-    <None Include="Scripts\Build\WebApiWarmUp.ps1" />
     <None Include="Scripts\Database\Local_BackupDatabase.bat" />
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { Component, NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -28,12 +28,21 @@ import { UserModule } from "../user/user.module";
 
 export { AuthGuard, CanDeactivateGuard, DynamicTitleResolve, ProjectService }
 
+// TODO: Remove! Only here to test appErrorHandler on production
+@Component({
+  template: ``
+})
+export class ExComponent {
+  constructor() { throw new Error("test"); }
+}
+
 const coreRoutes: Routes = [
   { path: "", component: LandingPageComponent, data: { title: "Home" } },
   { path: "app/contributors", component: ContributorsComponent, data: { title: "Contributors" } },
   { path: "app/getting-started", component: GettingStartedComponent, data: { title: "Getting Started" } },
   { path: "app/not-found", component: NotFoundComponent, data: { title: "Not Found" } },
   { path: "app/search", component: SearchComponent, data: { title: "Search" } },
+  { path: "app/ex", component: ExComponent },
 
   /* Home alternatives */
   { path: "app/home", redirectTo: "", pathMatch: "full" },
@@ -42,14 +51,17 @@ const coreRoutes: Routes = [
 ];
 
 const coreSettings: ISettings = {
+  environment: settings.environment,
   serviceApiUrl: settings.serviceApiUrl,
-  serviceODataUrl: settings.serviceODataUrl
+  serviceODataUrl: settings.serviceODataUrl,
+  sourceMapMappingsUrl: settings.sourceMapMappingsUrl
 }
 
 @NgModule({
   declarations: [
     ContributorsComponent,
     CoreComponent,
+    ExComponent,
     GettingStartedComponent,
     HomeComponent,
     LandingPageComponent,
