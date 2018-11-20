@@ -23,9 +23,8 @@ import { AuthGuard } from "./auth-guard.service";
 import { CanDeactivateGuard } from "./can-deactivate-guard.service";
 import { DynamicTitleResolve } from "./dynamic-title-resolve.service";
 import { ProjectService } from "./project.service";
-import { LandingPageComponent } from './components/landing-page.component';
-import { ProfileComponent } from '../user/profile.component';
-import { UserModule } from '../user/user.module';
+import { LandingPageComponent } from "./components/landing-page.component";
+import { UserModule } from "../user/user.module";
 
 export { AuthGuard, CanDeactivateGuard, DynamicTitleResolve, ProjectService }
 
