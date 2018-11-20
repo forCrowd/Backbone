@@ -53,7 +53,7 @@
   <!-- Element add/edit -->
   <div *ngIf="selectedElement">
 
-    <mat-card>
+    <mat-card class="g-mb-250">
       <form #elementForm="ngForm" autocomplete="off">
         <div class="g-mt-40 m-16">
           <div [ngClass]="{ 'has-error': selectedElement.entityAspect.getValidationErrors('Name').length > 0 }">

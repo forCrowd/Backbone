@@ -1,5 +1,5 @@
-<mat-sidenav-container [ngClass]="{'container': currentUrl !== '/', 'landing': currentUrl === '/'}">
-  <mat-sidenav #sidenav [hidden]="currentUrl === '/'" [(mode)]="over" [(opened)]="opened" class="bottom-to-top">
+<mat-sidenav-container [ngClass]="{'container': !isLandingPage(), 'landing': isLandingPage()}">
+  <mat-sidenav #sidenav [hidden]="isLandingPage()" [(mode)]="over" [(opened)]="opened" class="bottom-to-top">
     <mat-nav-list class="ml-0" dense>
       <mat-list-item class="logo-sidenav" fxLayoutAlign="center center" mat-button routerLink="/" class="ml-0 logo-white logo-sidenav">
         <img alt="Logo" src="/assets/images/backbone.png?v=0.1.0" class="backbone-icon">
@@ -48,16 +48,16 @@
 
   </mat-sidenav>
 
-  <mat-sidenav-content>
+  <mat-sidenav-content [ngClass]="{'ml-250': !isLandingPage()}">
 
     <mat-toolbar class="header-bb" >
 
-      <div *ngIf="currentUrl === '/'" class="logo-black">
+      <div *ngIf="isLandingPage()" class="logo-black">
         <img alt="Backbone" src="/assets/images/backbone-black.png?v=0.1.0" class="backbone-icon pt-4">
         Backbone
       </div>
 
-      <button mat-button *ngIf="currentUrl !== '/'" routerLink="/" class="logo-black">
+      <button mat-button *ngIf="!isLandingPage()" routerLink="/" class="logo-black">
         <img alt="Backbone" src="/assets/images/backbone-black.png?v=0.1.0" class="backbone-icon">
         Backbone
       </button>
@@ -107,10 +107,10 @@
     </mat-toolbar>
 
     <!-- forCrowd Backbone content -->
-    <mat-sidenav-content class="content" [ngClass]="{'no-margin': currentUrl === '/'}">
+    <mat-sidenav-content class="content" [ngClass]="{'no-margin': isLandingPage()}">
       <router-outlet></router-outlet>
 
-      <div mat-sidenav-content [ngClass]="{'footer-landing': currentUrl === '/', 'footer': currentUrl !== '/', 'sidenav-content-lp': currentUrl === '/', 'footer-l-0': !opened}" class="sidenav-content"
+      <div mat-sidenav-content [ngClass]="{'footer-landing': isLandingPage(), 'footer': !isLandingPage(), 'sidenav-content-lp': isLandingPage(), 'footer-l-0': !opened}" class="sidenav-content"
         fxLayout="row">
         <a href="https://forcrowd.org" target="_blank" class="footer-left">
           <img alt="Logo" src="/assets/images/Logo+Text_142x30.png?v=0.1.2"
@@ -133,7 +133,7 @@
         </a>
         <a mat-button href="https://github.com/forCrowd/Backbone/blob/master/CHANGELOG.md" target="_blank" class="footer-right"
           [ngStyle.xs]="{'font-size.px': 12, 'padding-top.px': 4, 'min-width.px': 80, 'padding-left.px': 4}">
-          Version 0.9.8
+          Version 0.9.9
         </a>
       </div>
     </mat-sidenav-content>
