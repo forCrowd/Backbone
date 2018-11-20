@@ -22,6 +22,7 @@ const userRoutes: Routes = [
     ProfileRemoveProjectComponent
   ],
   exports: [
+    ProfileComponent,
     RouterModule
   ],
   imports: [

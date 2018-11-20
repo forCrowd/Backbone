@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Project, User } from "backbone-client-core";
+import { Project, User, NotificationService } from "backbone-client-core";
 
 import { ProjectService } from "../core/core.module";
 import { settings } from "../../settings/settings";
@@ -40,6 +40,7 @@ export class ProjectManagerComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
     private projectService: ProjectService,
+    private notificationService: NotificationService,
     private router: Router) {
   }
 
@@ -102,6 +103,21 @@ export class ProjectManagerComponent implements OnInit {
         const command = `/projects/${this.project.Id}/edit`;
         this.router.navigate([command]);
       });
+  }
+
+  copyApiLink(val: string){
+    let sel = document.createElement('textarea');
+    sel.style.position = 'fixed';
+    sel.style.left = '0';
+    sel.style.top = '0';
+    sel.style.opacity = '0';
+    sel.value = val;
+    document.body.appendChild(sel);
+    sel.focus();
+    sel.select();
+    document.execCommand('copy');
+    document.body.removeChild(sel);
+    this.notificationService.notification.next("Api link copied to clipboard");
   }
 
   manageProject(): void {

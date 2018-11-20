@@ -1,6 +1,11 @@
 ### Changelog
 
 **0.9.9**
+
+* AngularClient - LandingPageComponent added (Selects landing page component according to user login state)
+* AngularClient - Minor Update and UI Minor fix
+
+**0.9.9**
 * AngularClient - Library Karma tests fix
 * General - Run-Backbone-WebAPI script
 

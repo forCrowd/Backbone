@@ -5,7 +5,7 @@ import { MatDialog, MatTableDataSource } from "@angular/material";
 import { Project, User } from "backbone-client-core";
 import { finalize } from "rxjs/operators";
 
-import { ProjectService } from "../core/core.module";
+import { ProjectService } from '../core/project.service';
 import { ProfileRemoveProjectComponent } from "./profile-remove-project.component";
 import { UserService } from "./user.service";
 
@@ -70,15 +70,16 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
 
+    var currentUser = this.userService.currentUser;
+
     // UserName
-    const userName = this.activatedRoute.snapshot.params["username"];
+    const userName = currentUser.isAuthenticated() ? currentUser.UserName : this.activatedRoute.snapshot.params["username"];
 
     // If profile user equals to current (authenticated) user
-    if (userName === this.userService.currentUser.UserName) {
+    if (userName === currentUser.UserName) {
       this.user = this.userService.currentUser;
       this.dataSource.data = this.user.ProjectSet;
     } else {
-
       // If not, then check it against remote
       this.userService.getUser(userName)
         .subscribe((user) => {
