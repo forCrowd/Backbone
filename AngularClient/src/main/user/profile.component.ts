@@ -16,10 +16,12 @@ import { UserService } from "./user.service";
 })
 export class ProfileComponent implements OnInit {
 
+  currentUser: User = null;
   displayedColumns = ["select", "name", "ratingCount", "createdOn", "functions"];
   dataSource = new MatTableDataSource<Project>([]);
   selection = new SelectionModel<Project>(true, []);
   user: User = null;
+  userName: string = "";
 
   get isBusy(): boolean {
     return this.projectService.isBusy || this.userService.isBusy;
@@ -70,36 +72,26 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
 
-    var currentUser = this.userService.currentUser;
+    this.currentUser = this.userService.currentUser;
+    var activetedRouteParam = this.activatedRoute.snapshot.params["username"];
 
     // UserName
-    const userName = currentUser.isAuthenticated() ? currentUser.UserName : this.activatedRoute.snapshot.params["username"];
+    this.userName = activetedRouteParam ? activetedRouteParam : this.currentUser.UserName;
 
-    // If profile user equals to current (authenticated) user
-    if (userName === currentUser.UserName) {
+    this.userService.getUser(this.userName)
+      .subscribe((user) => {
 
-      this.userService.getUser(userName)
-        .subscribe((user) => {
-          this.user = user;
-          this.dataSource.data = this.user.ProjectSet;
-        });
+        // Not found, navigate to 404
+        if (user === null) {
+          const url = window.location.href.replace(window.location.origin, "");
+          this.router.navigate(["/app/not-found", { url: url }]);
+          return;
+        }
 
-    } else {
-      // If not, then check it against remote
-      this.userService.getUser(userName)
-        .subscribe((user) => {
+        this.user = user;
+        this.dataSource.data = this.user.ProjectSet;
+      });
 
-          // Not found, navigate to 404
-          if (user === null) {
-            const url = window.location.href.replace(window.location.origin, "");
-            this.router.navigate(["/app/not-found", { url: url }]);
-            return;
-          }
-
-          this.user = user;
-          this.dataSource.data = this.user.ProjectSet;
-        });
-    }
   }
 
   trackBy(index: number, item: Project) {

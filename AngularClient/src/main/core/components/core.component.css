@@ -221,25 +221,13 @@ mat-sidenav {
   z-index: 1;
 }
 
-  .footer a {
-    justify-content: center;
-    font-family: Arial;
-    font-size: 16px;
-    font-weight: bold;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: 0.5px;
-    color: #354052;
-  }
+.footer-left {
+  margin-right: 10px;
+}
 
-  .footer .footer-left {
-    margin-right: 20px;
-  }
-
-  .footer .footer-right {
-    margin-left: 20px;
-  }
+.footer-right {
+  margin-left: 10px;
+}
 
 .footer-l-0 {
   left: 0px !important;

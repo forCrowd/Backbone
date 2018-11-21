@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.9.12**
+
+* AngularClient - Dashboard fix for other users views
+
 **0.9.11**
 
 * AngularClient - Library - ng-packagr, added specify umdModuleIds for building warnings
