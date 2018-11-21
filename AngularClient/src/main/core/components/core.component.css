@@ -47,6 +47,14 @@
   margin-left: 250px !important;
 }
 
+.ml-0 {
+  margin-left: 0px !important;
+}
+
+.ml-00 {
+  margin-left: 0px !important;
+}
+
 mat-sidenav {
   width: 250px;
 }

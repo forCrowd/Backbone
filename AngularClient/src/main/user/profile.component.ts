@@ -77,8 +77,13 @@ export class ProfileComponent implements OnInit {
 
     // If profile user equals to current (authenticated) user
     if (userName === currentUser.UserName) {
-      this.user = this.userService.currentUser;
-      this.dataSource.data = this.user.ProjectSet;
+
+      this.userService.getUser(userName)
+        .subscribe((user) => {
+          this.user = user;
+          this.dataSource.data = this.user.ProjectSet;
+        });
+
     } else {
       // If not, then check it against remote
       this.userService.getUser(userName)

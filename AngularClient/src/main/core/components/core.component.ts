@@ -48,7 +48,7 @@ export class CoreComponent implements OnDestroy, OnInit {
       } else {
         if (this.currentUrl === "/") {
           this.opened = true;
-          this.over = "over";
+          this.over = "side";
         } else {
           this.opened = true;
           this.over = "side";
@@ -65,7 +65,7 @@ export class CoreComponent implements OnDestroy, OnInit {
     } else {
       if (this.activeMediaQuery === "sm" || this.activeMediaQuery === "xs") {
         this.opened = false;
-        this.over = "over";
+        this.over = "side";
       } else {
         this.opened = true;
         this.over = "side";

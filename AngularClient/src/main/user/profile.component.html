@@ -41,7 +41,7 @@
       </div>
     </mat-card>
 
-    <mat-card [hidden]="dataSource.data.length === 0">
+    <mat-card class="g-mb-150" [hidden]="dataSource.data.length === 0">
       <table mat-table [dataSource]="dataSource" [trackBy]="trackBy" [hidden]="dataSource.data.length === 0">
         <!-- Checkbox Column -->
         <ng-container matColumnDef="select">
