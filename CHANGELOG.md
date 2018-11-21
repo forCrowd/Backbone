@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.9.11**
+
+* AngularClient - Library - ng-packagr, added specify umdModuleIds for building warnings
+* AngularClient - Dashboard minor fix
+
 **0.9.10**
 
 * AngularClient - Library - AppErrorHandler fix

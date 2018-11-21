@@ -2,6 +2,11 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/backbone-client-core",
   "lib": {
+    "umdModuleIds": {
+      "breeze-client": "breezeClient",
+      "breeze-bridge2-angular": "breezeBridge2Angular",
+      "source-map": "sourceMap"
+    },
     "entryFile": "src/public_api.ts"
   }
 }

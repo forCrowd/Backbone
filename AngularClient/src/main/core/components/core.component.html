@@ -48,9 +48,9 @@
 
   </mat-sidenav>
 
-  <mat-sidenav-content [ngClass]="{'ml-250': !isLandingPage()}">
+  <mat-sidenav-content [ngClass]="{'ml-250': !isLandingPage(), 'ml-0': activeMediaQuery === 'sm' || activeMediaQuery === 'xs', 'ml-00': currentUrl === '/' && !currentUser.isAuthenticated()}">
 
-    <mat-toolbar class="header-bb" >
+    <mat-toolbar class="header-bb">
 
       <div *ngIf="isLandingPage()" class="logo-black">
         <img alt="Backbone" src="/assets/images/backbone-black.png?v=0.1.0" class="backbone-icon pt-4">
@@ -68,8 +68,7 @@
         <span class="ml-1">forCrowd Foundation</span>
       </a>
 
-      <a class="link" fxShow.lt-md="false" fxShow.gt-sm="true" href="mailto:contact.backbone@forCrowd.org"
-        target="_blank">
+      <a class="link" fxShow.lt-md="false" fxShow.gt-sm="true" href="mailto:contact.backbone@forCrowd.org" target="_blank">
         <span class="ml-1">Contact</span>
       </a>
 
@@ -77,7 +76,7 @@
         <span class="ml-1">Register</span>
       </a>
 
-      <a *ngIf="!currentUser.isAuthenticated()" class="link" routerLink="/app/account" fxShow.lt-md="true" fxShow.gt-sm="true" >
+      <a *ngIf="!currentUser.isAuthenticated()" class="link" routerLink="/app/account" fxShow.lt-md="true" fxShow.gt-sm="true">
         <span class="ml-2" *ngIf="!currentUser.isAuthenticated()">Login</span>
       </a>
 
@@ -86,7 +85,8 @@
         <span class="ml-2" *ngIf="currentUser.isAuthenticated()">{{ currentUser.UserName }}</span>
       </a>
 
-      <button mat-icon-button *ngIf="currentUser.isAuthenticated()" [matMenuTriggerFor]="menu" fxShow.lt-md="true" fxShow.gt-sm="false">
+      <button mat-icon-button *ngIf="currentUser.isAuthenticated()" [matMenuTriggerFor]="menu" fxShow.lt-md="true"
+        fxShow.gt-sm="false">
         <mat-icon>account_circle</mat-icon>
       </button>
 
@@ -110,14 +110,12 @@
     <mat-sidenav-content class="content" [ngClass]="{'no-margin': isLandingPage()}">
       <router-outlet></router-outlet>
 
-      <div mat-sidenav-content [ngClass]="{'footer-landing': isLandingPage(), 'footer': !isLandingPage(), 'sidenav-content-lp': isLandingPage(), 'footer-l-0': !opened}" class="sidenav-content"
-        fxLayout="row">
+      <div mat-sidenav-content [ngClass]="{'footer-landing': isLandingPage(), 'footer': !isLandingPage(), 'sidenav-content-lp': isLandingPage(), 'footer-l-0': !opened}"
+        class="sidenav-content" fxLayout="row">
         <a href="https://forcrowd.org" target="_blank" class="footer-left">
-          <img alt="Logo" src="/assets/images/Logo+Text_142x30.png?v=0.1.2"
-            [ngStyle.xs]="{'padding-top.px': 10, 'width.px': 78}">
+          <img alt="Logo" src="/assets/images/Logo+Text_142x30.png?v=0.1.2" [ngStyle.xs]="{'padding-top.px': 10, 'width.px': 78}">
         </a>
-        <a mat-icon-button href="https://twitter.com/forCrowd" target="_blank" class="footer-left"
-          [ngStyle.xs]="{'padding-left.px': 10, 'width.px': 24}">
+        <a mat-icon-button href="https://twitter.com/forCrowd" target="_blank" class="footer-left" [ngStyle.xs]="{'padding-left.px': 10, 'width.px': 24}">
           <i class="fa fa-twitter fa-lg" aria-hidden="true" [ngStyle.xs]="{'font-size.px': 12}"></i>
         </a>
         <a mat-icon-button href="https://github.com/forCrowd/Backbone" target="_blank" class="footer-left" [ngStyle.xs]="{'width.px': 24}">
@@ -127,13 +125,12 @@
           <i class="fa fa-envelope fa-lg" aria-hidden="true" [ngStyle.xs]="{'font-size.px': 12}"></i>
         </a>
         <span style="margin: auto;">&nbsp;</span>
-        <a mat-button routerLink="/app/contributors" class="footer-right"
-          [ngStyle.xs]="{'font-size.px': 12, 'padding-top.px': 4, 'min-width.px': 80, 'padding-left.px': 4}">
+        <a mat-button routerLink="/app/contributors" class="footer-right" [ngStyle.xs]="{'font-size.px': 12, 'padding-top.px': 4, 'min-width.px': 80, 'padding-left.px': 4}">
           Contributors
         </a>
         <a mat-button href="https://github.com/forCrowd/Backbone/blob/master/CHANGELOG.md" target="_blank" class="footer-right"
           [ngStyle.xs]="{'font-size.px': 12, 'padding-top.px': 4, 'min-width.px': 80, 'padding-left.px': 4}">
-          Version 0.9.10
+          Version 0.9.11
         </a>
       </div>
     </mat-sidenav-content>
