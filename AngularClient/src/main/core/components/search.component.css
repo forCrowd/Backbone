@@ -7,6 +7,11 @@
   border-radius: 20px;
 }
 
+mat-card a {
+  font-weight: normal;
+  color: #0019ff;
+}
+
 .mat-cell {
   padding: 4px 0;
 }
