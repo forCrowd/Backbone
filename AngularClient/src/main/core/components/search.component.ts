@@ -14,7 +14,7 @@ import { ProjectService } from "../project.service";
 export class SearchComponent {
 
   isBusy: boolean;
-  displayedColumns = ["name", "userName", "ratingCount", "createdOn", "functions"];
+  displayedColumns = ["name", "userName", "ratingCount", "createdOn"];
   dataSource = new MatTableDataSource<Project>([]);
   hasResult = false;
   searchKey = "";
