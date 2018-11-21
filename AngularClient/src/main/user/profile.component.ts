@@ -76,7 +76,7 @@ export class ProfileComponent implements OnInit {
     var activetedRouteParam = this.activatedRoute.snapshot.params["username"];
 
     // UserName
-    this.userName = activetedRouteParam ? activetedRouteParam : this.currentUser.UserName;
+    this.userName = activetedRouteParam !== undefined ? activetedRouteParam : this.currentUser.UserName;
 
     this.userService.getUser(this.userName)
       .subscribe((user) => {
