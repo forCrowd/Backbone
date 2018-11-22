@@ -4,6 +4,7 @@ import { Project, User, NotificationService } from "backbone-client-core";
 
 import { ProjectService } from "../core/core.module";
 import { settings } from "../../settings/settings";
+import { UserService } from "../user/user.service";
 
 @Component({
   selector: "project-manager",
@@ -15,6 +16,7 @@ export class ProjectManagerComponent implements OnInit {
   isEditing = false;
   project: Project = null;
   selectedTabIndex = 0;
+  projectOwner: User = null;
   user: User;
   viewMode = "new"; // new | existing
 
@@ -41,6 +43,7 @@ export class ProjectManagerComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
     private projectService: ProjectService,
     private notificationService: NotificationService,
+    private userService: UserService,
     private router: Router) {
   }
 
@@ -135,12 +138,20 @@ export class ProjectManagerComponent implements OnInit {
     this.viewMode = this.activatedRoute.snapshot.url[this.activatedRoute.snapshot.url.length - 1].path;
 
     if (this.viewMode === "edit") this.viewMode = "existing";
+    if (Number.isNaN(Number(this.viewMode)) === false) this.viewMode = "view"
 
     if (this.viewMode !== "new") {
+
       const projectId: number = this.activatedRoute.snapshot.params["project-id"];
 
       this.projectService.getProjectExpanded(projectId)
         .subscribe(project => {
+          this.projectOwner = project.User;
+          this.user = this.userService.currentUser;
+
+          if (this.viewMode === "existing" && this.projectOwner !== this.user) {
+            this.router.navigate([`/projects/${project.Id}`]);
+          }
 
           // Not found, navigate to 404
           if (!project) {
@@ -148,7 +159,6 @@ export class ProjectManagerComponent implements OnInit {
             this.router.navigate(["/app/not-found", { url: url }]);
             return;
           }
-
           this.project = project;
         });
     }

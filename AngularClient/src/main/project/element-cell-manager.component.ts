@@ -13,6 +13,7 @@ import { ProjectService } from "../core/core.module";
 export class ElementCellManagerComponent implements OnInit {
 
   @Input() project: Project = null;
+  @Input() projectOwner: boolean = null;
   @Output() isEditingChanged = new EventEmitter<boolean>();
 
   elementCellDataSource = new MatTableDataSource<ElementCell>([]);

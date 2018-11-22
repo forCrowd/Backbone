@@ -3,7 +3,7 @@
   <!-- Element item list -->
   <div *ngIf="!selectedElementItem">
 
-    <div class="g-mt-20">
+    <div *ngIf="projectOwner" class="g-mt-20">
       <button mat-button (click)="addElementItem()" [disabled]="isBusy">
         <i class="material-icons">add</i>
         Create new
@@ -41,7 +41,10 @@
 
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let item"><a (click)="editElementItem(item)"> {{ item.Name }} </a></td>
+          <td mat-cell *matCellDef="let item">
+            <a *ngIf="projectOwner" (click)="editElementItem(item)"> {{ item.Name }} </a>
+            <span *ngIf="!projectOwner"> {{ item.Name }} </span>
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="createdOn">
