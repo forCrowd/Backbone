@@ -23,10 +23,8 @@ export class SearchComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute) {
       this.activatedRoute.url.subscribe(url =>{
-        if (url.length > 1 && url[1].path === "search" ) {
-          this.searchKey = url[1].parameters.searchKey;
-          this.search();
-        }
+        this.searchKey = url[1].parameters.searchKey;
+        this.search();
       });
   }
 
