@@ -32,6 +32,15 @@ export class ProfileComponent implements OnInit {
     private projectService: ProjectService,
     private router: Router,
     private userService: UserService) {
+      this.activatedRoute.url.subscribe(url =>{
+        if (url.length > 1 && url[1].path !== this.userName) {
+          if (this.displayedColumns.length === 3) {
+            this.displayedColumns.unshift("select");
+            this.displayedColumns.push("functions");
+          }
+          this.ngOnInit();
+        }
+      });
   }
 
   confirmRemove() {
@@ -89,6 +98,10 @@ export class ProfileComponent implements OnInit {
         }
 
         this.user = user;
+
+        if (this.currentUser !== this.user)
+          this.displayedColumns = [ "name", "ratingCount", "createdOn"];
+
         this.dataSource.data = this.user.ProjectSet;
       });
 

@@ -3,7 +3,7 @@
   <!-- Element field list -->
   <div *ngIf="!selectedElementField">
 
-    <div class="g-mt-20">
+    <div *ngIf="projectOwner" class="g-mt-20">
       <button mat-button (click)="addElementField()" [disabled]="project.ElementSet.length === 0">
         <i class="material-icons">add</i>
         Create new
@@ -42,7 +42,10 @@
 
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let field"> <a (click)="editElementField(field)"> {{ field.Name }} </a></td>
+          <td mat-cell *matCellDef="let field">
+            <a *ngIf="projectOwner" (click)="editElementField(field)"> {{ field.Name }} </a>
+            <span *ngIf="!projectOwner"> {{ field.Name }} </span>
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="dataType">

@@ -24,6 +24,7 @@ export class CoreComponent implements OnDestroy, OnInit {
   activeMediaQuery = "";
   watcher: Subscription;
   currentUrl: string = "";
+  searchKey: string = null;
 
   currentUser: User = null;
   hideGuestAccountInfoBox: boolean = true;
@@ -89,6 +90,10 @@ export class CoreComponent implements OnDestroy, OnInit {
     this.authService.setCurrentUser().subscribe(() => {
       this.router.navigate([""]);
     });
+  }
+
+  search() {
+    this.router.navigate(["app/search", { searchKey: this.searchKey }]);
   }
 
   ngOnDestroy(): void {

@@ -65,6 +65,8 @@
 
     <mat-card class="mat-card-std m-16" style="height: 240px !important;">
       <mat-card-title>Project Overview</mat-card-title>
+
+      <!-- Edit Mode -->
       <form *ngIf="viewMode === 'existing'" #projectForm="ngForm" autocomplete="off">
         <div fxLayout="row" fxLayoutAlign="start start">
           <div class="board">
@@ -102,6 +104,7 @@
         </div>
       </form>
 
+      <!-- View Mode -->
       <div *ngIf="viewMode === 'view'">
         <div fxLayout="row" fxLayoutAlign="start start">
 
@@ -166,8 +169,8 @@
           </div>
 
         </div>
-
       </div>
+
     </mat-card>
 
   <div class="m-16">
@@ -175,25 +178,25 @@
       Step 2 - add elements, fields and project specifications
     </div>
 
-    <h2 [hidden]="viewMode === 'existing'"><button mat-stroked-button (click)="manageProject()">Manage Project</button></h2>
+    <h2 [hidden]="viewMode === 'existing' || projectOwner !== user "><button mat-stroked-button (click)="manageProject()">Manage Project</button></h2>
     <h2 [hidden]="viewMode !== 'existing'">Manage Project</h2>
   </div>
 
   <mat-tab-group (selectedTabChange)="selectedTabChanged($event)">
     <mat-tab label="Elements" [disabled]="isEditing">
-      <element-manager *ngIf="selectedTabIndex === 0" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-manager>
+      <element-manager *ngIf="selectedTabIndex === 0" [projectOwner]="projectOwner === user" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-manager>
     </mat-tab>
 
     <mat-tab label="Fields" [disabled]="isEditing">
-      <element-field-manager *ngIf="selectedTabIndex === 1" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-field-manager>
+      <element-field-manager *ngIf="selectedTabIndex === 1" [projectOwner]="projectOwner === user" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-field-manager>
     </mat-tab>
 
     <mat-tab label="Items" [disabled]="isEditing">
-      <element-item-manager *ngIf="selectedTabIndex === 2" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-item-manager>
+      <element-item-manager *ngIf="selectedTabIndex === 2" [projectOwner]="projectOwner === user" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-item-manager>
     </mat-tab>
 
     <mat-tab label="Cells" [disabled]="isEditing">
-      <element-cell-manager *ngIf="selectedTabIndex === 3" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-cell-manager>
+      <element-cell-manager *ngIf="selectedTabIndex === 3" [projectOwner]="projectOwner === user" [project]="project" (isEditingChanged)="isEditingChanged($event)"></element-cell-manager>
     </mat-tab>
   </mat-tab-group>
 

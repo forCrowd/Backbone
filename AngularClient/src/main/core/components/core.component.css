@@ -26,6 +26,30 @@
   flex: 1 1 auto;
 }
 
+.searchInput {
+  padding: 0 14px;
+  font-size: 14px;
+  width: 233px;
+  border: 1px solid #d5d5d5;
+  height: 30px;
+  border-radius: 18.7px;
+  background-color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.searchIcon {
+  padding: 0px;
+  min-width: 0;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  line-height: 30px;
+  border-radius: 50%;
+  color: #8e8e93;
+  margin-bottom: 5px;
+  left: -33px;
+}
+
 .landing {
   background-color: #f8f9fb;
 }

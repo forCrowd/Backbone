@@ -15,6 +15,7 @@ import { RemoveConfirmComponent } from "./remove-confirm.component";
 export class ElementItemManagerComponent implements OnInit {
 
   @Input() project: Project = null;
+  @Input() projectOwner: boolean = null;
   @Output() isEditingChanged = new EventEmitter<boolean>();
 
   elementItemDataSource = new MatTableDataSource<ElementItem>([]);

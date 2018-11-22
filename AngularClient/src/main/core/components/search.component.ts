@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { MatTableDataSource } from "@angular/material";
 import { Project } from "backbone-client-core";
 import { finalize } from "rxjs/operators";
@@ -19,11 +19,16 @@ export class SearchComponent {
   hasResult = false;
   searchKey = "";
 
-  constructor(private projectService: ProjectService, private router: Router) {
+  constructor(private projectService: ProjectService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) {
+      this.activatedRoute.url.subscribe(url =>{
+        this.searchKey = url[1].parameters.searchKey;
+        this.search();
+      });
   }
 
   search(): void {
-
     this.isBusy = true;
 
     this.projectService.getProjectSet(this.searchKey).pipe(
@@ -39,4 +44,5 @@ export class SearchComponent {
   trackBy(index: number, item: Project): number {
     return item.Id;
   }
+
 }
