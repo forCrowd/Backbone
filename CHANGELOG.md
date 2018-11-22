@@ -3,6 +3,7 @@
 **0.9.13**
 
 * AngularClient - Dashboard and Project manager minor update/fix
+* AngularClient - Search is moved to toolbar
 
 **0.9.12**
 

@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { Router } from "@angular/router";
+import { Component, OnInit } from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
 import { MatTableDataSource } from "@angular/material";
 import { Project } from "backbone-client-core";
 import { finalize } from "rxjs/operators";
@@ -11,7 +11,7 @@ import { ProjectService } from "../project.service";
   templateUrl: "search.component.html",
   styleUrls: ["search.component.css"]
 })
-export class SearchComponent {
+export class SearchComponent implements OnInit {
 
   isBusy: boolean;
   displayedColumns = ["name", "userName", "ratingCount", "createdOn"];
@@ -19,7 +19,15 @@ export class SearchComponent {
   hasResult = false;
   searchKey = "";
 
-  constructor(private projectService: ProjectService, private router: Router) {
+  constructor(private projectService: ProjectService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) {
+      this.activatedRoute.url.subscribe(url =>{
+        if (url.length > 1 && url[1].path === "search" ) {
+          this.searchKey = url[1].parameters.searchKey;
+          this.search();
+        }
+      });
   }
 
   search(): void {
@@ -34,9 +42,15 @@ export class SearchComponent {
         this.dataSource.data = results;
         this.hasResult = true;
       });
-  }
+    }
 
-  trackBy(index: number, item: Project): number {
-    return item.Id;
+    trackBy(index: number, item: Project): number {
+      return item.Id;
+    }
+
+    ngOnInit(): void {
+      this.searchKey = this.activatedRoute.snapshot.params["searchKey"];
+      if (this.searchKey) this.search();
+    }
+
   }
-}

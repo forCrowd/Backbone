@@ -40,10 +40,6 @@
         <button mat-button class="other-btn ta-l" routerLink="/app/admin">Admin</button>
       </mat-list-item>
 
-      <mat-list-item class="list" role="listitem" fxLayoutAlign="center center">
-        <button mat-button class="other-btn ta-l" routerLink="/app/search">Search</button>
-      </mat-list-item>
-
     </mat-list>
 
   </mat-sidenav>
@@ -63,6 +59,14 @@
       </button>
 
       <span class="spacer"></span>
+
+      <!-- Search Form -->
+      <form #searchForm="ngForm" autocomplete="off">
+        <input matInput class="searchInput" id="searchKey" name="searchKey" (enter)="search()" [(ngModel)]="searchKey">
+        <button mat-icon-button type="submit" class="searchIcon" (click)="search()">
+          <i class="material-icons">search</i>
+        </button>
+      </form>
 
       <a class="link" fxShow.lt-md="true" fxShow.gt-sm="true" routerLink="/app/account/register" [hidden]="currentUser.isAuthenticated()">
         <span class="ml-1">Register</span>
