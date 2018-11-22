@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { MatTableDataSource } from "@angular/material";
 import { Project } from "backbone-client-core";
@@ -11,7 +11,7 @@ import { ProjectService } from "../project.service";
   templateUrl: "search.component.html",
   styleUrls: ["search.component.css"]
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent {
 
   isBusy: boolean;
   displayedColumns = ["name", "userName", "ratingCount", "createdOn"];
@@ -29,7 +29,6 @@ export class SearchComponent implements OnInit {
   }
 
   search(): void {
-
     this.isBusy = true;
 
     this.projectService.getProjectSet(this.searchKey).pipe(
@@ -40,15 +39,10 @@ export class SearchComponent implements OnInit {
         this.dataSource.data = results;
         this.hasResult = true;
       });
-    }
-
-    trackBy(index: number, item: Project): number {
-      return item.Id;
-    }
-
-    ngOnInit(): void {
-      this.searchKey = this.activatedRoute.snapshot.params["searchKey"];
-      if (this.searchKey) this.search();
-    }
-
   }
+
+  trackBy(index: number, item: Project): number {
+    return item.Id;
+  }
+
+}
