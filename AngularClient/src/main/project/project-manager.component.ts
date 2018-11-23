@@ -45,6 +45,7 @@ export class ProjectManagerComponent implements OnInit {
     private notificationService: NotificationService,
     private userService: UserService,
     private router: Router) {
+      localStorage.setItem("loginReturnUrl", this.router.url);
   }
 
   cancelProject() {

@@ -22,6 +22,10 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private notificationService: NotificationService,
     private router: Router) {
+      this.activatedRoute.url.subscribe(url =>{
+        if(this.authService.loginReturnUrl === "/app/account" && url[2].path === "login")
+          this.authService.loginReturnUrl = "";
+      });
   }
 
   login() {
@@ -34,7 +38,7 @@ export class LoginComponent implements OnInit {
 
           // Get return url, reset loginReturnUrl and navigate
           //TODO: Check this?
-          const returnUrl = this.authService.loginReturnUrl || `/users/${this.username}`;
+          const returnUrl = this.authService.loginReturnUrl === "" ? `/users/${this.username}` : this.authService.loginReturnUrl ;
           this.authService.loginReturnUrl = "";
           this.router.navigate([returnUrl]);
         });
