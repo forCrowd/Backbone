@@ -1,11 +1,11 @@
 import { Component } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { MatTableDataSource } from "@angular/material";
+import { ObservableMedia, MediaChange } from "@angular/flex-layout";
 import { Project } from "backbone-client-core";
 import { finalize } from "rxjs/operators";
 
 import { ProjectService } from "../project.service";
-import { ObservableMedia, MediaChange } from "@angular/flex-layout";
 
 @Component({
   selector: "search",
