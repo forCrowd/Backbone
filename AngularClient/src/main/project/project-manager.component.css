@@ -144,6 +144,14 @@ form {
   width: 70%; float: left;
 }
 
+.w-310 {
+  width: 310px !important;
+}
+
+.p-4 {
+  padding: 0 4px 20px  !important
+}
+
 .h-40 {
   height: 40px;
 }
@@ -154,7 +162,7 @@ form {
 }
 
 .p-16 {
-  padding: 16px !important;
+  padding: 16px;
 }
 
 textarea.mat-input-element {

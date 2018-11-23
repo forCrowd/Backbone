@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { SelectionModel } from "@angular/cdk/collections";
 import { ActivatedRoute, Router } from "@angular/router";
+import { MediaChange, ObservableMedia } from "@angular/flex-layout";
 import { MatDialog, MatTableDataSource } from "@angular/material";
 import { Project, User } from "backbone-client-core";
 import { finalize } from "rxjs/operators";
@@ -31,7 +32,8 @@ export class ProfileComponent implements OnInit {
     private dialog: MatDialog,
     private projectService: ProjectService,
     private router: Router,
-    private userService: UserService) {
+    private userService: UserService,
+    private media: ObservableMedia) {
       this.activatedRoute.url.subscribe(url =>{
         if (url.length > 1 && url[1].path !== this.userName) {
           if (this.displayedColumns.length === 3) {
@@ -39,6 +41,14 @@ export class ProfileComponent implements OnInit {
             this.displayedColumns.push("functions");
           }
           this.ngOnInit();
+        }
+      });
+      media.subscribe((change: MediaChange) => {
+        console.log(change.mqAlias);
+        if ( change.mqAlias === "xs") {
+          this.displayedColumns = ["select", "name", "functions"];
+        } else {
+          this.displayedColumns = ["select", "name", "ratingCount", "createdOn", "functions"];
         }
       });
   }

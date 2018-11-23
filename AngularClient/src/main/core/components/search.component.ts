@@ -5,13 +5,14 @@ import { Project } from "backbone-client-core";
 import { finalize } from "rxjs/operators";
 
 import { ProjectService } from "../project.service";
+import { ObservableMedia, MediaChange } from "@angular/flex-layout";
 
 @Component({
   selector: "search",
   templateUrl: "search.component.html",
   styleUrls: ["search.component.css"]
 })
-export class SearchComponent {
+export class SearchComponent  {
 
   isBusy: boolean;
   displayedColumns = ["name", "userName", "ratingCount", "createdOn"];
@@ -21,10 +22,19 @@ export class SearchComponent {
 
   constructor(private projectService: ProjectService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private media: ObservableMedia) {
       this.activatedRoute.url.subscribe(url =>{
         this.searchKey = url[1].parameters.searchKey;
         this.search();
+      });
+      media.subscribe((change: MediaChange) => {
+        console.log(change.mqAlias);
+        if ( change.mqAlias === "xs") {
+          this.displayedColumns = ["name", "userName"];
+        } else {
+          this.displayedColumns = ["name", "userName", "ratingCount", "createdOn"];
+        }
       });
   }
 
@@ -45,4 +55,17 @@ export class SearchComponent {
     return item.Id;
   }
 
+/*   ngOnInit(): void {
+    console.log("change.mqAlias");
+    this.media.subscribe((change: MediaChange) => {
+      console.log(change.mqAlias);
+      if ( change.mqAlias === "xs") {
+        this.displayedColumns = ["name", "userName"];
+      } else {
+        this.displayedColumns = ["name", "userName", "ratingCount", "createdOn"];
+      }
+
+    });
+  }
+ */
 }
