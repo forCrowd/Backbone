@@ -12,7 +12,7 @@ import { ObservableMedia, MediaChange } from "@angular/flex-layout";
   templateUrl: "search.component.html",
   styleUrls: ["search.component.css"]
 })
-export class SearchComponent  {
+export class SearchComponent {
 
   isBusy: boolean;
   displayedColumns = ["name", "userName", "ratingCount", "createdOn"];
@@ -55,17 +55,4 @@ export class SearchComponent  {
     return item.Id;
   }
 
-/*   ngOnInit(): void {
-    console.log("change.mqAlias");
-    this.media.subscribe((change: MediaChange) => {
-      console.log(change.mqAlias);
-      if ( change.mqAlias === "xs") {
-        this.displayedColumns = ["name", "userName"];
-      } else {
-        this.displayedColumns = ["name", "userName", "ratingCount", "createdOn"];
-      }
-
-    });
-  }
- */
 }
