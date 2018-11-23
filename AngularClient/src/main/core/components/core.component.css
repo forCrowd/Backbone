@@ -3,6 +3,10 @@
     font-size: 12px !important;
   }
 
+  .searchInput {
+    width: 100px !important;
+  }
+
 }
 
 .link {

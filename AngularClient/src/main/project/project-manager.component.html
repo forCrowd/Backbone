@@ -63,12 +63,12 @@
       Step 1 - enter the projects information
     </div>
 
-    <mat-card class="mat-card-std m-16" style="height: 240px !important;">
+    <mat-card class="mat-card-std m-16" ngClass.xs="mc-h-auto" ngClass.sm="mc-h-auto">
       <mat-card-title>Project Overview</mat-card-title>
 
       <!-- Edit Mode -->
       <form *ngIf="viewMode === 'existing'" #projectForm="ngForm" autocomplete="off">
-        <div fxLayout="row" fxLayoutAlign="start start">
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start start">
           <div class="board">
             <div [ngClass]="{ 'has-error': project.entityAspect.getValidationErrors('Name').length > 0 }" class="g-mt-20">
               <mat-form-field>
