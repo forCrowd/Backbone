@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.9.14**
+
+* AngularClient - Project manager minor fix
+
 **0.9.13**
 
 * AngularClient - Dashboard and Project manager minor update/fix

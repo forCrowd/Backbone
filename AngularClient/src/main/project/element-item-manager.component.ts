@@ -78,6 +78,7 @@ export class ElementItemManagerComponent implements OnInit {
 
   ngOnInit(): void {
     this.elementFilter = this.project.ElementSet[0];
+    if (!this.projectOwner) this.elementItemDisplayedColumns.splice(0, 1);
   }
 
   removeElementItem() {
