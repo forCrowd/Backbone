@@ -16,7 +16,7 @@ import { RemoveConfirmComponent } from "./remove-confirm.component";
 const projectRoutes: Routes = [
   { path: "projects/new", component: ProjectManagerComponent, canDeactivate: [CanDeactivateGuard], resolve: { title: DynamicTitleResolve } },
   { path: "projects/:project-id/edit", component: ProjectManagerComponent, canActivate: [AuthGuard], canDeactivate: [CanDeactivateGuard], resolve: { title: DynamicTitleResolve } },
-  { path: "projects/:project-id", component: ProjectManagerComponent, canActivate: [AuthGuard], canDeactivate: [CanDeactivateGuard], resolve: { title: DynamicTitleResolve } },
+  { path: "projects/:project-id", component: ProjectManagerComponent, resolve: { title: DynamicTitleResolve } },
 ];
 
 @NgModule({
