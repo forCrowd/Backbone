@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.9.15**
+
+* AngularClient - Minor
+
 **0.9.14**
 
 * AngularClient - Project manager minor fix

@@ -50,6 +50,7 @@
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\utils.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\public_api.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\test.ts" />
+    <TypeScriptCompile Include="src\main\core\components\landing-page.component.ts" />
     <TypeScriptCompile Include="src\settings\settings.ts" />
     <TypeScriptCompile Include="src\settings\settings-prod.ts" />
     <TypeScriptCompile Include="src\dev-all\project-tester.component.ts" />
@@ -135,6 +136,7 @@
     <Content Include="src\main\core\components\core.component.html" />
     <Content Include="src\main\core\components\contributors.component.css" />
     <Content Include="src\main\core\components\home.component.css" />
+    <Content Include="src\main\core\components\landing-page.component.html" />
     <Content Include="src\main\project\element-cell-manager.component.css" />
     <Content Include="src\main\project\element-cell-manager.component.html" />
     <Content Include="src\main\project\element-item-manager.component.css" />

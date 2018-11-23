@@ -75,9 +75,9 @@ export class CoreComponent implements OnDestroy, OnInit {
   }
 
   isLandingPage(): boolean {
-    return this.currentUrl === "/" ?
-      this.currentUser.isAuthenticated() ? false : true
-      : false
+    return this.currentUrl === "/"
+      ? !this.currentUser.isAuthenticated()
+      : false;
   }
 
   closeGuestAccountInfoBox(): void {
