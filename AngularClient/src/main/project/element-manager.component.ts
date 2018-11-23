@@ -67,6 +67,7 @@ export class ElementManagerComponent implements OnInit {
 
   ngOnInit(): void {
     this.elementDataSource.data = this.project.ElementSet;
+    if (!this.projectOwner) this.elementDisplayedColumns.splice(0, 1);
   }
 
   removeElement(): void {

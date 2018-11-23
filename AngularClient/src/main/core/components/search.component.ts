@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { MatTableDataSource } from "@angular/material";
+import { ObservableMedia, MediaChange } from "@angular/flex-layout";
 import { Project } from "backbone-client-core";
 import { finalize } from "rxjs/operators";
 
@@ -21,10 +22,18 @@ export class SearchComponent {
 
   constructor(private projectService: ProjectService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private media: ObservableMedia) {
       this.activatedRoute.url.subscribe(url =>{
         this.searchKey = url[1].parameters.searchKey;
         this.search();
+      });
+      media.subscribe((change: MediaChange) => {
+        if ( change.mqAlias === "xs" ) {
+          this.displayedColumns = ["name", "userName"];
+        } else {
+          this.displayedColumns = ["name", "userName", "ratingCount", "createdOn"];
+        }
       });
   }
 

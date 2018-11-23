@@ -63,12 +63,12 @@
       Step 1 - enter the projects information
     </div>
 
-    <mat-card class="mat-card-std m-16" style="height: 240px !important;">
+    <mat-card class="mat-card-std m-16" ngClass.xs="mc-h-auto" ngClass.sm="mc-h-auto">
       <mat-card-title>Project Overview</mat-card-title>
 
       <!-- Edit Mode -->
       <form *ngIf="viewMode === 'existing'" #projectForm="ngForm" autocomplete="off">
-        <div fxLayout="row" fxLayoutAlign="start start">
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start start">
           <div class="board">
             <div [ngClass]="{ 'has-error': project.entityAspect.getValidationErrors('Name').length > 0 }" class="g-mt-20">
               <mat-form-field>
@@ -106,9 +106,9 @@
 
       <!-- View Mode -->
       <div *ngIf="viewMode === 'view'">
-        <div fxLayout="row" fxLayoutAlign="start start">
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start start">
 
-          <div class="board w-35p">
+          <div class="board w-35p" ngClass.sm="w-310" ngClass.xs="w-310">
             <div class="h-40">
               <div class="wp-40">Created by</div>
               <div class="wp-60">
@@ -138,7 +138,7 @@
             </div>
           </div>
 
-          <div class="board w-30p">
+          <div class="board w-30p" ngClass.sm="w-310" ngClass.xs="w-310">
             <div class="h-60">
               <div class="wp-70">Basic view</div>
               <div class="wp-30">
@@ -153,7 +153,7 @@
             </div>
           </div>
 
-          <div class="board-no-border p-16 w-30p">
+          <div class="board-no-border p-16 w-30p" ngClass.sm="w-310 p-4" ngClass.xs="w-310 p-4">
             <div class="h-60">
               <div class="wp-70">Expanded view for project owners</div>
               <div class="wp-30">

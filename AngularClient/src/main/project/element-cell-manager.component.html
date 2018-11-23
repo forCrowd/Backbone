@@ -24,7 +24,7 @@
           <th mat-header-cell *matHeaderCellDef> Item </th>
           <td mat-cell *matCellDef="let cell">
             <a *ngIf="projectOwner" (click)="editElementCell(cell)">{{ cell.ElementItem.Name }}</a>
-            <span *ngIf="projectOwner"> {{ cell.ElementItem.Name }} </span>
+            <span *ngIf="!projectOwner"> {{ cell.ElementItem.Name }} </span>
           </td>
         </ng-container>
 

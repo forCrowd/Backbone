@@ -45,7 +45,8 @@ export class ProjectManagerComponent implements OnInit {
     private notificationService: NotificationService,
     private userService: UserService,
     private router: Router) {
-  }
+
+    }
 
   cancelProject() {
     this.project.entityAspect.rejectChanges();

@@ -89,6 +89,7 @@ export class ElementFieldManagerComponent implements OnInit {
 
   ngOnInit(): void {
     this.elementFilter = this.project.ElementSet[0];
+    if (!this.projectOwner) this.elementFieldDisplayedColumns.splice(0, 1);
   }
 
   removeElementField(): void {
