@@ -34,7 +34,6 @@ export class ProfileComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private media: ObservableMedia) {
-      localStorage.setItem("loginReturnUrl", this.router.url);
       this.activatedRoute.url.subscribe(url =>{
         if (url.length > 1 && url[1].path !== this.userName) {
           if (this.displayedColumns.length === 3) {
