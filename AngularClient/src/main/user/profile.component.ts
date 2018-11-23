@@ -44,7 +44,6 @@ export class ProfileComponent implements OnInit {
         }
       });
       media.subscribe((change: MediaChange) => {
-        console.log(change.mqAlias);
         if ( change.mqAlias === "xs") {
           this.displayedColumns = ["select", "name", "functions"];
         } else {

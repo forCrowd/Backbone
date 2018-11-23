@@ -29,8 +29,7 @@ export class SearchComponent {
         this.search();
       });
       media.subscribe((change: MediaChange) => {
-        console.log(change.mqAlias);
-        if ( change.mqAlias === "xs") {
+        if ( change.mqAlias === "xs" ) {
           this.displayedColumns = ["name", "userName"];
         } else {
           this.displayedColumns = ["name", "userName", "ratingCount", "createdOn"];
