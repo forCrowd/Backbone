@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.9.17**
+
+* AngularClient - @forCrowd/backbone-client-core npm package
+
 **0.9.16**
 
 * AngularClient - ProjectService moved to library

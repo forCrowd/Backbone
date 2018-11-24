@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Element, ElementField, ElementFieldDataType, ElementItem, ProjectService } from "backbone-client-core";
+import { Element, ElementField, ElementFieldDataType, ElementItem, ProjectService } from "@forcrowd/backbone-client-core";
 
 import { settings } from "../../settings/settings";
 

@@ -147,7 +147,7 @@
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ng607:serve:production"
+              "devServerTarget": "backbone-client:serve:production"
             }
           }
         },

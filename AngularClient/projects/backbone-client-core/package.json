@@ -1,9 +1,9 @@
 {
-  "name": "backbone-client-core",
+  "name": "@forcrowd/backbone-client-core",
   "description": "Backbone client core library",
   "author": "forCrowd Foundation",
   "license": "MIT",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "peerDependencies": {
     "@angular/common": "7.0.1",
     "@angular/core": "7.0.1",

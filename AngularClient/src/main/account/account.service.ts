@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { AppHttpClient, AuthService, User } from "backbone-client-core";
+import { AppHttpClient, AuthService, User } from "@forcrowd/backbone-client-core";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 

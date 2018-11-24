@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { AppHttpClient } from "backbone-client-core";
+import { AppHttpClient } from "@forcrowd/backbone-client-core";
 
 import { settings } from "../settings/settings";
 

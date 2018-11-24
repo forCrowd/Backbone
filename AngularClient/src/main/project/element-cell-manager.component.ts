@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { MatTableDataSource } from "@angular/material";
-import { Element, Project, ElementCell, ElementField, ElementFieldDataType, ElementItem, ProjectService } from
-  "backbone-client-core";
+import { Element, Project, ElementCell, ElementField, ElementFieldDataType, ElementItem, ProjectService } from "@forcrowd/backbone-client-core";
 
 @Component({
   selector: "element-cell-manager",

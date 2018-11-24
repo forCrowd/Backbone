@@ -4,7 +4,7 @@ import { MatSnackBar } from "@angular/material";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
 import { Angulartics2GoogleGlobalSiteTag } from "angulartics2/gst";
-import { AuthService, NotificationService, User } from "backbone-client-core";
+import { AuthService, NotificationService, User } from "@forcrowd/backbone-client-core";
 import { Subscription } from "rxjs";
 import { mergeMap, map, filter } from "rxjs/operators";
 

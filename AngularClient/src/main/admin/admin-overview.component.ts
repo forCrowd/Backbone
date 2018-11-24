@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { User } from "backbone-client-core";
+import { User } from "@forcrowd/backbone-client-core";
 
 import { AdminService } from "./admin.service";
 
