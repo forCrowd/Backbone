@@ -3,6 +3,7 @@ import { TestBed, getTestBed } from "@angular/core/testing";
 import { from } from "rxjs";
 import { SourceMapConsumer } from "source-map";
 
+import { ISettings } from "../settings";
 import { AppErrorHandler } from "./app-error-handler";
 
 describe("app-error-handler", () => {
@@ -25,55 +26,64 @@ describe("app-error-handler", () => {
 
   it("constructor", () => {
 
-    var errorHandler = new AppErrorHandler(null, {});
+    var settings: ISettings = {
+      environment: "Development",
+      serviceApiUrl: "",
+      serviceODataUrl: "",
+      sourceMapMappingsUrl: "https://unpkg.com/source-map@0.7.3/lib/mappings.wasm"
+    };
+
+    var errorHandler = new AppErrorHandler(null, settings);
     expect(errorHandler).toBeDefined();
 
   });
 
-  it("sourceMapConsumer", () => {
+  it("sourceMapConsumer sanity tests", () => {
 
     // https://www.npmjs.com/package/source-map/v/0.7.3
 
     const rawSourceMap = {
       version: 3,
-      file: 'min.js',
-      names: ['bar', 'baz', 'n'],
-      sources: ['one.js', 'two.js'],
-      sourceRoot: 'http://example.com/www/js/',
-      mappings: 'CAAC,IAAI,IAAM,SAAUA,GAClB,OAAOC,IAAID;CCDb,IAAI,IAAM,SAAUE,GAClB,OAAOA'
+      file: "min.js",
+      names: ["bar", "baz", "n"],
+      sources: ["one.js", "two.js"],
+      sourceRoot: "http://example.com/www/js/",
+      mappings: "CAAC,IAAI,IAAM,SAAUA,GAClB,OAAOC,IAAID;CCDb,IAAI,IAAM,SAAUE,GAClB,OAAOA"
     };
 
     (SourceMapConsumer as any).initialize({ "lib/mappings.wasm": "https://unpkg.com/source-map@0.7.3/lib/mappings.wasm" });
 
     from(SourceMapConsumer.with(rawSourceMap, null, consumer => {
-      return consumer;
-    })).subscribe(consumer => {
 
-        console.log(consumer.sources);
-        // [ 'http://example.com/www/js/one.js',
-        //   'http://example.com/www/js/two.js' ]
+      console.log(consumer.sources);
+      // [ 'http://example.com/www/js/one.js',
+      //   'http://example.com/www/js/two.js' ]
 
-        console.log(consumer.originalPositionFor({
-          line: 2,
-          column: 28
-        }));
-        // { source: 'http://example.com/www/js/two.js',
-        //   line: 2,
-        //   column: 10,
-        //   name: 'n' }
+      // consumer.originalPositionFor({})
 
-        console.log(consumer.generatedPositionFor({
-          source: 'http://example.com/www/js/two.js',
-          line: 2,
-          column: 10
-        }));
-        // { line: 2, column: 28 }
+      console.log(consumer.originalPositionFor({
+        line: 2,
+        column: 28,
+        bias: null,
+      }));
+      // { source: 'http://example.com/www/js/two.js',
+      //   line: 2,
+      //   column: 10,
+      //   name: 'n' }
 
-        consumer.eachMapping(function (m) {
-          // ...
-        });
+      console.log(consumer.generatedPositionFor({
+        source: "http://example.com/www/js/two.js",
+        line: 2,
+        column: 10,
+        bias: null
+      }));
+      // { line: 2, column: 28 }
 
+      consumer.eachMapping(m => {
+        // ...
       });
+
+    })).subscribe();
 
     expect(true).toBeTruthy();
 
