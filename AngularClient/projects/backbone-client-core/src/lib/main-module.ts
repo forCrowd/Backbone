@@ -5,6 +5,7 @@ import { AppHttpClientModule } from "./app-http-client/app-http-client-module";
 import { AuthModule } from "./auth/auth-module";
 import { AppErrorHandler } from "./services/app-error-handler";
 import { NotificationService } from "./services/notification-service";
+import { ProjectService } from "./services/project-service";
 import { ISettings, Settings } from "./settings";
 
 // @dynamic
@@ -30,6 +31,7 @@ export class MainModule {
           useClass: AppErrorHandler
         },
         NotificationService,
+        ProjectService,
         // Settings
         {
           provide: Settings,

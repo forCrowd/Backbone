@@ -22,6 +22,7 @@
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\app-http-client\auth-interceptor.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\app-http-client\busy-interceptor.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\app-http-client\error-interceptor.ts" />
+    <TypeScriptCompile Include="projects\backbone-client-core\src\lib\services\project-service.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\settings.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\auth\auth-service.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\app-entity-manager\breeze-client-odata-fix.ts" />

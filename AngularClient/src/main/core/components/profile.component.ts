@@ -3,10 +3,9 @@ import { SelectionModel } from "@angular/cdk/collections";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MediaChange, ObservableMedia } from "@angular/flex-layout";
 import { MatDialog, MatTableDataSource } from "@angular/material";
-import { AuthService, Project, User } from "backbone-client-core";
+import { AuthService, Project, ProjectService, User } from "backbone-client-core";
 import { finalize } from "rxjs/operators";
 
-import { ProjectService } from "../project.service";
 import { ProfileRemoveProjectComponent } from "./profile-remove-project.component";
 
 @Component({

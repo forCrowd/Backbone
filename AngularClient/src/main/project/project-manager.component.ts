@@ -1,8 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { AuthService, Project, User, NotificationService } from "backbone-client-core";
+import { AuthService, Project, ProjectService, User, NotificationService } from "backbone-client-core";
 
-import { ProjectService } from "../core/core.module";
 import { settings } from "../../settings/settings";
 
 @Component({

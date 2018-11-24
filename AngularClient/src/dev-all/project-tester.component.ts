@@ -1,8 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { Project } from "backbone-client-core";
+import { Project, ProjectService } from "backbone-client-core";
 
 import { AdminService } from "../main/admin/admin.service";
-import { ProjectService } from "../main/core/core.module";
 
 @Component({
   selector: "project-tester",

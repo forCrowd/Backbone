@@ -23,10 +23,9 @@ import { SearchComponent } from "./components/search.component";
 import { AuthGuard } from "./auth-guard.service";
 import { CanDeactivateGuard } from "./can-deactivate-guard.service";
 import { DynamicTitleResolve } from "./dynamic-title-resolve.service";
-import { ProjectService } from "./project.service";
 import { LandingPageComponent } from "./components/landing-page.component";
 
-export { AuthGuard, CanDeactivateGuard, DynamicTitleResolve, ProjectService }
+export { AuthGuard, CanDeactivateGuard, DynamicTitleResolve }
 
 // TODO: Remove! Only here to test appErrorHandler on production
 @Component({
@@ -94,7 +93,6 @@ const coreSettings: ISettings = {
     AuthGuard,
     CanDeactivateGuard,
     DynamicTitleResolve,
-    ProjectService,
   ]
 })
 export class CoreModule { }
