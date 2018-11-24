@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.9.16**
+
+* AngularClient - "User stays on Dashboard page after logout" fix
+* AngularClient - Minor updates
+
 **0.9.15**
 
 * AngularClient - LoginReturnUrl fix

@@ -30,7 +30,7 @@ export class AuthService {
   }
 
   // User cannot choose one of these folder/file names as its own username
-  restrictUserNames = [
+  forbiddenUserNames = [
     "app",
     "assets",
     "_app_offline.htm",
@@ -148,6 +148,7 @@ export class AuthService {
     this.appEntityManager.clear();
     this.currentUser = null;
     localStorage.removeItem("guestUserName");
+    localStorage.removeItem("loginReturnUrl");
     localStorage.removeItem("token");
   }
 
@@ -155,9 +156,8 @@ export class AuthService {
 
     // Validate: Don't allow to set a username that is in "restrict usernames" list
     const username = registerBindingModel.UserName.toLowerCase();
-    const restrictUsername = this.restrictUserNames.indexOf(username) > -1;
 
-    if (restrictUsername) {
+    if (this.forbiddenUserNames.indexOf(username) > -1) {
       return observableThrowError("Username is already taken.");
     }
 
@@ -274,7 +274,7 @@ export class AuthService {
       }));
   }
 
-  setCurrentUser(): Observable<void> {
+  private setCurrentUser(): Observable<void> {
 
     return this.ensureRolesEntities().pipe(mergeMap(() => {
 
