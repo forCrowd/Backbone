@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Project, User, NotificationService } from "backbone-client-core";
+import { AuthService, Project, User, NotificationService } from "backbone-client-core";
 
-import { ProjectService, UserService } from "../core/core.module";
+import { ProjectService } from "../core/core.module";
 import { settings } from "../../settings/settings";
 
 @Component({
@@ -40,9 +40,9 @@ export class ProjectManagerComponent implements OnInit {
   };
 
   constructor(private activatedRoute: ActivatedRoute,
+    private authService: AuthService,
     private projectService: ProjectService,
     private notificationService: NotificationService,
-    private userService: UserService,
     private router: Router) {
 
     }
@@ -138,7 +138,7 @@ export class ProjectManagerComponent implements OnInit {
     this.viewMode = this.activatedRoute.snapshot.url[this.activatedRoute.snapshot.url.length - 1].path;
 
     if (this.viewMode === "edit") this.viewMode = "existing";
-    if (Number.isNaN(Number(this.viewMode)) === false) this.viewMode = "view"
+    if (Number.isNaN(Number(this.viewMode)) === false) this.viewMode = "view";
 
     if (this.viewMode !== "new") {
 
@@ -147,7 +147,7 @@ export class ProjectManagerComponent implements OnInit {
       this.projectService.getProjectExpanded(projectId)
         .subscribe(project => {
           this.projectOwner = project.User;
-          this.user = this.userService.currentUser;
+          this.user = this.authService.currentUser;
 
           if (this.viewMode === "existing" && this.projectOwner !== this.user) {
             this.router.navigate([`/projects/${project.Id}`]);
