@@ -1,8 +1,7 @@
-
-<div *ngIf="!isLogedIn()">
+<div *ngIf="!currentUser.isAuthenticated()">
   <home></home>
 </div>
 
-<div *ngIf="isLogedIn()">
+<div *ngIf="currentUser.isAuthenticated()">
   <profile></profile>
 </div>
