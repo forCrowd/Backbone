@@ -148,7 +148,6 @@ export class AuthService {
     this.appEntityManager.clear();
     this.currentUser = null;
     localStorage.removeItem("guestUserName");
-    localStorage.removeItem("loginReturnUrl");
     localStorage.removeItem("token");
   }
 
