@@ -1,5 +1,4 @@
 import { Component, NgModule } from "@angular/core";
-import { FlexLayoutModule } from "@angular/flex-layout";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
@@ -82,10 +81,8 @@ const coreSettings: ISettings = {
   exports: [
     RouterModule,
     CoreComponent,
-    FlexLayoutModule
   ],
   imports: [
-    FlexLayoutModule,
     SharedModule,
     BrowserModule,
     BrowserAnimationsModule,
@@ -98,7 +95,6 @@ const coreSettings: ISettings = {
     CanDeactivateGuard,
     DynamicTitleResolve,
     ProjectService,
-    FlexLayoutModule,
   ]
 })
 export class CoreModule { }
