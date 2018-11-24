@@ -8,8 +8,6 @@ import { AuthService, NotificationService, User } from "backbone-client-core";
 import { Subscription } from "rxjs";
 import { mergeMap, map, filter } from "rxjs/operators";
 
-import { LoginComponent } from "../../account/login.component";
-
 @Component({
   selector: "core",
   templateUrl: "core.component.html",
@@ -113,9 +111,10 @@ export class CoreComponent implements OnDestroy, OnInit {
       map(() => this.activatedRoute),
       map(route => {
 
-        // Login return url: If the user is not logged in and not on Login page, then set "login return url"
+        // Login return url: If the user is not logged in and not on Login/Register pages, then set "login return url"
         if (!this.authService.currentUser.isAuthenticated()
-          && this.activatedRoute.firstChild.component !== LoginComponent) {
+          && this.activatedRoute.snapshot.firstChild.routeConfig.path !== "app/account/login"
+          && this.activatedRoute.snapshot.firstChild.routeConfig.path !== "app/account/register") {
             this.authService.loginReturnUrl = this.router.url;
         }
 
