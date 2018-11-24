@@ -2,6 +2,7 @@
 
 **0.9.16**
 
+* AngularClient - ProjectService moved to library
 * AngularClient - "User stays on Dashboard page after logout" fix
 * AngularClient - Minor updates
 
