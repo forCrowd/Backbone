@@ -8,6 +8,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod",
+    "build-core": "ng build backbone-client-core",
+    "publish-core": "npm publish dist/backbone-client-core",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
