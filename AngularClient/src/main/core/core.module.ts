@@ -26,9 +26,8 @@ import { CanDeactivateGuard } from "./can-deactivate-guard.service";
 import { DynamicTitleResolve } from "./dynamic-title-resolve.service";
 import { ProjectService } from "./project.service";
 import { LandingPageComponent } from "./components/landing-page.component";
-import { UserService } from "./user.service";
 
-export { AuthGuard, CanDeactivateGuard, DynamicTitleResolve, ProjectService, UserService }
+export { AuthGuard, CanDeactivateGuard, DynamicTitleResolve, ProjectService }
 
 // TODO: Remove! Only here to test appErrorHandler on production
 @Component({
@@ -99,7 +98,6 @@ const coreSettings: ISettings = {
     CanDeactivateGuard,
     DynamicTitleResolve,
     ProjectService,
-    UserService,
     FlexLayoutModule,
   ]
 })

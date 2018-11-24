@@ -3,11 +3,10 @@ import { SelectionModel } from "@angular/cdk/collections";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MediaChange, ObservableMedia } from "@angular/flex-layout";
 import { MatDialog, MatTableDataSource } from "@angular/material";
-import { Project, User } from "backbone-client-core";
+import { AuthService, Project, User } from "backbone-client-core";
 import { finalize } from "rxjs/operators";
 
 import { ProjectService } from "../project.service";
-import { UserService } from "../user.service";
 import { ProfileRemoveProjectComponent } from "./profile-remove-project.component";
 
 @Component({
@@ -25,14 +24,14 @@ export class ProfileComponent implements OnInit {
   userName: string = "";
 
   get isBusy(): boolean {
-    return this.projectService.isBusy || this.userService.isBusy;
+    return this.authService.isBusy || this.projectService.isBusy;
   };
 
-  constructor(private activatedRoute: ActivatedRoute,
+  constructor(private authService: AuthService,
+    private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
     private projectService: ProjectService,
     private router: Router,
-    private userService: UserService,
     private media: ObservableMedia) {
       this.activatedRoute.url.subscribe(url =>{
         if (url.length > 1 && url[1].path !== this.userName) {
@@ -66,7 +65,7 @@ export class ProfileComponent implements OnInit {
           this.projectService.removeProject(project);
         });
 
-        this.userService.saveChanges().pipe(
+        this.projectService.saveChanges().pipe(
           finalize(() => {
             this.dataSource.data = this.user.ProjectSet;
           })).subscribe();
@@ -90,13 +89,13 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.currentUser = this.userService.currentUser;
+    this.currentUser = this.authService.currentUser;
     var activetedRouteParam = this.activatedRoute.snapshot.params["username"];
 
     // UserName
     this.userName = activetedRouteParam !== undefined ? activetedRouteParam : this.currentUser.UserName;
 
-    this.userService.getUser(this.userName)
+    this.authService.getUser(this.userName)
       .subscribe((user) => {
 
         // Not found, navigate to 404
@@ -121,6 +120,6 @@ export class ProfileComponent implements OnInit {
   }
 
   userActionsEnabled(): boolean {
-    return this.user === this.userService.currentUser;
+    return this.user === this.authService.currentUser;
   }
 }
