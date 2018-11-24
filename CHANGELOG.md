@@ -2,7 +2,7 @@
 
 **0.9.15**
 
-* AngularClient - Minor
+* AngularClient - LoginReturnUrl fix
 
 **0.9.14**
 

@@ -41,7 +41,7 @@ export class ChangeUserNameComponent implements OnInit {
     // Get return url, reset loginReturnUrl and navigate
     const returnUrl = this.authService.loginReturnUrl || "/app/account";
     this.authService.loginReturnUrl = "";
-    this.router.navigate([returnUrl]);
+    this.router.navigateByUrl(returnUrl);
   }
 
   canDeactivate() {
@@ -61,7 +61,7 @@ export class ChangeUserNameComponent implements OnInit {
         // Get return url, reset loginReturnUrl and navigate
         const returnUrl = this.authService.loginReturnUrl || "/app/account";
         this.authService.loginReturnUrl = "";
-        this.router.navigate([returnUrl]);
+        this.router.navigateByUrl(returnUrl);
       });
   }
 
