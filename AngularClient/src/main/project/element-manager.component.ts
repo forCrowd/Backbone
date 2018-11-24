@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { SelectionModel } from "@angular/cdk/collections";
 import { MatTableDataSource, MatDialog } from "@angular/material";
-import { Element, Project, ProjectService } from "backbone-client-core";
+import { Element, Project, ProjectService } from "@forcrowd/backbone-client-core";
 import { finalize } from "rxjs/operators";
 
 import { RemoveConfirmComponent } from "./remove-confirm.component";

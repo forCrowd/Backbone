@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { BackboneClientCoreModule } from "backbone-client-core";
+import { BackboneClientCoreModule } from "@forcrowd/backbone-client-core";
 
 import { AdminModule } from "../main/admin/admin.module";
 import { CoreModule } from "../main/core/core.module";

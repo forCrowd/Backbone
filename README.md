@@ -1,9 +1,8 @@
 # Backbone
 
 [![Twitter Follow](https://img.shields.io/twitter/follow/forCrowd.svg?style=social)](https://twitter.com/forCrowd)
-[![Join the chat at https://gitter.im/forCrowd/Backbone](https://badges.gitter.im/forCrowd/Backbone.svg)](https://gitter.im/forCrowd/Backbone?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-A lightweight API service for rapid application prototyping
+Lightweight API service for rapid application prototyping
 
 ## Current Stack
 
@@ -16,7 +15,7 @@ A lightweight API service for rapid application prototyping
 
 ### Client
 
-* Angular 6.x
+* Angular 7.x
 * TypeScript 2.x
 * BreezeJS
 * Karma & Jasmine
@@ -50,7 +49,7 @@ You can use the local settings file as a base to create your own **test** and **
 
 To prepare a production bundle by generating sourcemap files, run the following on your command console:
 
-    ng build --prod
+    ng build --prod --source-map
 
 For more options, please visit [Angular CLI](https://github.com/angular/angular-cli)
 

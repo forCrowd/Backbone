@@ -1,6 +1,6 @@
 import { Component, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { BackboneClientCoreModule, ISettings } from "backbone-client-core";
+import { BackboneClientCoreModule, ISettings } from "@forcrowd/backbone-client-core";
 
 import { settings } from "../settings/settings";
 

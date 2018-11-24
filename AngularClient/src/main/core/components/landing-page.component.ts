@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { User, AuthService } from "backbone-client-core";
+import { User, AuthService } from "@forcrowd/backbone-client-core";
 import { Subscription } from "rxjs";
 
 @Component({

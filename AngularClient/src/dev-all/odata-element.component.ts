@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { mergeMap, map } from "rxjs/operators";
-import { Project, User, AuthService, getUniqueValue } from "backbone-client-core";
+import { Project, User, AuthService, getUniqueValue } from "@forcrowd/backbone-client-core";
 
 import { settings } from "../settings/settings";
 

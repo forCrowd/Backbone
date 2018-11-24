@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { MatTableDataSource } from "@angular/material";
 import { ObservableMedia, MediaChange } from "@angular/flex-layout";
-import { Project, ProjectService } from "backbone-client-core";
+import { Project, ProjectService } from "@forcrowd/backbone-client-core";
 import { finalize } from "rxjs/operators";
 
 @Component({

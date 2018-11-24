@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { AuthService, NotificationService, getUniqueUserName, stripInvalidChars } from "backbone-client-core";
+import { AuthService, NotificationService, getUniqueUserName, stripInvalidChars } from "@forcrowd/backbone-client-core";
 
 import { settings } from "../../settings/settings";
 import { AccountService } from "./account.service";

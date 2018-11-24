@@ -3,7 +3,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
 import { Angulartics2Module } from "angulartics2";
-import { BackboneClientCoreModule, ISettings, ProjectService } from "backbone-client-core";
+import { BackboneClientCoreModule, ISettings, ProjectService } from "@forcrowd/backbone-client-core";
 
 import { SharedModule } from "../shared/shared.module";
 

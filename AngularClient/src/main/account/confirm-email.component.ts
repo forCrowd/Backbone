@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { NotificationService } from "backbone-client-core";
+import { NotificationService } from "@forcrowd/backbone-client-core";
 import { timer as observableTimer } from "rxjs";
 
 import { AccountService } from "./account.service";

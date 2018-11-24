@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { AuthService, Project, ProjectService } from "backbone-client-core";
+import { AuthService, Project, ProjectService } from "@forcrowd/backbone-client-core";
 
 import { AppProjectService } from "../app-project.service";
 

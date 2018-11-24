@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { User, AuthService } from "backbone-client-core";
+import { User, AuthService } from "@forcrowd/backbone-client-core";
 
 @Component({
   selector: "app",
