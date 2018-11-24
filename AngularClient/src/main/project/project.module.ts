@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { FlexLayoutModule } from "@angular/flex-layout";
 
 import { SharedModule } from "../shared/shared.module";
 
@@ -39,7 +38,6 @@ const projectRoutes: Routes = [
   ],
   imports: [
     SharedModule,
-    FlexLayoutModule,
     RouterModule.forChild(projectRoutes),
   ]
 })

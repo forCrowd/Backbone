@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { AuthService, Project } from "backbone-client-core";
+import { AuthService, Project, ProjectService } from "backbone-client-core";
 
-import { ProjectService } from "../project.service";
+import { AppProjectService } from "../app-project.service";
 
 @Component({
   templateUrl: "getting-started.component.html",
@@ -51,7 +51,7 @@ export class GettingStartedComponent implements OnInit {
 
   createProject(): void {
 
-    this.project = this.projectService.createProjectTodo();
+    this.project = (this.projectService as AppProjectService).createProjectTodo();
 
     this.projectService.saveChanges().subscribe(() => {
       this.generateExampleCode();

@@ -1,4 +1,4 @@
-import { ErrorHandler, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { throwError as observableThrowError, of as observableOf, from as observableFrom, Observable } from "rxjs";
 import { map, finalize, catchError } from "rxjs/operators";
 
@@ -13,7 +13,6 @@ import "datajs";
 import {
   ElementCell, ElementField, ElementItem, Element, EntityBase, Project, Role, Token, User, UserElementCell,
   UserElementField, UserRole } from "../entities";
-import { AppErrorHandler } from "../services/app-error-handler";
 import { NotificationService } from "../services/notification-service";
 import { Settings } from "../settings";
 
@@ -25,21 +24,17 @@ export interface IQueryResult<T> {
 @Injectable()
 export class AppEntityManager extends EntityManager {
 
-  appErrorHandler: AppErrorHandler;
   isBusy: boolean = false;
   metadata: Object = null;
   queryCache: string[] = [];
 
   constructor(private breezeBridgeHttpClientModule: BreezeBridgeHttpClientModule,
     private notificationService: NotificationService,
-    errorHandler: ErrorHandler,
     private settings: Settings) {
 
     super({
       serviceName: settings.serviceODataUrl
     });
-
-    this.appErrorHandler = errorHandler as AppErrorHandler;
 
     config.initializeAdapterInstance("uriBuilder", "odata");
 
