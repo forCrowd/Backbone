@@ -105,7 +105,7 @@
     <TypeScriptCompile Include="src\main\core\dynamic-title-resolve.service.ts" />
     <TypeScriptCompile Include="src\main\core\components\home.component.ts" />
     <TypeScriptCompile Include="src\main\core\components\not-found.component.ts" />
-    <TypeScriptCompile Include="src\main\core\project.service.ts" />
+    <TypeScriptCompile Include="src\main\core\app-project.service.ts" />
     <TypeScriptCompile Include="src\main\core\components\search.component.ts" />
     <Content Include="e2e\protractor.conf.js" />
     <Content Include="projects\backbone-client-core\karma.conf.js" />

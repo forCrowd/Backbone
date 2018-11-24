@@ -213,92 +213,92 @@ export class ProjectService {
     return project;
   }
 
-  createProjectTodo() {
+  //createProjectTodo() {
 
-    // Project
-    const project = this.createProjectEmpty();
-    project.Name = "Todo App";
-    //project.Origin = this.settings.todoAppOrigin;
-    project.Origin = "";
+  //  // Project
+  //  const project = this.createProjectEmpty();
+  //  project.Name = "Todo App";
+  //  //project.Origin = this.settings.todoAppOrigin;
+  //  project.Origin = "";
 
-    // Element
-    const element = this.createElement({
-      Project: project,
-      Name: "Main"
-    }) as Element;
+  //  // Element
+  //  const element = this.createElement({
+  //    Project: project,
+  //    Name: "Main"
+  //  }) as Element;
 
-    // Field
-    const elementField = this.createElementField({
-      Element: element,
-      Name: "Completed",
-      DataType: ElementFieldDataType.Decimal,
-      UseFixedValue: false,
-      RatingEnabled: false,
-      SortOrder: 1
-    }) as ElementField;
+  //  // Field
+  //  const elementField = this.createElementField({
+  //    Element: element,
+  //    Name: "Completed",
+  //    DataType: ElementFieldDataType.Decimal,
+  //    UseFixedValue: false,
+  //    RatingEnabled: false,
+  //    SortOrder: 1
+  //  }) as ElementField;
 
-    // Item 1
-    const elementItem1 = this.createElementItem({
-      Element: element,
-      Name: "Create a project on Backbone"
-    }) as ElementItem;
+  //  // Item 1
+  //  const elementItem1 = this.createElementItem({
+  //    Element: element,
+  //    Name: "Create a project on Backbone"
+  //  }) as ElementItem;
 
-    // Cell 1
-    const cell1 = this.createElementCell({
-      ElementField: elementField,
-      ElementItem: elementItem1
-    });
+  //  // Cell 1
+  //  const cell1 = this.createElementCell({
+  //    ElementField: elementField,
+  //    ElementItem: elementItem1
+  //  });
 
-    // User cell 1
-    this.createUserElementCell(cell1, 1);
+  //  // User cell 1
+  //  this.createUserElementCell(cell1, 1);
 
-    // Item 2
-    const elementItem2 = this.createElementItem({
-      Element: element,
-      Name: "Read 'The Little Prince' book"
-    });
+  //  // Item 2
+  //  const elementItem2 = this.createElementItem({
+  //    Element: element,
+  //    Name: "Read 'The Little Prince' book"
+  //  });
 
-    // Cell 2
-    const cell2 = this.createElementCell({
-      ElementField: elementField,
-      ElementItem: elementItem2
-    });
+  //  // Cell 2
+  //  const cell2 = this.createElementCell({
+  //    ElementField: elementField,
+  //    ElementItem: elementItem2
+  //  });
 
-    // User cell 2
-    this.createUserElementCell(cell2, 0);
+  //  // User cell 2
+  //  this.createUserElementCell(cell2, 0);
 
-    // Item 3
-    const elementItem3 = this.createElementItem({
-      Element: element,
-      Name: "Watch 'Shawshank Redemption' movie"
-    });
+  //  // Item 3
+  //  const elementItem3 = this.createElementItem({
+  //    Element: element,
+  //    Name: "Watch 'Shawshank Redemption' movie"
+  //  });
 
-    // Cell 3
-    const cell3 = this.createElementCell({
-      ElementField: elementField,
-      ElementItem: elementItem3
-    });
+  //  // Cell 3
+  //  const cell3 = this.createElementCell({
+  //    ElementField: elementField,
+  //    ElementItem: elementItem3
+  //  });
 
-    // User cell 3
-    this.createUserElementCell(cell3, 0);
+  //  // User cell 3
+  //  this.createUserElementCell(cell3, 0);
 
-    // Item 4
-    const elementItem4 = this.createElementItem({
-      Element: element,
-      Name: "Visit 'Niagara Falls'"
-    });
+  //  // Item 4
+  //  const elementItem4 = this.createElementItem({
+  //    Element: element,
+  //    Name: "Visit 'Niagara Falls'"
+  //  });
 
-    // Cell 4
-    const cell4 = this.createElementCell({
-      ElementField: elementField,
-      ElementItem: elementItem4
-    });
+  //  // Cell 4
+  //  const cell4 = this.createElementCell({
+  //    ElementField: elementField,
+  //    ElementItem: elementItem4
+  //  });
 
-    // User cell 4
-    this.createUserElementCell(cell4, 0);
+  //  // User cell 4
+  //  this.createUserElementCell(cell4, 0);
 
-    return project;
-  }
+  //  return project;
+  //}
 
   getProjectExpanded(projectId: number, forceRefresh = false) {
 

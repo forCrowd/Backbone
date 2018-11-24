@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthService, Project, ProjectService, User, NotificationService } from "backbone-client-core";
 
+import { AppProjectService } from "../core/core.module";
 import { settings } from "../../settings/settings";
 
 @Component({
@@ -43,8 +44,7 @@ export class ProjectManagerComponent implements OnInit {
     private projectService: ProjectService,
     private notificationService: NotificationService,
     private router: Router) {
-
-    }
+  }
 
   cancelProject() {
     this.project.entityAspect.rejectChanges();
@@ -98,7 +98,7 @@ export class ProjectManagerComponent implements OnInit {
   }
 
   createProjectTodo(): void {
-    this.project = this.projectService.createProjectTodo();
+    this.project = (this.projectService as AppProjectService).createProjectTodo();
 
     this.projectService.saveChanges()
       .subscribe(() => {
@@ -107,7 +107,7 @@ export class ProjectManagerComponent implements OnInit {
       });
   }
 
-  copyApiLink(val: string){
+  copyApiLink(val: string) {
     let sel = document.createElement('textarea');
     sel.style.position = 'fixed';
     sel.style.left = '0';
