@@ -90,7 +90,7 @@ export class CoreComponent implements OnDestroy, OnInit {
     this.authService.logout();
 
     this.authService.setCurrentUser().subscribe(() => {
-      this.router.navigate([""]);
+      this.router.navigateByUrl("/");
     });
   }
 

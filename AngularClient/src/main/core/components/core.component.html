@@ -21,7 +21,7 @@
     <mat-list role="list" fxLayout="column" fxLayoutAlign="start start">
 
       <mat-list-item class="list" role="listitem" [hidden]="!currentUser.isAuthenticated()" fxLayoutAlign="center center">
-        <button mat-button class="other-btn ta-l" routerLink="/users/{{ currentUser.UserName }}">Dashboard</button>
+        <button mat-button class="other-btn ta-l" routerLink="/">Dashboard</button>
       </mat-list-item>
 
       <mat-list-item class="list" role="listitem" [hidden]="currentUser.isAuthenticated()" fxLayoutAlign="center center">
@@ -87,7 +87,7 @@
       </button>
 
       <mat-menu #menu="matMenu" overlapTrigger="false">
-        <button mat-menu-item routerLink="/users/{{ currentUser.UserName }}" [hidden]="!currentUser.isAuthenticated()">
+        <button mat-menu-item routerLink="/" [hidden]="!currentUser.isAuthenticated()">
           <span>Dashboard</span>
         </button>
         <button mat-menu-item routerLink="/app/account" [hidden]="!currentUser.isAuthenticated()">
