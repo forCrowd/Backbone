@@ -3,7 +3,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/forCrowd.svg?style=social)](https://twitter.com/forCrowd)
 [![Join the chat at https://gitter.im/forCrowd/Backbone](https://badges.gitter.im/forCrowd/Backbone.svg)](https://gitter.im/forCrowd/Backbone?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-An API service for rapid app prototyping
+A lightweight API service for rapid application prototyping
 
 ## Current Stack
 
