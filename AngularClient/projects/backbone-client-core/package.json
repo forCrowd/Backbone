@@ -1,6 +1,6 @@
 {
   "name": "backbone-client-core",
-  "description": "Core library of Backbone",
+  "description": "Backbone client core library",
   "author": "forCrowd Foundation",
   "license": "MIT",
   "version": "0.1.0",
