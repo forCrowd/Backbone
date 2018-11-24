@@ -6,9 +6,9 @@ import { MatDialog, MatTableDataSource } from "@angular/material";
 import { Project, User } from "backbone-client-core";
 import { finalize } from "rxjs/operators";
 
-import { ProjectService } from '../core/project.service';
+import { ProjectService } from "../project.service";
+import { UserService } from "../user.service";
 import { ProfileRemoveProjectComponent } from "./profile-remove-project.component";
-import { UserService } from "./user.service";
 
 @Component({
   selector: "profile",

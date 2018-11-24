@@ -4,7 +4,6 @@ import { CoreModule } from "./core/core.module";
 import { AccountModule } from "./account/account.module";
 import { AdminModule } from "./admin/admin.module";
 import { ProjectModule } from "./project/project.module";
-import { UserModule } from "./user/user.module";
 
 // App component
 @Component({
@@ -26,7 +25,6 @@ export class AppComponent { }
     AccountModule,
     AdminModule,
     ProjectModule, // Register Project & User modules as the last ones, because of "catch all" routes
-    UserModule
   ]
 })
 export class AppModule { }

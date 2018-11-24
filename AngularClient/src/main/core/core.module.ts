@@ -16,6 +16,8 @@ import { CoreComponent } from "./components/core.component";
 import { GettingStartedComponent } from "./components/getting-started.component";
 import { HomeComponent } from "./components/home.component";
 import { NotFoundComponent } from "./components/not-found.component";
+import { ProfileComponent } from "./components/profile.component";
+import { ProfileRemoveProjectComponent } from "./components/profile-remove-project.component";
 import { SearchComponent } from "./components/search.component";
 
 // Services
@@ -24,9 +26,9 @@ import { CanDeactivateGuard } from "./can-deactivate-guard.service";
 import { DynamicTitleResolve } from "./dynamic-title-resolve.service";
 import { ProjectService } from "./project.service";
 import { LandingPageComponent } from "./components/landing-page.component";
-import { UserModule } from "../user/user.module";
+import { UserService } from "./user.service";
 
-export { AuthGuard, CanDeactivateGuard, DynamicTitleResolve, ProjectService }
+export { AuthGuard, CanDeactivateGuard, DynamicTitleResolve, ProjectService, UserService }
 
 // TODO: Remove! Only here to test appErrorHandler on production
 @Component({
@@ -37,6 +39,8 @@ export class ExComponent {
 }
 
 const coreRoutes: Routes = [
+
+  // Core
   { path: "", component: LandingPageComponent, data: { title: "Home" } },
   { path: "app/contributors", component: ContributorsComponent, data: { title: "Contributors" } },
   { path: "app/getting-started", component: GettingStartedComponent, data: { title: "Getting Started" } },
@@ -44,7 +48,10 @@ const coreRoutes: Routes = [
   { path: "app/search", component: SearchComponent, data: { title: "Search" } },
   { path: "app/ex", component: ExComponent },
 
-  /* Home alternatives */
+  // Users
+  { path: "users/:username", component: ProfileComponent, resolve: { title: DynamicTitleResolve } },
+
+  // Home alternatives
   { path: "app/home", redirectTo: "", pathMatch: "full" },
   { path: "app.html", redirectTo: "", pathMatch: "full" },
   { path: "app-aot.html", redirectTo: "", pathMatch: "full" },
@@ -66,7 +73,12 @@ const coreSettings: ISettings = {
     HomeComponent,
     LandingPageComponent,
     NotFoundComponent,
+    ProfileComponent,
+    ProfileRemoveProjectComponent,
     SearchComponent,
+  ],
+  entryComponents: [
+    ProfileRemoveProjectComponent
   ],
   exports: [
     RouterModule,
@@ -76,7 +88,6 @@ const coreSettings: ISettings = {
   imports: [
     FlexLayoutModule,
     SharedModule,
-    UserModule,
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(coreRoutes),
@@ -88,6 +99,7 @@ const coreSettings: ISettings = {
     CanDeactivateGuard,
     DynamicTitleResolve,
     ProjectService,
+    UserService,
     FlexLayoutModule,
   ]
 })

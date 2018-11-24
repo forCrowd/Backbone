@@ -2,9 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Project, User, NotificationService } from "backbone-client-core";
 
-import { ProjectService } from "../core/core.module";
+import { ProjectService, UserService } from "../core/core.module";
 import { settings } from "../../settings/settings";
-import { UserService } from "../user/user.service";
 
 @Component({
   selector: "project-manager",

@@ -51,6 +51,9 @@
     <TypeScriptCompile Include="projects\backbone-client-core\src\public_api.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\test.ts" />
     <TypeScriptCompile Include="src\main\core\components\landing-page.component.ts" />
+    <TypeScriptCompile Include="src\main\core\components\profile-remove-project.component.ts" />
+    <TypeScriptCompile Include="src\main\core\components\profile.component.ts" />
+    <TypeScriptCompile Include="src\main\core\user.service.ts" />
     <TypeScriptCompile Include="src\settings\settings.ts" />
     <TypeScriptCompile Include="src\settings\settings-prod.ts" />
     <TypeScriptCompile Include="src\dev-all\project-tester.component.ts" />
@@ -137,6 +140,10 @@
     <Content Include="src\main\core\components\contributors.component.css" />
     <Content Include="src\main\core\components\home.component.css" />
     <Content Include="src\main\core\components\landing-page.component.html" />
+    <Content Include="src\main\core\components\profile-remove-project.component.css" />
+    <Content Include="src\main\core\components\profile-remove-project.component.html" />
+    <Content Include="src\main\core\components\profile.component.css" />
+    <Content Include="src\main\core\components\profile.component.html" />
     <Content Include="src\main\project\element-cell-manager.component.css" />
     <Content Include="src\main\project\element-cell-manager.component.html" />
     <Content Include="src\main\project\element-item-manager.component.css" />
@@ -149,10 +156,6 @@
     <TypeScriptCompile Include="src\main\project\project.module.ts" />
     <TypeScriptCompile Include="src\main\project\symbolic.pipe.ts" />
     <TypeScriptCompile Include="src\main\shared\shared.module.ts" />
-    <TypeScriptCompile Include="src\main\user\profile-remove-project.component.ts" />
-    <TypeScriptCompile Include="src\main\user\user.service.ts" />
-    <TypeScriptCompile Include="src\main\user\profile.component.ts" />
-    <TypeScriptCompile Include="src\main\user\user.module.ts" />
     <TypeScriptCompile Include="src\polyfills.ts" />
     <TypeScriptCompile Include="src\sanity.spec.ts" />
     <TypeScriptCompile Include="src\settings\settings-test.ts" />
@@ -192,9 +195,6 @@
     <Content Include="src\main\project\project-manager.component.css" />
     <Content Include="src\main\project\remove-confirm.component.css" />
     <Content Include="src\main\project\remove-confirm.component.html" />
-    <Content Include="src\main\user\profile-remove-project.component.css" />
-    <Content Include="src\main\user\profile-remove-project.component.html" />
-    <Content Include="src\main\user\profile.component.css" />
     <Content Include="src\styles\callout.scss" />
     <None Include="src\browserslist" />
     <None Include="src\styles\variables.scss" />
@@ -229,7 +229,6 @@
     <Content Include="src\main\core\components\search.component.html" />
     <Content Include="src\main\project\element-manager.component.html" />
     <Content Include="src\main\project\project-manager.component.html" />
-    <Content Include="src\main\user\profile.component.html" />
     <Content Include="src\styles\styles-old.css" />
   </ItemGroup>
   <ItemGroup />
