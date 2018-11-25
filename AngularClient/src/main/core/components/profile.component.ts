@@ -41,7 +41,7 @@ export class ProfileComponent implements OnInit {
           this.ngOnInit();
         }
       });
-      media.subscribe((change: MediaChange) => {
+      this.media.subscribe((change: MediaChange) => {
         if ( change.mqAlias === "xs") {
           this.displayedColumns = ["select", "name", "functions"];
         } else {
@@ -106,6 +106,7 @@ export class ProfileComponent implements OnInit {
 
         this.user = user;
 
+        // if not project owner then
         if (this.currentUser !== this.user)
           this.displayedColumns = [ "name", "ratingCount", "createdOn"];
 
