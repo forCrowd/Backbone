@@ -15,7 +15,6 @@ import { CoreComponent } from "./components/core.component";
 import { GettingStartedComponent } from "./components/getting-started.component";
 import { HomeComponent } from "./components/home.component";
 import { LandingPageComponent } from "./components/landing-page.component";
-import { NotFoundComponent } from "./components/not-found.component";
 import { ProfileComponent } from "./components/profile.component";
 import { ProfileRemoveProjectComponent } from "./components/profile-remove-project.component";
 import { SearchComponent } from "./components/search.component";
@@ -40,19 +39,14 @@ const coreRoutes: Routes = [
 
   // Core
   { path: "", component: LandingPageComponent, data: { title: "Home" } },
+  { path: "app/home", redirectTo: "", pathMatch: "full" },
   { path: "app/contributors", component: ContributorsComponent, data: { title: "Contributors" } },
   { path: "app/getting-started", component: GettingStartedComponent, data: { title: "Getting Started" } },
-  { path: "app/not-found", component: NotFoundComponent, data: { title: "Not Found" } },
   { path: "app/search", component: SearchComponent, data: { title: "Search" } },
   { path: "app/ex", component: ExComponent },
 
   // Users
   { path: "users/:username", component: ProfileComponent, resolve: { title: DynamicTitleResolve } },
-
-  // Home alternatives
-  { path: "app/home", redirectTo: "", pathMatch: "full" },
-  { path: "app.html", redirectTo: "", pathMatch: "full" },
-  { path: "app-aot.html", redirectTo: "", pathMatch: "full" },
 ];
 
 const coreSettings: ISettings = {
@@ -70,7 +64,6 @@ const coreSettings: ISettings = {
     GettingStartedComponent,
     HomeComponent,
     LandingPageComponent,
-    NotFoundComponent,
     ProfileComponent,
     ProfileRemoveProjectComponent,
     SearchComponent,

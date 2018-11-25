@@ -51,6 +51,8 @@
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\utils.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\public_api.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\test.ts" />
+    <TypeScriptCompile Include="src\main\not-found\not-found.module.ts" />
+    <TypeScriptCompile Include="src\main\not-found\not-found.component.ts" />
     <TypeScriptCompile Include="src\main\core\components\landing-page.component.ts" />
     <TypeScriptCompile Include="src\main\core\components\profile-remove-project.component.ts" />
     <TypeScriptCompile Include="src\main\core\components\profile.component.ts" />
@@ -133,6 +135,7 @@
     <Content Include="src\main\account\register.component.css" />
     <Content Include="src\main\account\login.component.css" />
     <Content Include="src\main\admin\projects.component.css" />
+    <Content Include="src\main\not-found\not-found.component.html" />
     <Content Include="src\main\core\components\getting-started.component.css" />
     <Content Include="src\main\core\components\getting-started.component.html" />
     <Content Include="src\main\core\components\core.component.css" />
@@ -195,7 +198,6 @@
     <Content Include="src\main\project\project-manager.component.css" />
     <Content Include="src\main\project\remove-confirm.component.css" />
     <Content Include="src\main\project\remove-confirm.component.html" />
-    <Content Include="src\styles\callout.scss" />
     <None Include="src\browserslist" />
     <None Include="src\styles\variables.scss" />
     <None Include="src\styles\theme.scss" />

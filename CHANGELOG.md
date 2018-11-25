@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.9.19**
+
+* AngularClient - Catch-all route fix
+
 **0.9.18**
 
 * AngularClient - Minor

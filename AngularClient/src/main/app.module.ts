@@ -1,8 +1,9 @@
 import { Component, NgModule } from "@angular/core";
 
-import { CoreModule } from "./core/core.module";
 import { AccountModule } from "./account/account.module";
 import { AdminModule } from "./admin/admin.module";
+import { CoreModule } from "./core/core.module";
+import { NotFoundModule } from "./not-found/not-found.module";
 import { ProjectModule } from "./project/project.module";
 
 // App component
@@ -23,8 +24,9 @@ export class AppComponent { }
   imports: [
     CoreModule,
     AccountModule,
+    ProjectModule,
     AdminModule,
-    ProjectModule, // Register Project & User modules as the last ones, because of "catch all" routes
+    NotFoundModule // Catch-all route
   ]
 })
 export class AppModule { }
