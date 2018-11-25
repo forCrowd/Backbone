@@ -1,7 +1,7 @@
 <mat-sidenav-container [ngClass]="{'container': !isLandingPage(), 'landing': isLandingPage()}">
-  <mat-sidenav #sidenav [hidden]="isLandingPage()" mode="side" [(opened)]="opened" class="bottom-to-top">
+  <mat-sidenav #sidenav mode="side" [(opened)]="displaySidebar" class="bottom-to-top">
     <mat-nav-list class="ml-0" dense>
-      <mat-list-item class="logo-sidenav" fxLayoutAlign="center center" mat-button routerLink="/" class="ml-0 logo-white logo-sidenav">
+      <mat-list-item class="logo-sidenav ml-0 logo-white" fxLayoutAlign="center center" mat-button routerLink="/">
         <img alt="Logo" src="/assets/images/backbone.png?v=0.1.0" class="backbone-icon">
         Backbone
       </mat-list-item>
@@ -44,7 +44,7 @@
 
   </mat-sidenav>
 
-  <mat-sidenav-content [ngClass]="{'ml-250': !isLandingPage(), 'ml-0': !opened, 'ml-00': isLandingPage()}">
+  <mat-sidenav-content [ngClass]="{'ml-250': !isLandingPage(), 'ml-0': !displaySidebar, 'ml-00': isLandingPage()}">
 
     <mat-toolbar class="header-bb">
 
@@ -101,10 +101,11 @@
 
     <!-- forCrowd Backbone content -->
     <mat-sidenav-content class="content" [ngClass]="{'no-margin': isLandingPage()}">
+
       <router-outlet></router-outlet>
 
       <div mat-sidenav-content [ngClass]="{'footer-landing sidenav-content-lp': isLandingPage(), 'footer': !isLandingPage(), 'footer-l-0': !opened}"
-        class="sidenav-content" fxLayout="row">
+           class="sidenav-content" fxLayout="row">
         <a href="https://forcrowd.org" target="_blank" class="footer-left">
           <img alt="Logo" src="/assets/images/Logo+Text_142x30.png?v=0.1.2" [ngStyle.xs]="{'padding-top.px': 10, 'width.px': 78}">
         </a>
@@ -122,7 +123,7 @@
           Contributors
         </a>
         <a mat-button href="https://github.com/forCrowd/Backbone/blob/master/CHANGELOG.md" target="_blank" class="footer-right"
-          [ngStyle.xs]="{'font-size.px': 12, 'padding-top.px': 4, 'min-width.px': 80, 'padding-left.px': 4}">
+           [ngStyle.xs]="{'font-size.px': 12, 'padding-top.px': 4, 'min-width.px': 80, 'padding-left.px': 4}">
           Version 0.9.18
         </a>
       </div>
