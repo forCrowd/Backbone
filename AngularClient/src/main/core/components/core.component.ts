@@ -17,10 +17,8 @@ export class CoreComponent implements OnDestroy, OnInit {
 
   activeMediaQuery = "";
   currentUser: User = null;
-  hideGuestAccountInfoBox: boolean = true;
   opened = true;
-  over = "side";
-  searchKey: string = null;
+  searchKey = "";
   subscriptions: Subscription[] = [];
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -46,10 +44,6 @@ export class CoreComponent implements OnDestroy, OnInit {
 
   isLandingPage(): boolean {
     return this.router.url === "/" ? !this.currentUser.isAuthenticated() : false;
-  }
-
-  closeGuestAccountInfoBox(): void {
-    this.hideGuestAccountInfoBox = true;
   }
 
   logout(): void {
@@ -107,12 +101,7 @@ export class CoreComponent implements OnDestroy, OnInit {
     // Current user changed subscription
     const currentUserChangedSubscription = this.authService.currentUserChanged.subscribe(currentUser => {
       this.currentUser = currentUser;
-      this.hideGuestAccountInfoBox = true;
     });
     this.subscriptions.push(currentUserChangedSubscription);
-  }
-
-  showGuestAccountInfoBox(): void {
-    this.hideGuestAccountInfoBox = false;
   }
 }
