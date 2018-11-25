@@ -21,7 +21,7 @@ export class CoreComponent implements OnDestroy, OnInit {
   subscriptions: Subscription[] = [];
 
   get displaySidebar() {
-    return !(this.isLandingPage() || this.activeMediaQuery === "xs");
+    return !(this.isHomePage() || this.activeMediaQuery === "xs");
   }
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -36,7 +36,7 @@ export class CoreComponent implements OnDestroy, OnInit {
       this.currentUser = this.authService.currentUser;
   }
 
-  isLandingPage(): boolean {
+  isHomePage(): boolean {
     return this.router.url === "/" ? !this.currentUser.isAuthenticated() : false;
   }
 

@@ -1,4 +1,4 @@
-<mat-sidenav-container [ngClass]="{'container': !isLandingPage(), 'landing': isLandingPage()}">
+<mat-sidenav-container [ngClass]="{'container': !isHomePage(), 'landing': isHomePage()}">
   <mat-sidenav #sidenav mode="side" [(opened)]="displaySidebar" class="bottom-to-top">
     <mat-nav-list class="ml-0" dense>
       <mat-list-item class="logo-sidenav ml-0 logo-white" fxLayoutAlign="center center" mat-button routerLink="/">
@@ -44,16 +44,11 @@
 
   </mat-sidenav>
 
-  <mat-sidenav-content [ngClass]="{'ml-250': !isLandingPage(), 'ml-0': !displaySidebar, 'ml-00': isLandingPage()}">
+  <mat-sidenav-content [ngClass]="{'ml-250': !isHomePage(), 'ml-0': !displaySidebar, 'ml-00': isHomePage()}">
 
     <mat-toolbar class="header-bb">
 
-      <div *ngIf="isLandingPage()" class="logo-black">
-        <img alt="Backbone" src="/assets/images/backbone-black.png?v=0.1.0" class="backbone-icon pt-4">
-        Backbone
-      </div>
-
-      <button mat-button *ngIf="!isLandingPage()" routerLink="/" class="logo-black">
+      <button mat-button routerLink="/" class="logo-black">
         <img alt="Backbone" src="/assets/images/backbone-black.png?v=0.1.0" class="backbone-icon">
         Backbone
       </button>
@@ -100,11 +95,11 @@
     </mat-toolbar>
 
     <!-- forCrowd Backbone content -->
-    <mat-sidenav-content class="content" [ngClass]="{'no-margin': isLandingPage()}">
+    <mat-sidenav-content class="content" [ngClass]="{'no-margin': isHomePage()}">
 
       <router-outlet></router-outlet>
 
-      <div mat-sidenav-content [ngClass]="{'footer-landing sidenav-content-lp': isLandingPage(), 'footer': !isLandingPage(), 'footer-l-0': !opened}"
+      <div mat-sidenav-content [ngClass]="{'footer-landing sidenav-content-lp': isHomePage(), 'footer': !isHomePage(), 'footer-l-0': !opened}"
            class="sidenav-content" fxLayout="row">
         <a href="https://forcrowd.org" target="_blank" class="footer-left">
           <img alt="Logo" src="/assets/images/Logo+Text_142x30.png?v=0.1.2" [ngStyle.xs]="{'padding-top.px': 10, 'width.px': 78}">
