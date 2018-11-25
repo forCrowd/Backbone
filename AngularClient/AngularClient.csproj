@@ -106,7 +106,6 @@
     <TypeScriptCompile Include="src\main\core\core.module.ts" />
     <TypeScriptCompile Include="src\main\core\dynamic-title-resolve.service.ts" />
     <TypeScriptCompile Include="src\main\core\components\home.component.ts" />
-    <TypeScriptCompile Include="src\main\core\components\not-found.component.ts" />
     <TypeScriptCompile Include="src\main\core\app-project.service.ts" />
     <TypeScriptCompile Include="src\main\core\components\search.component.ts" />
     <Content Include="e2e\protractor.conf.js" />
@@ -227,7 +226,6 @@
     <Content Include="src\main\account\reset-password.component.html" />
     <Content Include="src\main\core\components\contributors.component.html" />
     <Content Include="src\main\core\components\home.component.html" />
-    <Content Include="src\main\core\components\not-found.component.html" />
     <Content Include="src\main\core\components\search.component.html" />
     <Content Include="src\main\project\element-manager.component.html" />
     <Content Include="src\main\project\project-manager.component.html" />

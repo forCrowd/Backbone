@@ -1,5 +1,5 @@
 <mat-sidenav-container [ngClass]="{'container': !isHomePage(), 'landing': isHomePage()}">
-  <mat-sidenav #sidenav mode="side" [(opened)]="displaySidebar" class="bottom-to-top">
+  <mat-sidenav #sidenav mode="side" [opened]="displaySidebar" class="bottom-to-top">
     <mat-nav-list class="ml-0" dense>
       <mat-list-item class="logo-sidenav ml-0 logo-white" fxLayoutAlign="center center" mat-button routerLink="/">
         <img alt="Logo" src="/assets/images/backbone.png?v=0.1.0" class="backbone-icon">
@@ -99,7 +99,7 @@
 
       <router-outlet></router-outlet>
 
-      <div mat-sidenav-content [ngClass]="{'footer-landing sidenav-content-lp': isHomePage(), 'footer': !isHomePage(), 'footer-l-0': !opened}"
+      <div mat-sidenav-content [ngClass]="{'footer-landing sidenav-content-lp': isHomePage(), 'footer': !isHomePage(), 'footer-l-0': !displaySidebar}"
            class="sidenav-content" fxLayout="row">
         <a href="https://forcrowd.org" target="_blank" class="footer-left">
           <img alt="Logo" src="/assets/images/Logo+Text_142x30.png?v=0.1.2" [ngStyle.xs]="{'padding-top.px': 10, 'width.px': 78}">
