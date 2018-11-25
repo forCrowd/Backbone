@@ -38,8 +38,13 @@ export class CoreComponent implements OnDestroy, OnInit {
   }
 
   pathChecker(): void {
-    this.opened = this.router.url === "/" ? this.currentUser.isAuthenticated() : !(this.activeMediaQuery === "sm" || this.activeMediaQuery === "xs");
-    if (this.activeMediaQuery === "xs") this.opened = false;
+
+    this.opened = this.router.url === "/"
+      ? this.currentUser.isAuthenticated()
+      : !(this.activeMediaQuery === "sm" || this.activeMediaQuery === "xs");
+
+    if (this.activeMediaQuery === "xs")
+      this.opened = false;
   }
 
   isLandingPage(): boolean {
