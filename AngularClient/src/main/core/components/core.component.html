@@ -44,7 +44,7 @@
 
   </mat-sidenav>
 
-  <mat-sidenav-content [ngClass]="{'ml-250': !isLandingPage(), 'ml-0': activeMediaQuery === 'sm' || activeMediaQuery === 'xs', 'ml-00': currentUrl === '/' && !currentUser.isAuthenticated()}">
+  <mat-sidenav-content [ngClass]="{'ml-250': !isLandingPage(), 'ml-0': !opened, 'ml-00': isLandingPage()}">
 
     <mat-toolbar class="header-bb">
 
@@ -103,7 +103,7 @@
     <mat-sidenav-content class="content" [ngClass]="{'no-margin': isLandingPage()}">
       <router-outlet></router-outlet>
 
-      <div mat-sidenav-content [ngClass]="{'footer-landing': isLandingPage(), 'footer': !isLandingPage(), 'sidenav-content-lp': isLandingPage(), 'footer-l-0': !opened}"
+      <div mat-sidenav-content [ngClass]="{'footer-landing sidenav-content-lp': isLandingPage(), 'footer': !isLandingPage(), 'footer-l-0': !opened}"
         class="sidenav-content" fxLayout="row">
         <a href="https://forcrowd.org" target="_blank" class="footer-left">
           <img alt="Logo" src="/assets/images/Logo+Text_142x30.png?v=0.1.2" [ngStyle.xs]="{'padding-top.px': 10, 'width.px': 78}">
@@ -123,7 +123,7 @@
         </a>
         <a mat-button href="https://github.com/forCrowd/Backbone/blob/master/CHANGELOG.md" target="_blank" class="footer-right"
           [ngStyle.xs]="{'font-size.px': 12, 'padding-top.px': 4, 'min-width.px': 80, 'padding-left.px': 4}">
-          Version 0.9.17
+          Version 0.9.18
         </a>
       </div>
     </mat-sidenav-content>

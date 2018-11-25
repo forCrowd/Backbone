@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.9.18**
+
+* AngularClient - Minor
+
 **0.9.17**
 
 * AngularClient - @forCrowd/backbone-client-core npm package

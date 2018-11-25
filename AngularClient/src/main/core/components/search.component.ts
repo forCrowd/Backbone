@@ -26,7 +26,7 @@ export class SearchComponent {
         this.searchKey = url[1].parameters.searchKey;
         this.search();
       });
-      media.subscribe((change: MediaChange) => {
+      this.media.subscribe((change: MediaChange) => {
         if ( change.mqAlias === "xs" ) {
           this.displayedColumns = ["name", "userName"];
         } else {

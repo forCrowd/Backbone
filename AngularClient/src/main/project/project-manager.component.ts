@@ -17,7 +17,7 @@ export class ProjectManagerComponent implements OnInit {
   selectedTabIndex = 0;
   projectOwner: User = null;
   user: User;
-  viewMode = "new"; // new | existing
+  viewMode = "new"; // new | existing | view
 
   get metadataUrl(): string {
     return `${settings.serviceODataUrl}/$metadata`;

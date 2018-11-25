@@ -15,19 +15,12 @@ import { mergeMap, map, filter } from "rxjs/operators";
 })
 export class CoreComponent implements OnDestroy, OnInit {
 
-  opened = true;
-  over = "side";
-  expandHeight = "42px";
-  collapseHeight = "42px";
-  displayMode = "flat";
-  // overlap = false;
   activeMediaQuery = "";
-  watcher: Subscription;
-  currentUrl: string = "";
-  searchKey: string = null;
-
   currentUser: User = null;
   hideGuestAccountInfoBox: boolean = true;
+  opened = true;
+  over = "side";
+  searchKey: string = null;
   subscriptions: Subscription[] = [];
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -38,46 +31,21 @@ export class CoreComponent implements OnDestroy, OnInit {
     private titleService: Title,
     private router: Router,
     private media: ObservableMedia) {
-    angulartics.startTracking();
-    this.currentUser = this.authService.currentUser;
-    this.watcher = media.subscribe((change: MediaChange) => {
-      this.currentUrl = this.router.url;
-      this.activeMediaQuery = change.mqAlias;
-      if (change.mqAlias === "sm" || change.mqAlias === "xs") {
-        this.opened = false;
-        this.over = "side";
-      } else {
-        if (this.currentUrl === "/") {
-          this.opened = true;
-          this.over = "side";
-        } else {
-          this.opened = true;
-          this.over = "side";
-        }
-      }
-    });
+      this.angulartics.startTracking();
+      this.currentUser = this.authService.currentUser;
+      this.media.subscribe((change: MediaChange) => {
+        this.activeMediaQuery = change.mqAlias;
+        this.pathChecker();
+      });
   }
 
   pathChecker(): void {
-    this.currentUrl = this.router.url;
-    if (this.currentUrl === "/") {
-      this.opened = true;
-      this.over = "side";
-    } else {
-      if (this.activeMediaQuery === "sm" || this.activeMediaQuery === "xs") {
-        this.opened = false;
-        this.over = "side";
-      } else {
-        this.opened = true;
-        this.over = "side";
-      }
-    }
+    this.opened = this.router.url === "/" ? this.currentUser.isAuthenticated() : !(this.activeMediaQuery === "sm" || this.activeMediaQuery === "xs");
+    if (this.activeMediaQuery === "xs") this.opened = false;
   }
 
   isLandingPage(): boolean {
-    return this.currentUrl === "/"
-      ? !this.currentUser.isAuthenticated()
-      : false;
+    return this.router.url === "/" ? !this.currentUser.isAuthenticated() : false;
   }
 
   closeGuestAccountInfoBox(): void {
@@ -115,7 +83,7 @@ export class CoreComponent implements OnDestroy, OnInit {
         if (!this.authService.currentUser.isAuthenticated()
           && this.activatedRoute.snapshot.firstChild.routeConfig.path !== "app/account/login"
           && this.activatedRoute.snapshot.firstChild.routeConfig.path !== "app/account/register") {
-            this.authService.loginReturnUrl = this.router.url;
+          this.authService.loginReturnUrl = this.router.url;
         }
 
         this.pathChecker(); // for home and mobile
