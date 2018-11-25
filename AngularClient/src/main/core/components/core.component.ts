@@ -17,11 +17,12 @@ export class CoreComponent implements OnDestroy, OnInit {
 
   activeMediaQuery = "";
   currentUser: User = null;
-  hideGuestAccountInfoBox: boolean = true;
-  opened = true;
-  over = "side";
-  searchKey: string = null;
+  searchKey = "";
   subscriptions: Subscription[] = [];
+
+  get displaySidebar() {
+    return !(this.isHomePage() || this.activeMediaQuery === "xs");
+  }
 
   constructor(private activatedRoute: ActivatedRoute,
     private angulartics: Angulartics2GoogleGlobalSiteTag,
@@ -33,23 +34,10 @@ export class CoreComponent implements OnDestroy, OnInit {
     private media: ObservableMedia) {
       this.angulartics.startTracking();
       this.currentUser = this.authService.currentUser;
-      this.media.subscribe((change: MediaChange) => {
-        this.activeMediaQuery = change.mqAlias;
-        this.pathChecker();
-      });
   }
 
-  pathChecker(): void {
-    this.opened = this.router.url === "/" ? this.currentUser.isAuthenticated() : !(this.activeMediaQuery === "sm" || this.activeMediaQuery === "xs");
-    if (this.activeMediaQuery === "xs") this.opened = false;
-  }
-
-  isLandingPage(): boolean {
+  isHomePage(): boolean {
     return this.router.url === "/" ? !this.currentUser.isAuthenticated() : false;
-  }
-
-  closeGuestAccountInfoBox(): void {
-    this.hideGuestAccountInfoBox = true;
   }
 
   logout(): void {
@@ -86,7 +74,6 @@ export class CoreComponent implements OnDestroy, OnInit {
           this.authService.loginReturnUrl = this.router.url;
         }
 
-        this.pathChecker(); // for home and mobile
         while (route.firstChild) { route = route.firstChild; }
         return route;
       }),
@@ -107,12 +94,12 @@ export class CoreComponent implements OnDestroy, OnInit {
     // Current user changed subscription
     const currentUserChangedSubscription = this.authService.currentUserChanged.subscribe(currentUser => {
       this.currentUser = currentUser;
-      this.hideGuestAccountInfoBox = true;
     });
     this.subscriptions.push(currentUserChangedSubscription);
-  }
 
-  showGuestAccountInfoBox(): void {
-    this.hideGuestAccountInfoBox = false;
+    // Media queries
+    this.media.subscribe(change => {
+      this.activeMediaQuery = change.mqAlias;
+    });
   }
 }

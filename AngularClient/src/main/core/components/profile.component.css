@@ -69,3 +69,11 @@ mat-card .board {
   height: 140px;
   padding: 0px !important;
 }
+
+.noResults {
+  display: flex;
+  justify-content: center;
+  -o-justify-content: center;
+  -webkit-justify-content: center;
+  padding: 2em;
+}
