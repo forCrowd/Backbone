@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.9.20**
+
+* Package updates
+
 **0.9.19**
 
 * AngularClient - Catch-all route fix
