@@ -1,9 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { SelectionModel } from "@angular/cdk/collections";
+import { ObservableMedia } from "@angular/flex-layout";
 import { ActivatedRoute, Router } from "@angular/router";
-import { MediaChange, ObservableMedia } from "@angular/flex-layout";
 import { MatDialog, MatTableDataSource } from "@angular/material";
 import { AuthService, Project, ProjectService, User } from "@forcrowd/backbone-client-core";
+import { Subscription } from "rxjs";
 import { finalize } from "rxjs/operators";
 
 import { ProfileRemoveProjectComponent } from "./profile-remove-project.component";
@@ -13,14 +14,15 @@ import { ProfileRemoveProjectComponent } from "./profile-remove-project.componen
   templateUrl: "profile.component.html",
   styleUrls: ["profile.component.css"]
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnDestroy, OnInit {
 
   currentUser: User = null;
   displayedColumns = ["select", "name", "ratingCount", "createdOn", "functions"];
   dataSource = new MatTableDataSource<Project>([]);
+  mediaQuery = "";
+  profileUser: User = null;
   selection = new SelectionModel<Project>(true, []);
-  user: User = null;
-  userName: string = "";
+  subscriptions: Subscription[] = [];
 
   get isBusy(): boolean {
     return this.authService.isBusy || this.projectService.isBusy;
@@ -32,22 +34,6 @@ export class ProfileComponent implements OnInit {
     private projectService: ProjectService,
     private router: Router,
     private media: ObservableMedia) {
-      this.activatedRoute.url.subscribe(url =>{
-        if (url.length > 1 && url[1].path !== this.userName) {
-          if (this.displayedColumns.length === 3) {
-            this.displayedColumns.unshift("select");
-            this.displayedColumns.push("functions");
-          }
-          this.ngOnInit();
-        }
-      });
-      this.media.subscribe((change: MediaChange) => {
-        if ( change.mqAlias === "xs") {
-          this.displayedColumns = ["select", "name", "functions"];
-        } else {
-          this.displayedColumns = ["select", "name", "ratingCount", "createdOn", "functions"];
-        }
-      });
   }
 
   confirmRemove() {
@@ -64,9 +50,11 @@ export class ProfileComponent implements OnInit {
           this.projectService.removeProject(project);
         });
 
+        this.selection.clear();
+
         this.projectService.saveChanges().pipe(
           finalize(() => {
-            this.dataSource.data = this.user.ProjectSet;
+            this.dataSource.data = this.profileUser.ProjectSet;
           })).subscribe();
       }
     });
@@ -82,20 +70,23 @@ export class ProfileComponent implements OnInit {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  ngOnDestroy(): void {
+    for (let i = 0; i < this.subscriptions.length; i++) {
+      this.subscriptions[i].unsubscribe();
+    }
   }
 
   ngOnInit(): void {
 
     this.currentUser = this.authService.currentUser;
-    var activetedRouteParam = this.activatedRoute.snapshot.params["username"];
+    const profileUserName = this.activatedRoute.snapshot.params["username"] || this.currentUser.UserName;
 
-    // UserName
-    this.userName = activetedRouteParam !== undefined ? activetedRouteParam : this.currentUser.UserName;
-
-    this.authService.getUser(this.userName)
-      .subscribe((user) => {
+    this.authService.getUser(profileUserName)
+      .subscribe(user => {
 
         // Not found, navigate to 404
         if (user === null) {
@@ -104,22 +95,32 @@ export class ProfileComponent implements OnInit {
           return;
         }
 
-        this.user = user;
+        this.profileUser = user;
 
-        // if not project owner then
-        if (this.currentUser !== this.user)
-          this.displayedColumns = [ "name", "ratingCount", "createdOn"];
+        this.dataSource.data = this.profileUser.ProjectSet;
 
-        this.dataSource.data = this.user.ProjectSet;
+        this.setColumns();
       });
 
+    // Media queries
+    var mediaSubscription = this.media.subscribe(change => {
+      this.mediaQuery = change.mqAlias;
+      this.setColumns();
+    });
+    this.subscriptions.push(mediaSubscription);
+  }
+
+  private setColumns() {
+    this.displayedColumns = this.currentUser === this.profileUser
+      ? (this.mediaQuery !== "xs" && this.mediaQuery !== "sm")
+        ? ["select", "name", "ratingCount", "createdOn", "functions"]
+        : ["select", "name", "functions"]
+      : (this.mediaQuery !== "xs" && this.mediaQuery !== "sm")
+        ? ["name", "ratingCount", "createdOn"]
+        : ["name", "createdOn"];
   }
 
   trackBy(index: number, item: Project) {
     return item.Id;
-  }
-
-  userActionsEnabled(): boolean {
-    return this.user === this.authService.currentUser;
   }
 }
