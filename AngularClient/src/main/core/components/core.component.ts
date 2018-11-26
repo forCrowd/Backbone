@@ -15,13 +15,13 @@ import { mergeMap, map, filter } from "rxjs/operators";
 })
 export class CoreComponent implements OnDestroy, OnInit {
 
-  activeMediaQuery = "";
   currentUser: User = null;
+  mediaQuery = "";
   searchKey = "";
   subscriptions: Subscription[] = [];
 
   get displaySidebar() {
-    return !(this.isHomePage() || this.activeMediaQuery === "xs");
+    return !(this.isHomePage() || this.mediaQuery === "xs");
   }
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -98,8 +98,9 @@ export class CoreComponent implements OnDestroy, OnInit {
     this.subscriptions.push(currentUserChangedSubscription);
 
     // Media queries
-    this.media.subscribe(change => {
-      this.activeMediaQuery = change.mqAlias;
+    var mediaSubscription = this.media.subscribe(change => {
+      this.mediaQuery = change.mqAlias;
     });
+    this.subscriptions.push(mediaSubscription);
   }
 }

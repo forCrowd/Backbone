@@ -9,14 +9,14 @@ Lightweight API service for rapid application prototyping
 ### Server
 
 * .NET Framework 4.6
-* ASP.NET Web API 2 & OData v3
+* ASP.NET Web API 2 & OData 3
 * Entity Framework 6
 * SQL Server 2014
 
 ### Client
 
-* Angular 7.x
-* TypeScript 2.x
+* Angular 7
+* TypeScript 3
 * BreezeJS
 * Karma & Jasmine
 

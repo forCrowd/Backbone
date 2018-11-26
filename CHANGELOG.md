@@ -1,5 +1,11 @@
 ### Changelog
 
+**0.9.20**
+
+* AngularClient - Profile page - Delete project fix
+* AngularClient - Profile page - Media queries fix
+* Package updates
+
 **0.9.19**
 
 * AngularClient - Catch-all route fix

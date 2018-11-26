@@ -157,7 +157,7 @@ namespace Microsoft.Data.Edm
 
                 using (var reader = edmx.CreateReader())
                 {
-                    return EdmxReader.Parse(reader);
+                    return Csdl.EdmxReader.Parse(reader);
                 }
 
                 // Old part
