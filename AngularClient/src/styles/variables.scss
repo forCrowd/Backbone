@@ -7,6 +7,7 @@ $brand-palette: ( 50 : #ebf6f1, 100 : #cde8db, 200 : #acd9c3, 300 : #8ac9ab, 400
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
 $app-primary: mat-palette($brand-palette);
+$app-warning: mat-palette($mat-blue-grey);
 
 // Custom color variables
 $primary: mat-color($app-primary);
