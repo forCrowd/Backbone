@@ -7,6 +7,122 @@
     width: 100px !important;
   }
 
+  .searchInput-landing {
+    width: 80px !important;
+  }
+
+  .footer-left {
+    width: 10px;
+    margin-left: 4px;
+  }
+    .footer-left .img {
+      width: 24px;
+    }
+
+    .footer-left .pl-10 {
+      padding-left: 78px !important;
+    }
+
+  .img {
+    padding-top: 7px;
+    width: 78px !important;
+  }
+
+  .footer-right {
+    font-size: 12px;
+    padding: 0 4px;
+    min-width: 80px !important;
+  }
+}
+
+.backbone-icon {
+  width: 19px;
+  height: 26px;
+  padding-right: 8px;
+}
+
+.bottom-to-top {
+  border: 0px;
+  border-right: 1px;
+  border-style: solid;
+  background-color: #2e3640;
+  border-image: linear-gradient(to top, #c1c1c1, rgba(0, 0, 0, 0)) 1 100%
+}
+
+.content {
+  display: initial !important;
+  top: 64px !important;
+  margin: 0 !important;
+  padding-bottom: 100px;
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #f8f9fb;
+}
+
+.footer {
+  left: 250px !important;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  width: initial;
+  background-color: #f8f9fb;
+  z-index: 1;
+}
+
+.footer-landing {
+  position: unset;
+  left: 0px;
+  right: 0px;
+  width: initial;
+  background-color: #ffffff;
+  z-index: 1;
+}
+
+
+.footer-left {
+  margin-right: 10px;
+}
+
+.footer-right {
+  margin-left: 10px;
+}
+
+.footer-l-0 {
+  left: 0px !important;
+}
+
+.landing {
+  background-color: #f8f9fb;
+}
+
+.logo-white {
+  color: #ffffff;
+  font-size: 1.5em !important;
+  font-weight: 500;
+}
+
+.logo-black {
+  color: #000000;
+  padding-top: 14px !important;
+  padding-bottom: 14px !important;
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.logo-sidenav {
+  height: 60px !important;
+  border-bottom: 1px solid #7d7676;
 }
 
 .link {
@@ -60,19 +176,6 @@
   left: -33px;
 }
 
-.landing {
-  background-color: #f8f9fb;
-}
-
-.container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: #f8f9fb;
-}
-
 .mat-icon {
   color: #767676 !important;
 }
@@ -82,10 +185,6 @@
 }
 
 .ml-0 {
-  margin-left: 0px !important;
-}
-
-.ml-00 {
   margin-left: 0px !important;
 }
 
@@ -99,13 +198,6 @@ mat-sidenav {
   position: fixed
 }
 
-.content {
-  display: initial !important;
-  top: 64px !important;
-  margin: 0 !important;
-  padding-bottom: 100px;
-}
-
 .no-margin {
   z-index: 1;
   width: 100vw;
@@ -114,66 +206,24 @@ mat-sidenav {
   margin-right: 0px !important;
 }
 
-.logo-white {
-  color: #ffffff;
-  font-size: 1.5em !important;
-  font-weight: 500;
-}
-
-.logo-black {
-  color: #000000;
-  padding-top: 14px !important;
-  padding-bottom: 14px !important;
-  font-size: 1em;
-  font-weight: 500;
-}
-
-.logo-sidenav {
-  height: 60px !important;
-  border-bottom: 1px solid #7d7676;
-}
-
-.circle {
-  border-radius: 50%;
-}
-
-.with-bg {
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
-  max-height: 130px;
-}
-
-.no-shadow {
-  box-shadow: none !important;
-}
-
 ::ng-deep .mat-expansion-panel-body {
   padding: 0px !important;
   padding-left: 10px !important;
 }
 
-.header-bb {
+.header {
   right: 0px;
   background-color: #ffffff;
   border-bottom: 1px solid #dadada;
 }
 
-.bottom-to-top {
-  border: 0px;
-  border-right: 1px;
-  border-style: solid;
-  background-color: #2e3640;
-  border-image: linear-gradient(to top, #c1c1c1, rgba(0, 0, 0, 0)) 1 100%
+.list {
+  height: 46px !important;
 }
 
-.new-btn {
-  width: 145.9px;
-  height: 47.4px;
+.new-project-btn {
+  width: 146px;
+  height: 48px;
   border-radius: 4px;
   background-color: #58b287;
   font-family: Arial;
@@ -197,114 +247,9 @@ mat-sidenav {
   color: #ffffff;
 }
 
-.sidenav-link {
-  font-family: Arial;
-  font-size: 18px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #e8e8e8;
-}
-
-.list {
-  height: 46px !important;
-}
-
-
 .pt-20 {
   margin-top: 20px;
   margin-bottom: 14px;
-}
-
-.w-160 {
-  width: 160px;
-}
-
-/*  ---  */
-
-.backbone-icon {
-  width: 19px;
-  height: 26px;
-  padding-right: 8px;
-}
-
-.pt-4 {
-  padding-top: 3px !important;
-  float: left;
-}
-
-.footer-landing {
-  position: unset;
-  left: 0px;
-  right: 0px;
-  width: initial;
-  background-color: #ffffff;
-  z-index: 1;
-}
-
-.footer {
-  left: 250px !important;
-  position: fixed;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  width: initial;
-  background-color: #f8f9fb;
-  z-index: 1;
-}
-
-.footer-left {
-  margin-right: 10px;
-}
-
-.footer-right {
-  margin-left: 10px;
-}
-
-.footer-l-0 {
-  left: 0px !important;
-}
-
-.header {
-  left: 0px;
-  position: fixed;
-  right: 0px;
-  top: 0px;
-  width: initial;
-  z-index: 100;
-}
-  .header a {
-    left: 200px;
-    padding: 0px;
-    line-height: initial;
-  }
-
-  .header h1 {
-    display: inline-block;
-    margin-left: 0px;
-  }
-
-.sidenav {
-  align-items: center;
-  -ms-align-items: center;
-  -o-align-items: center;
-  -webkit-align-items: center;
-  background-color: #2e3640;
-  display: flex;
-  flex-direction: column;
-  width: 200px;
-}
-
-  .sidenav a, .sidenav button {
-    min-width: 200px;
-    padding: 0px;
-    color: #ffffff;
-  }
-
-.rotate {
-  transform: rotate(180deg);
 }
 
 .sidenav-container {
@@ -321,4 +266,19 @@ mat-sidenav {
 
 .sidenav-content-lp {
   padding: 30px 30px 78px 40px;
+}
+
+.sidenav-link {
+  font-family: Arial;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #e8e8e8;
+}
+
+.w-160 {
+  width: 160px;
 }

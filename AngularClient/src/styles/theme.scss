@@ -9,7 +9,7 @@
 @include mat-core();
 
 // Create the theme object (a Sass map containing all of the palettes).
-$app-theme: mat-light-theme($app-primary, $app-primary);
+$app-theme: mat-light-theme($app-primary, $app-primary, $app-warning);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component

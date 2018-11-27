@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.9.21**
+
+* AngularClient - UI minor fix
+
 **0.9.20**
 
 * AngularClient - Profile page - Delete project fix

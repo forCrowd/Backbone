@@ -61,7 +61,7 @@
   <!-- Element item add/edit -->
   <div *ngIf="selectedElementItem">
 
-    <mat-card class="g-mt-20">
+    <mat-card class="g-mt-20 g-mb-250">
       <form #elementItemForm="ngForm" autocomplete="off">
         <div class="g-mt-40 m-16">
           <div *ngIf="selectedElementItem.entityAspect.entityState.isAdded()" [ngClass]="{ 'has-error': selectedElementItem.entityAspect.getValidationErrors('Element').length > 0 }"
@@ -86,7 +86,7 @@
             <button mat-flat-button (click)="saveElementItem()" [disabled]="submitDisabled()" class="mat-m02">
               Save item
             </button>
-            <button mat-flat-button (click)="cancelElementItem()" [disabled]="isBusy" color="primary" class="mat-m02">
+            <button mat-flat-button (click)="cancelElementItem()" [disabled]="isBusy" color="warn" class="mat-m02">
               Cancel
             </button>
           </div>

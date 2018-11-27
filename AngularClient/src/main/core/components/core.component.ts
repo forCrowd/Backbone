@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { ObservableMedia, MediaChange } from "@angular/flex-layout";
+import { ObservableMedia } from "@angular/flex-layout";
 import { MatSnackBar } from "@angular/material";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
@@ -21,7 +21,7 @@ export class CoreComponent implements OnDestroy, OnInit {
   subscriptions: Subscription[] = [];
 
   get displaySidebar() {
-    return !(this.isHomePage() || this.mediaQuery === "xs");
+    return !(this.isHomePage() || (this.mediaQuery === "xs" || this.mediaQuery === "sm"));
   }
 
   constructor(private activatedRoute: ActivatedRoute,
