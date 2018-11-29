@@ -91,7 +91,7 @@ namespace forCrowd.Backbone.BusinessObjects.Entities
             MiddleName = default(string);
             LastName = default(string);
             Notes = default(string);
-            CreatedOn = default(DateTime);
+            //CreatedOn = default(DateTime);
             ModifiedOn = default(DateTime);
             DeletedOn = default(DateTime?);
             RowVersion = new byte[] { };

@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.9.22**
+
+* Server - User - CreatedOn field fix
+
 **0.9.21**
 
 * AngularClient - UI minor fix
