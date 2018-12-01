@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.9.23**
+
+* Angular - Library - Updates
+
 **0.9.22**
 
 * Server - User - CreatedOn field fix

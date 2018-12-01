@@ -23,6 +23,7 @@ export class ElementField extends EntityBase {
   // Server-side
   Id = 0;
   Element: Element;
+  Name = "";
   DataType = ElementFieldDataType.String;
   SelectedElement: Element;
   UseFixedValue = false;
@@ -33,15 +34,8 @@ export class ElementField extends EntityBase {
   ElementCellSet: ElementCell[];
   UserElementFieldSet: UserElementField[];
 
-  get Name(): string {
-    return this.fields.name;
-  }
-  set Name(value: string) {
-    this.fields.name = value.trim();
-  }
-
   // Client-side
-  get DataTypeText(): string {
+  get DataTypeText() {
 
     let text = ElementFieldDataType[this.DataType];
 
@@ -55,13 +49,7 @@ export class ElementField extends EntityBase {
   otherUsersRatingTotal = 0;
   otherUsersRatingCount = 0;
 
-  private fields: {
-    name: string,
-  } = {
-      name: "",
-    };
-
-  initialize(): void {
+  initialize() {
     if (this.initialized) return;
 
     super.initialize();

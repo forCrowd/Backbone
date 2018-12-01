@@ -171,6 +171,7 @@
     <None Include="package.json" />
     <None Include="projects\backbone-client-core\ng-package.json" />
     <None Include="projects\backbone-client-core\package.json" />
+    <None Include="projects\backbone-client-core\CHANGELOG.md" />
     <None Include="projects\backbone-client-core\README.md" />
     <None Include="projects\backbone-client-core\tsconfig.lib.json" />
     <None Include="projects\backbone-client-core\tsconfig.spec.json" />

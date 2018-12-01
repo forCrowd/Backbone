@@ -9,30 +9,17 @@ export class ElementCell extends EntityBase {
   Id = 0;
   ElementField: ElementField;
   ElementItem: ElementItem;
+  StringValue: string | null = null;
   DecimalValueTotal = 0;
   DecimalValueCount = 0;
   SelectedElementItem: ElementItem;
   UserElementCellSet: UserElementCell[];
 
-  get StringValue(): string {
-    return this.fields.stringValue;
-  }
-  set StringValue(value: string) {
-    this.fields.stringValue = value ? value.trim() : null;
-  }
-
   // Client
   otherUsersDecimalValueTotal = 0;
   otherUsersDecimalValueCount = 0;
 
-  // Client-side
-  private fields: {
-    stringValue: string,
-  } = {
-      stringValue: null,
-    };
-
-  initialize(): boolean {
+  initialize() {
     if (this.initialized) return;
 
     super.initialize();
