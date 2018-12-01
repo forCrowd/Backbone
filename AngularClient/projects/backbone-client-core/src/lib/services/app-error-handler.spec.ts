@@ -3,7 +3,7 @@ import { TestBed, getTestBed } from "@angular/core/testing";
 import { from } from "rxjs";
 import { SourceMapConsumer } from "source-map";
 
-import { Config } from "../config";
+import { CoreConfig } from "../core-config";
 import { AppErrorHandler } from "./app-error-handler";
 
 describe("app-error-handler", () => {
@@ -26,7 +26,7 @@ describe("app-error-handler", () => {
 
   it("constructor", () => {
 
-    var config: Config = {
+    var config: CoreConfig = {
       environment: "Development",
       entityManagerConfig: null,
       serviceApiUrl: "",

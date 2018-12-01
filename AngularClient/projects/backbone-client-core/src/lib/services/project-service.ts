@@ -9,7 +9,7 @@ import { AppHttpClient } from "../app-http-client/app-http-client";
 import { AuthService } from "../auth/auth-service";
 import { ElementCell, ElementField, ElementFieldDataType, ElementItem, Element, Project, UserElementCell } from
   "../entities";
-import { Config } from "../config";
+import { CoreConfig } from "../core-config";
 import { getUniqueValue } from "../utils";
 
 @Injectable()
@@ -25,7 +25,7 @@ export class ProjectService {
   constructor(private appEntityManager: AppEntityManager,
     private authService: AuthService,
     private httpClient: HttpClient,
-    private readonly config: Config) {
+    private readonly config: CoreConfig) {
 
     this.appHttpClient = httpClient as AppHttpClient;
   }

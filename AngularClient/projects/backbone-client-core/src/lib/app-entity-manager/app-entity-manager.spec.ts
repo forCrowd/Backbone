@@ -9,7 +9,7 @@ import { EntityManagerConfig } from "./app-entity-manager-config";
 import { metadataExported } from "./metadata";
 import { Project } from "../entities/project";
 import { NotificationService } from "../services/notification-service";
-import { Config } from "../config";
+import { CoreConfig } from "../core-config";
 
 class CustomProject extends Project {
   get IdExtended() {
@@ -23,7 +23,7 @@ describe("app-entity-manager/app-entity-manager", () => {
   const entityManagerConfig = new EntityManagerConfig();
   let injector: TestBed;
   const notificationService = new NotificationService();
-  let config: Config;
+  let config: CoreConfig;
 
   beforeEach(() => {
     TestBed.configureTestingModule({

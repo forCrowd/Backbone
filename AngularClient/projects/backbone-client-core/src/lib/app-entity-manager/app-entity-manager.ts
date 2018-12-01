@@ -12,7 +12,7 @@ import "datajs";
 
 import { EntityBase, Token } from "../entities";
 import { NotificationService } from "../services/notification-service";
-import { Config } from "../config";
+import { CoreConfig } from "../core-config";
 
 export interface IQueryResult<T> {
   count: number;
@@ -28,7 +28,7 @@ export class AppEntityManager extends EntityManager {
 
   constructor(private breezeBridgeHttpClientModule: BreezeBridgeHttpClientModule,
     private notificationService: NotificationService,
-    private config: Config) {
+    private config: CoreConfig) {
 
     super({
       serviceName: config.serviceODataUrl
@@ -71,9 +71,11 @@ export class AppEntityManager extends EntityManager {
     this.metadataStore.registerEntityTypeCtor("Project", config.entityManagerConfig.projectType);
     this.metadataStore.registerEntityTypeCtor("Role", config.entityManagerConfig.roleType);
     this.metadataStore.registerEntityTypeCtor("User", config.entityManagerConfig.userType);
-    this.metadataStore.registerEntityTypeCtor("UserRole", config.entityManagerConfig.userRoleType);
+    this.metadataStore.registerEntityTypeCtor("UserClaim", config.entityManagerConfig.userClaimType);
     this.metadataStore.registerEntityTypeCtor("UserElementCell", config.entityManagerConfig.userElementCellType);
     this.metadataStore.registerEntityTypeCtor("UserElementField", config.entityManagerConfig.userElementFieldType);
+    this.metadataStore.registerEntityTypeCtor("UserLogin", config.entityManagerConfig.userLoginType);
+    this.metadataStore.registerEntityTypeCtor("UserRole", config.entityManagerConfig.userRoleType);
   }
 
   clear(): void {
