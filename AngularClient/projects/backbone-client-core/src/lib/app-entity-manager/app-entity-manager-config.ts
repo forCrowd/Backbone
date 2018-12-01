@@ -1,5 +1,5 @@
-import { ElementCell, ElementField, ElementItem, Element, Project, Role, User, UserElementCell, UserElementField,
-  UserRole } from "../entities";
+import { ElementCell, ElementField, ElementItem, Element, Project, Role, User, UserClaim, UserElementCell,
+  UserElementField, UserLogin, UserRole } from "../entities";
 
 export class EntityManagerConfig {
   elementCellType: any = ElementCell;
@@ -8,8 +8,10 @@ export class EntityManagerConfig {
   elementType: any = Element;
   projectType: any = Project;
   roleType: any = Role;
+  userClaim: any = UserClaim;
   userType: any = User;
   userElementCellType: any = UserElementCell;
   userElementFieldType: any = UserElementField;
+  userLogin: any = UserLogin;
   userRoleType: any = UserRole;
 }

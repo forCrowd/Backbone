@@ -3,7 +3,7 @@ import { throwError as observableThrowError, of as observableOf, from as observa
 import { map, finalize, catchError } from "rxjs/operators";
 
 import {
-  config, Entity, EntityManager, EntityQuery, EntityState, EntityStateSymbol, EntityType, ExecuteQueryErrorCallback,
+  config as BreezeConfig, Entity, EntityManager, EntityQuery, EntityState, EntityStateSymbol, EntityType, ExecuteQueryErrorCallback,
   ExecuteQuerySuccessCallback, FetchStrategy, MergeStrategySymbol, QueryResult, SaveChangesErrorCallback, SaveChangesSuccessCallback,
   SaveOptions, SaveResult
 } from "breeze-client";
@@ -12,7 +12,7 @@ import "datajs";
 
 import { EntityBase, Token } from "../entities";
 import { NotificationService } from "../services/notification-service";
-import { Settings } from "../settings";
+import { Config } from "../config";
 
 export interface IQueryResult<T> {
   count: number;
@@ -28,16 +28,16 @@ export class AppEntityManager extends EntityManager {
 
   constructor(private breezeBridgeHttpClientModule: BreezeBridgeHttpClientModule,
     private notificationService: NotificationService,
-    private settings: Settings) {
+    private config: Config) {
 
     super({
-      serviceName: settings.serviceODataUrl
+      serviceName: config.serviceODataUrl
     });
 
-    config.initializeAdapterInstance("uriBuilder", "odata");
+    BreezeConfig.initializeAdapterInstance("uriBuilder", "odata");
 
     // Use Web API OData to query and save
-    const adapter = config.initializeAdapterInstance("dataService", "webApiOData", true) as any;
+    const adapter = BreezeConfig.initializeAdapterInstance("dataService", "webApiOData", true) as any;
     adapter.getRoutePrefix = this.getRoutePrefix_Microsoft_AspNet_WebApi_OData_5_3_x;
 
     // OData authorization interceptor
@@ -64,16 +64,16 @@ export class AppEntityManager extends EntityManager {
     // breeze.NamingConvention.camelCase.setAsDefault();
 
     // Metadata store
-    this.metadataStore.registerEntityTypeCtor("Element", settings.entityManagerConfig.elementType);
-    this.metadataStore.registerEntityTypeCtor("ElementCell", settings.entityManagerConfig.elementCellType);
-    this.metadataStore.registerEntityTypeCtor("ElementField", settings.entityManagerConfig.elementFieldType);
-    this.metadataStore.registerEntityTypeCtor("ElementItem", settings.entityManagerConfig.elementItemType);
-    this.metadataStore.registerEntityTypeCtor("Project", settings.entityManagerConfig.projectType);
-    this.metadataStore.registerEntityTypeCtor("Role", settings.entityManagerConfig.roleType);
-    this.metadataStore.registerEntityTypeCtor("User", settings.entityManagerConfig.userType);
-    this.metadataStore.registerEntityTypeCtor("UserRole", settings.entityManagerConfig.userRoleType);
-    this.metadataStore.registerEntityTypeCtor("UserElementCell", settings.entityManagerConfig.userElementCellType);
-    this.metadataStore.registerEntityTypeCtor("UserElementField", settings.entityManagerConfig.userElementFieldType);
+    this.metadataStore.registerEntityTypeCtor("Element", config.entityManagerConfig.elementType);
+    this.metadataStore.registerEntityTypeCtor("ElementCell", config.entityManagerConfig.elementCellType);
+    this.metadataStore.registerEntityTypeCtor("ElementField", config.entityManagerConfig.elementFieldType);
+    this.metadataStore.registerEntityTypeCtor("ElementItem", config.entityManagerConfig.elementItemType);
+    this.metadataStore.registerEntityTypeCtor("Project", config.entityManagerConfig.projectType);
+    this.metadataStore.registerEntityTypeCtor("Role", config.entityManagerConfig.roleType);
+    this.metadataStore.registerEntityTypeCtor("User", config.entityManagerConfig.userType);
+    this.metadataStore.registerEntityTypeCtor("UserRole", config.entityManagerConfig.userRoleType);
+    this.metadataStore.registerEntityTypeCtor("UserElementCell", config.entityManagerConfig.userElementCellType);
+    this.metadataStore.registerEntityTypeCtor("UserElementField", config.entityManagerConfig.userElementFieldType);
   }
 
   clear(): void {
@@ -377,7 +377,13 @@ export class AppEntityManager extends EntityManager {
     batches.push(this.getEntities("ElementField", EntityState.Deleted));
     batches.push(this.getEntities("Element", EntityState.Deleted));
     batches.push(this.getEntities("Project", EntityState.Deleted));
+    batches.push(this.getEntities("UserLogin", EntityState.Deleted));
+    batches.push(this.getEntities("UserClaim", EntityState.Deleted));
+    batches.push(this.getEntities("User", EntityState.Deleted));
 
+    batches.push(this.getEntities("User", EntityState.Added));
+    batches.push(this.getEntities("UserClaim", EntityState.Added));
+    batches.push(this.getEntities("UserLogin", EntityState.Added));
     batches.push(this.getEntities("Project", EntityState.Added));
     batches.push(this.getEntities("Element", EntityState.Added));
     batches.push(this.getEntities("ElementField", EntityState.Added));
