@@ -17,6 +17,7 @@
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\app-entity-manager\app-entity-manager-module.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\app-entity-manager\app-entity-manager.spec.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\auth\auth-module.ts" />
+    <TypeScriptCompile Include="projects\backbone-client-core\src\lib\core-config.spec.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\entities\index.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\services\app-error-handler.spec.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\services\app-error-handler.ts" />
@@ -26,7 +27,7 @@
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\app-http-client\busy-interceptor.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\app-http-client\error-interceptor.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\services\project-service.ts" />
-    <TypeScriptCompile Include="projects\backbone-client-core\src\lib\settings.ts" />
+    <TypeScriptCompile Include="projects\backbone-client-core\src\lib\core-config.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\auth\auth-service.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\app-entity-manager\breeze-client-odata-fix.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\entities\element-cell.spec.ts" />
@@ -48,7 +49,7 @@
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\entities\user-login.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\entities\user-role.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\entities\user.ts" />
-    <TypeScriptCompile Include="projects\backbone-client-core\src\lib\main-module.ts" />
+    <TypeScriptCompile Include="projects\backbone-client-core\src\lib\core-module.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\services\notification-service.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\entities\token.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\utils.ts" />
@@ -106,7 +107,7 @@
     <TypeScriptCompile Include="src\main\account\reset-password.component.ts" />
     <TypeScriptCompile Include="src\main\core\can-deactivate-guard.service.ts" />
     <TypeScriptCompile Include="src\main\core\components\contributors.component.ts" />
-    <TypeScriptCompile Include="src\main\core\core.module.ts" />
+    <TypeScriptCompile Include="src\main\core\app-core.module.ts" />
     <TypeScriptCompile Include="src\main\core\dynamic-title-resolve.service.ts" />
     <TypeScriptCompile Include="src\main\core\components\home.component.ts" />
     <TypeScriptCompile Include="src\main\core\app-project.service.ts" />

@@ -2,7 +2,7 @@ import { Component, NgModule } from "@angular/core";
 
 import { AccountModule } from "./account/account.module";
 import { AdminModule } from "./admin/admin.module";
-import { CoreModule } from "./core/core.module";
+import { AppCoreModule } from "./core/app-core.module";
 import { NotFoundModule } from "./not-found/not-found.module";
 import { ProjectModule } from "./project/project.module";
 
@@ -22,7 +22,7 @@ export class AppComponent { }
     AppComponent
   ],
   imports: [
-    CoreModule,
+    AppCoreModule,
     AccountModule,
     ProjectModule,
     AdminModule,

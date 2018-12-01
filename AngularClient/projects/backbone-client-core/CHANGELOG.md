@@ -2,8 +2,9 @@
 
 **0.2.0**
 
-* CHANGELOG.md file
+* EntityManagerConfig: Now the client app can pass "extended" entities
 * String fields trim() update
+* CHANGELOG.md file
 
 **0.1.2**
 

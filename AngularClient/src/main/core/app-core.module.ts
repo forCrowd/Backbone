@@ -3,7 +3,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
 import { Angulartics2Module } from "angulartics2";
-import { BackboneClientCoreModule, ISettings, ProjectService } from "@forcrowd/backbone-client-core";
+import { CoreConfig, CoreModule, ProjectService } from "@forcrowd/backbone-client-core";
 
 import { SharedModule } from "../shared/shared.module";
 
@@ -35,7 +35,7 @@ export class ExComponent {
   constructor() { throw new Error("test"); }
 }
 
-const coreRoutes: Routes = [
+const appCoreRoutes: Routes = [
 
   // Core
   { path: "", component: LandingPageComponent, data: { title: "Home" } },
@@ -49,12 +49,7 @@ const coreRoutes: Routes = [
   { path: "users/:username", component: ProfileComponent, resolve: { title: DynamicTitleResolve } },
 ];
 
-const coreSettings: ISettings = {
-  environment: settings.environment,
-  serviceApiUrl: settings.serviceApiUrl,
-  serviceODataUrl: settings.serviceODataUrl,
-  sourceMapMappingsUrl: settings.sourceMapMappingsUrl
-}
+const coreConfig = new CoreConfig(settings.environment, settings.serviceApiUrl, settings.serviceODataUrl, null, settings.sourceMapMappingsUrl);
 
 @NgModule({
   declarations: [
@@ -79,9 +74,9 @@ const coreSettings: ISettings = {
     SharedModule,
     BrowserModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(coreRoutes),
+    RouterModule.forRoot(appCoreRoutes),
     Angulartics2Module.forRoot(),
-    BackboneClientCoreModule.configure(coreSettings)
+    CoreModule.configure(coreConfig)
   ],
   providers: [
     AuthGuard,
@@ -94,4 +89,4 @@ const coreSettings: ISettings = {
     },
   ]
 })
-export class CoreModule { }
+export class AppCoreModule { }

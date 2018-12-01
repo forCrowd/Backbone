@@ -2,7 +2,7 @@
 
 **0.9.23**
 
-* Angular - Library - Updates
+* Angular - Library updates
 
 **0.9.22**
 
