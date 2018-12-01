@@ -11,8 +11,11 @@
   <ItemGroup>
     <TypeScriptCompile Include="e2e\src\app.e2e-spec.ts" />
     <TypeScriptCompile Include="e2e\src\app.po.ts" />
+    <TypeScriptCompile Include="projects\backbone-client-core\src\lib\app-entity-manager\app-entity-manager-config.ts" />
+    <TypeScriptCompile Include="projects\backbone-client-core\src\lib\app-entity-manager\metadata.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\app-entity-manager\app-entity-manager.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\app-entity-manager\app-entity-manager-module.ts" />
+    <TypeScriptCompile Include="projects\backbone-client-core\src\lib\app-entity-manager\app-entity-manager.spec.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\auth\auth-module.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\entities\index.ts" />
     <TypeScriptCompile Include="projects\backbone-client-core\src\lib\services\app-error-handler.spec.ts" />

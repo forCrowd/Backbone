@@ -9,7 +9,7 @@ import { AppHttpClient } from "../app-http-client/app-http-client";
 import { AuthService } from "../auth/auth-service";
 import { ElementCell, ElementField, ElementFieldDataType, ElementItem, Element, Project, UserElementCell } from
   "../entities";
-import { Settings } from "../settings";
+import { Config } from "../config";
 import { getUniqueValue } from "../utils";
 
 @Injectable()
@@ -25,7 +25,7 @@ export class ProjectService {
   constructor(private appEntityManager: AppEntityManager,
     private authService: AuthService,
     private httpClient: HttpClient,
-    private readonly settings: Settings) {
+    private readonly config: Config) {
 
     this.appHttpClient = httpClient as AppHttpClient;
   }
@@ -471,7 +471,7 @@ export class ProjectService {
   }
 
   private getUpdateComputedFieldsUrl(projectId: number) {
-    return `${this.settings.serviceApiUrl}/ProjectApi/${projectId}/UpdateComputedFields`;
+    return `${this.config.serviceApiUrl}/ProjectApi/${projectId}/UpdateComputedFields`;
   }
 
   private removeElementCell(elementCell: ElementCell): void {

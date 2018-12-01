@@ -8,7 +8,7 @@ import { AppEntityManager } from "../app-entity-manager/app-entity-manager";
 import { AppHttpClient } from "../app-http-client/app-http-client";
 import { Role, Token, User, UserRole } from "../entities";
 import { NotificationService } from "../services/notification-service";
-import { Settings } from "../settings";
+import { Config } from "../config";
 import { getUniqueUserName } from "../utils";
 
 @Injectable()
@@ -50,14 +50,14 @@ export class AuthService {
   constructor(private appEntityManager: AppEntityManager,
     private httpClient: HttpClient,
     private notificationService: NotificationService,
-    private settings: Settings) {
+    private config: Config) {
 
     this.appHttpClient = httpClient as AppHttpClient;
 
     // Service urls
-    this.currentUserUrl = settings.serviceApiUrl + "/Account/CurrentUser";
-    this.registerUrl = settings.serviceApiUrl + "/Account/Register";
-    this.tokenUrl = settings.serviceApiUrl + "/Token";
+    this.currentUserUrl = config.serviceApiUrl + "/Account/CurrentUser";
+    this.registerUrl = config.serviceApiUrl + "/Account/Register";
+    this.tokenUrl = config.serviceApiUrl + "/Token";
   }
 
   ensureAuthenticatedUser() {

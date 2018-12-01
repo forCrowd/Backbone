@@ -6,7 +6,7 @@ import { AuthModule } from "./auth/auth-module";
 import { AppErrorHandler } from "./services/app-error-handler";
 import { NotificationService } from "./services/notification-service";
 import { ProjectService } from "./services/project-service";
-import { ISettings, Settings } from "./settings";
+import { Config } from "./config";
 
 // @dynamic
 // Fixes "Error encountered in metadata generated for exported symbol" error during 'build' operation
@@ -20,23 +20,23 @@ import { ISettings, Settings } from "./settings";
 })
 export class MainModule {
 
-  static configure(settings: ISettings): ModuleWithProviders {
+  static configure(config: Config): ModuleWithProviders {
 
     return {
       ngModule: MainModule,
       providers: [
+        // Config
+        {
+          provide: Config,
+          useValue: config
+        },
         // Error handler
         {
           provide: ErrorHandler,
           useClass: AppErrorHandler
         },
         NotificationService,
-        ProjectService,
-        // Settings
-        {
-          provide: Settings,
-          useValue: settings
-        }
+        ProjectService
       ]
     };
   }

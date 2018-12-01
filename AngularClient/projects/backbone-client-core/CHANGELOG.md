@@ -1,6 +1,6 @@
 ### Changelog
 
-**0.1.3**
+**0.2.0**
 
 * CHANGELOG.md file
 * String fields trim() update

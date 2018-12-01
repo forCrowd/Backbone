@@ -10,9 +10,7 @@ import {
 import { BreezeBridgeHttpClientModule } from "breeze-bridge2-angular";
 import "datajs";
 
-import {
-  ElementCell, ElementField, ElementItem, Element, EntityBase, Project, Role, Token, User, UserElementCell,
-  UserElementField, UserRole } from "../entities";
+import { EntityBase, Token } from "../entities";
 import { NotificationService } from "../services/notification-service";
 import { Settings } from "../settings";
 
@@ -66,16 +64,16 @@ export class AppEntityManager extends EntityManager {
     // breeze.NamingConvention.camelCase.setAsDefault();
 
     // Metadata store
-    this.metadataStore.registerEntityTypeCtor("Element", Element);
-    this.metadataStore.registerEntityTypeCtor("ElementCell", ElementCell);
-    this.metadataStore.registerEntityTypeCtor("ElementField", ElementField);
-    this.metadataStore.registerEntityTypeCtor("ElementItem", ElementItem);
-    this.metadataStore.registerEntityTypeCtor("Project", Project);
-    this.metadataStore.registerEntityTypeCtor("Role", Role);
-    this.metadataStore.registerEntityTypeCtor("User", User);
-    this.metadataStore.registerEntityTypeCtor("UserRole", UserRole);
-    this.metadataStore.registerEntityTypeCtor("UserElementCell", UserElementCell);
-    this.metadataStore.registerEntityTypeCtor("UserElementField", UserElementField);
+    this.metadataStore.registerEntityTypeCtor("Element", settings.entityManagerConfig.elementType);
+    this.metadataStore.registerEntityTypeCtor("ElementCell", settings.entityManagerConfig.elementCellType);
+    this.metadataStore.registerEntityTypeCtor("ElementField", settings.entityManagerConfig.elementFieldType);
+    this.metadataStore.registerEntityTypeCtor("ElementItem", settings.entityManagerConfig.elementItemType);
+    this.metadataStore.registerEntityTypeCtor("Project", settings.entityManagerConfig.projectType);
+    this.metadataStore.registerEntityTypeCtor("Role", settings.entityManagerConfig.roleType);
+    this.metadataStore.registerEntityTypeCtor("User", settings.entityManagerConfig.userType);
+    this.metadataStore.registerEntityTypeCtor("UserRole", settings.entityManagerConfig.userRoleType);
+    this.metadataStore.registerEntityTypeCtor("UserElementCell", settings.entityManagerConfig.userElementCellType);
+    this.metadataStore.registerEntityTypeCtor("UserElementField", settings.entityManagerConfig.userElementFieldType);
   }
 
   clear(): void {
