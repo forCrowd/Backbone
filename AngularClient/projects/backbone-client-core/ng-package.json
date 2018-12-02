@@ -8,5 +8,11 @@
       "source-map": "sourceMap"
     },
     "entryFile": "src/public_api.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "breeze-client",
+    "breeze-bridge2-angular",
+    "datajs",
+    "source-map"
+  ]
 }

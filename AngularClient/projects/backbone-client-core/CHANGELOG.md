@@ -1,8 +1,12 @@
 ### Changelog
 
+**0.2.1**
+
+* Package.json - Dependencies & peer dependencies fix
+
 **0.2.0**
 
-* EntityManagerConfig: Now the client app can pass "extended" entities
+* EntityManagerConfig: Allows client app to pass "extended" entities
 * String fields trim() update
 * CHANGELOG.md file
 
