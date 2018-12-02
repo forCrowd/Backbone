@@ -7,7 +7,7 @@ import { mergeMap, finalize, map } from "rxjs/operators";
 import { AppEntityManager } from "../app-entity-manager/app-entity-manager";
 import { AppHttpClient } from "../app-http-client/app-http-client";
 import { AuthService } from "../auth/auth-service";
-import { ElementCell, ElementField, ElementFieldDataType, ElementItem, Element, Project, UserElementCell } from
+import { ElementCell, ElementField, ElementFieldDataType, ElementItem, Element, Project, UserElementCell, UserElementField } from
   "../entities";
 import { CoreConfig } from "../core-config";
 import { getUniqueValue } from "../utils";
@@ -36,21 +36,6 @@ export class ProjectService {
 
   createElementCell<TElementCell extends ElementCell>(initialValues: {}) {
     return this.appEntityManager.createEntity("ElementCell", initialValues) as TElementCell;
-  }
-
-  createUserElementCell<TUserElementCell extends UserElementCell>(elementCell: ElementCell, decimalValue: number | null) {
-
-    if (elementCell.ElementField.DataType !== ElementFieldDataType.Decimal) {
-      throw new Error(`Invalid field type: ${elementCell.ElementField.DataType}`);
-    }
-
-    const initialValues = {
-      User: this.authService.currentUser,
-      ElementCell: elementCell,
-      DecimalValue: decimalValue
-    };
-
-    return this.appEntityManager.createEntity("UserElementCell", initialValues);
   }
 
   createElementField<TElementField extends ElementField>(initialValues: {}) {
@@ -211,6 +196,38 @@ export class ProjectService {
 
     // Return
     return project;
+  }
+
+  createUserElementCell<TUserElementCell extends UserElementCell>(elementCell: ElementCell, decimalValue: number | null) {
+
+    if (elementCell.ElementField.DataType !== ElementFieldDataType.Decimal) {
+      throw new Error(`Invalid field type: ${elementCell.ElementField.DataType}`);
+    }
+
+    const initialValues = {
+      User: this.authService.currentUser,
+      ElementCell: elementCell,
+      DecimalValue: decimalValue
+    };
+
+    return this.appEntityManager.createEntity("UserElementCell", initialValues) as TUserElementCell;
+  }
+
+  createUserElementField<TUserElementField extends UserElementField>(elementField: ElementField, rating: number) {
+
+    if (!elementField.RatingEnabled) {
+      throw new Error(`Invalid state: elementField.RatingEnabled must be true`);
+    }
+
+    const initialValues = {
+      User: this.authService.currentUser,
+      ElementField: elementField,
+      Rating: rating
+    };
+
+    this.appEntityManager.createEntity("UserElementField", initialValues);
+
+    return this.appEntityManager.createEntity("UserElementCell", initialValues) as TUserElementField;
   }
 
   getProjectExpanded<TProject extends Project>(projectId: number, forceRefresh = false) {
