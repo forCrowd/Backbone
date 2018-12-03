@@ -12,8 +12,12 @@ export class User extends EntityBase {
 
   // Server-side
   Id = 0;
+  Email = "";
   EmailConfirmed = false;
-  EmailConfirmationSentOn: Date | null;
+  EmailConfirmationSentOn: Date | null = null;
+  FirstName: string = null;
+  MiddleName: string = null;
+  LastName: string = null;
   SingleUseToken: string = null;
   HasPassword = false;
   PhoneNumber = "";
@@ -21,7 +25,7 @@ export class User extends EntityBase {
   TwoFactorEnabled = false;
   AccessFailedCount = 0;
   LockoutEnabled = false;
-  LockoutEndDateUtc: Date = null;
+  LockoutEndDateUtc: Date | null = null;
   Notes = "";
   Claims: UserClaim[];
   Logins: UserLogin[];
@@ -33,34 +37,6 @@ export class User extends EntityBase {
   // Client-side
   token: Token = null;
 
-  get Email(): string {
-    return this.fields.email;
-  }
-  set Email(value: string) {
-    this.fields.email = value.trim();
-  }
-
-  get FirstName(): string {
-    return this.fields.firstName;
-  }
-  set FirstName(value: string) {
-    this.fields.firstName = value ? value.trim() : null;
-  }
-
-  get MiddleName(): string {
-    return this.fields.middleName;
-  }
-  set MiddleName(value: string) {
-    this.fields.middleName = value ? value.trim() : null;
-  }
-
-  get LastName(): string {
-    return this.fields.lastName;
-  }
-  set LastName(value: string) {
-    this.fields.lastName = value ? value.trim() : null;
-  }
-
   get UserName(): string {
     return this.fields.userName;
   }
@@ -68,7 +44,7 @@ export class User extends EntityBase {
     this.fields.userName = stripInvalidChars(value);
   }
 
-  get userText(): string {
+  get userText() {
 
     if (!this.initialized) {
       return "";
@@ -84,24 +60,16 @@ export class User extends EntityBase {
   }
 
   private fields: {
-    email: string,
-    firstName: string,
-    lastName: string,
-    middleName: string,
     userName: string,
   } = {
-      email: "",
-      firstName: null,
-      lastName: null,
-      middleName: null,
-      userName: "",
-    };
+    userName: "",
+  };
 
-  isAuthenticated(): boolean {
+  isAuthenticated() {
     return this.Id > 0;
   }
 
-  isAdmin(): boolean {
+  isAdmin() {
 
     if (!this.initialized) {
       return false;

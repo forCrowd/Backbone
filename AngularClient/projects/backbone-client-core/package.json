@@ -3,13 +3,16 @@
   "description": "Backbone client core library",
   "author": "forCrowd Foundation",
   "license": "MIT",
-  "version": "0.1.2",
-  "peerDependencies": {
-    "@angular/common": "7.1.0",
-    "@angular/core": "7.1.0",
+  "version": "0.2.2",
+  "dependencies": {
     "breeze-client": "1.7.1",
     "breeze-bridge2-angular": "1.1.0",
     "datajs": "1.0.3",
+    "source-map": "0.7.3"
+  },
+  "peerDependencies": {
+    "@angular/common": "7.1.0",
+    "@angular/core": "7.1.0",
     "rxjs": "6.3.3"
   },
   "browser": {

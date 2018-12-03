@@ -3,7 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 
 import { SharedModule } from "../shared/shared.module";
 
-import { AuthGuard, CanDeactivateGuard, DynamicTitleResolve } from "../core/core.module";
+import { AuthGuard, CanDeactivateGuard, DynamicTitleResolve } from "../core/app-core.module";
 import { ElementManagerComponent } from "./element-manager.component";
 import { ElementCellManagerComponent } from "./element-cell-manager.component";
 import { ElementFieldManagerComponent } from "./element-field-manager.component";

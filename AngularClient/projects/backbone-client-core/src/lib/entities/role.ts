@@ -5,18 +5,6 @@ export class Role extends EntityBase {
 
   // Server-side
   Id = 0;
+  Name = "";
   Users: UserRole[];
-
-  get Name(): string {
-    return this.fields.name;
-  }
-  set Name(value: string) {
-    this.fields.name = value.trim();
-  }
-
-  private fields: {
-    name: string,
-  } = {
-      name: "",
-    }
 }

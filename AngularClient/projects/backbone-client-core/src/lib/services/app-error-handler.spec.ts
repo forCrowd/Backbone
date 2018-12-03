@@ -3,7 +3,7 @@ import { TestBed, getTestBed } from "@angular/core/testing";
 import { from } from "rxjs";
 import { SourceMapConsumer } from "source-map";
 
-import { ISettings } from "../settings";
+import { CoreConfig } from "../core-config";
 import { AppErrorHandler } from "./app-error-handler";
 
 describe("app-error-handler", () => {
@@ -26,14 +26,15 @@ describe("app-error-handler", () => {
 
   it("constructor", () => {
 
-    var settings: ISettings = {
+    var config: CoreConfig = {
       environment: "Development",
+      entityManagerConfig: null,
       serviceApiUrl: "",
       serviceODataUrl: "",
       sourceMapMappingsUrl: "https://unpkg.com/source-map@0.7.3/lib/mappings.wasm"
     };
 
-    var errorHandler = new AppErrorHandler(null, settings);
+    var errorHandler = new AppErrorHandler(null, config);
     expect(errorHandler).toBeDefined();
 
   });

@@ -4,7 +4,7 @@ import { throwError, forkJoin, from, Observable, of as observableOf, Subscriptio
 import { catchError, flatMap, map, mergeMap, share } from "rxjs/operators";
 import { BasicSourceMapConsumer, IndexedSourceMapConsumer, SourceMapConsumer } from "source-map";
 
-import { Settings } from "../settings";
+import { CoreConfig } from "../core-config";
 
 @Injectable()
 export class AppErrorHandler implements ErrorHandler {
@@ -14,13 +14,13 @@ export class AppErrorHandler implements ErrorHandler {
   errorLimitResetTimer: Subscription = null;
   get errorLimitReached(): boolean { return this.errorCounter > 10 };
 
-  constructor(private readonly httpClient: HttpClient, private readonly settings: Settings) {
-    (SourceMapConsumer as any).initialize({ "lib/mappings.wasm": settings.sourceMapMappingsUrl });
+  constructor(private readonly httpClient: HttpClient, private readonly config: CoreConfig) {
+    (SourceMapConsumer as any).initialize({ "lib/mappings.wasm": config.sourceMapMappingsUrl });
   }
 
   handleError(error: Error): void {
 
-    if (this.settings.environment === "Development") {
+    if (this.config.environment === "Development") {
 
     console.error(error);
 
@@ -46,7 +46,7 @@ export class AppErrorHandler implements ErrorHandler {
           Stack: stack || ""
         };
 
-        const errorHandlerUrl = this.settings.serviceApiUrl + "/Exception/Record";
+        const errorHandlerUrl = this.config.serviceApiUrl + "/Exception/Record";
 
         this.httpClient.post(errorHandlerUrl, model).subscribe();
       });

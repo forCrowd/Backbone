@@ -6,8 +6,8 @@ export class EntityBase implements Entity {
   entityType: EntityType;
   initialized = false; // Determines whether the entity is completely being created or loaded from server.
 
-  CreatedOn = new Date();
-  ModifiedOn = new Date();
+  CreatedOn: Date = new Date();
+  ModifiedOn: Date = new Date();
   DeletedOn: Date | null = null;
   RowVersion: string = "AAAAAAAAAAA=";
 
@@ -20,7 +20,7 @@ export class EntityBase implements Entity {
   // or the entities being retrieved with executeQueryObservable function
   // Initial preparation of the entity can be done here
   // First time calls return "true" flag, so the child objects can also complete their implementation
-  initialize(): void {
+  initialize() {
     if (this.initialized) return;
     this.initialized = true;
   }

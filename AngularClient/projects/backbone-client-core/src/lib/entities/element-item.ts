@@ -7,23 +7,11 @@ export class ElementItem extends EntityBase {
   // Server-side
   Id = 0;
   Element: Element;
+  Name = "";
   ElementCellSet: ElementCell[];
   ParentCellSet: ElementCell[];
 
-  get Name(): string {
-    return this.fields.name;
-  }
-  set Name(value: string) {
-    this.fields.name = value.trim();
-  }
-
-  private fields: {
-    name: string,
-  } = {
-      name: "",
-    };
-
-  initialize(): void {
+  initialize() {
     if (this.initialized) return;
 
     super.initialize();

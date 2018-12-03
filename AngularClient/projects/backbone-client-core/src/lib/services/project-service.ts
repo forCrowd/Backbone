@@ -7,9 +7,9 @@ import { mergeMap, finalize, map } from "rxjs/operators";
 import { AppEntityManager } from "../app-entity-manager/app-entity-manager";
 import { AppHttpClient } from "../app-http-client/app-http-client";
 import { AuthService } from "../auth/auth-service";
-import { ElementCell, ElementField, ElementFieldDataType, ElementItem, Element, Project, UserElementCell } from
+import { ElementCell, ElementField, ElementFieldDataType, ElementItem, Element, Project, UserElementCell, UserElementField } from
   "../entities";
-import { Settings } from "../settings";
+import { CoreConfig } from "../core-config";
 import { getUniqueValue } from "../utils";
 
 @Injectable()
@@ -22,49 +22,34 @@ export class ProjectService {
   private readonly appHttpClient: AppHttpClient = null;
   private isBusyLocal: boolean = false; // Use this flag for functions that contain multiple http requests (e.g. saveChanges())
 
-  constructor(private appEntityManager: AppEntityManager,
-    private authService: AuthService,
-    private httpClient: HttpClient,
-    private readonly settings: Settings) {
+  constructor(private readonly appEntityManager: AppEntityManager,
+    private readonly authService: AuthService,
+    private readonly httpClient: HttpClient,
+    private readonly config: CoreConfig) {
 
     this.appHttpClient = httpClient as AppHttpClient;
   }
 
-  createElement(initialValues: {}) {
-    return this.appEntityManager.createEntity("Element", initialValues);
+  createElement<TElement extends Element>(initialValues: {}) {
+    return this.appEntityManager.createEntity("Element", initialValues) as TElement;
   }
 
-  createElementCell(initialValues: {}) {
-    return this.appEntityManager.createEntity("ElementCell", initialValues) as ElementCell;
+  createElementCell<TElementCell extends ElementCell>(initialValues: {}) {
+    return this.appEntityManager.createEntity("ElementCell", initialValues) as TElementCell;
   }
 
-  createUserElementCell(elementCell: ElementCell, decimalValue: number | null) {
-
-    if (elementCell.ElementField.DataType !== ElementFieldDataType.Decimal) {
-      throw new Error(`Invalid field type: ${elementCell.ElementField.DataType}`);
-    }
-
-    const initialValues = {
-      User: this.authService.currentUser,
-      ElementCell: elementCell,
-      DecimalValue: decimalValue
-    };
-
-    return this.appEntityManager.createEntity("UserElementCell", initialValues) as UserElementCell;
+  createElementField<TElementField extends ElementField>(initialValues: {}) {
+    return this.appEntityManager.createEntity("ElementField", initialValues) as TElementField;
   }
 
-  createElementField(initialValues: {}) {
-    return this.appEntityManager.createEntity("ElementField", initialValues) as ElementField;
+  createElementItem<TElementItem extends ElementItem>(initialValues: {}) {
+    return this.appEntityManager.createEntity("ElementItem", initialValues) as TElementItem;
   }
 
-  createElementItem(initialValues: {}): ElementItem {
-    return this.appEntityManager.createEntity("ElementItem", initialValues) as ElementItem;
-  }
-
-  createProjectBasic() {
+  createProjectBasic<TProject extends Project>() {
 
     // Project
-    const project = this.createProjectEmpty();
+    const project = this.createProjectEmpty<TProject>();
 
     // Element
     const element = this.createElement({
@@ -109,22 +94,22 @@ export class ProjectService {
     return project;
   }
 
-  createProjectEmpty(): Project {
+  createProjectEmpty<TProject extends Project>() {
 
     const project = this.appEntityManager.createEntity("Project", {
       User: this.authService.currentUser,
       Name: `New project ${getUniqueValue()}`,
       Origin: "http://",
       RatingCount: 1 // Computed field
-    }) as Project;
+    }) as TProject;
 
     return project;
   }
 
-  createProjectParentChild() {
+  createProjectParentChild<TProject extends Project>() {
 
     // Project
-    const project = this.createProjectEmpty();
+    const project = this.createProjectEmpty<TProject>();
     project.Name = "Parent - Child";
 
     // Child element
@@ -213,94 +198,39 @@ export class ProjectService {
     return project;
   }
 
-  //createProjectTodo() {
+  createUserElementCell<TUserElementCell extends UserElementCell>(elementCell: ElementCell, decimalValue: number | null) {
 
-  //  // Project
-  //  const project = this.createProjectEmpty();
-  //  project.Name = "Todo App";
-  //  //project.Origin = this.settings.todoAppOrigin;
-  //  project.Origin = "";
+    if (elementCell.ElementField.DataType !== ElementFieldDataType.Decimal) {
+      throw new Error(`Invalid field type: ${elementCell.ElementField.DataType}`);
+    }
 
-  //  // Element
-  //  const element = this.createElement({
-  //    Project: project,
-  //    Name: "Main"
-  //  }) as Element;
+    const initialValues = {
+      User: this.authService.currentUser,
+      ElementCell: elementCell,
+      DecimalValue: decimalValue
+    };
 
-  //  // Field
-  //  const elementField = this.createElementField({
-  //    Element: element,
-  //    Name: "Completed",
-  //    DataType: ElementFieldDataType.Decimal,
-  //    UseFixedValue: false,
-  //    RatingEnabled: false,
-  //    SortOrder: 1
-  //  }) as ElementField;
+    return this.appEntityManager.createEntity("UserElementCell", initialValues) as TUserElementCell;
+  }
 
-  //  // Item 1
-  //  const elementItem1 = this.createElementItem({
-  //    Element: element,
-  //    Name: "Create a project on Backbone"
-  //  }) as ElementItem;
+  createUserElementField<TUserElementField extends UserElementField>(elementField: ElementField, rating: number) {
 
-  //  // Cell 1
-  //  const cell1 = this.createElementCell({
-  //    ElementField: elementField,
-  //    ElementItem: elementItem1
-  //  });
+    if (!elementField.RatingEnabled) {
+      throw new Error(`Invalid state: elementField.RatingEnabled must be true`);
+    }
 
-  //  // User cell 1
-  //  this.createUserElementCell(cell1, 1);
+    const initialValues = {
+      User: this.authService.currentUser,
+      ElementField: elementField,
+      Rating: rating
+    };
 
-  //  // Item 2
-  //  const elementItem2 = this.createElementItem({
-  //    Element: element,
-  //    Name: "Read 'The Little Prince' book"
-  //  });
+    this.appEntityManager.createEntity("UserElementField", initialValues);
 
-  //  // Cell 2
-  //  const cell2 = this.createElementCell({
-  //    ElementField: elementField,
-  //    ElementItem: elementItem2
-  //  });
+    return this.appEntityManager.createEntity("UserElementCell", initialValues) as TUserElementField;
+  }
 
-  //  // User cell 2
-  //  this.createUserElementCell(cell2, 0);
-
-  //  // Item 3
-  //  const elementItem3 = this.createElementItem({
-  //    Element: element,
-  //    Name: "Watch 'Shawshank Redemption' movie"
-  //  });
-
-  //  // Cell 3
-  //  const cell3 = this.createElementCell({
-  //    ElementField: elementField,
-  //    ElementItem: elementItem3
-  //  });
-
-  //  // User cell 3
-  //  this.createUserElementCell(cell3, 0);
-
-  //  // Item 4
-  //  const elementItem4 = this.createElementItem({
-  //    Element: element,
-  //    Name: "Visit 'Niagara Falls'"
-  //  });
-
-  //  // Cell 4
-  //  const cell4 = this.createElementCell({
-  //    ElementField: elementField,
-  //    ElementItem: elementItem4
-  //  });
-
-  //  // User cell 4
-  //  this.createUserElementCell(cell4, 0);
-
-  //  return project;
-  //}
-
-  getProjectExpanded(projectId: number, forceRefresh = false) {
+  getProjectExpanded<TProject extends Project>(projectId: number, forceRefresh = false) {
 
     // Prepare the query
     let query = EntityQuery.from("Project").where("Id", "eq", projectId);
@@ -310,13 +240,13 @@ export class ProjectService {
       ? query.expand("User, ElementSet.ElementFieldSet.UserElementFieldSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet")
       : query.expand("User, ElementSet.ElementFieldSet, ElementSet.ElementItemSet.ElementCellSet");
 
-    return this.appEntityManager.executeQueryObservable<Project>(query, forceRefresh).pipe(
+    return this.appEntityManager.executeQueryObservable<TProject>(query, forceRefresh).pipe(
       map(response => {
         return response.results[0] || null;
       }));
   }
 
-  getProjectSet(searchKey: string = "") {
+  getProjectSet<TProject extends Project>(searchKey: string = "") {
 
     let query = EntityQuery
       .from("Project")
@@ -329,7 +259,7 @@ export class ProjectService {
       query = query.where(projectNamePredicate.or(userNamePredicate));
     }
 
-    return this.appEntityManager.executeQueryObservable<Project>(query).pipe(
+    return this.appEntityManager.executeQueryObservable<TProject>(query).pipe(
       map(response => {
         return response.results;
       }));
@@ -349,15 +279,15 @@ export class ProjectService {
     }));
   }
 
-  rejectChanges(): void {
-    this.appEntityManager.rejectChanges();
+  rejectChanges() {
+    return this.appEntityManager.rejectChanges();
   }
 
-  rejectChangesElement(element: Element): void {
+  rejectChangesElement(element: Element) {
     element.entityAspect.rejectChanges();
   }
 
-  rejectChangesElementCell(elementCell: ElementCell): void {
+  rejectChangesElementCell(elementCell: ElementCell) {
 
     if (elementCell.UserElementCellSet[0]) {
       elementCell.UserElementCellSet[0].entityAspect.rejectChanges();
@@ -366,11 +296,11 @@ export class ProjectService {
     elementCell.entityAspect.rejectChanges();
   }
 
-  rejectChangesElementField(elementField: ElementField): void {
+  rejectChangesElementField(elementField: ElementField) {
     elementField.entityAspect.rejectChanges();
   }
 
-  rejectChangesElementItem(elementItem: ElementItem): void {
+  rejectChangesElementItem(elementItem: ElementItem) {
     elementItem.entityAspect.rejectChanges();
   }
 
@@ -471,10 +401,10 @@ export class ProjectService {
   }
 
   private getUpdateComputedFieldsUrl(projectId: number) {
-    return `${this.settings.serviceApiUrl}/ProjectApi/${projectId}/UpdateComputedFields`;
+    return `${this.config.serviceApiUrl}/ProjectApi/${projectId}/UpdateComputedFields`;
   }
 
-  private removeElementCell(elementCell: ElementCell): void {
+  private removeElementCell(elementCell: ElementCell) {
 
     // User element cell
     if (elementCell.UserElementCellSet[0]) {

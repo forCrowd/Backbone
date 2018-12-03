@@ -3,18 +3,16 @@ import { throwError as observableThrowError, of as observableOf, from as observa
 import { map, finalize, catchError } from "rxjs/operators";
 
 import {
-  config, Entity, EntityManager, EntityQuery, EntityState, EntityStateSymbol, EntityType, ExecuteQueryErrorCallback,
+  config as BreezeConfig, Entity, EntityManager, EntityQuery, EntityState, EntityStateSymbol, EntityType, ExecuteQueryErrorCallback,
   ExecuteQuerySuccessCallback, FetchStrategy, MergeStrategySymbol, QueryResult, SaveChangesErrorCallback, SaveChangesSuccessCallback,
   SaveOptions, SaveResult
 } from "breeze-client";
 import { BreezeBridgeHttpClientModule } from "breeze-bridge2-angular";
 import "datajs";
 
-import {
-  ElementCell, ElementField, ElementItem, Element, EntityBase, Project, Role, Token, User, UserElementCell,
-  UserElementField, UserRole } from "../entities";
+import { EntityBase, Token } from "../entities";
 import { NotificationService } from "../services/notification-service";
-import { Settings } from "../settings";
+import { CoreConfig } from "../core-config";
 
 export interface IQueryResult<T> {
   count: number;
@@ -30,16 +28,16 @@ export class AppEntityManager extends EntityManager {
 
   constructor(private breezeBridgeHttpClientModule: BreezeBridgeHttpClientModule,
     private notificationService: NotificationService,
-    private settings: Settings) {
+    private config: CoreConfig) {
 
     super({
-      serviceName: settings.serviceODataUrl
+      serviceName: config.serviceODataUrl
     });
 
-    config.initializeAdapterInstance("uriBuilder", "odata");
+    BreezeConfig.initializeAdapterInstance("uriBuilder", "odata");
 
     // Use Web API OData to query and save
-    const adapter = config.initializeAdapterInstance("dataService", "webApiOData", true) as any;
+    const adapter = BreezeConfig.initializeAdapterInstance("dataService", "webApiOData", true) as any;
     adapter.getRoutePrefix = this.getRoutePrefix_Microsoft_AspNet_WebApi_OData_5_3_x;
 
     // OData authorization interceptor
@@ -66,16 +64,18 @@ export class AppEntityManager extends EntityManager {
     // breeze.NamingConvention.camelCase.setAsDefault();
 
     // Metadata store
-    this.metadataStore.registerEntityTypeCtor("Element", Element);
-    this.metadataStore.registerEntityTypeCtor("ElementCell", ElementCell);
-    this.metadataStore.registerEntityTypeCtor("ElementField", ElementField);
-    this.metadataStore.registerEntityTypeCtor("ElementItem", ElementItem);
-    this.metadataStore.registerEntityTypeCtor("Project", Project);
-    this.metadataStore.registerEntityTypeCtor("Role", Role);
-    this.metadataStore.registerEntityTypeCtor("User", User);
-    this.metadataStore.registerEntityTypeCtor("UserRole", UserRole);
-    this.metadataStore.registerEntityTypeCtor("UserElementCell", UserElementCell);
-    this.metadataStore.registerEntityTypeCtor("UserElementField", UserElementField);
+    this.metadataStore.registerEntityTypeCtor("Element", config.entityManagerConfig.elementType);
+    this.metadataStore.registerEntityTypeCtor("ElementCell", config.entityManagerConfig.elementCellType);
+    this.metadataStore.registerEntityTypeCtor("ElementField", config.entityManagerConfig.elementFieldType);
+    this.metadataStore.registerEntityTypeCtor("ElementItem", config.entityManagerConfig.elementItemType);
+    this.metadataStore.registerEntityTypeCtor("Project", config.entityManagerConfig.projectType);
+    this.metadataStore.registerEntityTypeCtor("Role", config.entityManagerConfig.roleType);
+    this.metadataStore.registerEntityTypeCtor("User", config.entityManagerConfig.userType);
+    this.metadataStore.registerEntityTypeCtor("UserClaim", config.entityManagerConfig.userClaimType);
+    this.metadataStore.registerEntityTypeCtor("UserElementCell", config.entityManagerConfig.userElementCellType);
+    this.metadataStore.registerEntityTypeCtor("UserElementField", config.entityManagerConfig.userElementFieldType);
+    this.metadataStore.registerEntityTypeCtor("UserLogin", config.entityManagerConfig.userLoginType);
+    this.metadataStore.registerEntityTypeCtor("UserRole", config.entityManagerConfig.userRoleType);
   }
 
   clear(): void {
@@ -379,7 +379,13 @@ export class AppEntityManager extends EntityManager {
     batches.push(this.getEntities("ElementField", EntityState.Deleted));
     batches.push(this.getEntities("Element", EntityState.Deleted));
     batches.push(this.getEntities("Project", EntityState.Deleted));
+    batches.push(this.getEntities("UserLogin", EntityState.Deleted));
+    batches.push(this.getEntities("UserClaim", EntityState.Deleted));
+    batches.push(this.getEntities("User", EntityState.Deleted));
 
+    batches.push(this.getEntities("User", EntityState.Added));
+    batches.push(this.getEntities("UserClaim", EntityState.Added));
+    batches.push(this.getEntities("UserLogin", EntityState.Added));
     batches.push(this.getEntities("Project", EntityState.Added));
     batches.push(this.getEntities("Element", EntityState.Added));
     batches.push(this.getEntities("ElementField", EntityState.Added));

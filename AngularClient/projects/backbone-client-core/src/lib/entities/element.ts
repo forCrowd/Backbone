@@ -8,25 +8,13 @@ export class Element extends EntityBase {
   // Public - Server-side
   Id = 0;
   Project: Project;
+  Name = "";
   SortOrder = 0;
   ElementFieldSet: ElementField[];
   ElementItemSet: ElementItem[];
   ParentFieldSet: ElementField[];
 
-  get Name(): string {
-    return this.fields.name;
-  }
-  set Name(value: string) {
-    this.fields.name = value.trim();
-  }
-
-  private fields: {
-    name: string,
-  } = {
-      name: "",
-    };
-
-  initialize(): void {
+  initialize() {
     if (this.initialized) return;
 
     super.initialize();

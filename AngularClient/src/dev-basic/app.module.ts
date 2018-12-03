@@ -1,6 +1,6 @@
 import { Component, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { BackboneClientCoreModule, ISettings } from "@forcrowd/backbone-client-core";
+import { CoreModule, ICoreConfig } from "@forcrowd/backbone-client-core";
 
 import { settings } from "../settings/settings";
 
@@ -39,17 +39,16 @@ export class AppComponent {
   }
 }
 
-const coreSettings: ISettings = {
+const coreConfig: ICoreConfig = {
   environment: settings.environment,
   serviceApiUrl: settings.serviceApiUrl,
-  serviceODataUrl: settings.serviceODataUrl,
-  sourceMapMappingsUrl: settings.sourceMapMappingsUrl
-}
+  serviceODataUrl: settings.serviceODataUrl
+};
 
 @NgModule({
   imports: [
     BrowserModule,
-    BackboneClientCoreModule.configure(coreSettings)
+    CoreModule.configure(coreConfig)
   ],
   declarations: [
     AppComponent

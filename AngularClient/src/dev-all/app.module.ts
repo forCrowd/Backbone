@@ -1,9 +1,11 @@
 import { NgModule } from "@angular/core";
-import { BackboneClientCoreModule } from "@forcrowd/backbone-client-core";
+import { CoreModule, ICoreConfig } from "@forcrowd/backbone-client-core";
 
 import { AdminModule } from "../main/admin/admin.module";
-import { CoreModule } from "../main/core/core.module";
+import { AppCoreModule } from "../main/core/app-core.module";
 import { SharedModule } from "../main/shared/shared.module";
+
+import { settings } from "../settings/settings";
 
 import { AppRouterModule } from "./app-router.module";
 import { AppComponent } from "./app.component";
@@ -20,6 +22,12 @@ import { ODataUserElementFieldComponent } from "./odata-user-element-field.compo
 import { ODataUserComponent } from "./odata-user.component";
 import { ProjectTesterComponent } from "./project-tester.component";
 import { WebApiComponent } from "./web-api.component";
+
+const coreConfig: ICoreConfig = {
+  environment: settings.environment,
+  serviceApiUrl: settings.serviceApiUrl,
+  serviceODataUrl: settings.serviceODataUrl
+};
 
 @NgModule({
   bootstrap: [
@@ -42,14 +50,12 @@ import { WebApiComponent } from "./web-api.component";
     WebApiComponent
   ],
   imports: [
+    CoreModule.configure(coreConfig),
     SharedModule,
 
     AppRouterModule, // Routes (must be before Core, to set default route!)
-
-    CoreModule,
-
+    AppCoreModule,
     AdminModule,
-    BackboneClientCoreModule
   ]
 })
 export class AppModule { }

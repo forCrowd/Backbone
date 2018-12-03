@@ -13,6 +13,6 @@ export * from "./lib/services/notification-service";
 export * from "./lib/services/project-service";
 
 // Module
-export { MainModule as BackboneClientCoreModule } from "./lib/main-module";
-export * from "./lib/settings";
+export * from "./lib/core-module";
+export { ICoreConfig } from "./lib/core-config";
 export * from "./lib/utils"

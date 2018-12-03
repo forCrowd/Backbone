@@ -19,10 +19,10 @@
     ],
     "importHelpers": true,
     "paths": {
-      "backbone-client-core": [
+      "@forcrowd/backbone-client-core": [
         "dist/backbone-client-core"
       ],
-      "backbone-client-core/*": [
+      "@forcrowd/backbone-client-core/*": [
         "dist/backbone-client-core/*"
       ]
     }
