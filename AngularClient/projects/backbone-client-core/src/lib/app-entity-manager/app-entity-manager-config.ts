@@ -3,32 +3,49 @@ import {
   UserElementField, UserLogin, UserRole
 } from "../entities";
 
+export interface IEntityManagerConfig {
+  elementType?: typeof Element;
+  elementCellType?: typeof ElementCell;
+  elementFieldType?: typeof ElementField;
+  elementItemType?: typeof ElementItem;
+  projectType?: typeof Project;
+  roleType?: typeof Role;
+  userType?: typeof User;
+  userClaimType?: typeof UserClaim;
+  userElementCellType?: typeof UserElementCell;
+  userElementFieldType?: typeof UserElementField;
+  userLoginType?: typeof UserLogin;
+  userRoleType?: typeof UserRole;
+}
+
 export class EntityManagerConfig {
 
-  constructor(public elementType?: any,
-    public elementCellType?: any,
-    public elementFieldType?: any,
-    public elementItemType?: any,
-    public projectType?: any,
-    public roleType?: any,
-    public userType?: any,
-    public userClaimType?: any,
-    public userElementCellType?: any,
-    public userElementFieldType?: any,
-    public userLoginType?: any,
-    public userRoleType?: any) {
+  elementType = Element;
+  elementCellType = ElementCell;
+  elementFieldType = ElementField;
+  elementItemType = ElementItem;
+  projectType = Project;
+  roleType = Role;
+  userType = User;
+  userClaimType = UserClaim;
+  userElementCellType = UserElementCell;
+  userElementFieldType = UserElementField;
+  userLoginType = UserLogin;
+  userRoleType = UserRole;
 
-    if (!this.elementType) this.elementType = Element;
-    if (!this.elementCellType) this.elementCellType = ElementCell;
-    if (!this.elementFieldType) this.elementFieldType = ElementField;
-    if (!this.elementItemType) this.elementItemType = ElementItem;
-    if (!this.projectType) this.projectType = Project;
-    if (!this.roleType) this.roleType = Role;
-    if (!this.userType) this.userType = User;
-    if (!this.userClaimType) this.userClaimType = UserClaim;
-    if (!this.userElementCellType) this.userElementCellType = UserElementCell;
-    if (!this.userElementFieldType) this.userElementFieldType = UserElementField;
-    if (!this.userLoginType) this.userLoginType = UserLogin;
-    if (!this.userRoleType) this.userRoleType = UserRole;
+  constructor(config?: IEntityManagerConfig) {
+    if (!config) config = {};
+    if (config.elementType) this.elementType = config.elementType;
+    if (config.elementCellType) this.elementCellType = config.elementCellType;
+    if (config.elementFieldType) this.elementFieldType = config.elementFieldType;
+    if (config.elementItemType) this.elementItemType = config.elementItemType;
+    if (config.projectType) this.projectType = config.projectType;
+    if (config.roleType) this.roleType = config.roleType;
+    if (config.userType) this.userType = config.userType;
+    if (config.userClaimType) this.userClaimType = config.userClaimType;
+    if (config.userElementCellType) this.userElementCellType = config.userElementCellType;
+    if (config.userElementFieldType) this.userElementFieldType = config.userElementFieldType;
+    if (config.userLoginType) this.userLoginType = config.userLoginType;
+    if (config.userRoleType) this.userRoleType = config.userRoleType;
   }
 }

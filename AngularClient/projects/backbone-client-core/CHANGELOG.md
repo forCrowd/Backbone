@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.2.2**
+
+* Package.json - coreConfigFactory fix
+
 **0.2.1**
 
 * Package.json - Dependencies & peer dependencies fix

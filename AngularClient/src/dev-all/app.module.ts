@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { CoreConfig, CoreModule } from "@forcrowd/backbone-client-core";
+import { CoreModule, ICoreConfig } from "@forcrowd/backbone-client-core";
 
 import { AdminModule } from "../main/admin/admin.module";
 import { AppCoreModule } from "../main/core/app-core.module";
@@ -23,7 +23,11 @@ import { ODataUserComponent } from "./odata-user.component";
 import { ProjectTesterComponent } from "./project-tester.component";
 import { WebApiComponent } from "./web-api.component";
 
-const coreConfig = new CoreConfig(settings.environment, settings.serviceApiUrl, settings.serviceODataUrl);
+const coreConfig: ICoreConfig = {
+  environment: settings.environment,
+  serviceApiUrl: settings.serviceApiUrl,
+  serviceODataUrl: settings.serviceODataUrl
+};
 
 @NgModule({
   bootstrap: [

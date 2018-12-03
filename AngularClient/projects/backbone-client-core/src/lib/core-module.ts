@@ -6,7 +6,11 @@ import { AuthModule } from "./auth/auth-module";
 import { AppErrorHandler } from "./services/app-error-handler";
 import { NotificationService } from "./services/notification-service";
 import { ProjectService } from "./services/project-service";
-import { CoreConfig } from "./core-config";
+import { ICoreConfig, CoreConfig } from "./core-config";
+
+export function coreConfigFactory(config: ICoreConfig) {
+  return new CoreConfig(config);
+}
 
 // @dynamic
 // Fixes "Error encountered in metadata generated for exported symbol" error during 'build' operation
@@ -20,15 +24,22 @@ import { CoreConfig } from "./core-config";
 })
 export class CoreModule {
 
-  static configure(config: CoreConfig): ModuleWithProviders {
+  static configure(config: ICoreConfig): ModuleWithProviders {
 
     return {
       ngModule: CoreModule,
       providers: [
-        // Config
+        // coreConfigFactory converts the initial config object to CoreConfig instance, which does validation and uses the default values
+        // "CoreConfigInitial" provider is only there, so it can be passed to the factory
+        // Bit hacky but Angular compiler won't allow arrow functions here for now / coni2k - 03 Dec. '18
         {
-          provide: CoreConfig,
+          provide: "CoreConfigInitial",
           useValue: config
+        },
+        {
+          deps: ["CoreConfigInitial"],
+          provide: CoreConfig,
+          useFactory: coreConfigFactory
         },
         // Error handler
         {

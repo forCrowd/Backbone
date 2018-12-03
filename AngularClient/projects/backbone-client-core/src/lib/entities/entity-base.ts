@@ -6,8 +6,8 @@ export class EntityBase implements Entity {
   entityType: EntityType;
   initialized = false; // Determines whether the entity is completely being created or loaded from server.
 
-  CreatedOn = new Date();
-  ModifiedOn = new Date();
+  CreatedOn: Date = new Date();
+  ModifiedOn: Date = new Date();
   DeletedOn: Date | null = null;
   RowVersion: string = "AAAAAAAAAAA=";
 

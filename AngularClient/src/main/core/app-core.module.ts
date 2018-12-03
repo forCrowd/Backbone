@@ -3,7 +3,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes } from "@angular/router";
 import { Angulartics2Module } from "angulartics2";
-import { CoreConfig, CoreModule, ProjectService } from "@forcrowd/backbone-client-core";
+import { CoreModule, ICoreConfig, ProjectService } from "@forcrowd/backbone-client-core";
 
 import { SharedModule } from "../shared/shared.module";
 
@@ -43,13 +43,17 @@ const appCoreRoutes: Routes = [
   { path: "app/contributors", component: ContributorsComponent, data: { title: "Contributors" } },
   { path: "app/getting-started", component: GettingStartedComponent, data: { title: "Getting Started" } },
   { path: "app/search", component: SearchComponent, data: { title: "Search" } },
-  { path: "app/ex", component: ExComponent },
+  { path: "app/ex", component: ExComponent }, // TODO: Remove! Only here to test appErrorHandler on production
 
   // Users
   { path: "users/:username", component: ProfileComponent, resolve: { title: DynamicTitleResolve } },
 ];
 
-const coreConfig = new CoreConfig(settings.environment, settings.serviceApiUrl, settings.serviceODataUrl, null, settings.sourceMapMappingsUrl);
+const coreConfig: ICoreConfig = {
+  environment: settings.environment,
+  serviceApiUrl: settings.serviceApiUrl,
+  serviceODataUrl: settings.serviceODataUrl
+};
 
 @NgModule({
   declarations: [

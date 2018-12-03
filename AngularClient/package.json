@@ -34,7 +34,7 @@
     "@angular/platform-browser": "7.1.0",
     "@angular/platform-browser-dynamic": "7.1.0",
     "@angular/router": "7.1.0",
-    "@forcrowd/backbone-client-core": "0.2.1",
+    "@forcrowd/backbone-client-core": "0.2.2",
     "angulartics2": "7.2.0",
     "breeze-client": "1.7.1",
     "core-js": "2.5.7",
