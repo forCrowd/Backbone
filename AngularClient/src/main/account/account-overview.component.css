@@ -1,21 +1,6 @@
 
-h1 {
-  color: #4a4a4a;
-  font-size: 24px;
-  font-family: Arial;
-  font-weight: bold;
-  font-style: normal;
-  letter-spacing: normal;
-  margin: 16px 0 16px !important;
-}
-
 mat-card {
-  padding-top: 24px;
-  border-radius: 4px;
   padding: 16px !important;
-  border: solid 1px #dbdbdd;
-  background-color: #ffffff;
-  box-shadow: none !important;
 }
 
 mat-card a {
