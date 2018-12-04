@@ -1,8 +1,8 @@
 ### Changelog
 
-**0.9.25**
+**0.9.24b**
 
-* AngularClient - Minor
+* AngularClient - Minor project updates
 
 **0.9.24**
 
