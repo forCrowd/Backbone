@@ -12,7 +12,9 @@
       </div>
       <div class="card-body text-center">
         <div class="display-fs3 font-weight-bold mb-1r">
-          <a routerLink="/app/admin/projects"> {{ projectCount }} </a>
+          <a (click)="setProjectDataSource(projects, 'All Project - Top 100')">
+            {{ projectCount }}
+          </a>
         </div>
         <div class="progress progress-sm">
           <div class="progress-bar bg-red" style="width: 0%"></div>
@@ -90,7 +92,11 @@
         <h3 class="card-title">Total User</h3>
       </div>
       <div class="card-body text-center">
-        <div class="display-fs3 font-weight-bold mb-1r">{{ userCount }}</div>
+        <div class="display-fs3 font-weight-bold mb-1r">
+          <a (click)="setUserDataSource(users, 'All User - Top 100')">
+            {{ userCount }}
+          </a>
+        </div>
         <div class="progress progress-sm">
           <div class="progress-bar bg-red" style="width: 0%"></div>
         </div>
@@ -107,7 +113,9 @@
       </div>
       <div class="card-body text-center">
         <div class="display-fs3 font-weight-bold mb-1r">
-          {{ todaysUser ? todaysUser.length : "0" }}
+          <a (click)="setUserDataSource(todaysUser, 'Todays User')">
+            {{ todaysUser ? todaysUser.length : "0" }}
+          </a>
         </div>
         <div class="progress progress-sm">
           <div class="progress-bar bg-green" *ngIf="todaysUser" [ngStyle]="{'width':  todaysUser.length * 100 / userCount + '%'}"></div>
@@ -125,7 +133,9 @@
       </div>
       <div class="card-body text-center">
         <div class="display-fs3 font-weight-bold mb-1r">
-          {{ lastWeekUsers ? lastWeekUsers.length : "0" }}
+          <a (click)="setUserDataSource(lastWeekUsers, 'Users of Last Week')">
+            {{ lastWeekUsers ? lastWeekUsers.length : "0" }}
+          </a>
         </div>
         <div class="progress progress-sm">
           <div class="progress-bar bg-green" *ngIf="lastWeekUsers" [ngStyle]="{'width': lastWeekUsers.length * 100 / userCount + '%'}"></div>
@@ -143,7 +153,9 @@
       </div>
       <div class="card-body text-center">
         <div class="display-fs3 font-weight-bold mb-1r">
-          {{ lastMonthUsers ? lastMonthUsers.length : "0" }}
+          <a (click)="setUserDataSource(lastMonthUsers, 'Users of Last Month')">
+            {{ lastMonthUsers ? lastMonthUsers.length : "0" }}
+          </a>
         </div>
         <div class="progress progress-sm">
           <div class="progress-bar bg-green" *ngIf="lastMonthUsers" [ngStyle]="{'width': (lastMonthUsers.length * 100 / userCount) + '%'}"></div>
@@ -153,7 +165,7 @@
   </div>
 
   <h2>
-    {{ title ? title : "Last projects" }}
+    {{ projectsTitle ? projectsTitle : "Last Projects" }}
   </h2>
 
   <div class="m-16 g-mb-150">
@@ -209,7 +221,9 @@
     </mat-card>
   </div>
 
-  <h2>Last users</h2>
+  <h2>
+    {{ usersTitle ? usersTitle : "Last Users" }}
+  </h2>
 
   <div class="m-16 mb-150">
     <mat-card [hidden]="userDataSource.data.length > 0">

@@ -119,6 +119,9 @@ mat-card a {
   font-weight: 300;
   line-height: 1.1;
 }
+  .display-fs3 a {
+    color: #0019ff;
+  }
 
 .text-center {
   text-align: center !important;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { MatTableDataSource } from "@angular/material";
-import { Project, User } from "@forcrowd/backbone-client-core";
+import { Project, User, NotificationService } from "@forcrowd/backbone-client-core";
 
 import { AdminService } from "./admin.service";
 import { finalize, mergeMap, map } from "rxjs/operators";
@@ -28,13 +28,14 @@ export class AdminOverviewComponent implements OnInit {
   todaysProject: Project[] = [];
   lastMonthProjects: Project[] = [];
   lastWeekProjects: Project[] = [];
-  title: string = null;
+  projectsTitle: string = null;
 
   //for User statistics
   users: User[] = null;
   lastMonthUsers: User[] = [];
   lastWeekUsers: User[] = [];
   todaysUser: User[] = [];
+  usersTitle: string = null;
 
   // Date
   date = new Date();
@@ -48,15 +49,22 @@ export class AdminOverviewComponent implements OnInit {
     return this.adminService.currentUser;
   }
 
-  constructor(private adminService: AdminService) { }
+  constructor(private adminService: AdminService, private notificationService: NotificationService) { }
 
   formatDate(v: Date): string {
     return v.toISOString().split('T')[0];
   }
 
-  setProjectDataSource(project: Project[], title: string): void {
-    this.projectDataSource.data = project;
-    this.title = title;
+  setProjectDataSource(data: Project[], title: string): void {
+    this.projectDataSource.data = data;
+    this.projectsTitle = title;
+    this.notificationService.notification.next("Please look at the project table");
+  }
+
+  setUserDataSource(data: User[], title: string): void {
+    this.userDataSource.data = data;
+    this.usersTitle = title;
+    this.notificationService.notification.next("Please look at the user table");
   }
 
   getTodaysProject(): void {
@@ -116,8 +124,9 @@ export class AdminOverviewComponent implements OnInit {
         this.getLastWeekProjects();
         this.hasResult = true;
       }))
-      .subscribe(results => {
-        this.projects = results;
+      .subscribe(response => {
+        this.projects = response.results
+        this.projectCount = response.count;
       });
 
     this.adminService.getUser().pipe(
@@ -127,17 +136,10 @@ export class AdminOverviewComponent implements OnInit {
         this.getLastWeekUsers();
         this.getLastMonthUsers();
       }))
-      .subscribe((results) => {
-        this.users = results;
+      .subscribe((response) => {
+        this.users = response.results;
+        this.userCount = response.count;
       });
-
-    this.adminService.getUserCount().subscribe((count) => {
-      this.userCount = count;
-    });
-
-    this.adminService.getProjectSet(true).subscribe((results) => {
-      this.projectCount = results.count;
-    });
   }
 
   updateComputedFields(project: Project): void {

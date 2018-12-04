@@ -41,38 +41,27 @@ export class AdminService {
     return this.appEntityManager.executeQueryObservable<Project>(query, forceRefresh);
   }
 
-  getUserCount() {
-
-    const query = EntityQuery
-      .from("Users")
-      .take(0)
-      .inlineCount(true);
-
-    return this.appEntityManager.executeQueryObservable<User>(query).pipe(
-      map((response) => {
-        return response.count;
-      }));
-  }
-
   getUser() {
     let query = EntityQuery
       .from("Users")
+      .inlineCount(true)
       .orderByDesc("CreatedOn");
 
     return this.appEntityManager.executeQueryObservable<User>(query).pipe(
       map((response) => {
-        return response.results
+        return response;
       }));
   }
 
   getProject() {
     let query = EntityQuery
       .from("Project")
+      .inlineCount(true)
       .orderByDesc("CreatedOn");
 
     return this.appEntityManager.executeQueryObservable<Project>(query).pipe(
       map((response) => {
-        return response.results
+        return response;
       }));
   }
 
