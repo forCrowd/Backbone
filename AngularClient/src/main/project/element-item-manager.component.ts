@@ -87,7 +87,6 @@ export class ElementItemManagerComponent implements OnInit {
       if (!confirmed) return;
 
       if (this.selection.selected.length > 0) {
-        this.elementItemDataSource.data = null;
         this.selection.selected.forEach(elementItem => {
           this.projectService.removeElementItem(elementItem);
         });

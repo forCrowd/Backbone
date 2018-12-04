@@ -3,6 +3,7 @@
 **0.9.24**
 
 * AngularClient - Admin Overview updates
+* AngularClient - Minor fix for remove functions in project manager
 
 **0.9.23**
 

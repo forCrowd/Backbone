@@ -98,7 +98,6 @@ export class ElementFieldManagerComponent implements OnInit {
       if (!confirmed) return;
 
       if (this.selection.selected.length > 0) {
-        this.elementFieldDataSource.data = null;
         this.selection.selected.forEach(elementField => {
           this.projectService.removeElementField(elementField);
         });
