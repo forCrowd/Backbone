@@ -7,8 +7,7 @@ import { AccountService } from "./account.service";
 
 @Component({
   selector: "change-email",
-  templateUrl: "change-email.component.html",
-  styleUrls: ["change-email.component.css"]
+  templateUrl: "change-email.component.html"
 })
 export class ChangeEmailComponent implements OnInit {
 

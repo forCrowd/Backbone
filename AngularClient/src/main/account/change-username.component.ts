@@ -7,8 +7,7 @@ import { AccountService } from "./account.service";
 
 @Component({
   selector: "change-username",
-  templateUrl: "change-username.component.html",
-  styleUrls: ["change-username.component.css"]
+  templateUrl: "change-username.component.html"
 })
 export class ChangeUserNameComponent implements OnInit {
 

@@ -6,8 +6,7 @@ import { AccountService } from "./account.service";
 
 @Component({
   selector: "add-password",
-  templateUrl: "add-password.component.html",
-  styleUrls: ["add-password.component.css"]
+  templateUrl: "add-password.component.html"
 })
 export class AddPasswordComponent {
 

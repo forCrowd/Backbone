@@ -7,8 +7,7 @@ import { settings } from "../../settings/settings";
 
 @Component({
   selector: "register",
-  templateUrl: "register.component.html",
-  styleUrls: ["register.component.css"]
+  templateUrl: "register.component.html"
 })
 export class RegisterComponent implements OnInit {
 
