@@ -16,11 +16,6 @@ export const settings = {
   serviceODataUrl: "http://localhost:15001/odata/v1",
 
   /*
-   * Source-map library, mappings.wasm file url
-   */
-  sourceMapMappingsUrl: "https://unpkg.com/source-map@0.7.3/lib/mappings.wasm",
-
-  /*
    * Origin field for the example project that 'Getting started' page creates
    */
   todoAppOrigin: "http://localhost:15011",
