@@ -78,7 +78,6 @@ export class ElementManagerComponent implements OnInit {
 
       if (this.selection.selected.length > 0) {
 
-        this.elementDataSource.data = null;
         this.selection.selected.forEach(element => {
           this.projectService.removeElement(element);
         });
@@ -86,8 +85,9 @@ export class ElementManagerComponent implements OnInit {
         this.projectService.saveChanges().pipe(
           finalize(() => {
             this.elementDataSource.data = this.project.ElementSet;
+            this.selection.clear();
           })).subscribe();
-      }
+        }
     });
   }
 

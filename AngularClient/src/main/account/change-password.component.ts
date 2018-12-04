@@ -7,8 +7,7 @@ import { AccountService } from "./account.service";
 
 @Component({
   selector: "change-password",
-  templateUrl: "change-password.component.html",
-  styleUrls: ["change-password.component.css"]
+  templateUrl: "change-password.component.html"
 })
 export class ChangePasswordComponent implements OnInit {
 

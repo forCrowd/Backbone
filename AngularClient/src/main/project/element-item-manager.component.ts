@@ -87,7 +87,6 @@ export class ElementItemManagerComponent implements OnInit {
       if (!confirmed) return;
 
       if (this.selection.selected.length > 0) {
-        this.elementItemDataSource.data = null;
         this.selection.selected.forEach(elementItem => {
           this.projectService.removeElementItem(elementItem);
         });
@@ -95,6 +94,7 @@ export class ElementItemManagerComponent implements OnInit {
         this.projectService.saveChanges().pipe(
           finalize(() => {
             this.elementItemDataSource.data = this.elementFilter.ElementItemSet;
+            this.selection.clear();
           })).subscribe();
       }
     });

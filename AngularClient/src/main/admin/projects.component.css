@@ -1,3 +1,10 @@
+mat-card a {
+  font-weight: normal;
+  color: #0019ff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .mat-cell {
   padding: 4px 0;
 }
@@ -12,4 +19,8 @@
   -o-justify-content: center;
   -webkit-justify-content: center;
   padding: 2em;
+}
+
+.mb-150 {
+  margin-bottom: 150px !important;
 }

@@ -98,13 +98,13 @@ export class ElementFieldManagerComponent implements OnInit {
       if (!confirmed) return;
 
       if (this.selection.selected.length > 0) {
-        this.elementFieldDataSource.data = null;
         this.selection.selected.forEach(elementField => {
           this.projectService.removeElementField(elementField);
         });
         this.projectService.saveChanges().pipe(
           finalize(() => {
             this.elementFieldDataSource.data = this.elementFilter.ElementFieldSet;
+            this.selection.clear();
           })).subscribe();
       }
     });
