@@ -104,6 +104,7 @@ export class ElementFieldManagerComponent implements OnInit {
         this.projectService.saveChanges().pipe(
           finalize(() => {
             this.elementFieldDataSource.data = this.elementFilter.ElementFieldSet;
+            this.selection.clear();
           })).subscribe();
       }
     });

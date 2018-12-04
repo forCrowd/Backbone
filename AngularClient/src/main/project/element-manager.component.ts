@@ -85,6 +85,7 @@ export class ElementManagerComponent implements OnInit {
         this.projectService.saveChanges().pipe(
           finalize(() => {
             this.elementDataSource.data = this.project.ElementSet;
+            this.selection.clear();
           })).subscribe();
         }
     });
