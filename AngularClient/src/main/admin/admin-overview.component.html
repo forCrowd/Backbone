@@ -1,21 +1,254 @@
 <div class="m-16">
-  <h2>Admin Overview</h2>
+  <h1>Admin Dashboard</h1>
 
-  <div class="m-16">
-    <div class="g-mt-20">
-      <label class="mat-body-2">
-        <a routerLink="/app/admin/projects">Projects</a>
-      </label>
-      <div>
-        {{ projectCount }}
+  <h2>Project Statistics</h2>
+
+  <div class="m-16 row" *ngIf="projects">
+
+    <!-- Total -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title"><a routerLink="/app/admin/projects">Total Project</a></h3>
+      </div>
+      <div class="card-body text-center">
+        <div class="display-fs3 font-weight-bold mb-1r">
+          <a routerLink="/app/admin/projects"> {{ projectCount }} </a>
+        </div>
+        <div class="progress progress-sm">
+          <div class="progress-bar bg-red" style="width: 0%"></div>
+        </div>
       </div>
     </div>
-    <div class="g-mt-20">
-      <label class="mat-body-2">Users</label>
-      <div>
-        {{ userCount }}
+
+    <!-- Today -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Today</h3>
+        <div class="date">
+          {{ date | date:"mediumDate" }}
+        </div>
+      </div>
+      <div class="card-body text-center">
+        <div class="display-fs3 font-weight-bold mb-1r">
+          <a (click)="setProjectDataSource(todaysProject, 'Todays Project')">
+            {{ todaysProject ? todaysProject.length : "0" }}
+          </a>
+        </div>
+        <div class="progress progress-sm">
+          <div class="progress-bar bg-green" *ngIf="projects" style="width: 0%"></div>
+        </div>
       </div>
     </div>
+
+    <!-- Last Week -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Last Week</h3>
+        <div class="date">
+          {{ weekFirstDay | date:" LLL dd" }} - {{ weekLastDay | date:" LLL dd" }}
+        </div>
+      </div>
+      <div class="card-body text-center">
+        <div class="display-fs3 font-weight-bold mb-1r">
+          <a (click)="setProjectDataSource(lastWeekProjects, 'Projects of Last Week')">
+            {{ lastWeekProjects ? lastWeekProjects.length : "0" }}
+          </a>
+        </div>
+        <div class="progress progress-sm">
+          <div class="progress-bar bg-green" [ngStyle]="{'width':  lastWeekProjects.length * 100 / projectCount + '%'}"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Last Month -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Last Month</h3>
+        <div class="date">
+          {{ monthFirstDay | date:"LLL dd" }} - {{ monthLastDay | date:"LLL dd" }}
+        </div>
+      </div>
+      <div class="card-body text-center">
+        <div class="display-fs3 font-weight-bold mb-1r">
+          <a (click)="setProjectDataSource(lastMonthProjects, 'Projects of Last Month')">
+            {{ lastMonthProjects ? lastMonthProjects.length : "0" }}
+          </a>
+        </div>
+        <div class="progress progress-sm">
+          <div class="progress-bar bg-green" [ngStyle]="{'width':  lastMonthProjects.length * 100 / projectCount + '%'}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2>User Statistics</h2>
+
+  <div class="m-16 row">
+    <!-- Total -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Total User</h3>
+      </div>
+      <div class="card-body text-center">
+        <div class="display-fs3 font-weight-bold mb-1r">{{ userCount }}</div>
+        <div class="progress progress-sm">
+          <div class="progress-bar bg-red" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Today -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Today</h3>
+        <div class="date">
+          {{ date | date:"mediumDate" }}
+        </div>
+      </div>
+      <div class="card-body text-center">
+        <div class="display-fs3 font-weight-bold mb-1r">
+          {{ todaysUser ? todaysUser.length : "0" }}
+        </div>
+        <div class="progress progress-sm">
+          <div class="progress-bar bg-green" *ngIf="todaysUser" [ngStyle]="{'width':  todaysUser.length * 100 / userCount + '%'}"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Last Week -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Last Week</h3>
+        <div class="date">
+          {{ weekFirstDay | date:" LLL dd" }} - {{ weekLastDay | date:" LLL dd" }}
+        </div>
+      </div>
+      <div class="card-body text-center">
+        <div class="display-fs3 font-weight-bold mb-1r">
+          {{ lastWeekUsers ? lastWeekUsers.length : "0" }}
+        </div>
+        <div class="progress progress-sm">
+          <div class="progress-bar bg-green" *ngIf="lastWeekUsers" [ngStyle]="{'width': lastWeekUsers.length * 100 / userCount + '%'}"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Last Month -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Last Month</h3>
+        <div class="date">
+          {{ monthFirstDay | date:"LLL dd" }} - {{ monthLastDay | date:"LLL dd" }}
+        </div>
+      </div>
+      <div class="card-body text-center">
+        <div class="display-fs3 font-weight-bold mb-1r">
+          {{ lastMonthUsers ? lastMonthUsers.length : "0" }}
+        </div>
+        <div class="progress progress-sm">
+          <div class="progress-bar bg-green" *ngIf="lastMonthUsers" [ngStyle]="{'width': (lastMonthUsers.length * 100 / userCount) + '%'}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2>
+    {{ title ? title : "Last projects" }}
+  </h2>
+
+  <div class="m-16 g-mb-150">
+    <mat-card [hidden]="projectDataSource.data.length > 0">
+      <div class="noResults">
+        Nothing to display!
+      </div>
+    </mat-card>
+
+    <mat-card [hidden]="!hasResult || projectDataSource.data.length === 0">
+      <table mat-table [dataSource]="projectDataSource" [trackBy]="trackBy" class="g-mt-20">
+
+        <!-- Project Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> UserName </th>
+          <td mat-cell *matCellDef="let project"><a routerLink="/projects/{{ project.Id }}">{{ project.Name }}</a></td>
+        </ng-container>
+
+        <!-- User Column -->
+        <ng-container matColumnDef="user">
+          <th mat-header-cell *matHeaderCellDef> User </th>
+          <td mat-cell *matCellDef="let project"><a routerLink="/users/{{ project.User.UserName }}">{{
+              project.User.UserName }}</a></td>
+        </ng-container>
+
+        <!-- Origin -->
+        <ng-container matColumnDef="origin">
+          <th mat-header-cell *matHeaderCellDef> Origin </th>
+          <td mat-cell *matCellDef="let project"><a href="{{ project.Origin }}" target="_blank">{{ project.Origin }}</a></td>
+        </ng-container>
+
+        <!-- Project Date -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef> Date </th>
+          <td mat-cell *matCellDef="let project"> {{ project.CreatedOn | amTimeAgo }} </td>
+        </ng-container>
+
+        <!-- Functions Column -->
+        <ng-container matColumnDef="functions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let project">
+            <div class="pull-right">
+              <button mat-button (click)="updateComputedFields(project)" class="mat-m02">
+                <i class="fa fa-refresh" aria-hidden="true"></i> Update
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="projectDisplayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: projectDisplayedColumns;"></tr>
+      </table>
+    </mat-card>
+  </div>
+
+  <h2>Last users</h2>
+
+  <div class="m-16 mb-150">
+    <mat-card [hidden]="userDataSource.data.length > 0">
+      <div class="noResults">
+        Nothing to display!
+      </div>
+    </mat-card>
+
+    <mat-card [hidden]="userDataSource.data.length === 0">
+      <table *ngIf="userDataSource.data" mat-table [dataSource]="userDataSource" class="g-mt-20">
+
+        <!-- UserName Column -->
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef> UserName </th>
+          <td mat-cell *matCellDef="let element"><a routerLink="/users/{{ element.UserName }}">{{ element.UserName }}</a></td>
+        </ng-container>
+
+        <!-- Project length -->
+        <ng-container matColumnDef="projects">
+          <th mat-header-cell *matHeaderCellDef> Projects </th>
+          <td mat-cell *matCellDef="let element"> {{ element.ProjectSet.length }} </td>
+        </ng-container>
+
+        <!-- Project length -->
+        <ng-container matColumnDef="confirm">
+          <th mat-header-cell *matHeaderCellDef> Confirm </th>
+          <td mat-cell *matCellDef="let element"> {{ element.EmailConfirmed ? "Yes" : "No" }} </td>
+        </ng-container>
+
+        <!-- Date Column -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef> Date </th>
+          <td mat-cell *matCellDef="let element"> {{ element.CreatedOn | amTimeAgo }} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="userDisplayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: userDisplayedColumns;"></tr>
+      </table>
+    </mat-card>
   </div>
 
 </div>

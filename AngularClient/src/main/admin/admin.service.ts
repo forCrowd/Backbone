@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { AppEntityManager, AppHttpClient, AuthService, User, Project } from "@forcrowd/backbone-client-core";
-import { EntityQuery } from "breeze-client";
+import { EntityQuery, Predicate } from "breeze-client";
 import { Observable } from "rxjs";
 import { finalize, mergeMap, map } from "rxjs/operators";
 
@@ -51,6 +51,28 @@ export class AdminService {
     return this.appEntityManager.executeQueryObservable<User>(query).pipe(
       map((response) => {
         return response.count;
+      }));
+  }
+
+  getUser() {
+    let query = EntityQuery
+      .from("Users")
+      .orderByDesc("CreatedOn");
+
+    return this.appEntityManager.executeQueryObservable<User>(query).pipe(
+      map((response) => {
+        return response.results
+      }));
+  }
+
+  getProject() {
+    let query = EntityQuery
+      .from("Project")
+      .orderByDesc("CreatedOn");
+
+    return this.appEntityManager.executeQueryObservable<Project>(query).pipe(
+      map((response) => {
+        return response.results
       }));
   }
 

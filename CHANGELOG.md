@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.9.24**
+
+* AngularClient - Admin Overview updates
+
 **0.9.23**
 
 * Angular - Library updates
