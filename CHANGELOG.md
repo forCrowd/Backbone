@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.9.25**
+
+* Delete account option
+
 **0.9.24b**
 
 * AngularClient - Minor project updates

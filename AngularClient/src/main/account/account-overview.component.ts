@@ -1,5 +1,9 @@
 import { Component } from "@angular/core";
-import { AuthService, User } from "@forcrowd/backbone-client-core";
+import { Router } from "@angular/router";
+import { AuthService, NotificationService, User } from "@forcrowd/backbone-client-core";
+import { flatMap, map } from "rxjs/operators";
+
+import { AccountService } from "./account.service";
 
 @Component({
   selector: "account-overview",
@@ -18,5 +22,15 @@ export class AccountOverviewComponent {
         && !this.currentUser.EmailConfirmationSentOn));
   }
 
-  constructor(private authService: AuthService) { }
+  constructor(private accountService: AccountService, private authService: AuthService, private notificationService: NotificationService, private router: Router) { }
+
+  deleteAccount() {
+    this.accountService.deleteAccount().pipe(flatMap(() => {
+      this.notificationService.notification.next("Your account has been deleted!");
+
+      return this.authService.init().pipe(map(() => {
+        this.router.navigate(["/"]);
+      }));
+    })).subscribe();
+  }
 }

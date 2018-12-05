@@ -19,6 +19,7 @@ export class AccountService {
   changePasswordUrl = "";
   changeUserNameUrl = "";
   confirmEmailUrl = "";
+  deleteAccountUrl = "";
   resendConfirmationEmailUrl = "";
   resetPasswordUrl = "";
   resetPasswordRequestUrl = "";
@@ -36,6 +37,7 @@ export class AccountService {
     this.changePasswordUrl = settings.serviceApiUrl + "/Account/ChangePassword";
     this.changeUserNameUrl = settings.serviceApiUrl + "/Account/ChangeUserName";
     this.confirmEmailUrl = settings.serviceApiUrl + "/Account/ConfirmEmail";
+    this.deleteAccountUrl = settings.serviceApiUrl + "/Account/DeleteAccount";
     this.resendConfirmationEmailUrl = settings.serviceApiUrl + "/Account/ResendConfirmationEmail";
     this.resetPasswordUrl = settings.serviceApiUrl + "/Account/ResetPassword";
     this.resetPasswordRequestUrl = settings.serviceApiUrl + "/Account/ResetPasswordRequest";
@@ -81,6 +83,14 @@ export class AccountService {
       map(updatedUser => {
         this.authService.updateCurrentUser(updatedUser);
         return true;
+      }));
+  }
+
+  deleteAccount() {
+
+    return this.httpClient.delete(this.deleteAccountUrl).pipe(
+      map(() => {
+        this.authService.logout();
       }));
   }
 

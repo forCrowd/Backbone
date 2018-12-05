@@ -129,6 +129,24 @@ namespace forCrowd.Backbone.WebApi.Controllers.Api
             return await UserManager.FindByIdAsync(currentUserId);
         }
 
+        // DELETE api/v1/Account/DeleteAccount
+        [HttpDelete]
+        public async Task<IHttpActionResult> DeleteAccount()
+        {
+            var currentUserId = User.Identity.GetUserId<int>();
+            var currentUser = await UserManager.FindByIdAsync(currentUserId);
+
+            var result = await UserManager.DeleteAsync(currentUser);
+            var errorResult = GetErrorResult(result);
+
+            if (errorResult != null)
+            {
+                return errorResult;
+            }
+
+            return Ok();
+        }
+
         // POST api/v1/Account/Register
         [AllowAnonymous]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
