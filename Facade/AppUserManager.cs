@@ -139,6 +139,18 @@
             return result;
         }
 
+        public override async Task<IdentityResult> DeleteAsync(User user)
+        {
+            var result = await base.DeleteAsync(user);
+
+            if (result.Succeeded)
+            {
+                await Store.Context.SaveChangesAsync();
+            }
+
+            return result;
+        }
+
         public async Task<User> FindBySingleUseTokenAsync(string token)
         {
             // Search for the user

@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { AuthService, NotificationService } from "@forcrowd/backbone-client-core";
 import { timer as observableTimer } from "rxjs";
 
-
 @Component({
   selector: "login",
   templateUrl: "login.component.html"
