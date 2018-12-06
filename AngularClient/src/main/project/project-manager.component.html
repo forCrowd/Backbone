@@ -54,120 +54,128 @@
     </h2>
 
     <div class="m-16" [hidden]="viewMode !== 'existing'">
-      Step 1 - enter the projects information
+      Step 1 - Enter the projects information.
     </div>
+    <mat-accordion>
+        <mat-expansion-panel (projectOverviewIsOpen)="panelOpenState = true" (projectOverviewIsOpen)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="mat-card-title">
+              Project Overview
+            </mat-panel-title>
+            <mat-panel-description>
+              Show project information
+            </mat-panel-description>
+          </mat-expansion-panel-header>
 
-    <div class="mat-card-std m-16" ngClass.xs="h-auto" ngClass.sm="h-auto">
-      <mat-card-title>Project Overview</mat-card-title>
-
-      <!-- Edit Mode -->
-      <form *ngIf="viewMode === 'existing'" #projectForm="ngForm" autocomplete="off">
-        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start start">
-          <div class="board">
-            <div [ngClass]="{ 'has-error': project.entityAspect.getValidationErrors('Name').length > 0 }" class="g-mt-20">
-              <mat-form-field>
-                <input matInput [(ngModel)]="project.Name" id="Name" name="Name" placeholder="Name" />
-              </mat-form-field>
-            </div>
-          </div>
-
-          <div class="board">
-            <div [ngClass]="{ 'has-error': project.entityAspect.getValidationErrors('Origin').length > 0 }" class="g-mt-20">
-              <mat-form-field>
-                <input matInput [(ngModel)]="project.Origin" id="Origin" name="Origin" placeholder="Origin URL" />
-              </mat-form-field>
-              <mat-card-content id="KeyHelp" class="fs-12">
-                The host/domain that the client application will be making the requests from.
-              </mat-card-content>
-            </div>
-          </div>
-
-          <div class="board">
-            <div [ngClass]="{ 'has-error': project.entityAspect.getValidationErrors('Description').length > 0 }" class="g-mt-20">
-              <mat-form-field>
-                <textarea matInput [(ngModel)]="project.Description" id="Description" name="Description" placeholder="Description"></textarea>
-              </mat-form-field>
-            </div>
-          </div>
-
-          <div class="board-no-border">
-            <button mat-flat-button (click)="saveProject()" [disabled]="submitDisabled()" class="mat-m02">
-              Save
-            </button>
-          </div>
-        </div>
-      </form>
-
-      <!-- View Mode -->
-      <div *ngIf="viewMode === 'view'">
-        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start start">
-
-          <div class="board w-35p" ngClass.sm="w-310" ngClass.xs="w-310">
-            <div class="h-40">
-              <div class="wp-40">Created by</div>
-              <div class="wp-60">
-                <a class="link" routerLink="/users/{{ project.User.UserName }}">{{ project.User.UserName }}</a>
-              </div>
-            </div>
-            <div class="h-40">
-              <div class="wp-40">Origin (Domain)</div>
-              <div class="wp-60 no-wrap">
-                <a class="link" href="{{ project.Origin }}" target="_blank">{{ project.Origin }}</a>
-              </div>
-            </div>
-            <div class="h-40">
-              <div class="wp-40">Description</div>
-              <div class="wp-60">
-                {{ project.Description || "N/A" }}
-              </div>
-            </div>
-            <div>
-              <div class="wp-40">Date Created</div>
-              <div class="wp-60 no-wrap">
-                {{ project.CreatedOn | date: 'medium' }}
-                <div class="no-wrap" [hidden]="project.CreatedOn.getTime() === project.ModifiedOn.getTime()">
-                  {{ project.ModifiedOn | date: 'medium' }}
+          <!-- Edit Mode -->
+          <form *ngIf="viewMode === 'existing'" #projectForm="ngForm" autocomplete="off">
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start start">
+              <div class="board">
+                <div [ngClass]="{ 'has-error': project.entityAspect.getValidationErrors('Name').length > 0 }" class="g-mt-20">
+                  <mat-form-field>
+                    <input matInput [(ngModel)]="project.Name" id="Name" name="Name" placeholder="Name" />
+                  </mat-form-field>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div class="board w-30p" ngClass.sm="w-310" ngClass.xs="w-310">
-            <div class="h-60">
-              <div class="wp-70"><a href="{{ projectBasicApiUrl }}" target="_blank">Basic view</a></div>
-              <div class="wp-30">
-                <a mat-stroked-button (click)="copyApiLink(projectBasicApiUrl)" target="_blank">Copy</a>
+              <div class="board">
+                <div [ngClass]="{ 'has-error': project.entityAspect.getValidationErrors('Origin').length > 0 }" class="g-mt-20">
+                  <mat-form-field>
+                    <input matInput [(ngModel)]="project.Origin" id="Origin" name="Origin" placeholder="Origin URL" />
+                  </mat-form-field>
+                  <mat-card-content id="KeyHelp" class="fs-12">
+                    The host/domain that the client application will be making the requests from.
+                  </mat-card-content>
+                </div>
               </div>
-            </div>
-            <div>
-              <div class="wp-70"><a href="{{ projectGuestExpandedApiUrl }}" target="_blank">Expanded view for guest access</a></div>
-              <div class="wp-30">
-                <a mat-stroked-button (click)="copyApiLink(projectGuestExpandedApiUrl)" target="_blank">Copy</a>
-              </div>
-            </div>
-          </div>
-          <div class="board-no-border p-16 w-30p" ngClass.sm="w-310" ngClass.xs="w-310 p-4">
-            <div class="h-60">
-              <div class="wp-70"><a href="{{ projectOwnerExpandedApiUrl }}" target="_blank">Expanded view for project owners</a></div>
-              <div class="wp-30">
-                <a mat-stroked-button (click)="copyApiLink(projectOwnerExpandedApiUrl)" target="_blank">Copy</a>
-              </div>
-            </div>
-            <div>
-              <div class="wp-70"><a href="{{ metadataUrl }}" target="_blank">API Metadata</a></div>
-              <div class="wp-30">
-                <a mat-stroked-button (click)="copyApiLink(metadataUrl)" target="_blank">Copy</a>
-              </div>
-            </div>
-          </div>
 
-        </div>
-      </div>
-    </div>
+              <div class="board">
+                <div [ngClass]="{ 'has-error': project.entityAspect.getValidationErrors('Description').length > 0 }" class="g-mt-20">
+                  <mat-form-field>
+                    <textarea matInput [(ngModel)]="project.Description" id="Description" name="Description" placeholder="Description"></textarea>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="board-no-border">
+                <button mat-flat-button (click)="saveProject()" [disabled]="submitDisabled()" class="mat-m02">
+                  Save
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <!-- View Mode -->
+          <div *ngIf="viewMode === 'view'">
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start start">
+
+              <div class="board w-35p" ngClass.sm="w-310" ngClass.xs="w-310">
+                <div class="h-40">
+                  <div class="wp-40">Created by</div>
+                  <div class="wp-60">
+                    <a class="link" routerLink="/users/{{ project.User.UserName }}">{{ project.User.UserName }}</a>
+                  </div>
+                </div>
+                <div class="h-40">
+                  <div class="wp-40">Origin (Domain)</div>
+                  <div class="wp-60 no-wrap">
+                    <a class="link" href="{{ project.Origin }}" target="_blank">{{ project.Origin }}</a>
+                  </div>
+                </div>
+                <div class="h-40">
+                  <div class="wp-40">Description</div>
+                  <div class="wp-60">
+                    {{ project.Description || "N/A" }}
+                  </div>
+                </div>
+                <div>
+                  <div class="wp-40">Date Created</div>
+                  <div class="wp-60 no-wrap">
+                    {{ project.CreatedOn | date: 'medium' }}
+                    <div class="no-wrap" [hidden]="project.CreatedOn.getTime() === project.ModifiedOn.getTime()">
+                      {{ project.ModifiedOn | date: 'medium' }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="board w-30p" ngClass.sm="w-310" ngClass.xs="w-310">
+                <div class="h-60">
+                  <div class="wp-70"><a href="{{ projectBasicApiUrl }}" target="_blank">Basic view</a></div>
+                  <div class="wp-30">
+                    <a mat-stroked-button (click)="copyApiLink(projectBasicApiUrl)" target="_blank">Copy</a>
+                  </div>
+                </div>
+                <div>
+                  <div class="wp-70"><a href="{{ projectGuestExpandedApiUrl }}" target="_blank">Expanded view for guest access</a></div>
+                  <div class="wp-30">
+                    <a mat-stroked-button (click)="copyApiLink(projectGuestExpandedApiUrl)" target="_blank">Copy</a>
+                  </div>
+                </div>
+              </div>
+              <div class="board-no-border p-16 w-30p" ngClass.sm="w-310" ngClass.xs="w-310 p-4">
+                <div class="h-60">
+                  <div class="wp-70"><a href="{{ projectOwnerExpandedApiUrl }}" target="_blank">Expanded view for project owners</a></div>
+                  <div class="wp-30">
+                    <a mat-stroked-button (click)="copyApiLink(projectOwnerExpandedApiUrl)" target="_blank">Copy</a>
+                  </div>
+                </div>
+                <div>
+                  <div class="wp-70"><a href="{{ metadataUrl }}" target="_blank">API Metadata</a></div>
+                  <div class="wp-30">
+                    <a mat-stroked-button (click)="copyApiLink(metadataUrl)" target="_blank">Copy</a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
 
     <div class="m-16">
       <div [hidden]="viewMode !== 'existing'">
-        Step 2 - add elements, fields and project specifications
+        Step 2 - Add elements, fields and project specifications.
       </div>
 
       <h2 [hidden]="viewMode === 'existing' || projectOwner !== user "><button mat-stroked-button (click)="manageProject()">Manage

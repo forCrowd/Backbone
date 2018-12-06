@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.9.26**
+
+* AngularClient - Project manager minor fix
+* AngularClient - Delete account - confirmation has been added
+
 **0.9.25**
 
 * Delete account option

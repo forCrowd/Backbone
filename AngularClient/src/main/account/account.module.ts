@@ -13,6 +13,7 @@ import { ConfirmEmailComponent } from "./confirm-email.component";
 import { LoginComponent } from "./login.component";
 import { RegisterComponent } from "./register.component";
 import { ResetPasswordComponent } from "./reset-password.component";
+import { AccountRemoveConfirmComponent } from "./account-delete-confirm.component";
 
 // Services
 import { AccountService } from "./account.service";
@@ -42,6 +43,10 @@ const accountRoutes: Routes = [
     LoginComponent,
     RegisterComponent,
     ResetPasswordComponent,
+    AccountRemoveConfirmComponent,
+  ],
+  entryComponents: [
+    AccountRemoveConfirmComponent
   ],
   exports: [
     RouterModule

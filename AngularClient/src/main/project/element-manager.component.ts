@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { SelectionModel } from "@angular/cdk/collections";
 import { MatTableDataSource, MatDialog } from "@angular/material";
-import { Element, Project, ProjectService } from "@forcrowd/backbone-client-core";
+import { Element, Project, ProjectService, NotificationService } from "@forcrowd/backbone-client-core";
 import { finalize } from "rxjs/operators";
 
 import { RemoveConfirmComponent } from "./remove-confirm.component";
@@ -45,6 +45,7 @@ export class ElementManagerComponent implements OnInit {
   }
 
   constructor(private projectService: ProjectService,
+    private notificationService: NotificationService,
     private dialog: MatDialog) { }
 
   addElement(): void {
@@ -70,6 +71,7 @@ export class ElementManagerComponent implements OnInit {
   }
 
   removeElement(): void {
+    var isRemove = true;
     const dialogRef = this.dialog.open(RemoveConfirmComponent);
 
     dialogRef.afterClosed().subscribe(confirmed => {
@@ -77,9 +79,16 @@ export class ElementManagerComponent implements OnInit {
       if (!confirmed) return;
 
       if (this.selection.selected.length > 0) {
+        this.selection.selected.forEach(selected => {
 
-        this.selection.selected.forEach(element => {
-          this.projectService.removeElement(element);
+          if (selected.ParentFieldSet.length > 0) {
+            isRemove = false;
+            let parentField = selected.ParentFieldSet[0].Name;
+            let errorMsg = `This Element (${selected.Name}) could not be removed, because firstly related field (${parentField}) must be removed!`;
+            this.notificationService.notification.next(errorMsg);
+          }
+
+          if(isRemove) this.projectService.removeElement(selected);
         });
 
         this.projectService.saveChanges().pipe(
