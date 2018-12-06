@@ -16,6 +16,7 @@ export class ProjectManagerComponent implements OnInit {
   project: Project = null;
   selectedTabIndex = 0;
   projectOwner: User = null;
+  projectOverviewIsOpen: boolean = false;
   user: User;
   viewMode = "new"; // new | existing | view
 
