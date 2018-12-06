@@ -1,9 +1,11 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
+import { MatDialog } from "@angular/material";
 import { AuthService, NotificationService, User } from "@forcrowd/backbone-client-core";
 import { flatMap, map } from "rxjs/operators";
 
 import { AccountService } from "./account.service";
+import { AccountRemoveConfirmComponent } from "./account-delete-confirm.component";
 
 @Component({
   selector: "account-overview",
@@ -22,15 +24,27 @@ export class AccountOverviewComponent {
         && !this.currentUser.EmailConfirmationSentOn));
   }
 
-  constructor(private accountService: AccountService, private authService: AuthService, private notificationService: NotificationService, private router: Router) { }
+  constructor(private accountService: AccountService,
+    private authService: AuthService,
+    private notificationService: NotificationService,
+    private dialog: MatDialog,
+    private router: Router) { }
 
   deleteAccount() {
-    this.accountService.deleteAccount().pipe(flatMap(() => {
-      this.notificationService.notification.next("Your account has been deleted!");
 
-      return this.authService.init().pipe(map(() => {
-        this.router.navigate(["/"]);
-      }));
-    })).subscribe();
+    const dialogRef = this.dialog.open(AccountRemoveConfirmComponent)
+    dialogRef.afterClosed().subscribe(confirmed => {
+
+      if (!confirmed) return;
+
+      this.accountService.deleteAccount().pipe(flatMap(() => {
+        this.notificationService.notification.next("Your account has been deleted!");
+        return this.authService.init().pipe(map(() => {
+          this.router.navigate(["/"]);
+        }));
+      })).subscribe();
+
+    });
+
   }
 }

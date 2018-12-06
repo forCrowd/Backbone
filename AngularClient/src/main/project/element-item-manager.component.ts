@@ -1,7 +1,7 @@
 import { SelectionModel } from "@angular/cdk/collections";
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { MatTableDataSource, MatDialog } from "@angular/material";
-import { Element, ElementItem, Project, ProjectService } from "@forcrowd/backbone-client-core";
+import { Element, ElementItem, Project, ProjectService, NotificationService } from "@forcrowd/backbone-client-core";
 import { finalize } from "rxjs/operators";
 
 import { RemoveConfirmComponent } from "./remove-confirm.component";
@@ -56,6 +56,7 @@ export class ElementItemManagerComponent implements OnInit {
   }
 
   constructor(private projectService: ProjectService,
+    private notificationService: NotificationService,
     private dialog: MatDialog) { }
 
   addElementItem() {
@@ -81,6 +82,7 @@ export class ElementItemManagerComponent implements OnInit {
   }
 
   removeElementItem() {
+    var isRemove = true;
     const dialogRef = this.dialog.open(RemoveConfirmComponent);
     dialogRef.afterClosed().subscribe(confirmed => {
 
@@ -88,7 +90,16 @@ export class ElementItemManagerComponent implements OnInit {
 
       if (this.selection.selected.length > 0) {
         this.selection.selected.forEach(elementItem => {
-          this.projectService.removeElementItem(elementItem);
+
+          if (elementItem.ParentCellSet.length > 0) {
+            isRemove = false;
+            let parentItem = elementItem.ParentCellSet[0].ElementItem.Name;
+            let parentField = elementItem.ParentCellSet[0].ElementField.Name;
+            let errorMsg  = `This Items (${elementItem.Name}) could not be removed, because firstly related elements (${parentItem}, ${parentField}) must be removed!`;
+            this.notificationService.notification.next(errorMsg);
+          }
+
+          if(isRemove) this.projectService.removeElementItem(elementItem);
         });
 
         this.projectService.saveChanges().pipe(

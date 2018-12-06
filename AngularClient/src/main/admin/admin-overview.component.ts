@@ -72,7 +72,7 @@ export class AdminOverviewComponent implements OnInit {
       var createdOn = this.formatDate(e.CreatedOn);
       if (createdOn === this.today)
         this.todaysProject.push(e);
-    })
+    });
   }
 
   getLastMonthProjects(): void {
@@ -80,7 +80,7 @@ export class AdminOverviewComponent implements OnInit {
       var createdOn = this.formatDate(e.CreatedOn);
       if (createdOn >= this.monthFirstDay && createdOn <= this.monthLastDay)
         this.lastMonthProjects.push(e);
-    })
+    });
   }
 
   getLastWeekProjects(): void {
@@ -88,7 +88,7 @@ export class AdminOverviewComponent implements OnInit {
       var createdOn = this.formatDate(e.CreatedOn);
       if (createdOn >= this.weekFirstDay && createdOn <= this.weekLastDay)
         this.lastWeekProjects.push(e);
-    })
+    });
   }
 
   getTodayUsers(): void {
