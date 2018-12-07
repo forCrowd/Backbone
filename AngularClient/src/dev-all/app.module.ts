@@ -23,12 +23,6 @@ import { ODataUserComponent } from "./odata-user.component";
 import { ProjectTesterComponent } from "./project-tester.component";
 import { WebApiComponent } from "./web-api.component";
 
-const coreConfig: ICoreConfig = {
-  environment: settings.environment,
-  serviceApiUrl: settings.serviceApiUrl,
-  serviceODataUrl: settings.serviceODataUrl
-};
-
 @NgModule({
   bootstrap: [
     AppComponent
@@ -50,7 +44,6 @@ const coreConfig: ICoreConfig = {
     WebApiComponent
   ],
   imports: [
-    CoreModule.configure(coreConfig),
     SharedModule,
 
     AppRouterModule, // Routes (must be before Core, to set default route!)
