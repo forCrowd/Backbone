@@ -20,10 +20,12 @@ export class ElementManagerComponent implements OnInit {
   elementDataSource = new MatTableDataSource<Element>([]);
   selection = new SelectionModel<Element>(true, []);
   elementDisplayedColumns = ["select", "name", "sortOrder", "createdOn"];
+  sortOrderArray: number[] = null;
 
   get selectedElement(): Element {
     return this.fields.selectedElement;
   }
+
   set selectedElement(value: Element) {
     if (this.fields.selectedElement !== value) {
       this.fields.selectedElement = value;
@@ -44,9 +46,22 @@ export class ElementManagerComponent implements OnInit {
     return this.projectService.isBusy;
   }
 
+  get sortOrder(): number[] {
+    var sortOrderArray = Array(this.selectedElement.SortOrder + 1).fill(1).map((e, i)=>i).reverse();
+
+    if(this.sortOrderArray === null) {
+      this.sortOrderArray = sortOrderArray;
+      return sortOrderArray;
+    }
+
+    return sortOrderArray.length > this.sortOrderArray.length ? sortOrderArray
+      : this.sortOrderArray;
+  }
+
   constructor(private projectService: ProjectService,
     private notificationService: NotificationService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog) {
+    }
 
   addElement(): void {
     this.selectedElement = this.projectService.createElement({

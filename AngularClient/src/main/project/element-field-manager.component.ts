@@ -22,6 +22,7 @@ export class ElementFieldManagerComponent implements OnInit {
   elementFieldDisplayedColumns = ["select", "element", "name", "dataType", "createdOn"];
   elementFieldDataType = ElementFieldDataType;
   selectedElementList: Element[] = [];
+  sortOrderArray: number[] = null;
 
   get selectedElementField(): ElementField {
     return this.fields.selectedElementField;
@@ -50,6 +51,18 @@ export class ElementFieldManagerComponent implements OnInit {
 
       this.elementFieldDataSource.data = value ? value.ElementFieldSet : [];
     }
+  }
+
+  get sortOrder(): number[] {
+    var sortOrderArray = Array(this.selectedElementField.SortOrder + 1).fill(1).map((e, i)=>i).reverse();
+
+    if(this.sortOrderArray === null) {
+      this.sortOrderArray = sortOrderArray;
+      return sortOrderArray;
+    }
+
+    return sortOrderArray.length > this.sortOrderArray.length ? sortOrderArray
+      : this.sortOrderArray;
   }
 
   private fields: {

@@ -14,7 +14,13 @@
       </button>
     </div>
 
-    <mat-card class="mat-card-std g-mb-150 g-mt-20">
+    <mat-card [hidden]="elementDataSource.data.length > 0" class="mat-card-std g-mb-150 g-mt-20">
+      <div class="noResults">
+        Please create a new one!
+      </div>
+    </mat-card>
+
+    <mat-card [hidden]="elementDataSource.data.length === 0" class="mat-card-std g-mb-150 g-mt-20">
       <table mat-table [dataSource]="elementDataSource" [trackBy]="trackBy" class="g-mt-20">
         <ng-container matColumnDef="select">
           <th mat-header-cell *matHeaderCellDef>
@@ -67,8 +73,11 @@
 
           <div [ngClass]="{ 'has-error': selectedElement.entityAspect.getValidationErrors('SortOrder').length > 0 }">
             <mat-form-field>
-              <input matInput id="SortOrder" name="SortOrder" type="text" [(ngModel)]="selectedElement.SortOrder"
-                placeholder="SortOrder" />
+              <mat-select placeholder="Sort Order" name="SortOrder" id="SortOrder" [value]="sortOrder.length" [(ngModel)]="selectedElement.SortOrder">
+                <mat-option *ngFor="let order of sortOrder" [value]="order">
+                  {{order}}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
 

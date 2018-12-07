@@ -3,13 +3,13 @@
   <!-- Element cell list -->
   <div *ngIf="!selectedElementCell">
     <div class="cellFilterContainer g-mt-20">
-      <mat-form-field>
+      <mat-form-field [hidden]="project.ElementSet.length === 0">
         <mat-select placeholder="Select an element" [(value)]="elementFilter">
           <mat-option *ngFor="let element of project.ElementSet" [value]="element">{{ element.Name }}</mat-option>
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field [hidden]="elementFilter?.ElementFieldSet === null">
         <mat-select placeholder="Select a field" [(value)]="elementFieldFilter">
           <mat-option *ngFor="let elementField of elementFilter?.ElementFieldSet" [value]="elementField">{{
             elementField.Name }}</mat-option>
@@ -17,7 +17,13 @@
       </mat-form-field>
     </div>
 
-    <mat-card class="mat-card-std g-mb-250 g-mt-20">
+    <mat-card [hidden]="elementCellDataSource.data.length > 0" class="mat-card-std g-mb-150 g-mt-20">
+      <div class="noResults">
+        {{ project.ElementSet.length === 0 ? "Please create a new Element first!" : elementFilter?.ElementFieldSet?.length === 0 ? "Please create a new Field!" : "Pleace create a new Item!" }}
+      </div>
+    </mat-card>
+
+    <mat-card [hidden]="elementCellDataSource.data.length === 0" class="mat-card-std g-mb-250 g-mt-20">
       <table mat-table [dataSource]="elementCellDataSource" [trackBy]="trackBy" class="g-mt-20">
 
         <ng-container matColumnDef="elementItem">

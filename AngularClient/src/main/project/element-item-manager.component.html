@@ -4,7 +4,7 @@
   <div *ngIf="!selectedElementItem">
 
     <div *ngIf="projectOwner" class="g-mt-20">
-      <button mat-button (click)="addElementItem()" [disabled]="isBusy">
+      <button mat-button (click)="addElementItem()" [hidden]="project.ElementSet.length === 0" [disabled]="isBusy">
         <i class="material-icons">add</i>
         Create new
       </button>
@@ -12,14 +12,20 @@
         <i class="material-icons">delete</i>
         Remove
       </button>
-      <mat-form-field>
+      <mat-form-field [hidden]="project.ElementSet.length === 0">
         <mat-select placeholder="Select an element" [(value)]="elementFilter">
           <mat-option *ngFor="let element of project.ElementSet" [value]="element">{{ element.Name }}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
 
-    <mat-card class="mat-card-std g-mb-250 g-mt-20">
+    <mat-card [hidden]="elementItemDataSource.data.length > 0" class="mat-card-std g-mb-150 g-mt-20">
+      <div class="noResults">
+        {{ project.ElementSet.length === 0 ? "Please create a new Element first" : "Please create a new Item!" }}
+      </div>
+    </mat-card>
+
+    <mat-card [hidden]="elementItemDataSource.data.length === 0" class="mat-card-std g-mb-250 g-mt-20">
       <table mat-table [dataSource]="elementItemDataSource" [trackBy]="trackBy" class="g-mt-20">
         <ng-container matColumnDef="select">
           <th mat-header-cell *matHeaderCellDef>
@@ -76,8 +82,7 @@
             <label class="mat-body-1">Element</label>
             <p>{{ selectedElementItem.Element.Name }}</p>
           </div>
-          <div [ngClass]="{ 'has-error': selectedElementItem.entityAspect.getValidationErrors('Name').length > 0 }"
-            class="g-mt-20">
+          <div [ngClass]="{ 'has-error': selectedElementItem.entityAspect.getValidationErrors('Name').length > 0 }" class="g-mt-20">
             <mat-form-field>
               <input matInput placeholder="Name" id="Name" name="Name" [(ngModel)]="selectedElementItem.Name" />
             </mat-form-field>

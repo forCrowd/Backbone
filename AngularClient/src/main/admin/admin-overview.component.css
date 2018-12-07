@@ -127,13 +127,6 @@ mat-card a {
   text-align: center !important;
 }
 
-.noResults {
-  display: flex;
-  justify-content: center;
-  -o-justify-content: center;
-  -webkit-justify-content: center;
-  padding: 2em;
-}
 
 .mb-150 {
   margin-bottom: 150px !important;

@@ -4,7 +4,7 @@
   <div *ngIf="!selectedElementField">
 
     <div *ngIf="projectOwner" class="g-mt-20">
-      <button mat-button (click)="addElementField()" [disabled]="project.ElementSet.length === 0">
+      <button mat-button (click)="addElementField()" [hidden]="project.ElementSet.length === 0">
         <i class="material-icons">add</i>
         Create new
       </button>
@@ -13,14 +13,20 @@
         Remove
       </button>
 
-      <mat-form-field>
+      <mat-form-field [hidden]="project.ElementSet.length === 0">
         <mat-select placeholder="Select an element" [(value)]="elementFilter">
           <mat-option *ngFor="let element of project.ElementSet" [value]="element">{{ element.Name }}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
 
-    <mat-card class="mat-card-std g-mb-250 g-mt-20">
+    <mat-card [hidden]="elementFieldDataSource.data.length > 0" class="mat-card-std g-mb-150 g-mt-20">
+      <div class="noResults">
+        Please create a new Element!
+      </div>
+    </mat-card>
+
+    <mat-card [hidden]="elementFieldDataSource.data.length === 0" class="mat-card-std g-mb-250 g-mt-20">
       <table mat-table [dataSource]="elementFieldDataSource" [trackBy]="trackBy" class="g-mt-20">
         <ng-container matColumnDef="select">
           <th mat-header-cell *matHeaderCellDef>
@@ -150,11 +156,13 @@
             <label class="mat-body-1">Rating Enabled</label>
             <p>{{ selectedElementField.RatingEnabled }}</p>
           </div>
-
-          <div [ngClass]="{ 'has-error': selectedElementField.entityAspect.getValidationErrors('SortOrder').length > 0 }"
-            class="g-mt-20">
+          <div [ngClass]="{ 'has-error': selectedElementField.entityAspect.getValidationErrors('SortOrder').length > 0 }" class="g-mt-20">
             <mat-form-field>
-              <input matInput placeholder="Sort Order" id="SortOrder" name="SortOrder" [(ngModel)]="selectedElementField.SortOrder" />
+              <mat-select placeholder="Sort Order" name="SortOrder" id="SortOrder" [value]="sortOrder.length" [(ngModel)]="selectedElementField.SortOrder">
+                <mat-option *ngFor="let order of sortOrder" [value]="order">
+                  {{order}}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
           <div class="g-mt-20">

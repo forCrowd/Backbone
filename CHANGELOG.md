@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.9.28**
+
+* AngularClient - Project manager SortOrder fields get inside the dropdown
+* AngularClient - Project manager minor fix
+
 **0.9.27**
 
 * AngularClient - Delete account hidden fix
