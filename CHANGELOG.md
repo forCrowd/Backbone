@@ -1,5 +1,11 @@
 ### Changelog
 
+**0.9.28**
+
+* AngularClient
+  * "dev-all" module fixes
+  * Library updates
+
 **0.9.27**
 
 * AngularClient - Delete account hidden fix

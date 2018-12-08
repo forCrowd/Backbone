@@ -225,9 +225,7 @@ export class ProjectService {
       Rating: rating
     };
 
-    this.appEntityManager.createEntity("UserElementField", initialValues);
-
-    return this.appEntityManager.createEntity("UserElementCell", initialValues) as TUserElementField;
+    return this.appEntityManager.createEntity("UserElementField", initialValues) as TUserElementField;
   }
 
   getProjectExpanded<TProject extends Project>(projectId: number, forceRefresh = false) {
