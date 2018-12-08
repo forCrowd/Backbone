@@ -1,7 +1,6 @@
-using forCrowd.Backbone.BusinessObjects.Entities;
-
 namespace forCrowd.Backbone.WebApi.Controllers.OData
 {
+    using BusinessObjects.Entities;
     using Facade;
     using Filters;
     using Microsoft.AspNet.Identity;
@@ -21,34 +20,34 @@ namespace forCrowd.Backbone.WebApi.Controllers.OData
         [AllowAnonymous]
         public IQueryable<Project> Get()
         {
-            var list = _projectManager.GetProjectSet(null, true, project => project.User);
+            var query = _projectManager.GetProjectSet(null, true, project => project.User);
 
-            // TODO Handle this by intercepting the query either on OData or EF level
-            // Currently it queries the database twice / coni2k - 20 Feb. '17
+            // Don't return user details to other users
+            // TODO This is a bit hacky, find a better way! / coni2k - 08 Dec. '18
             var currentUserId = User.Identity.GetUserId<int>();
-            foreach (var item in list.Where(item => item.UserId != currentUserId))
+            foreach (var item in query.Where(item => item.UserId != currentUserId))
             {
                 item.User.ResetValues();
             }
 
-            return list;
+            return query;
         }
 
         // GET odata/Project(1)
         [AllowAnonymous]
         public IQueryable<Project> Get([FromODataUri] int key)
         {
-            var list = _projectManager.GetProjectSet(key, true, project => project.User);
+            var query = _projectManager.GetProjectSet(key, true, project => project.User);
 
-            // TODO Handle this by intercepting the query either on OData or EF level
-            // Currently it queries the database twice / coni2k - 20 Feb. '17
+            // Don't return user details to other users
+            // TODO This is a bit hacky, find a better way! / coni2k - 08 Dec. '18
             var currentUserId = User.Identity.GetUserId<int>();
-            foreach (var item in list.Where(item => item.UserId != currentUserId))
+            foreach (var item in query.Where(item => item.UserId != currentUserId))
             {
                 item.User.ResetValues();
             }
 
-            return list;
+            return query;
         }
 
         // POST odata/Project

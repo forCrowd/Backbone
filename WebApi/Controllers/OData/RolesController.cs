@@ -1,7 +1,6 @@
-using forCrowd.Backbone.BusinessObjects.Entities;
-
 namespace forCrowd.Backbone.WebApi.Controllers.OData
 {
+    using BusinessObjects.Entities;
     using Facade;
     using DataObjects;
     using System.Linq;

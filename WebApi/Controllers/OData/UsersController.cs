@@ -1,7 +1,6 @@
-using forCrowd.Backbone.BusinessObjects.Entities;
-
 namespace forCrowd.Backbone.WebApi.Controllers.OData
 {
+    using BusinessObjects.Entities;
     using Facade;
     using DataObjects;
     using Microsoft.AspNet.Identity;
@@ -24,17 +23,17 @@ namespace forCrowd.Backbone.WebApi.Controllers.OData
         [AllowAnonymous]
         public IQueryable<User> Get()
         {
-            var list = _userManager.GetUserSet();
+            var query = _userManager.GetUserSet();
 
-            // TODO Handle this by intercepting the query either on OData or EF level
-            // Currently it queries the database twice / coni2k - 20 Feb. '17
+            // Don't return user details to other users
+            // TODO This is a bit hacky, find a better way! / coni2k - 08 Dec. '18
             var currentUserId = User.Identity.GetUserId<int>();
-            foreach (var item in list.Where(item => item.Id != currentUserId))
+            foreach (var item in query.Where(item => item.Id != currentUserId))
             {
                 item.ResetValues();
             }
 
-            return list;
+            return query;
         }
     }
 }

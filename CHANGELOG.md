@@ -5,6 +5,7 @@
 * AngularClient
   * "dev-all" module fixes
   * Library updates
+* WebAPI - Minor
 
 **0.9.27**
 
@@ -113,6 +114,7 @@
   * AppSettings was replaced environment
 
 **0.9.5**
+
 * AngularClient
   * Client + library separation
   * app_offline.html minor updates
