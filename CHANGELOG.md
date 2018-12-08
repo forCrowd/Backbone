@@ -1,5 +1,12 @@
 ### Changelog
 
+**0.9.28**
+
+* AngularClient
+  * "dev-all" module fixes
+  * Library updates
+* WebAPI - Minor
+
 **0.9.27**
 
 * AngularClient - Delete account hidden fix
@@ -107,6 +114,7 @@
   * AppSettings was replaced environment
 
 **0.9.5**
+
 * AngularClient
   * Client + library separation
   * app_offline.html minor updates

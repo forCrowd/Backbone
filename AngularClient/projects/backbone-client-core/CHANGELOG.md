@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.2.3**
+
+* project.service - createUserElementField fix
+
 **0.2.2**
 
 * Package.json - coreConfigFactory fix
