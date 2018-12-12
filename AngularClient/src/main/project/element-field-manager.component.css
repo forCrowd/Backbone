@@ -15,11 +15,23 @@ form {
   margin-top: -4px
 }
 
-mat-card a {
+a {
+  cursor: pointer;
   font-weight: normal;
   color: #0019ff;
   text-decoration: underline;
   cursor: pointer;
+}
+
+.mat-table i {
+  float: left;
+  padding-right: 6px;
+  color: gray;
+  cursor: move;
+}
+
+.mc-pl-30 {
+  padding-left: 30px;
 }
 
 label {

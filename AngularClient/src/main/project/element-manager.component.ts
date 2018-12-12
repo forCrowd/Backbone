@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { SelectionModel } from "@angular/cdk/collections";
 import { MatTableDataSource, MatDialog } from "@angular/material";
-import { DragDropModule, CdkDragDrop, CdkDrag, moveItemInArray } from "@angular/cdk/drag-drop";
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { Element, Project, ProjectService, NotificationService } from "@forcrowd/backbone-client-core";
 import { finalize } from "rxjs/operators";
 
@@ -47,7 +47,7 @@ export class ElementManagerComponent implements OnInit {
     return this.projectService.isBusy;
   }
 
-  get sortOrder(): number[] {
+/*   get sortOrder(): number[] {
     var sortOrderArray = Array(this.selectedElement.SortOrder + 1).fill(1).map((e, i)=>i).reverse();
 
     if(this.sortOrderArray === null) {
@@ -57,29 +57,7 @@ export class ElementManagerComponent implements OnInit {
 
     return sortOrderArray.length > this.sortOrderArray.length ? sortOrderArray
       : this.sortOrderArray;
-  }
-
-  drop(event: CdkDragDrop<Element[]>) {
-    if (event.previousIndex !== event.currentIndex) {
-
-      this.project.ElementSet[event.previousIndex].SortOrder = this.project.ElementSet.length - (event.currentIndex + 1);
-
-      if (event.previousIndex < event.currentIndex) {
-        for(var i = event.previousIndex; i < event.currentIndex; i++) {
-          this.project.ElementSet[i + 1].SortOrder = this.project.ElementSet.length - i - 1;
-        }
-      } else {
-        for (var i = event.currentIndex; i < event.previousIndex; i++) {
-          this.project.ElementSet[i].SortOrder = this.project.ElementSet.length - i - 2;
-        }
-      }
-
-      moveItemInArray(this.project.ElementSet, event.previousIndex, event.currentIndex)
-      this.saveElement();
-      this.elementDataSource.data = this.project.ElementSet;
-
-    }
-  }
+  } */
 
   constructor(private projectService: ProjectService,
     private notificationService: NotificationService,
@@ -101,6 +79,25 @@ export class ElementManagerComponent implements OnInit {
 
   editElement(element: Element): void {
     this.selectedElement = element;
+  }
+
+  drop(event: CdkDragDrop<Element[]>) {
+    if (event.previousIndex !== event.currentIndex) {
+      this.project.ElementSet[event.previousIndex].SortOrder = this.project.ElementSet.length - (event.currentIndex + 1);
+      if (event.previousIndex < event.currentIndex) {
+        for(var i = event.previousIndex; i < event.currentIndex; i++) {
+          this.project.ElementSet[i + 1].SortOrder = this.project.ElementSet.length - i - 1;
+        }
+      } else {
+        for (var i = event.currentIndex; i < event.previousIndex; i++) {
+          this.project.ElementSet[i].SortOrder = this.project.ElementSet.length - i - 2;
+        }
+      }
+
+      moveItemInArray(this.project.ElementSet, event.previousIndex, event.currentIndex)
+      this.saveElement();
+      this.elementDataSource.data = this.project.ElementSet;
+    }
   }
 
   ngOnInit(): void {

@@ -1,6 +1,7 @@
 import { SelectionModel } from "@angular/cdk/collections";
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { MatTableDataSource, MatDialog } from "@angular/material";
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { Element, ElementField, ElementFieldDataType, Project, ProjectService } from "@forcrowd/backbone-client-core";
 import { finalize } from "rxjs/operators";
 
@@ -50,6 +51,7 @@ export class ElementFieldManagerComponent implements OnInit {
       this.fields.elementFilter = value;
 
       this.elementFieldDataSource.data = value ? value.ElementFieldSet : [];
+      this.elementFieldDataSource.data = this.elementFieldDataSource.data.sort((a, b)=> (a.SortOrder - b.SortOrder));
     }
   }
 
@@ -97,6 +99,27 @@ export class ElementFieldManagerComponent implements OnInit {
 
   editElementField(elementField: ElementField): void {
     this.selectedElementField = elementField;
+  }
+
+  drop(event: CdkDragDrop<ElementField[]>) {
+    var elementFieldSet = this.elementFieldDataSource.data
+    if (event.previousIndex !== event.currentIndex) {
+      elementFieldSet[event.previousIndex].SortOrder = elementFieldSet.length - (event.currentIndex + 1);
+      if (event.previousIndex < event.currentIndex) {
+        for(var i = event.previousIndex; i < event.currentIndex; i++) {
+          elementFieldSet[i + 1].SortOrder = elementFieldSet.length - i - 1;
+          this.projectService.saveElementField(elementFieldSet[i+1]).subscribe();
+        }
+      } else {
+        for (var i = event.currentIndex; i < event.previousIndex; i++) {
+          elementFieldSet[i].SortOrder = elementFieldSet.length - i - 2;
+          this.projectService.saveElementField(elementFieldSet[i]).subscribe();
+        }
+      }
+
+      moveItemInArray(elementFieldSet, event.previousIndex, event.currentIndex)
+      elementFieldSet = elementFieldSet;
+    }
   }
 
   ngOnInit(): void {
