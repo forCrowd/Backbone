@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.9.29**
+
+* AngularClient * Project manager - Drag and drop sort
+
 **0.9.28**
 
 * AngularClient
