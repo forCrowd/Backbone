@@ -6,6 +6,7 @@ import { Element, ElementField, ElementFieldDataType, Project, ProjectService } 
 import { finalize } from "rxjs/operators";
 
 import { RemoveConfirmComponent } from "./remove-confirm.component";
+import { async } from 'q';
 
 @Component({
   selector: "element-field-manager",
@@ -51,7 +52,7 @@ export class ElementFieldManagerComponent implements OnInit {
       this.fields.elementFilter = value;
 
       this.elementFieldDataSource.data = value ? value.ElementFieldSet : [];
-      this.elementFieldDataSource.data = this.elementFieldDataSource.data.sort((a, b)=> (a.SortOrder - b.SortOrder));
+      this.elementFieldDataSource.data = this.elementFieldDataSource.data.sort((a, b) => (b.SortOrder - a.SortOrder));
     }
   }
 
@@ -102,24 +103,26 @@ export class ElementFieldManagerComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<ElementField[]>) {
-    var elementFieldSet = this.elementFieldDataSource.data
+
+    var elementFieldSet = this.elementFilter.ElementFieldSet;
+
     if (event.previousIndex !== event.currentIndex) {
       elementFieldSet[event.previousIndex].SortOrder = elementFieldSet.length - (event.currentIndex + 1);
-      if (event.previousIndex < event.currentIndex) {
-        for(var i = event.previousIndex; i < event.currentIndex; i++) {
-          elementFieldSet[i + 1].SortOrder = elementFieldSet.length - i - 1;
-          this.projectService.saveElementField(elementFieldSet[i+1]).subscribe();
+      if (event.previousIndex > event.currentIndex) {
+        for (var i = event.currentIndex; i < event.previousIndex; i++)  {
+          elementFieldSet[i].SortOrder = elementFieldSet.length - i - 2;
         }
       } else {
-        for (var i = event.currentIndex; i < event.previousIndex; i++) {
-          elementFieldSet[i].SortOrder = elementFieldSet.length - i - 2;
-          this.projectService.saveElementField(elementFieldSet[i]).subscribe();
+        for (var i = event.previousIndex; i < event.currentIndex; i++) {
+          elementFieldSet[i + 1].SortOrder = elementFieldSet.length - i - 1;
         }
       }
 
-      moveItemInArray(elementFieldSet, event.previousIndex, event.currentIndex)
-      elementFieldSet = elementFieldSet;
+      moveItemInArray(elementFieldSet, event.previousIndex, event.currentIndex);
+      this.projectService.saveChanges().subscribe();
+      this.elementFieldDataSource.data = elementFieldSet;
     }
+
   }
 
   ngOnInit(): void {
@@ -174,6 +177,6 @@ export class ElementFieldManagerComponent implements OnInit {
   }
 
   trackBy(index: number, elementField: ElementField) {
-    return elementField.Id;
+    return elementField.SortOrder;
   }
 }

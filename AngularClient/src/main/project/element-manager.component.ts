@@ -84,17 +84,17 @@ export class ElementManagerComponent implements OnInit {
   drop(event: CdkDragDrop<Element[]>) {
     if (event.previousIndex !== event.currentIndex) {
       this.project.ElementSet[event.previousIndex].SortOrder = this.project.ElementSet.length - (event.currentIndex + 1);
-      if (event.previousIndex < event.currentIndex) {
-        for(var i = event.previousIndex; i < event.currentIndex; i++) {
-          this.project.ElementSet[i + 1].SortOrder = this.project.ElementSet.length - i - 1;
-        }
-      } else {
+      if (event.previousIndex > event.currentIndex) {
         for (var i = event.currentIndex; i < event.previousIndex; i++) {
           this.project.ElementSet[i].SortOrder = this.project.ElementSet.length - i - 2;
         }
+      } else {
+        for(var i = event.previousIndex; i < event.currentIndex; i++) {
+          this.project.ElementSet[i + 1].SortOrder = this.project.ElementSet.length - i - 1;
+        }
       }
 
-      moveItemInArray(this.project.ElementSet, event.previousIndex, event.currentIndex)
+      moveItemInArray(this.project.ElementSet, event.previousIndex, event.currentIndex);
       this.saveElement();
       this.elementDataSource.data = this.project.ElementSet;
     }
