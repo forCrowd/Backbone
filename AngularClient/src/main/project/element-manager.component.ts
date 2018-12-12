@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { SelectionModel } from "@angular/cdk/collections";
 import { MatTableDataSource, MatDialog } from "@angular/material";
+import { DragDropModule, CdkDragDrop, CdkDrag, moveItemInArray } from "@angular/cdk/drag-drop";
 import { Element, Project, ProjectService, NotificationService } from "@forcrowd/backbone-client-core";
 import { finalize } from "rxjs/operators";
 
@@ -58,6 +59,28 @@ export class ElementManagerComponent implements OnInit {
       : this.sortOrderArray;
   }
 
+  drop(event: CdkDragDrop<Element[]>) {
+    if (event.previousIndex !== event.currentIndex) {
+
+      this.project.ElementSet[event.previousIndex].SortOrder = this.project.ElementSet.length - (event.currentIndex + 1);
+
+      if (event.previousIndex < event.currentIndex) {
+        for(var i = event.previousIndex; i < event.currentIndex; i++) {
+          this.project.ElementSet[i + 1].SortOrder = this.project.ElementSet.length - i - 1;
+        }
+      } else {
+        for (var i = event.currentIndex; i < event.previousIndex; i++) {
+          this.project.ElementSet[i].SortOrder = this.project.ElementSet.length - i - 2;
+        }
+      }
+
+      moveItemInArray(this.project.ElementSet, event.previousIndex, event.currentIndex)
+      this.saveElement();
+      this.elementDataSource.data = this.project.ElementSet;
+
+    }
+  }
+
   constructor(private projectService: ProjectService,
     private notificationService: NotificationService,
     private dialog: MatDialog) {
@@ -81,7 +104,7 @@ export class ElementManagerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.elementDataSource.data = this.project.ElementSet;
+    this.elementDataSource.data = this.project.ElementSet.sort((a, b)=> b.SortOrder - a.SortOrder);
     if (!this.projectOwner) this.elementDisplayedColumns.splice(0, 1);
   }
 
@@ -138,6 +161,6 @@ export class ElementManagerComponent implements OnInit {
   }
 
   trackBy(index: number, element: Element) {
-    return element.Id;
+    return element.SortOrder;
   }
 }

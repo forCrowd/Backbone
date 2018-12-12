@@ -20,43 +20,41 @@
       </div>
     </mat-card>
 
-    <mat-card [hidden]="elementDataSource.data.length === 0" class="mat-card-std g-mb-150 g-mt-20">
-      <table mat-table [dataSource]="elementDataSource" [trackBy]="trackBy" class="g-mt-20">
-        <ng-container matColumnDef="select">
-          <th mat-header-cell *matHeaderCellDef>
-            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
-              [indeterminate]="selection.hasValue() && !isAllSelected()">
-            </mat-checkbox>
-          </th>
-          <td mat-cell *matCellDef="let element">
-            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(element) : null"
-              [checked]="selection.isSelected(element)">
-            </mat-checkbox>
-          </td>
-        </ng-container>
+    <table mat-table [dataSource]="elementDataSource" [trackBy]="trackBy" class="g-mt-20 drag-list" (cdkDropListDropped)="drop($event)" cdkDropList>
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(element) : null"
+            [checked]="selection.isSelected(element)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
 
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Element </th>
-          <td mat-cell *matCellDef="let element">
-            <a *ngIf="projectOwner" (click)="editElement(element)">{{ element.Name }}</a>
-            <span *ngIf="!projectOwner" > {{ element.Name }} </span>
-          </td>
-        </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Element </th>
+        <td mat-cell *matCellDef="let element">
+          <a *ngIf="projectOwner" (click)="editElement(element)">{{ element.Name }}</a>
+          <span *ngIf="!projectOwner" > {{ element.Name }} </span>
+        </td>
+      </ng-container>
 
-        <ng-container matColumnDef="sortOrder">
-          <th mat-header-cell *matHeaderCellDef> Sort Order </th>
-          <td mat-cell *matCellDef="let element"> {{ element.SortOrder }} </td>
-        </ng-container>
+      <ng-container matColumnDef="sortOrder">
+        <th mat-header-cell *matHeaderCellDef> Sort Order </th>
+        <td mat-cell *matCellDef="let element"> {{ element.SortOrder }} </td>
+      </ng-container>
 
-        <ng-container matColumnDef="createdOn">
-          <th mat-header-cell *matHeaderCellDef> Created On</th>
-          <td mat-cell *matCellDef="let element"> {{ element.CreatedOn | amTimeAgo }} </td>
-        </ng-container>
+      <ng-container matColumnDef="createdOn">
+        <th mat-header-cell *matHeaderCellDef> Created On</th>
+        <td mat-cell *matCellDef="let element"> {{ element.CreatedOn | amTimeAgo }} </td>
+      </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="elementDisplayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: elementDisplayedColumns;" (click)="selection.toggle(row)"></tr>
-      </table>
-    </mat-card>
+      <tr mat-header-row *matHeaderRowDef="elementDisplayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: elementDisplayedColumns;" (click)="selection.toggle(row)" class="drag-box" cdkDragLockAxis="y" cdkDrag></tr>
+    </table>
   </div>
 
   <!-- Element add/edit -->
