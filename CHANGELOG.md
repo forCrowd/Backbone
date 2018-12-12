@@ -1,9 +1,15 @@
 ### Changelog
 
+**0.9.29**
+
+* AngularClient * Project manager - Drag and drop sort
+
 **0.9.28**
 
-* AngularClient - Project manager SortOrder fields get inside the dropdown
-* AngularClient - Project manager minor fix
+* AngularClient
+  * "dev-all" module fixes
+  * Library updates
+* WebAPI - Minor
 
 **0.9.27**
 
