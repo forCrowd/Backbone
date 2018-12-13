@@ -212,6 +212,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="_app_offline.htm" />
+    <None Include="Configs\Test\appSettings.config" />
+    <None Include="Configs\Test\connectionStrings.config" />
+    <None Include="Configs\Test\elmah.errorLog.config" />
+    <None Include="Configs\Test\elmah.errorMail.config" />
+    <None Include="Configs\Test\system.net.mailSettings.smtp.config" />
     <None Include="Configs\appSettings.config">
       <SubType>Designer</SubType>
     </None>
@@ -244,6 +249,7 @@
     <Content Include="favicon.ico" />
     <Content Include="default.aspx" />
     <Content Include="robots.txt" />
+    <None Include="Properties\PublishProfiles\api.backbone.acc.pubxml" />
     <None Include="Properties\PublishProfiles\api.backbone.pubxml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

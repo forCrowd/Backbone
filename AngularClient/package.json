@@ -7,7 +7,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --source-map",
+    "build-test": "ng build --prod --configuration=test --source-map",
+    "build-prod": "ng build --prod --source-map",
     "build-core": "ng build backbone-client-core",
     "test": "ng test",
     "test-core": "ng test backbone-client-core",

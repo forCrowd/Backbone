@@ -49,7 +49,7 @@ You can use the local settings file as a base to create your own **test** and **
 
 To prepare a production bundle by generating sourcemap files, run the following on your command console:
 
-    ng build --prod --source-map
+	npm run build-prod
 
 For more options, please visit [Angular CLI](https://github.com/angular/angular-cli)
 
