@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.9.28b**
+
+* "Test" settings updates
+
 **0.9.28**
 
 * AngularClient
