@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
 import { SelectionModel } from "@angular/cdk/collections";
 import { moveItemInArray } from "@angular/cdk/drag-drop";
-import { MatTableDataSource, MatDialog, MatTable } from "@angular/material";
+import { MatDialog, MatTable } from "@angular/material";
 import { Element, ElementField, ElementFieldDataType, Project, ProjectService } from "@forcrowd/backbone-client-core";
 import { finalize } from "rxjs/operators";
 
@@ -19,7 +19,6 @@ export class ElementFieldManagerComponent implements OnInit {
   @Output() isEditingChanged = new EventEmitter<boolean>();
   @ViewChild(MatTable) matTable: MatTable<any>;
 
-  elementFieldDataSource = new MatTableDataSource<ElementField>([]);
   selection = new SelectionModel<ElementField>(true, []);
   elementFieldDisplayedColumns = ["select", "element", "name", "dataType", "createdOn"];
   elementFieldDataType = ElementFieldDataType;
@@ -50,9 +49,9 @@ export class ElementFieldManagerComponent implements OnInit {
     if (this.fields.elementFilter !== value) {
       this.fields.elementFilter = value;
 
-      value.ElementFieldSet.sort((a, b) => a.SortOrder - b.SortOrder);
-
-      // this.elementFieldDataSource.data = value ? value.ElementFieldSet : [];
+      if (value) {
+        value.ElementFieldSet.sort((a, b) => a.SortOrder - b.SortOrder);
+      }
     }
   }
 
@@ -128,7 +127,7 @@ export class ElementFieldManagerComponent implements OnInit {
         });
         this.projectService.saveChanges().pipe(
           finalize(() => {
-            this.elementFieldDataSource.data = this.elementFilter.ElementFieldSet;
+            this.matTable.renderRows();
             this.selection.clear();
           })).subscribe();
       }
@@ -152,15 +151,23 @@ export class ElementFieldManagerComponent implements OnInit {
   }
 
   isAllSelected() {
+
+    if (!this.elementFilter)
+      return false;
+
     const numSelected = this.selection.selected.length;
-    const numRows = this.elementFieldDataSource.data.length;
+    const numRows = this.elementFilter.ElementFieldSet.length;
     return numSelected === numRows;
   }
 
   masterToggle() {
+
+    if (!this.elementFilter)
+      return;
+
     this.isAllSelected() ?
         this.selection.clear() :
-        this.elementFieldDataSource.data.forEach(row => this.selection.select(row));
+        this.elementFilter.ElementFieldSet.forEach(row => this.selection.select(row));
   }
 
   trackBy(index: number, elementField: ElementField) {

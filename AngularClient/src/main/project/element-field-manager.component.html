@@ -151,12 +151,6 @@
             <p>{{ selectedElementField.RatingEnabled }}</p>
           </div>
 
-          <div [ngClass]="{ 'has-error': selectedElementField.entityAspect.getValidationErrors('SortOrder').length > 0 }"
-            class="g-mt-20">
-            <mat-form-field>
-              <input matInput placeholder="Sort Order" id="SortOrder" name="SortOrder" [(ngModel)]="selectedElementField.SortOrder" />
-            </mat-form-field>
-          </div>
           <div class="g-mt-20">
             <button mat-flat-button (click)="saveElementField()" [disabled]="submitDisabled()" class="mat-m02">
               Save field
