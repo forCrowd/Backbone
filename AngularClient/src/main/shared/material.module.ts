@@ -32,12 +32,14 @@ import {
   MatTooltipModule,
   MatStepperModule,
 } from "@angular/material";
+import { DragDropModule } from "@angular/cdk/drag-drop";
 import { CdkTableModule } from "@angular/cdk/table";
 import "hammerjs";
 
 @NgModule({
   exports: [
     CdkTableModule,
+    DragDropModule,
     MatAutocompleteModule,
     MatButtonModule,
     MatButtonToggleModule,

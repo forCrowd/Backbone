@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.9.29**
+
+* AngularClient - Element sort
+
 **0.9.28b**
 
 * "Test" settings updates
