@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { moveItemInArray } from "@angular/cdk/drag-drop";
 import { SelectionModel } from "@angular/cdk/collections";
-import { MatTableDataSource, MatDialog } from "@angular/material";
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
+import { MatDialog, MatTable } from "@angular/material";
 import { Element, Project, ProjectService, NotificationService } from "@forcrowd/backbone-client-core";
 import { finalize } from "rxjs/operators";
 
@@ -16,10 +17,10 @@ export class ElementManagerComponent implements OnInit {
   @Input() project: Project = null;
   @Input() projectOwner: boolean = null;
   @Output() isEditingChanged = new EventEmitter<boolean>();
+  @ViewChild(MatTable) matTable: MatTable<any>;
 
-  elementDataSource = new MatTableDataSource<Element>([]);
   selection = new SelectionModel<Element>(true, []);
-  elementDisplayedColumns = ["select", "name", "sortOrder", "createdOn"];
+  elementDisplayedColumns = ["select", "name", "createdOn"];
 
   get selectedElement(): Element {
     return this.fields.selectedElement;
@@ -52,7 +53,7 @@ export class ElementManagerComponent implements OnInit {
     this.selectedElement = this.projectService.createElement({
       Project: this.project,
       Name: "New element",
-      SortOrder: this.project.ElementSet.length + 1,
+      SortOrder: this.project.ElementSet.length,
     }) as Element;
   }
 
@@ -66,7 +67,7 @@ export class ElementManagerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.elementDataSource.data = this.project.ElementSet;
+    this.project.ElementSet.sort((a, b) => a.SortOrder - b.SortOrder);
     if (!this.projectOwner) this.elementDisplayedColumns.splice(0, 1);
   }
 
@@ -93,11 +94,29 @@ export class ElementManagerComponent implements OnInit {
 
         this.projectService.saveChanges().pipe(
           finalize(() => {
-            this.elementDataSource.data = this.project.ElementSet;
+            this.matTable.renderRows();
             this.selection.clear();
           })).subscribe();
         }
     });
+  }
+
+  onListDrop($event) {
+
+    // Update data & render
+    const prevIndex = this.project.ElementSet.findIndex(d => d === $event.item.data);
+    moveItemInArray(this.project.ElementSet, prevIndex, $event.currentIndex);
+    this.matTable.renderRows();
+
+    // Update elements' SortOrder property
+    this.project.ElementSet.map((e, i) => {
+      if (e.SortOrder !== i) {
+        e.SortOrder = i;
+      }
+    });
+
+    // Save
+    this.projectService.saveChanges().subscribe();
   }
 
   saveElement(): void {
@@ -112,14 +131,14 @@ export class ElementManagerComponent implements OnInit {
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.elementDataSource.data.length;
+    const numRows = this.project.ElementSet.length;
     return numSelected === numRows;
   }
 
   masterToggle() {
     this.isAllSelected() ?
         this.selection.clear() :
-        this.elementDataSource.data.forEach(row => this.selection.select(row));
+        this.project.ElementSet.forEach(row => this.selection.select(row));
   }
 
   trackBy(index: number, element: Element) {

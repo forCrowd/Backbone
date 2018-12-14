@@ -8,7 +8,7 @@
         <i class="material-icons">add</i>
         Create new
       </button>
-      <button mat-button [disabled]="isBusy || selection.selected.length === 0" (click)="removeElementItem()" [hidden]="elementItemDataSource.data.length === 0">
+      <button mat-button [disabled]="isBusy || selection.selected.length === 0" (click)="removeElementItem()" [hidden]="!elementFilter || elementFilter.ElementItemSet.length === 0">
         <i class="material-icons">delete</i>
         Remove
       </button>
@@ -20,7 +20,7 @@
     </div>
 
     <mat-card class="mat-card-std g-mb-250 g-mt-20">
-      <table mat-table [dataSource]="elementItemDataSource" [trackBy]="trackBy" class="g-mt-20">
+      <table mat-table [dataSource]="elementFilter?.ElementItemSet" [trackBy]="trackBy" class="g-mt-20">
         <ng-container matColumnDef="select">
           <th mat-header-cell *matHeaderCellDef>
             <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"

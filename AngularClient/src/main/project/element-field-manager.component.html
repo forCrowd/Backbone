@@ -8,7 +8,7 @@
         <i class="material-icons">add</i>
         Create new
       </button>
-      <button mat-button [disabled]="isBusy || selection.selected.length === 0" (click)="removeElementField()" [hidden]="elementFieldDataSource.data.length === 0">
+      <button mat-button [disabled]="isBusy || selection.selected.length === 0" (click)="removeElementField()" [hidden]="!elementFilter || elementFilter.ElementFieldSet.length === 0">
         <i class="material-icons">delete</i>
         Remove
       </button>
@@ -21,7 +21,7 @@
     </div>
 
     <mat-card class="mat-card-std g-mb-250 g-mt-20">
-      <table mat-table [dataSource]="elementFieldDataSource" [trackBy]="trackBy" class="g-mt-20">
+      <table mat-table [dataSource]="elementFilter?.ElementFieldSet" [trackBy]="trackBy" cdkDropList [cdkDropListData]="elementFilter?.ElementFieldSet" (cdkDropListDropped)="onListDrop($event)" class="g-mt-20">
         <ng-container matColumnDef="select">
           <th mat-header-cell *matHeaderCellDef>
             <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
@@ -59,7 +59,7 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="elementFieldDisplayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: elementFieldDisplayedColumns;" (click)="selection.toggle(row)"></tr>
+        <tr mat-row *matRowDef="let row; columns: elementFieldDisplayedColumns;" (click)="selection.toggle(row)" cdkDrag [cdkDragData]="row"></tr>
       </table>
     </mat-card>
   </div>
@@ -151,12 +151,6 @@
             <p>{{ selectedElementField.RatingEnabled }}</p>
           </div>
 
-          <div [ngClass]="{ 'has-error': selectedElementField.entityAspect.getValidationErrors('SortOrder').length > 0 }"
-            class="g-mt-20">
-            <mat-form-field>
-              <input matInput placeholder="Sort Order" id="SortOrder" name="SortOrder" [(ngModel)]="selectedElementField.SortOrder" />
-            </mat-form-field>
-          </div>
           <div class="g-mt-20">
             <button mat-flat-button (click)="saveElementField()" [disabled]="submitDisabled()" class="mat-m02">
               Save field

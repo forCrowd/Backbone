@@ -1,6 +1,7 @@
+import { moveItemInArray } from "@angular/cdk/drag-drop";
 import { SelectionModel } from "@angular/cdk/collections";
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { MatTableDataSource, MatDialog } from "@angular/material";
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
+import { MatDialog, MatTable } from "@angular/material";
 import { Element, ElementField, ElementFieldDataType, Project, ProjectService } from "@forcrowd/backbone-client-core";
 import { finalize } from "rxjs/operators";
 
@@ -16,8 +17,8 @@ export class ElementFieldManagerComponent implements OnInit {
   @Input() project: Project = null;
   @Input() projectOwner: boolean = null;
   @Output() isEditingChanged = new EventEmitter<boolean>();
+  @ViewChild(MatTable) matTable: MatTable<any>;
 
-  elementFieldDataSource = new MatTableDataSource<ElementField>([]);
   selection = new SelectionModel<ElementField>(true, []);
   elementFieldDisplayedColumns = ["select", "element", "name", "dataType", "createdOn"];
   elementFieldDataType = ElementFieldDataType;
@@ -48,7 +49,9 @@ export class ElementFieldManagerComponent implements OnInit {
     if (this.fields.elementFilter !== value) {
       this.fields.elementFilter = value;
 
-      this.elementFieldDataSource.data = value ? value.ElementFieldSet : [];
+      if (value) {
+        value.ElementFieldSet.sort((a, b) => a.SortOrder - b.SortOrder);
+      }
     }
   }
 
@@ -71,8 +74,7 @@ export class ElementFieldManagerComponent implements OnInit {
     this.selectedElementField = this.projectService.createElementField({
       Element: this.elementFilter,
       Name: "New field",
-      DataType: ElementFieldDataType.String,
-      SortOrder: this.elementFilter.ElementFieldSet.length + 1,
+      DataType: ElementFieldDataType.String
     });
   }
 
@@ -91,6 +93,28 @@ export class ElementFieldManagerComponent implements OnInit {
     if (!this.projectOwner) this.elementFieldDisplayedColumns.splice(0, 1);
   }
 
+  onListDrop($event) {
+
+    if (!this.elementFilter) {
+      return;
+    }
+
+    // Update data & render
+    const prevIndex = this.elementFilter.ElementFieldSet.findIndex(d => d === $event.item.data);
+    moveItemInArray(this.elementFilter.ElementFieldSet, prevIndex, $event.currentIndex);
+    this.matTable.renderRows();
+
+    // Update elements' SortOrder property
+    this.elementFilter.ElementFieldSet.map((e, i) => {
+      if (e.SortOrder !== i) {
+        e.SortOrder = i;
+      }
+    });
+
+    // Save
+    this.projectService.saveChanges().subscribe();
+  }
+
   removeElementField(): void {
     const dialogRef = this.dialog.open(RemoveConfirmComponent);
     dialogRef.afterClosed().subscribe(confirmed => {
@@ -103,7 +127,7 @@ export class ElementFieldManagerComponent implements OnInit {
         });
         this.projectService.saveChanges().pipe(
           finalize(() => {
-            this.elementFieldDataSource.data = this.elementFilter.ElementFieldSet;
+            this.matTable.renderRows();
             this.selection.clear();
           })).subscribe();
       }
@@ -111,6 +135,7 @@ export class ElementFieldManagerComponent implements OnInit {
   }
 
   saveElementField(): void {
+    this.selectedElementField.SortOrder = this.selectedElementField.Element.ElementFieldSet.length;
     this.projectService.saveElementField(this.selectedElementField)
       .subscribe(() => {
         this.selectedElementField = null;
@@ -126,15 +151,23 @@ export class ElementFieldManagerComponent implements OnInit {
   }
 
   isAllSelected() {
+
+    if (!this.elementFilter)
+      return false;
+
     const numSelected = this.selection.selected.length;
-    const numRows = this.elementFieldDataSource.data.length;
+    const numRows = this.elementFilter.ElementFieldSet.length;
     return numSelected === numRows;
   }
 
   masterToggle() {
+
+    if (!this.elementFilter)
+      return;
+
     this.isAllSelected() ?
         this.selection.clear() :
-        this.elementFieldDataSource.data.forEach(row => this.selection.select(row));
+        this.elementFilter.ElementFieldSet.forEach(row => this.selection.select(row));
   }
 
   trackBy(index: number, elementField: ElementField) {
