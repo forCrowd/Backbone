@@ -75,8 +75,7 @@ export class ElementFieldManagerComponent implements OnInit {
     this.selectedElementField = this.projectService.createElementField({
       Element: this.elementFilter,
       Name: "New field",
-      DataType: ElementFieldDataType.String,
-      SortOrder: this.elementFilter.ElementFieldSet.length,
+      DataType: ElementFieldDataType.String
     });
   }
 
@@ -137,6 +136,7 @@ export class ElementFieldManagerComponent implements OnInit {
   }
 
   saveElementField(): void {
+    this.selectedElementField.SortOrder = this.selectedElementField.Element.ElementFieldSet.length;
     this.projectService.saveElementField(this.selectedElementField)
       .subscribe(() => {
         this.selectedElementField = null;
