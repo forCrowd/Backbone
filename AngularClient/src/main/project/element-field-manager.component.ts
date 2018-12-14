@@ -1,6 +1,7 @@
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
 import { SelectionModel } from "@angular/cdk/collections";
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { MatTableDataSource, MatDialog } from "@angular/material";
+import { moveItemInArray } from "@angular/cdk/drag-drop";
+import { MatTableDataSource, MatDialog, MatTable } from "@angular/material";
 import { Element, ElementField, ElementFieldDataType, Project, ProjectService } from "@forcrowd/backbone-client-core";
 import { finalize } from "rxjs/operators";
 
@@ -16,6 +17,7 @@ export class ElementFieldManagerComponent implements OnInit {
   @Input() project: Project = null;
   @Input() projectOwner: boolean = null;
   @Output() isEditingChanged = new EventEmitter<boolean>();
+  @ViewChild(MatTable) matTable: MatTable<any>;
 
   elementFieldDataSource = new MatTableDataSource<ElementField>([]);
   selection = new SelectionModel<ElementField>(true, []);
@@ -48,7 +50,9 @@ export class ElementFieldManagerComponent implements OnInit {
     if (this.fields.elementFilter !== value) {
       this.fields.elementFilter = value;
 
-      this.elementFieldDataSource.data = value ? value.ElementFieldSet : [];
+      value.ElementFieldSet.sort((a, b) => a.SortOrder - b.SortOrder);
+
+      // this.elementFieldDataSource.data = value ? value.ElementFieldSet : [];
     }
   }
 
@@ -72,7 +76,7 @@ export class ElementFieldManagerComponent implements OnInit {
       Element: this.elementFilter,
       Name: "New field",
       DataType: ElementFieldDataType.String,
-      SortOrder: this.elementFilter.ElementFieldSet.length + 1,
+      SortOrder: this.elementFilter.ElementFieldSet.length,
     });
   }
 
@@ -89,6 +93,28 @@ export class ElementFieldManagerComponent implements OnInit {
   ngOnInit(): void {
     this.elementFilter = this.project.ElementSet[0];
     if (!this.projectOwner) this.elementFieldDisplayedColumns.splice(0, 1);
+  }
+
+  onListDrop($event) {
+
+    if (!this.elementFilter) {
+      return;
+    }
+
+    // Update data & render
+    const prevIndex = this.elementFilter.ElementFieldSet.findIndex(d => d === $event.item.data);
+    moveItemInArray(this.elementFilter.ElementFieldSet, prevIndex, $event.currentIndex);
+    this.matTable.renderRows();
+
+    // Update elements' SortOrder property
+    this.elementFilter.ElementFieldSet.map((e, i) => {
+      if (e.SortOrder !== i) {
+        e.SortOrder = i;
+      }
+    });
+
+    // Save
+    this.projectService.saveChanges().subscribe();
   }
 
   removeElementField(): void {
