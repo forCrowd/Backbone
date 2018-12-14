@@ -1,6 +1,6 @@
 import { SelectionModel } from "@angular/cdk/collections";
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { MatTableDataSource, MatDialog } from "@angular/material";
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
+import { MatDialog, MatTable } from "@angular/material";
 import { Element, ElementItem, Project, ProjectService, NotificationService } from "@forcrowd/backbone-client-core";
 import { finalize } from "rxjs/operators";
 
@@ -16,8 +16,8 @@ export class ElementItemManagerComponent implements OnInit {
   @Input() project: Project = null;
   @Input() projectOwner: boolean = null;
   @Output() isEditingChanged = new EventEmitter<boolean>();
+  @ViewChild(MatTable) matTable: MatTable<any>;
 
-  elementItemDataSource = new MatTableDataSource<ElementItem>([]);
   selection = new SelectionModel<ElementItem>(true, []);
   elementItemDisplayedColumns = ["select", "element", "name", "createdOn"];
 
@@ -38,8 +38,6 @@ export class ElementItemManagerComponent implements OnInit {
   set elementFilter(value: Element) {
     if (this.fields.elementFilter !== value) {
       this.fields.elementFilter = value;
-
-      this.elementItemDataSource.data = value ? value.ElementItemSet : [];
     }
   }
 
@@ -95,16 +93,16 @@ export class ElementItemManagerComponent implements OnInit {
             isRemove = false;
             let parentItem = elementItem.ParentCellSet[0].ElementItem.Name;
             let parentField = elementItem.ParentCellSet[0].ElementField.Name;
-            let errorMsg  = `This Items (${elementItem.Name}) could not be removed, because firstly related elements (${parentItem}, ${parentField}) must be removed!`;
+            let errorMsg = `This Items (${elementItem.Name}) could not be removed, because firstly related elements (${parentItem}, ${parentField}) must be removed!`;
             this.notificationService.notification.next(errorMsg);
           }
 
-          if(isRemove) this.projectService.removeElementItem(elementItem);
+          if (isRemove) this.projectService.removeElementItem(elementItem);
         });
 
         this.projectService.saveChanges().pipe(
           finalize(() => {
-            this.elementItemDataSource.data = this.elementFilter.ElementItemSet;
+            this.matTable.renderRows();
             this.selection.clear();
           })).subscribe();
       }
@@ -123,15 +121,21 @@ export class ElementItemManagerComponent implements OnInit {
   }
 
   isAllSelected() {
+    if (!this.elementFilter)
+      return false;
+
     const numSelected = this.selection.selected.length;
-    const numRows = this.elementItemDataSource.data.length;
+    const numRows = this.elementFilter.ElementItemSet.length;
     return numSelected === numRows;
   }
 
   masterToggle() {
-    this.isAllSelected() ?
-        this.selection.clear() :
-        this.elementItemDataSource.data.forEach(row => this.selection.select(row));
+    if (!this.elementFilter)
+      return;
+
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.elementFilter.ElementItemSet.forEach(row => this.selection.select(row));
   }
 
   trackBy(index: number, elementItem: ElementItem) {

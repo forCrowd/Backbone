@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
-import { SelectionModel } from "@angular/cdk/collections";
 import { moveItemInArray } from "@angular/cdk/drag-drop";
+import { SelectionModel } from "@angular/cdk/collections";
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
 import { MatDialog, MatTable } from "@angular/material";
 import { Element, ElementField, ElementFieldDataType, Project, ProjectService } from "@forcrowd/backbone-client-core";
 import { finalize } from "rxjs/operators";
