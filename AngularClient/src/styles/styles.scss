@@ -29,22 +29,33 @@ h2 {
 .cdk-drag-preview{
   width: -webkit-fill-available;
   max-width: 100%;
-  min-height: 60px;
+  min-height: 39px;
   display: table;
   background: white;
-  border-radius: 4px;
   overflow: hidden;
-  border-radius: 4px;
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
               0 8px 10px 1px rgba(0, 0, 0, 0.14),
               0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-preview i {
+  display: none;
+}
+
+.cdk-drag-preview .mat-checkbox {
+  display: none;
+}
+
+.cdk-drag-preview td {
+  border: none;
+  border-color: white;
 }
 
 .drag-list {
   width: -webkit-fill-available;
   max-width: 100%;
   border: solid 1px #ccc;
-  min-height: 60px;
+  min-height: 39px;
   display: table;
   background: white;
   border-radius: 4px;
@@ -52,7 +63,7 @@ h2 {
 }
 
 .drag-box {
-  padding: 20px 10px;
+  padding: 10px 10px 10px 100px;
   border-bottom: solid 1px #ccc;
   color: rgba(0, 0, 0, 0.87);
   flex-direction: row;
@@ -62,7 +73,6 @@ h2 {
   background: white;
   font-size: 14px;
 }
-
 
 .cdk-drag-placeholder {
   opacity: 0;
