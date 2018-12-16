@@ -20,48 +20,47 @@
       </mat-form-field>
     </div>
 
-    <mat-card class="mat-card-std g-mb-250 g-mt-20">
-      <table mat-table [dataSource]="elementFilter?.ElementFieldSet" [trackBy]="trackBy" cdkDropList [cdkDropListData]="elementFilter?.ElementFieldSet" (cdkDropListDropped)="onListDrop($event)" class="g-mt-20">
-        <ng-container matColumnDef="select">
-          <th mat-header-cell *matHeaderCellDef>
-            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
-              [indeterminate]="selection.hasValue() && !isAllSelected()">
-            </mat-checkbox>
-          </th>
-          <td mat-cell *matCellDef="let field">
-            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(field) : null"
-              [checked]="selection.isSelected(field)">
-            </mat-checkbox>
-          </td>
-        </ng-container>
+    <table mat-table [dataSource]="elementFilter?.ElementFieldSet" [trackBy]="trackBy" cdkDropList [cdkDropListData]="elementFilter?.ElementFieldSet" (cdkDropListDropped)="onListDrop($event)" class="mat-card-std g-mb-250 g-mt-20 g-mt-20 drag-list">
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let field">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(field) : null"
+            [checked]="selection.isSelected(field)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
 
-        <ng-container matColumnDef="element">
-          <th mat-header-cell *matHeaderCellDef> Element </th>
-          <td mat-cell *matCellDef="let field"> {{ field?.Element?.Name }} </td>
-        </ng-container>
+      <ng-container matColumnDef="element">
+        <th mat-header-cell *matHeaderCellDef> Element </th>
+        <td mat-cell *matCellDef="let field"> {{ field?.Element?.Name }} </td>
+      </ng-container>
 
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let field">
-            <a *ngIf="projectOwner" (click)="editElementField(field)"> {{ field.Name }} </a>
-            <span *ngIf="!projectOwner"> {{ field.Name }} </span>
-          </td>
-        </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let field">
+          <a *ngIf="projectOwner" (click)="editElementField(field)"> {{ field.Name }} </a>
+          <span *ngIf="!projectOwner"> {{ field.Name }} </span>
+        </td>
+      </ng-container>
 
-        <ng-container matColumnDef="dataType">
-          <th mat-header-cell *matHeaderCellDef> Data Type </th>
-          <td mat-cell *matCellDef="let field"> {{ field.DataTypeText }} </td>
-        </ng-container>
+      <ng-container matColumnDef="dataType">
+        <th mat-header-cell *matHeaderCellDef> Data Type </th>
+        <td mat-cell *matCellDef="let field"> {{ field.DataTypeText }} </td>
+      </ng-container>
 
-        <ng-container matColumnDef="createdOn">
-          <th mat-header-cell *matHeaderCellDef> Created On</th>
-          <td mat-cell *matCellDef="let field"> {{ field.CreatedOn | amTimeAgo }} </td>
-        </ng-container>
+      <ng-container matColumnDef="createdOn">
+        <th mat-header-cell *matHeaderCellDef> Created On</th>
+        <td mat-cell *matCellDef="let field"> {{ field.CreatedOn | amTimeAgo }} </td>
+      </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="elementFieldDisplayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: elementFieldDisplayedColumns;" (click)="selection.toggle(row)" cdkDrag [cdkDragData]="row"></tr>
-      </table>
-    </mat-card>
+      <tr mat-header-row *matHeaderRowDef="elementFieldDisplayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: elementFieldDisplayedColumns;" (click)="selection.toggle(row)" cdkDrag cdkDragLockAxis="y" [cdkDragData]="row" class="drop-box"></tr>
+    </table>
+
   </div>
 
   <!-- Element field add/edit -->

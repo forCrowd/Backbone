@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.9.30**
+
+* AngularClient - UI fix
+
 **0.9.29**
 
 * AngularClient - Element and field sort
