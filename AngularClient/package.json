@@ -38,6 +38,8 @@
     "@forcrowd/backbone-client-core": "0.2.3",
     "angulartics2": "7.5.2",
     "breeze-client": "1.7.1",
+    "browserlist": "1.0.1",
+    "caniuse-lite": "1.0.30000971",
     "core-js": "3.1.3",
     "font-awesome": "4.7.0",
     "hammerjs": "2.0.8",
@@ -74,6 +76,6 @@
     "tsickle": "0.35.0",
     "tslib": "1.9.3",
     "tslint": "5.16.0",
-    "typescript": "3.5.1"
+    "typescript": "3.4.1"
   }
 }
