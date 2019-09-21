@@ -17,7 +17,7 @@ export class ElementManagerComponent implements OnInit {
   @Input() project: Project = null;
   @Input() projectOwner: boolean = null;
   @Output() isEditingChanged = new EventEmitter<boolean>();
-  @ViewChild(MatTable) matTable: MatTable<any>;
+  @ViewChild(MatTable, {static: false}) matTable: MatTable<any>;
 
   selection = new SelectionModel<Element>(true, []);
   elementDisplayedColumns = ["select", "name", "createdOn"];

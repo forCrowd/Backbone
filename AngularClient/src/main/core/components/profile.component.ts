@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { SelectionModel } from "@angular/cdk/collections";
-import { ObservableMedia } from "@angular/flex-layout";
+import { MediaObserver } from "@angular/flex-layout";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatDialog, MatTableDataSource } from "@angular/material";
 import { AuthService, Project, ProjectService, User } from "@forcrowd/backbone-client-core";
@@ -33,7 +33,7 @@ export class ProfileComponent implements OnDestroy, OnInit {
     private dialog: MatDialog,
     private projectService: ProjectService,
     private router: Router,
-    private media: ObservableMedia) {
+    private media: MediaObserver) {
   }
 
   confirmRemove() {
@@ -103,7 +103,7 @@ export class ProfileComponent implements OnDestroy, OnInit {
       });
 
     // Media queries
-    var mediaSubscription = this.media.subscribe(change => {
+    var mediaSubscription = this.media.media$.subscribe(change => {
       this.mediaQuery = change.mqAlias;
       this.setColumns();
     });

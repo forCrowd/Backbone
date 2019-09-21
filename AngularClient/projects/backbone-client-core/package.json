@@ -11,9 +11,9 @@
     "source-map": "0.7.3"
   },
   "peerDependencies": {
-    "@angular/common": "7.1.0",
-    "@angular/core": "7.1.0",
-    "rxjs": "6.3.3"
+    "@angular/common": "8.0.0",
+    "@angular/core": "8.0.0",
+    "rxjs": "6.5.2"
   },
   "browser": {
     "fs": false,

@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.9.31**
+
+* AngularClient - Upgrade to Angular 8
+
 **0.9.30**
 
 * AngularClient - UI fix

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { ObservableMedia } from "@angular/flex-layout";
+import { MediaObserver } from "@angular/flex-layout";
 import { MatSnackBar } from "@angular/material";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
@@ -31,7 +31,7 @@ export class CoreComponent implements OnDestroy, OnInit {
     private notificationService: NotificationService,
     private titleService: Title,
     private router: Router,
-    private media: ObservableMedia) {
+    private media: MediaObserver) {
       this.angulartics.startTracking();
       this.currentUser = this.authService.currentUser;
   }
@@ -98,7 +98,7 @@ export class CoreComponent implements OnDestroy, OnInit {
     this.subscriptions.push(currentUserChangedSubscription);
 
     // Media queries
-    var mediaSubscription = this.media.subscribe(change => {
+    var mediaSubscription = this.media.media$.subscribe(change => {
       this.mediaQuery = change.mqAlias;
     });
     this.subscriptions.push(mediaSubscription);
