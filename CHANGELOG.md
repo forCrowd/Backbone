@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.9.31**
+
+*Angular Client - https://github.com/forCrowd/Backbone/wiki/First-Mission - aasimmd
+
 **0.9.30**
 
 * AngularClient - UI fix
